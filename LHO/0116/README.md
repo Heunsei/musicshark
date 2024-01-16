@@ -93,3 +93,56 @@ function Cart(){
 }
 ```
 - useDispatch() > store.js로 요청 보내주는 함수
+- dispatch(changeName()) 이렇게 사용
+
+### 요약
+1. store.js에 만든 createSlice()안에 reducers를 적고 그 안에 변경함수 작성
+2. 밖으로 빼서 export let { Name } = sliceName.actions 이런식으로 빼주기
+3. 쓸 파일에 import 받아오고 useDispatch를 사용해 호출한다
+
+## Redux안의 데이터가 ary / obj 일 때 변경방법
+### 결론 > 그냥 직접 바꾸면 됨
+```js
+// return 안넣어도 괜찮음
+let user = createSlice({
+	name : '',
+	initialState : { name : 'kim', age : 21},
+	reducers : {
+		chageName(state){
+			state.name = 'part'		
+		}
+		increase(state){
+			state.age += 1
+		}
+	}
+})
+```
+- 생각보다 착함
+
+### 파라미터 어떻게 넣어용?
+```js
+// return 안넣어도 괜찮음
+let user = createSlice({
+	name : '',
+	initialState : { name : 'kim', age : 21},
+	reducers : {
+		chageName(state){
+			state.name = 'part'		
+		}
+		increase(state){
+			state.age += 1
+		}
+		increase2(state){// 이렇게 계속 만들어야하냐?
+			state.age += 10
+		}
+        // 그건 아니고 파라미터는 이렇게 뚫어두자
+increase2(state, action){  // 이렇게 계속 만들어야하냐?
+		state.age += action.payload  // payload붙여서 넣자
+}
+	}
+})
+```
+
+## 다른 파일로 저장할 것들을 뺄거면?
+- store라는 폴더 만들어서 관리하자
+- 필요하면 export해서 빼주고 store.js에서 받아오자
