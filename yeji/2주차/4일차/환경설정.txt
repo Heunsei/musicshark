@@ -1,0 +1,6 @@
+visual studio code
+java(JDK)	17v
+node js
+mysql
+docker
+react

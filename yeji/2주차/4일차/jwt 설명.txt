@@ -1,0 +1,11 @@
+jwt
+
+aaaaa.bbbbb.ccccc
+header.payload.signature 
+
+stateless장점
+scale out을 하더라도 대응이 가능하다
+비밀번호를 다시 입력할 필요가 없음
+validation check만으로 가능
+
+react 쿠키 저장 방법 따로 있음 확인
