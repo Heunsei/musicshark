@@ -3,7 +3,7 @@ import AuthBox from '../../../components/AuthBox';
 import LoginPageInputs from './LoginPageInputs';
 import LoginPageHeader from './LoginPageHeader';
 import LoginPageFooter from './LoginPageFooter';
-import Navbar from './../../../components/Navbar';
+import Navbar from '../../../components/Navbar';
 
 const LoginPage = () => {
     // 입력값을 감지하고 서버에 전송할 변수 선언
