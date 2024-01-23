@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
-import RedirectInfo from '../../../components/RedirectInfo';
-import CustomPrimaryButton from '../../../components/CustomPrimaryButton';
+import Button from '@mui/material/Button'
 import styled from '@emotion/styled';
+import CustomPrimaryButton from '../../../components/CustomPrimaryButton';
+import RedirectInfo from '../../../components/RedirectInfo';
 
 const getFormNotValidMessage = () => {
-    return 'Enter correct email address and password should contains between6 and 12 char'
+    return ''
 }
 
 const getFromValidMessage = () => {
@@ -14,16 +15,25 @@ const getFromValidMessage = () => {
 }
 
 const FindUserInfo = styled('p')({
-    float : 'right',
+    color: '#00AFF4',
+    float: 'right',
     display: 'inline-block',
     margin: '0 5px',
+    cursor: 'pointer',
 })
 
+// handle login은 loginpage에서 가져와서 넣어줘야함
 const LoginPageFooter = ({ handleLogin, isFormValid }) => {
     const navigate = useNavigate()
-    const handlePushToRegisterPage = () => {
-        navigate("/register")
+
+    const handlePushToPasswordFindPage = () => {
+        navigate('/auth/password-find')
     }
+
+    const handlePushToIdFindPage = () => {
+        navigate('/auth/id-find')
+    }
+
     return (
         <>
             <Tooltip
@@ -41,11 +51,26 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
                     />
                 </div>
             </Tooltip>
-            <div>
-                <FindUserInfo>비밀번호 찾기</FindUserInfo>
+            <div style={{margin : '10px'}}>
+                <RedirectInfo
+                    redirectText={'비밀번호 찾기'}
+                    redirectHandler={handlePushToPasswordFindPage}
+                />
                 <FindUserInfo>|</FindUserInfo>
-                <FindUserInfo>아이디찾기</FindUserInfo>
+                <RedirectInfo
+                    redirectText={'아이디 찾기'}
+                    redirectHandler={handlePushToIdFindPage}
+                />
             </div>
+            <Button variant='outlined' sx={{
+                bgcolor: '#DAE5A3',
+                color: 'black',
+                textTransform: 'none',
+                fontSize: '16px',
+                fontWeight: 500,
+                width: '100%',
+                height: '40px',
+            }} onClick={() => {navigate('/register')}}>회원가입</Button>
         </>
     );
 };
