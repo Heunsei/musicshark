@@ -33,8 +33,8 @@ create table if not exists `belong_channel` (
     channel_idx int NOT NULL COMMENT '채널 인덱스',
     user_idx int NOT NULL COMMENT '유저 인덱스',
 	is_admin tinyint NOT NULL COMMENT '채널장 여부',
-    CONSTRAINT `fk_channel_idx` FOREIGN KEY (channel_idx) REFERENCES `channel` (channel_idx),
-    CONSTRAINT `fk_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
+    CONSTRAINT `fk_belong_channel_channel_idx` FOREIGN KEY (channel_idx) REFERENCES `channel` (channel_idx),
+    CONSTRAINT `fk_belong_channel_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );  
 
 -- 공지사항
