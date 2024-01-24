@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -29,8 +30,10 @@ public class SignUpRequestDto {
     String birth;
 
     @NotBlank
-    String user_email;
+    @Column(name = "user_email")
+    String userEmail;
 
     @URL
-    String profile_image;
+    @Column(name = "profile_image")
+    String profileImage;
 }

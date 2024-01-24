@@ -21,7 +21,7 @@ public class MultipartConfig {
 	@Bean
 	public MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
-		factory.setLocation("C:" + File.separator + "ssatudio");
+		factory.setLocation("D:" + File.separator + "ssatudio");
 		factory.setMaxRequestSize(DataSize.ofMegabytes(300L));
 		factory.setMaxFileSize(DataSize.ofMegabytes(300L));
 

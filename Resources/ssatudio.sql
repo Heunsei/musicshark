@@ -5,6 +5,10 @@ use ssatudio;
 -- 해당 테이블에서만 쓰는 변수는 테이블명 안붙이기 ? --
 -- 다른 테이블에서도 쓰는 변수는 테이블명 붙이기 ? --
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5755dbdbfbec0b2304f20712d842af4977ae5137
 -- 사용자
 create table if not exists `User` (
     user_idx int primary key auto_increment COMMENT '유저 인덱스',
