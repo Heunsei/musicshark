@@ -49,12 +49,17 @@ public class AuthServiceImpl implements AuthService {
         String userEmail = dto.getUserEmail();
         String password = dto.getPassword();
 
+        UserEntity userEntity = null;
+        UserEntity userEntityPassword = null;
         try{
 
-            if(!userRepository.findByUserEmail(userEmail)){
+            userEntity = userRepository.findByUserEmail(userEmail);
+            if(userEntity == null){
                 return "존재하지 않는 이메일입니다.";
             }
-            if(!userRepository.findByPassword(password)){
+
+            userEntityPassword = userRepository.findByPassword(password);
+            if(userEntityPassword == null){
                 return "존재하지 않는 패스워드입니다.";
             }
 
