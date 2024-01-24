@@ -19,9 +19,7 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequestDto requestDto){
-
         authService.signUp(requestDto);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
