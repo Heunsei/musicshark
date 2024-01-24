@@ -1,4 +1,4 @@
-package dto.request;
+package org.example.back.request;
 
 import lombok.Getter;
 import lombok.Setter;

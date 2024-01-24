@@ -1,10 +1,10 @@
-package service.implementation;
+package org.example.back.service.implementation;
 
-import dto.request.SignUpRequestDto;
-import entity.UserEntity;
+import org.example.back.request.SignUpRequestDto;
+import org.example.back.entity.UserEntity;
+import org.example.back.service.AuthService;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
-import service.AuthService;
+import org.example.back.repository.UserRepository;
 
 @Service
 public class AuthServiceImpl implements AuthService {

@@ -1,4 +1,4 @@
-package config;
+package org.example.back.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

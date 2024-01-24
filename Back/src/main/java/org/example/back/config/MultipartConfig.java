@@ -1,4 +1,4 @@
-package config;
+package org.example.back.config;
 
 import java.io.File;
 
