@@ -59,12 +59,27 @@ create table if not exists `friend` (
     are_friend tinyint NOT NULL COMMENT '친구 여부',
     CONSTRAINT `fk_friend_from_user_idx` FOREIGN KEY (from_user_idx) REFERENCES `user` (user_idx),
     CONSTRAINT `fk_friend_to_user_idx` FOREIGN KEY (to_user_idx) REFERENCES `user` (user_idx)
- ); 
- 
+ );
+
 -- 노래
 create table if not exists `song` (
-	song_idx int primary key auto_increment COMMENT '노래 인덱스',
-    title varchar(50) NOT NULL COMMENT '제목'
+    song_idx int primary key auto_increment COMMENT '노래 인덱스',
+    title varchar(50) NOT NULL COMMENT '제목',
+    singer varchar(50) COMMENT '가수',
+    start_timing int NOT NULL COMMENT '시작 시간',
+    running_time int NOT NULL COMMENT '재생 시간',
+    mr_file varchar(300) NOT NULL COMMENT '반주'
+);
+
+-- 노래 바
+create table if not exists `song_line` (
+   song_line_idx int primary key auto_increment COMMENT '노래바 인덱스',
+   song_idx int NOT NULL COMMENT '노래 인덱스',
+   start_node long NOT NULL COMMENT '시작 노드',
+   end_node long NOT NULL COMMENT '끝 노드',
+   start_time long NOT NULL COMMENT '시작 시간',
+   end_time long NOT NULL COMMENT '끝 시간',
+   CONSTRAINT `fk_song_line_song_idx` FOREIGN KEY (song_idx) REFERENCES `song` (song_idx)
 );
 
 -- 퍼펙트 플레이
