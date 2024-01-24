@@ -10,9 +10,9 @@ import org.example.back.repository.UserRepository;
 public class AuthServiceImpl implements AuthService {
 
     UserRepository userRepository;
+
     @Override
     public void signUp(SignUpRequestDto dto) {
-
 
         String nickname = dto.getNickname();
         String user_email = dto.getUser_email();
@@ -24,7 +24,5 @@ public class AuthServiceImpl implements AuthService {
 
         UserEntity userEntity = new UserEntity(dto);
         userRepository.save(userEntity);
-
-
-
+    }
 }
