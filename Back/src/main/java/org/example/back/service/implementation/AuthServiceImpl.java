@@ -11,9 +11,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     UserRepository userRepository;
+
     @Override
     public String signUp(SignUpRequestDto dto) {
-
         String nickname = dto.getNickname();
         String userEmail = dto.getUserEmail();
 
@@ -42,3 +42,4 @@ public class AuthServiceImpl implements AuthService {
         return "회원가입 성공!!!";
     }
 }
+
