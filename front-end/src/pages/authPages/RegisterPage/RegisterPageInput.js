@@ -1,11 +1,8 @@
 import React from 'react';
-import styled from '@emotion/styled';
 
 import InputWithLabel from '../../../components/InputWithLabel';
 import BirthDateInput from './BirthDateInput';
 import SelectGenderBox from './SelectGenderBox';
-
-
 
 const RegisterInput = ({
   email, setMail, password, setPassword, birth, setBirth, passwordConfirm, setPasswordConfirm,

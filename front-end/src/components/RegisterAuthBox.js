@@ -11,13 +11,13 @@ const BoxWrapper = styled('div')({
     background: '#FFEDD8'
 })
 
-const AuthBox = (props) => {
+const RegisterAuthBox = (props) => {
     return (
         <BoxWrapper>
             <Box
                 sx={{
                     width: 700,
-                    height: 500,
+                    height: 700,
                     bgcolor: '#ffffff',
                     borderRadius: '5px',
                     boxShadow: '0 2px 10px 0 rgb(0 0 0.5/ 20%)',
@@ -32,4 +32,4 @@ const AuthBox = (props) => {
     )
 }
 
-export default AuthBox
+export default RegisterAuthBox

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import AuthBox from '../../../components/AuthBox';
+import RegisterAuthBox from '../../../components/RegisterAuthBox';
 import RegisterPageHeader from './RegisterPageHeader';
 import RegisterInput from './RegisterPageInput';
+import RegisterPageFooter from './RegisterPageFooter';
 
 const RegisterPage = () => {
     const [mail, setMail] = useState("")
@@ -10,15 +11,14 @@ const RegisterPage = () => {
     const [nickname, setNickname] = useState("")
     const [birth, setBirth] = useState('')
     const [gender, setGender] = useState("")
+    const [isFormValid, setIsFormValid] = useState(false)
+
     // const [profile, setProfile] = useState("")
-    useEffect(() => {
-        console.log(birth)
-    },[birth])
 
     return (
-        <AuthBox>
-            <RegisterPageHeader/>
-            <RegisterInput 
+        <RegisterAuthBox>
+            <RegisterPageHeader />
+            <RegisterInput
                 mail={mail}
                 setMail={setMail}
                 password={password}
@@ -32,7 +32,10 @@ const RegisterPage = () => {
                 birth={birth}
                 setBirth={setBirth}
             />
-        </AuthBox>
+            <RegisterPageFooter 
+                isFormValid={isFormValid}
+            />
+        </RegisterAuthBox>
     );
 };
 
