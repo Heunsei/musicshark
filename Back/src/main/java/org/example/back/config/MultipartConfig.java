@@ -9,7 +9,7 @@ import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-import jakarta.servlet.MultipartConfigElement;
+import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class MultipartConfig {
