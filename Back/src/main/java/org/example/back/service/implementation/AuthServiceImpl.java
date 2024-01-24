@@ -18,8 +18,6 @@ public class AuthServiceImpl implements AuthService {
     UserRepository userRepository;
     @Override
     public void signUp(SignUpRequestDto dto) {
-
-
         String nickname = dto.getNickname();
         String user_email = dto.getUser_email();
 

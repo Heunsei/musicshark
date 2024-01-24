@@ -5,8 +5,6 @@ use ssatudio;
 -- 해당 테이블에서만 쓰는 변수는 테이블명 안붙이기 ? --
 -- 다른 테이블에서도 쓰는 변수는 테이블명 붙이기 ? --
 
-select * from user;
-
 -- 사용자
 create table if not exists `User` (
     user_idx int primary key auto_increment COMMENT '유저 인덱스',
@@ -70,6 +68,10 @@ create table if not exists `song` (
     running_time int NOT NULL COMMENT '재생 시간',
     mr_file varchar(300) NOT NULL COMMENT '반주'
 );
+
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목1','가수1',3,102,'엠알저장경로1');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목2','가수2',4,142,'엠알저장경로2');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목3','가수3',5,162,'엠알저장경로3');
 
 -- 노래 바
 create table if not exists `song_line` (
