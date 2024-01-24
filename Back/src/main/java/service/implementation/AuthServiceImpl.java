@@ -25,6 +25,6 @@ public class AuthServiceImpl implements AuthService {
         UserEntity userEntity = new UserEntity(dto);
         userRepository.save(userEntity);
 
-
+    }
 
 }
