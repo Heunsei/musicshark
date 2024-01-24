@@ -4,5 +4,5 @@ import org.example.back.dto.request.SignUpRequestDto;
 
 public interface AuthService {
 
-    void signUp(SignUpRequestDto dto);
+    public String signUp(SignUpRequestDto dto);
 }

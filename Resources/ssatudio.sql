@@ -6,7 +6,6 @@ use ssatudio;
 -- 다른 테이블에서도 쓰는 변수는 테이블명 붙이기 ? --
 
 
-
 -- 사용자
 create table if not exists `User` (
     user_idx int primary key auto_increment COMMENT '유저 인덱스',
@@ -59,8 +58,8 @@ create table if not exists `friend` (
     are_friend tinyint NOT NULL COMMENT '친구 여부',
     CONSTRAINT `fk_friend_from_user_idx` FOREIGN KEY (from_user_idx) REFERENCES `user` (user_idx),
     CONSTRAINT `fk_friend_to_user_idx` FOREIGN KEY (to_user_idx) REFERENCES `user` (user_idx)
- );
-
+ ); 
+ 
 -- 노래
 create table if not exists `song` (
     song_idx int primary key auto_increment COMMENT '노래 인덱스',
