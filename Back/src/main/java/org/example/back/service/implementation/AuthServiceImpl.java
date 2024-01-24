@@ -5,6 +5,10 @@ import org.example.back.entity.UserEntity;
 import org.example.back.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.example.back.service.AuthService;
+import org.example.back.entity.UserEntity;
+import org.example.back.service.AuthService;
+import org.springframework.stereotype.Service;
+import org.example.back.repository.UserRepository;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -25,6 +29,6 @@ public class AuthServiceImpl implements AuthService {
         UserEntity userEntity = new UserEntity(dto);
         userRepository.save(userEntity);
 
-
+    }
 
 }

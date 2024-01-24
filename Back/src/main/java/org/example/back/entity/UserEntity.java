@@ -1,7 +1,6 @@
 package org.example.back.entity;
 
 import org.example.back.dto.request.SignUpRequestDto;
-//import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

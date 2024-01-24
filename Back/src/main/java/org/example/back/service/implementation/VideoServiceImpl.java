@@ -1,6 +1,6 @@
-package service.implementation;
+package org.example.back.service.implementation;
 
-import service.VideoService;
+import org.example.back.service.VideoService;
 
 public class VideoServiceImpl implements VideoService {
 }
