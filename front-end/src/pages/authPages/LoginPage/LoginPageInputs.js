@@ -7,14 +7,14 @@ const LoginPageInputs = ({ email, setMail, password, setPassword }) => {
             <InputWithLabel
                 value={email}
                 setValue={setMail}
-                lable="E-mail"
+                label="E-mail"
                 type='email'
                 placeholder="이메일을 입력하세요"
             />
             <InputWithLabel
                 value={password}
                 setValue={setPassword}
-                lable="password"
+                label="password"
                 type='password'
                 placeholder="비밀번호를 입력하세요"
             />

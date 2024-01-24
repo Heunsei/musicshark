@@ -4,7 +4,7 @@ import CustomPrimaryButton from '../../../components/CustomPrimaryButton';
 import RedirectInfo from '../../../components/RedirectInfo';
 import { useNavigate } from 'react-router-dom';
 
-const getFormNotValidMessage = () => {
+const getFormNotValidMessage = (props) => {
     return '입력값을 확인해 주세요'
 }
 
@@ -19,7 +19,7 @@ const RegisterPageFooter = (props) => {
     const handleToPushLoginPage = () => {
         navigate('/login')
     }
-
+    
     return (
         <>
             <Tooltip

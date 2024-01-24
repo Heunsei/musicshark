@@ -6,7 +6,7 @@ import RegisterPageFooter from './RegisterPageFooter';
 import { useNavigate } from 'react-router-dom';
 import { registerAction } from './registerAction'
 import { validatePasswordConfirm } from './../validator'
-
+import {registerValidator} from './../validator'
 const RegisterPage = () => {
     const navigate = useNavigate()
 
@@ -29,13 +29,12 @@ const RegisterPage = () => {
     }
 
     useEffect(() => {
-        
-    }, [mail, nickname, gender, birth])
+        setIsFormValid(registerValidator(mail, nickname, gender, birth, isPasswordValid))
+    }, [mail, nickname, gender, birth, isPasswordValid, setIsFormValid])
 
     useEffect(() => {
         setIsPasswordVaild(validatePasswordConfirm(password, passwordConfirm))
     }, [password, passwordConfirm, setIsPasswordVaild, setPasswordConfirm])
-
 
     return (
         <RegisterAuthBox>
