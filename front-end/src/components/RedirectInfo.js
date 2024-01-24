@@ -5,7 +5,7 @@ const RedirectText = styled('p')({
     color: '#00AFF4',
     float: 'right',
     display: 'inline-block',
-    margin: '0 5px',
+    margin: '10px 5px',
     cursor: 'pointer',
 })
 const RedirectInfo = ({
