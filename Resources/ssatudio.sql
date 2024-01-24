@@ -75,10 +75,10 @@ create table if not exists `song` (
 create table if not exists `song_line` (
    song_line_idx int primary key auto_increment COMMENT '노래바 인덱스',
    song_idx int NOT NULL COMMENT '노래 인덱스',
-   start_node long NOT NULL COMMENT '시작 노드',
-   end_node long NOT NULL COMMENT '끝 노드',
-   start_time long NOT NULL COMMENT '시작 시간',
-   end_time long NOT NULL COMMENT '끝 시간',
+   start_node bigint NOT NULL COMMENT '시작 노드',
+   end_node bigint NOT NULL COMMENT '끝 노드',
+   start_time bigint NOT NULL COMMENT '시작 시간',
+   end_time bigint NOT NULL COMMENT '끝 시간',
    CONSTRAINT `fk_song_line_song_idx` FOREIGN KEY (song_idx) REFERENCES `song` (song_idx)
 );
 
