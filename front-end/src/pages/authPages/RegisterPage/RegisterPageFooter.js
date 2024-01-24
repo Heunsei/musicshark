@@ -13,7 +13,7 @@ const getFromValidMessage = () => {
 }
 
 const RegisterPageFooter = (props) => {
-    const { isFormValid } = props
+    const { isFormValid, handleRegister } = props
     const navigate = useNavigate()
 
     const handleToPushLoginPage = () => {
@@ -32,6 +32,7 @@ const RegisterPageFooter = (props) => {
                     <CustomPrimaryButton
                         disabled={!isFormValid}
                         label={'회원가입'}
+                        onClick={handleRegister}
                     />
                 </div>
             </Tooltip>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Tooltip from '@mui/material/Tooltip';
 
 import InputWithLabel from '../../../components/InputWithLabel';
 import BirthDateInput from './BirthDateInput';
@@ -10,13 +11,15 @@ const RegisterInput = ({
 }) => {
   return (
     <>
-      <InputWithLabel
-        value={email}
-        setValue={setMail}
-        lable="E-mail"
-        type='email'
-        placeholder="이메일을 입력하세요"
-      />
+      <Tooltip>
+        <InputWithLabel
+          value={email}
+          setValue={setMail}
+          lable="E-mail"
+          type='email'
+          placeholder="이메일을 입력하세요"
+        />
+      </Tooltip>
       <InputWithLabel
         value={password}
         setValue={setPassword}
