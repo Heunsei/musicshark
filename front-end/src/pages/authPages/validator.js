@@ -1,6 +1,5 @@
 // 비밀번호 8-16자리
 export const loginValidator = (mail, password) => {
-    console.log(mail)
     const isMailValid = validateMail(mail)
     const isPasswordValid = validatePassword(password)
     return isMailValid && isPasswordValid
@@ -22,18 +21,19 @@ export const validatePasswordConfirm = (password, passwordConfirm) => {
     }
 }
 
-const validatePassword = (password) => {
+export const validatePassword = (password) => {
     return password.length >= 8 && password.length < 16
 }
 
-const validateMail = (mail) => {
+export const validateMail = (mail) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(mail);
 }
 
-const validateNickname = (nickname) => {
-    console.log(nickname)
-    return true
+export const validateNickname = (nickname) => {
+    const regex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/;
+    const isFormValid = regex.test(nickname)
+    return nickname.length >=8 && nickname.length < 16 && isFormValid
 }
 
 const validateGender = (gender) => {
