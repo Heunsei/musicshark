@@ -5,7 +5,6 @@ use ssatudio;
 -- 해당 테이블에서만 쓰는 변수는 테이블명 안붙이기 ? --
 -- 다른 테이블에서도 쓰는 변수는 테이블명 붙이기 ? --
 
-select * from user;
 
 -- 사용자
 create table if not exists `User` (

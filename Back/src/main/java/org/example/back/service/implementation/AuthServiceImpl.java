@@ -6,33 +6,39 @@ import org.example.back.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.example.back.service.AuthService;
-import org.example.back.entity.UserEntity;
-import org.example.back.service.AuthService;
-import org.springframework.stereotype.Service;
-import org.example.back.repository.UserRepository;
-
 @Service
 public class AuthServiceImpl implements AuthService {
 
     @Autowired
     UserRepository userRepository;
     @Override
-    public void signUp(SignUpRequestDto dto) {
-
+    public String signUp(SignUpRequestDto dto) {
 
         String nickname = dto.getNickname();
-        String user_email = dto.getUser_email();
+        String userEmail = dto.getUserEmail();
 
         System.out.println(nickname);
-        System.out.println(user_email);
-//        if (userRepository.existsByNickname(nickname)) {
-//            System.out.println("이미 존재하는 닉네임");
-//            return;
-//        }
+        System.out.println(userEmail);
+
+        try{
+
+        if (userRepository.existsByNickname(nickname)) {
+            return "이미 존재하는 닉네임";
+        }
+
+        if(userRepository.existsByUserEmail(userEmail)) {
+            return "이미 존재하는 이메일";
+         }
+        }
+        catch (Exception e){
+
+            e.printStackTrace();
+            return "에러@@";
+        }
 
         UserEntity userEntity = new UserEntity(dto);
         userRepository.save(userEntity);
 
+        return "회원가입 성공!!!";
     }
-
 }
