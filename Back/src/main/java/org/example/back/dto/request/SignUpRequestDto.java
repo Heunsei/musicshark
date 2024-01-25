@@ -14,12 +14,12 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class SignUpRequestDto {
 
+
     @NotBlank
     @Length(max=16)
     String nickname;
 
     @NotBlank
-    @Length(max=16)
     String password;
 
     @NotBlank

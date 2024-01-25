@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class UserEntity {
     private String nickname;
     private String password;
     private String gender;
-    private Timestamp birth;
+    private Date birth;
 
     @Column(name = "user_isdelete")
     private int userIsdelete;
@@ -36,8 +36,10 @@ public class UserEntity {
         this.nickname = dto.getNickname();
         this.password = dto.getPassword();
         this.gender = dto.getGender();
-        this.birth = Timestamp.valueOf(dto.getBirth());
+        this.birth =  Date.valueOf(dto.getBirth());
         this.userEmail = dto.getUserEmail();
         this.profileImage = dto.getProfileImage();
     }
+
+
 }

@@ -5,17 +5,17 @@ use ssatudio;
 -- 해당 테이블에서만 쓰는 변수는 테이블명 안붙이기 ? --
 -- 다른 테이블에서도 쓰는 변수는 테이블명 붙이기 ? --
 
-<<<<<<< HEAD
-=======
+select * from user;  
 
->>>>>>> 5755dbdbfbec0b2304f20712d842af4977ae5137
+drop table User;
+
 -- 사용자
 create table if not exists `User` (
     user_idx int primary key auto_increment COMMENT '유저 인덱스',
     nickname varchar(16) NOT NULL unique COMMENT '닉네임',
-    password varchar(16) NOT NULL COMMENT '패스워드',
+    password TEXT NOT NULL COMMENT '패스워드',
     gender varchar(8) NOT NULL COMMENT '성별',
-    birth timestamp NOT NULL COMMENT '생년월일',
+    birth date NOT NULL COMMENT '생년월일',
     user_isDelete tinyint NOT NULL default 0 COMMENT '탈퇴 여부',
     user_email varchar(60) NOT NULL unique COMMENT '이메일',
     profile_image blob COMMENT '프로필 사진'
