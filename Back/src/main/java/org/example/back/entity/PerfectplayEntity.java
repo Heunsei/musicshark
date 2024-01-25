@@ -3,13 +3,13 @@ package org.example.back.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
+@Setter
 @AllArgsConstructor
 @Entity
 @Table(name = "PERFECTPLAY")
@@ -29,7 +29,7 @@ public class PerfectplayEntity {
 	@Column(name = "SONG_IDX", nullable = false)
 	private int songIdx;
 
-	@Column(name = "DATE", nullable = false)
+	@Column(name = "DATE", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
 	private Timestamp date;
 
 	@Column(name = "CLEAR", nullable = false)
@@ -42,4 +42,8 @@ public class PerfectplayEntity {
 	@ManyToOne
 	@JoinColumn(name = "SONG_IDX", referencedColumnName = "SONG_IDX", insertable = false, updatable = false)
 	private SongEntity song;
+
+	public PerfectplayEntity() {
+		this.date = new Timestamp(System.currentTimeMillis());
+	}
 }
