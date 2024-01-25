@@ -1,0 +1,17 @@
+Index: Back/src/main/java/org/example/back/controller/PerfectController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.back.controller;\n\nimport static org.springframework.http.HttpStatus.*;\n\nimport java.util.List;\n\nimport org.apache.coyote.Response;\nimport org.example.back.common.ApiResponse;\nimport org.example.back.dto.request.PerfectplayRequestDto;\nimport org.example.back.dto.response.PerfectplayResponseDto;\nimport org.example.back.dto.response.SongResponseDto;\nimport org.example.back.entity.PerfectplayEntity;\nimport org.example.back.service.implementation.PerfectplayServiceImpl;\nimport org.example.back.service.implementation.SongServiceImpl;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.PathVariable;\nimport org.springframework.web.bind.annotation.PostMapping;\nimport org.springframework.web.bind.annotation.RequestBody;\nimport org.springframework.web.bind.annotation.RequestMapping;\nimport org.springframework.web.bind.annotation.RequestParam;\nimport org.springframework.web.bind.annotation.RestController;\n\nimport lombok.RequiredArgsConstructor;\n\n@RestController\n@RequestMapping(\"/perfectplay\")\n@RequiredArgsConstructor\npublic class PerfectController {\n\n\tprivate final SongServiceImpl songServiceImpl;\n\tprivate final PerfectplayServiceImpl perfectplayServiceImpl;\n\n\t// 전체 음악 조회\n\t@GetMapping(\"/list\")\n\tpublic ResponseEntity<ApiResponse> findAllSong() {\n\n\t\tList<SongResponseDto> songList = songServiceImpl.findAllSong();\n\n\t\tApiResponse apiResponse = ApiResponse.builder()\n\t\t\t.message(\"조회 결과\")\n\t\t\t.status(OK.value())\n\t\t\t.data(songList)\n\t\t\t.build();\n\t\treturn ResponseEntity.ok(apiResponse);\n\t}\n\n\t// 퍼펙트플레이 기록 조회\n\t@GetMapping(\"/{userIdx}\")\n\tpublic ResponseEntity<ApiResponse> perfectplayResultByUserIdx(@PathVariable int userIdx) {\n\t\tList<PerfectplayResponseDto> perfectplayResultList = perfectplayServiceImpl.perfectplayResult(userIdx);\n\t\tApiResponse apiResponse = ApiResponse.builder()\n\t\t\t.message(\"조회 결과\")\n\t\t\t.status(OK.value())\n\t\t\t.data(perfectplayResultList)\n\t\t\t.build();\n\t\treturn ResponseEntity.ok(apiResponse);\n\t}\n\n\t// 퍼펙트플레이 기록 저장\n\t@PostMapping(\"/{userIdx}\")\n\tpublic ResponseEntity<ApiResponse> perfectplayResultSave(@PathVariable int userIdx\n\t\t,@RequestBody PerfectplayRequestDto perfectplayRequestDto) {\n\n\t\tboolean check = perfectplayServiceImpl.createPerfectplayResult(userIdx, perfectplayRequestDto);\n\t\tApiResponse apiResponse = ApiResponse.builder()\n\t\t\t.message(\"생성 결과\")\n\t\t\t.status(OK.value())\n\t\t\t.data(check)\n\t\t\t.build();\n\t\treturn ResponseEntity.ok(apiResponse);\n\t}\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Back/src/main/java/org/example/back/controller/PerfectController.java b/Back/src/main/java/org/example/back/controller/PerfectController.java
+--- a/Back/src/main/java/org/example/back/controller/PerfectController.java	(revision e567aa7c055cb2398f1ed0f48555adbed76d3386)
++++ b/Back/src/main/java/org/example/back/controller/PerfectController.java	(date 1706163878361)
+@@ -70,5 +70,4 @@
+ 			.build();
+ 		return ResponseEntity.ok(apiResponse);
+ 	}
+-
+ }
+\ No newline at end of file
