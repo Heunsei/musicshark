@@ -62,11 +62,11 @@ public class PerfectController {
 	public ResponseEntity<ApiResponse> perfectplayResultSave(@PathVariable int userIdx
 		,@RequestBody PerfectplayRequestDto perfectplayRequestDto) {
 
-		boolean check = perfectplayServiceImpl.createPerfectplayResult(userIdx, perfectplayRequestDto);
+		PerfectplayEntity perfectplayEntity = perfectplayServiceImpl.createPerfectplayResult(userIdx, perfectplayRequestDto);
 		ApiResponse apiResponse = ApiResponse.builder()
 			.message("생성 결과")
 			.status(OK.value())
-			.data(check)
+			.data(perfectplayEntity)
 			.build();
 		return ResponseEntity.ok(apiResponse);
 	}

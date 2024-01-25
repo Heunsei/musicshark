@@ -2,6 +2,7 @@ package org.example.back.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.example.back.dto.request.PerfectplayRequestDto;
 import org.example.back.dto.response.PerfectplayResponseDto;
@@ -50,20 +51,61 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 
 	// 퍼펙트플레이 기록 저장
 	@Override
-	public boolean createPerfectplayResult(int userIdx, PerfectplayRequestDto perfectplayRequestDto) {
+	public PerfectplayEntity createPerfectplayResult(int userIdx, PerfectplayRequestDto perfectplayRequestDto) {
 		PerfectplayEntity perfectplayEntity = convertToEntity(userIdx, perfectplayRequestDto);
 
 		perfectplayRepository.save(perfectplayEntity);
 
-		int songIdx = perfectplayEntity.getSongIdx();
-		System.out.println("@@@@clear:"+perfectplayEntity.isClear());
-		if(!checkPerfectplayTable(userIdx,songIdx) && perfectplayEntity.isClear()) //이미 플레이한 곡인지 확인, clear상태인지
-			tierRepository.updateClearCnt(userIdx);
+		//최초 클리어면 티어 테이블 생성
+		if(checkFirstClear(userIdx)&& perfectplayEntity.isClear()){
+			TierEntity newTierEntity = new TierEntity();
+			newTierEntity.setUserIdx(userIdx);
+			newTierEntity.setClearCnt(1);
+			newTierEntity.setUserTier("bronze");
 
+			tierRepository.save(newTierEntity);
+			return perfectplayEntity;
+		}
+
+		//클리어한 곡 수 증가
+		int songIdx = perfectplayEntity.getSongIdx();
+		if(!checkPerfectplayTable(userIdx,songIdx) && perfectplayEntity.isClear()) {
+				tierRepository.updateClearCnt(userIdx);
+		}
+
+		//티어 업데이트
+		Optional<TierEntity> tierEntity = tierRepository.findById(userIdx);
+		if(tierEntity.isPresent()){
+			int clearCnt = tierEntity.get().getClearCnt();
+			if(clearCnt == 4 || clearCnt == 11) {
+				String curTier = tierEntity.get().getUserTier();
+				String nextTier = fineNextTier(curTier);
+				tierRepository.updateTier(userIdx, nextTier);
+			}
+		}
+
+		return perfectplayEntity;
+	}
+	private boolean checkFirstClear(int userIdx){
+		Optional<TierEntity> tierEntity = tierRepository.findById(userIdx);
+
+		if(tierEntity.isPresent()) return false;
 		return true;
 	}
+	private String fineNextTier(String curTier) {
+		//bronze면 silver 반환
+		//silver면 gold 반환
+		if(curTier.equals("bronze")) return "silver";
+		return "gold";
+	}
+	private boolean checkClearCnt(int userIdx) {
+		Optional<TierEntity> tierEntity = tierRepository.findById(userIdx);
 
-	private boolean checkPerfectplayTable(int userIdx, int songIdx){
+		int clearCnt = tierEntity.get().getClearCnt();
+		if(clearCnt == 4 || clearCnt == 11) return true;
+		return false;
+	}
+	private boolean checkPerfectplayTable(int userIdx, int songIdx){//플레이한 적 있으면 true반환
 		List<PerfectplayEntity> allResult = perfectplayRepository.perfectplayResult(userIdx);
 		int cnt = 0;
 
@@ -71,10 +113,7 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 			int oldSongIdx = result.getSongIdx();
 			if(songIdx == oldSongIdx) cnt++;
 		}
-		System.out.println("!!!!!!!!!!!!!!cnt : " + cnt);
-
-		if(cnt > 1) return true;
-		return false;
+		return cnt > 1;
 	}
 
 	private PerfectplayEntity convertToEntity(int userIdx, PerfectplayRequestDto perfectplayRequestDto) {
