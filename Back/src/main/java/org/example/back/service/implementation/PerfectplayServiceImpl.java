@@ -56,8 +56,9 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		perfectplayRepository.save(perfectplayEntity);
 
 		int songIdx = perfectplayEntity.getSongIdx();
-		if(!checkPerfectplayTable(userIdx,songIdx)) //이미 플레이한 곡인지 확인
-			updateTierClearCount(userIdx); //tier테이블의 clearCnt+1
+		System.out.println("@@@@clear:"+perfectplayEntity.isClear());
+		if(!checkPerfectplayTable(userIdx,songIdx) && perfectplayEntity.isClear()) //이미 플레이한 곡인지 확인, clear상태인지
+			tierRepository.updateClearCnt(userIdx);
 
 		return true;
 	}
@@ -70,25 +71,15 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 			int oldSongIdx = result.getSongIdx();
 			if(songIdx == oldSongIdx) cnt++;
 		}
+		System.out.println("!!!!!!!!!!!!!!cnt : " + cnt);
 
 		if(cnt > 1) return true;
 		return false;
 	}
-	private void updateTierClearCount(int userIdx) {
-		TierEntity tierEntity = tierRepository.findByUserIdx(userIdx);
-
-		if (tierEntity != null) {
-			tierEntity.setClearCnt(tierEntity.getClearCnt() + 1);
-			tierRepository.save(tierEntity);
-			//
-		}
-		// songIdx에 해당하는 Tier 엔터티가 없는 경우 예외 처리
-	}
 
 	private PerfectplayEntity convertToEntity(int userIdx, PerfectplayRequestDto perfectplayRequestDto) {
-		boolean isClear = perfectplayRequestDto.getScore() >= 80; //score 80점 넘으면 clear=true
-
 		PerfectplayEntity entity = new PerfectplayEntity();
+		boolean isClear = perfectplayRequestDto.getScore() >= 80; //score 80점 넘으면 clear=true
 		entity.setUserIdx(userIdx);
 		entity.setSongIdx(perfectplayRequestDto.getSongIdx());
 		entity.setScore(perfectplayRequestDto.getScore());
