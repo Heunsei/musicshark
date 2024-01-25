@@ -5,5 +5,5 @@ import java.util.List;
 import org.example.back.dto.response.PerfectplayResponseDto;
 
 public interface PerfectplayService {
-	List<PerfectplayResponseDto> perfectplayResult();
+	List<PerfectplayResponseDto> perfectplayResult(int userIdx);
 }

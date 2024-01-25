@@ -21,8 +21,8 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 
 	// 퍼펙트플레이 기록 조회
 	@Override
-	public List<PerfectplayResponseDto> perfectplayResult() {
-		List<PerfectplayEntity> allResult = perfectplayRepository.perfectplayResult();
+	public List<PerfectplayResponseDto> perfectplayResult(int userIdx) {
+		List<PerfectplayEntity> allResult = perfectplayRepository.perfectplayResult(userIdx);
 
 		List<PerfectplayResponseDto> perfectplayResponseDtos = new ArrayList<>();
 		for (PerfectplayEntity result : allResult) {
