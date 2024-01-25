@@ -58,12 +58,17 @@ public class PerfectController {
 	}
 
 	// 퍼펙트플레이 기록 저장
-	// @PostMapping("/{userIdx}")
-	// public ResponseEntity<ApiResponse> perfectplayResultSave(@PathVariable int userIdx
-	// 	,@RequestBody PerfectplayRequestDto perfectplayRequestDto) {
-	//
-	//
-	//
-	// }
+	@PostMapping("/{userIdx}")
+	public ResponseEntity<ApiResponse> perfectplayResultSave(@PathVariable int userIdx
+		,@RequestBody PerfectplayRequestDto perfectplayRequestDto) {
+
+		boolean check = perfectplayServiceImpl.createPerfectplayResult(userIdx, perfectplayRequestDto);
+		ApiResponse apiResponse = ApiResponse.builder()
+			.message("생성 결과")
+			.status(OK.value())
+			.data(check)
+			.build();
+		return ResponseEntity.ok(apiResponse);
+	}
 
 }
