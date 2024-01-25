@@ -48,8 +48,4 @@ public class WebSecurityConfig {
         return http.build();
 
     }
-//        protected WebSecurityCustomizer webSecurityCustomizer(){
-//            return (web) -> web.ignoring()
-//                    .an
-//        }
 }

@@ -13,7 +13,7 @@ import io.jsonwebtoken.*;
 @Component
 public class TokenProvider {
 
-    @Value("${jwt.security-key")
+    @Value("${jwt.security-key}")
     private String Security_Key;
 
     public String create(String email){

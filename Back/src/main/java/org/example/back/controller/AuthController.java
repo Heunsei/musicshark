@@ -2,6 +2,7 @@ package org.example.back.controller;
 
 import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
+import org.example.back.dto.response.SignInResponseDto;
 import org.example.back.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class AuthController {
 
     @GetMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody SignInRequestDto requestDto){
-        String result = authService.signIn(requestDto);
+        SignInResponseDto result = authService.signIn(requestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
