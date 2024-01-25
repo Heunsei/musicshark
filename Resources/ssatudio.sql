@@ -166,25 +166,35 @@ create table if not exists `channel_video` (
    CONSTRAINT `fk_channel_video_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx) -- 유저 인덱스가 왜 필여하지?
 );
 
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
+-- 사용자 티어
+create table if not exists `tier` (
+   user_idx int NOT NULL COMMENT '사용자 인덱스',
+   clear_cnt INT NOT NULL DEFAULT 0 COMMENT '클리어 수',
+   user_tier VARCHAR(10) NOT NULL DEFAULT 'bronze' COMMENT '사용자 티어',
+   CONSTRAINT `fk_tier_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
+);
 
--- INSERT INTO `User` (nickname, password, gender, birth, user_isDelete, user_email, profile_image)
--- VALUES
---     ('user1', 'password1', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('2000-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user1@example.com', NULL),
---     ('user2', 'password2', 'Female', FROM_UNIXTIME(UNIX_TIMESTAMP('1995-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user2@example.com', NULL),
---     ('user3', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'userN@example.com', NULL);
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
 
--- INSERT INTO `perfectplay` (user_idx, score, song_idx, clear)
--- VALUES
---     (1, FLOOR(1 + RAND() * 100), 1, 1),
---     (2, FLOOR(1 + RAND() * 100), 2, 0),
---     (3, FLOOR(1 + RAND() * 100), 3,  1);
---     
--- select* from song;
--- select * from User;
--- select * from perfectplay;
+INSERT INTO `User` (nickname, password, gender, birth, user_isDelete, user_email, profile_image)
+VALUES
+    ('user1', 'password1', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('2000-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user1@example.com', NULL),
+    ('user2', 'password2', 'Female', FROM_UNIXTIME(UNIX_TIMESTAMP('1995-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user2@example.com', NULL),
+    ('user3', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'userN@example.com', NULL);
+    
+INSERT INTO `tier` (user_idx, clear_cnt, user_tier)
+VALUES
+  (1, 5, 'Bronze'),
+  (2, 10, 'Silver'),
+  (3, 15, 'Gold');
+  
+select * from tier;
+select* from song;
+select * from User;
+select * from perfectplay;
+
 
 
 
