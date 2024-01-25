@@ -17,4 +17,5 @@ public interface PerfectplayRepository extends JpaRepository<PerfectplayEntity, 
 	List<PerfectplayEntity> perfectplayResult(@Param("userIdx") int userIdx);
 
 	// 퍼펙트플레이 기록 저장
+
 }

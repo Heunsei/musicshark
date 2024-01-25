@@ -1,4 +1,4 @@
-package org.example.back.dto.response;
+package org.example.back.dto.request;
 
 import java.sql.Timestamp;
 
@@ -9,13 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PerfectplayResponseDto {
-	private int ppIdx;
+public class PerfectplayRequestDto {
 	private int userIdx;
 	private int songIdx;
-	private String title;
-	private String singer;
 	private int score;
 	private boolean clear;
-	private Timestamp date;
 }
