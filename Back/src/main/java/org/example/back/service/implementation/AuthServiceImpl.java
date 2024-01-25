@@ -1,23 +1,37 @@
 package org.example.back.service.implementation;
 
-import org.example.back.config.TokenProvider;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.back.config.JwtTokenProvider;
+import org.example.back.dto.request.JwtToken;
 import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
 import org.example.back.dto.response.SignInResponseDto;
 import org.example.back.entity.UserEntity;
 import org.example.back.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.example.back.service.AuthService;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+
 @Service
+@Slf4j
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired UserRepository userRepository;
-    @Autowired private TokenProvider tokenProvider;
-
+    private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Override
     public String signUp(SignUpRequestDto dto) {
@@ -52,39 +66,43 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public SignInResponseDto signIn(SignInRequestDto dto) {
+    public JwtToken signIn(SignInRequestDto dto) {
 
         String userEmail = dto.getUserEmail();
         String password = dto.getPassword();
 
 
-        SignInResponseDto data = null;
         try{
 
-            UserEntity userEntity = null;
+            Optional<UserEntity> userEntity = null;
             userEntity = userRepository.findByUserEmail(userEmail);
 
-            if(userEntity == null){
+            if(!userEntity.isPresent()){
                 return null;
 //                return "존재하지 않는 이메일입니다.";
             }
 
-            boolean passwordMatch = passwordEncoder.matches(password, userEntity.getPassword());
+            boolean passwordMatch = passwordEncoder.matches(password, userEntity.get().getPassword());
 
             if(!passwordMatch){
                 return null;
 //                return "패스워드 틀렸습니다.";
             }
 
-            String token = tokenProvider.create(userEmail);
-            data = new SignInResponseDto(userEntity, token);
 
         }catch (Exception e){
             e.printStackTrace();
             return null;
 //            return "에러@@@";
         }
-        return data;
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userEmail, password);
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
+
+        return jwtToken;
     }
 }
 
