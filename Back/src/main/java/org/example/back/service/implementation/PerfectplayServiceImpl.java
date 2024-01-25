@@ -80,6 +80,7 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		if (tierEntity != null) {
 			tierEntity.setClearCnt(tierEntity.getClearCnt() + 1);
 			tierRepository.save(tierEntity);
+			//
 		}
 		// songIdx에 해당하는 Tier 엔터티가 없는 경우 예외 처리
 	}
