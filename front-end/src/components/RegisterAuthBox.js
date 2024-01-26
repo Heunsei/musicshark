@@ -17,13 +17,15 @@ const RegisterAuthBox = (props) => {
             <Box
                 sx={{
                     width: 700,
-                    height: 800,
+                    height: '70vh',
                     bgcolor: '#ffffff',
                     borderRadius: '5px',
                     boxShadow: '0 2px 10px 0 rgb(0 0 0.5/ 20%)',
                     display: 'flex',
                     flexDirection: 'column',
                     padding: '25px',
+                    overflow:'scroll',
+
                 }}
             >
                 {props.children}

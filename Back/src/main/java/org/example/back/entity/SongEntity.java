@@ -28,23 +28,18 @@ public class SongEntity {
 	private int songIdx;
 
 	@Column(name = "TITLE", nullable = false)
-	@NotNull
 	private String title;
 
 	@Column(name = "SINGER", nullable = false)
-	@NotNull
 	private String singer;
 
-	@Column(name = "START_TIMING")
-	@NotNull
+	@Column(name = "START_TIMING", nullable = false)
 	private int startTiming;
 
-	@Column(name = "RUNNING_TIME")
-	@NotNull
+	@Column(name = "RUNNING_TIME", nullable = false)
 	private int runningTime;
 
-	@Column(name = "MR_FILE", columnDefinition = "TEXT")
-	@NotNull
+	@Column(name = "MR_FILE", columnDefinition = "TEXT", nullable = false)
 	private String mrFile;
 
 	@Override

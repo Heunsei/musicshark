@@ -13,8 +13,7 @@ public interface SongRepository extends JpaRepository<SongEntity, Integer> {
 	@Modifying
 	@Query("select s FROM SongEntity s")
 	List<SongEntity> findAllSong();
-	// 퍼펙트플레이 기록 조회
 
-	// 퍼펙트플레이 기록 저장
+	//음악 선택 시 엠알 조회
 }
 
