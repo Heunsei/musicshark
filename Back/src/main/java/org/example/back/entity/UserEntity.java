@@ -51,6 +51,7 @@ public class UserEntity implements UserDetails {
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
@@ -62,26 +63,46 @@ public class UserEntity implements UserDetails {
     }
     @Override
     public String getUsername() {
-        return null;
+        return userEmail;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return userIsdelete == 0;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "userIdx=" + userIdx +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birth=" + birth +
+                ", userIsdelete=" + userIsdelete +
+                ", userEmail='" + userEmail + '\'' +
+                ", profileImage='" + profileImage + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

@@ -1,22 +1,18 @@
 create database if not exists ssatudio;
+
 use ssatudio;
 
 -- 해당 테이블에서만 쓰는 변수는 테이블명 안붙이기 ? --
 -- 다른 테이블에서도 쓰는 변수는 테이블명 붙이기 ? --
--- drop database ssatudio;
--- select * from user;
--- select * from Role;
 
--- ALTER TABLE USer ADD COLUMN roles VARCHAR(255);
--- INSERT INTO user (user_idx, nickname, password, gender, birth, user_isDelete, user_email) VALUES (1, "yaho", "123", "남", "1983-12-22", "0", "ssafy@123");
+select*from user;
+select * from user where user_idx = 1;  
 
-CREATE TABLE IF NOT EXISTS Roles (
-    role_id int PRIMARY KEY AUTO_INCREMENT,
-    roles varchar(255) NOT NULL UNIQUE
+create table if not exists `user_roles` (
+
+  user_id int primary key auto_increment COMMENT '유저 역할 인덱스',
+  roles varchar(99)
 );
-
-INSERT INTO Role (role_id, roles) VALUES (1, 'USER');
-
 
 -- 사용자
 create table if not exists `User` (
@@ -29,10 +25,6 @@ create table if not exists `User` (
     user_email varchar(60) NOT NULL unique COMMENT '이메일',
     profile_image blob COMMENT '프로필 사진'
 ); 
-
--- ALTER TABLE User
--- ADD COLUMN role_id int,
--- ADD FOREIGN KEY (role_id) REFERENCES Role(role_id);
 
 -- 채널
 create table if not exists `Channel` (

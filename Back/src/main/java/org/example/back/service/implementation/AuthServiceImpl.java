@@ -24,7 +24,6 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
@@ -71,30 +70,9 @@ public class AuthServiceImpl implements AuthService {
         String userEmail = dto.getUserEmail();
         String password = dto.getPassword();
 
-
-        try{
-
-            Optional<UserEntity> userEntity = null;
-            userEntity = userRepository.findByUserEmail(userEmail);
-
-            if(!userEntity.isPresent()){
-                return null;
-//                return "존재하지 않는 이메일입니다.";
-            }
-
-            boolean passwordMatch = passwordEncoder.matches(password, userEntity.get().getPassword());
-
-            if(!passwordMatch){
-                return null;
-//                return "패스워드 틀렸습니다.";
-            }
-
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-//            return "에러@@@";
-        }
+        Optional<UserEntity> userEntity = null;
+        userEntity = userRepository.findByUserEmail(userEmail);
+        System.out.println("User found: " + userEntity.get());
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userEmail, password);
 
@@ -103,6 +81,41 @@ public class AuthServiceImpl implements AuthService {
         JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
 
         return jwtToken;
+
+//        try{
+//
+//            System.out.println("나는 이메일 / "+ userEmail);
+//            Optional<UserEntity> userEntity = null;
+//            userEntity = userRepository.findByUserEmail(userEmail);
+//            System.out.println("나는 엔티티 이메일 / "+ userEntity.get().getUserEmail());
+//
+//            if(userEntity.isPresent()){
+//                System.out.println("User found: " + userEntity.get());
+//                boolean passwordMatch = passwordEncoder.matches(password, userEntity.get().getPassword());
+//                System.out.println("Password matches: " + passwordMatch);
+//
+////                return "존재하지 않는 이메일입니다.";
+//            }
+////            if(!userEntity.isPresent()){
+////                return null;
+//////                return "존재하지 않는 이메일입니다.";
+////            }
+//
+//            boolean passwordMatch = passwordEncoder.matches(password, userEntity.get().getPassword());
+//
+//            if(!passwordMatch){
+//                return null;
+////                return "패스워드 틀렸습니다.";
+//            }
+//
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return null;
+////            return "에러@@@";
+//        }
+
+
     }
 }
 

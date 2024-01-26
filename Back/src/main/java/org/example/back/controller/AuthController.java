@@ -30,7 +30,13 @@ public class AuthController {
 
     @GetMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody SignInRequestDto requestDto){
+//        System.out.println(requestDto.getUserEmail());
         JwtToken result = authService.signIn(requestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/test")
+    public String test() {
+        return "success";
     }
 }
