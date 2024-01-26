@@ -22,6 +22,7 @@ public interface PerfectplayRepository extends JpaRepository<PerfectplayEntity, 
 	Integer findLatestSongIdx(@Param("userIdx") int userIdx);
 
 	// 퍼펙트플레이 점수 내림차순
+	//
 	// @Query("select p.songIdx from PerfectplayEntity p where p.userIdx = :userIdx order by p.score desc")
 	// Integer findHighScoreIdx(@Param("userIdx") int userIdx);
 }
