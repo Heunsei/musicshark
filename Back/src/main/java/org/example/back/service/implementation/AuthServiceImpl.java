@@ -1,5 +1,6 @@
 package org.example.back.service.implementation;
 
+import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
 import org.example.back.entity.UserEntity;
 import org.example.back.repository.UserRepository;
@@ -40,6 +41,28 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(userEntity);
 
         return "회원가입 성공!!!";
+    }
+
+    @Override
+    public String signIn(SignInRequestDto dto) {
+
+        String userEmail = dto.getUserEmail();
+        String password = dto.getPassword();
+
+        try{
+
+            if(!userRepository.findByUserEmail(userEmail)){
+                return "존재하지 않는 이메일입니다.";
+            }
+            if(!userRepository.findByPassword(password)){
+                return "존재하지 않는 패스워드입니다.";
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return "에러@@@";
+        }
+        return "로그인 성공!!!";
     }
 }
 

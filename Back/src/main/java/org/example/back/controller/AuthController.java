@@ -1,5 +1,6 @@
 package org.example.back.controller;
 
+import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
 import org.example.back.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,12 @@ public class AuthController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequestDto requestDto){
         String result = authService.signUp(requestDto);
-        return new ResponseEntity<>(result ,HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/sign-in")
-    public String hello(){
-        return "HELLO";
+    public ResponseEntity<?> signIn(@RequestBody SignInRequestDto requestDto){
+        String result = authService.signIn(requestDto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
