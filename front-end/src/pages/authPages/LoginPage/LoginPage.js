@@ -3,7 +3,7 @@ import AuthBox from '../../../components/AuthBox';
 import LoginPageInputs from './LoginPageInputs';
 import LoginPageHeader from './LoginPageHeader';
 import LoginPageFooter from './LoginPageFooter';
-import Navbar from '../../../components/Navbar';
+import Navbar from '../../../components/navbar';
 import { loginAction } from './loginAction';
 import { loginValidator } from './../validator'
 

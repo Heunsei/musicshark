@@ -31,7 +31,6 @@ const GroupPage = () => {
                 <GroupInput value={searchText}
                     setValue={setSearchText} />
                 <GroupBox isShowBox={isShowBox}/>
-                <GroupBottom />
             </BoxWrapper>
         </>
 
