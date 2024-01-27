@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import styles from './GroupBox.module.css'
-import GroupCard from './GroupCard';
-import GroupPagenation from './GroupPagenation'
+import { useNavigate } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import Stack from '@mui/material/Stack';
-import GroupAddBox from './GroupAddBox';
 
+import GroupAddBox from './GroupAddBox';
+import styles from './GroupBox.module.css'
+import GroupPagenation from './GroupPagenation'
+import GroupCard from './GroupCard';
+import GroupCreateModal from './GroupCreateModal';
 
 const arr = [
     {
@@ -69,10 +71,11 @@ const arr = [
 
 
 const GroupBox = (props) => {
+    const navigate = useNavigate()
     const { isShowBox } = props
-    const itemsPerPage = 8
+    const itemsPerPage = 4
     const [currentPage, setCurrentPage] = useState(1)
-
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const lastItem = currentPage * itemsPerPage
     const fisrtItem = lastItem - itemsPerPage
     const showGroup = arr.slice(fisrtItem, lastItem);
@@ -80,11 +83,14 @@ const GroupBox = (props) => {
         setCurrentPage(value);
     };
 
+    const handleOpenGroupCreatePage = () => {
+        setIsModalOpen(true)
+    }
     return (
         <>
             <div className={styles.groupBox}>
                 <div className={styles.innerBox}>
-                    <GroupAddBox/>
+                    <GroupAddBox openModal={handleOpenGroupCreatePage}/>
                     {
                         showGroup.map((element, i) => {
                             return (
@@ -102,7 +108,7 @@ const GroupBox = (props) => {
                         </Stack>
                     </div>
                 </div>
-
+                <GroupCreateModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
             </div>
         </>
     );

@@ -21,9 +21,11 @@ const BoxWrapper = styled('div')({
 const GroupPage = () => {
     const [isShowBox, setIsShowBox] = useState(true)
     const [searchText, setSearchText] = useState('')
+
     useEffect(() => {
         console.log(searchText)
     },[searchText])
+    
     return (
         <>
             <Navbar />
