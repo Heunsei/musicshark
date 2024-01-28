@@ -7,6 +7,7 @@ import org.example.back.dto.request.JwtToken;
 import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
 import org.example.back.dto.response.SignInResponseDto;
+import org.example.back.dto.response.SignUpResponseDto;
 import org.example.back.entity.UserEntity;
 import org.example.back.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.example.back.service.AuthService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -29,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Override
@@ -49,7 +52,12 @@ public class AuthServiceImpl implements AuthService {
          }
 
         String encodePassword = passwordEncoder.encode(password);
+        List<String> roles = new ArrayList<>();
+        roles.add("USER");
+
         dto.setPassword(encodePassword);
+        UserEntity userEntity = new UserEntity(dto, roles);
+        userRepository.save(userEntity);
 
         }
         catch (Exception e){
@@ -57,9 +65,6 @@ public class AuthServiceImpl implements AuthService {
             e.printStackTrace();
             return "에러@@";
         }
-
-        UserEntity userEntity = new UserEntity(dto);
-        userRepository.save(userEntity);
 
         return "회원가입 성공!!!";
     }
@@ -70,52 +75,31 @@ public class AuthServiceImpl implements AuthService {
         String userEmail = dto.getUserEmail();
         String password = dto.getPassword();
 
-        Optional<UserEntity> userEntity = null;
-        userEntity = userRepository.findByUserEmail(userEmail);
-        System.out.println("User found: " + userEntity.get());
+        Optional<UserEntity> userEntity = userRepository.findByUserEmail(userEmail);
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userEmail, password);
+        try{
+            if(userEntity.isPresent()){
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+                boolean passwordMatch = passwordEncoder.matches(password, userEntity.get().getPassword());
+                if(passwordMatch){
 
-        JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userEmail, userEntity.get().getPassword());
+                Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+                JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
 
-        return jwtToken;
+                return jwtToken;
+                }
 
-//        try{
-//
-//            System.out.println("나는 이메일 / "+ userEmail);
-//            Optional<UserEntity> userEntity = null;
-//            userEntity = userRepository.findByUserEmail(userEmail);
-//            System.out.println("나는 엔티티 이메일 / "+ userEntity.get().getUserEmail());
-//
-//            if(userEntity.isPresent()){
-//                System.out.println("User found: " + userEntity.get());
-//                boolean passwordMatch = passwordEncoder.matches(password, userEntity.get().getPassword());
-//                System.out.println("Password matches: " + passwordMatch);
-//
-////                return "존재하지 않는 이메일입니다.";
-//            }
-////            if(!userEntity.isPresent()){
-////                return null;
-//////                return "존재하지 않는 이메일입니다.";
-////            }
-//
-//            boolean passwordMatch = passwordEncoder.matches(password, userEntity.get().getPassword());
-//
-//            if(!passwordMatch){
-//                return null;
-////                return "패스워드 틀렸습니다.";
-//            }
-//
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return null;
-////            return "에러@@@";
-//        }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("로그인 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("로그인 중 오류 발생");
+        }
 
 
+        throw new RuntimeException("로그인 중 오류 발생");
     }
 }
 
