@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import InputWithLabel from '../../../components/InputWithLabel';
+import InputWithLabel from './../../../../components/InputWithLabel';
 
 const style = {
     position: 'absolute',
@@ -22,20 +22,33 @@ const GroupCreateModal = (props) => {
     const { isModalOpen, setIsModalOpen } = props
     const [groupName, setGroupName] = useState('')
     const [groupIntro, setGroupIntro] = useState('')
-    const [channelMax, setChannelMax] = useState('')
-    
+    const [channelMax, setChannelMax] = useState(1)
+
     const createGroupAction = () => {
         // axios 요청을 보낼 함수 작성
+        console.log(groupName, groupIntro, channelMax)
+        const groupDetail = {
+            "channel_name": groupName,
+            "channel_intro": groupIntro,
+            "channel_max": channelMax,
+        }
+        axios.post('/channels', groupDetail)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     useEffect(() => {
-        if(!isNaN(channelMax)){
+        if (!isNaN(channelMax)) {
             setChannelMax(parseInt(channelMax))
         }
         if (channelMax >= 6) {
             setChannelMax(6)
         }
-    },[channelMax])
+    }, [channelMax])
 
     return (
         <div>
@@ -56,15 +69,15 @@ const GroupCreateModal = (props) => {
                             setValue={setGroupName}
                             type='text'
                             placeholder='그룹명'
-                            maxLength ='15'
+                            maxLength='15'
                         />
                         <InputWithLabel
-                            label='채널 설명을 입력하세요'
+                            label='그룹 설명을 입력하세요'
                             value={groupIntro}
                             setValue={setGroupIntro}
                             type='text'
                             placeholder='채널 설명'
-                            maxLength ='15'
+                            maxLength='15'
                         />
                     </div>
                     <InputWithLabel
@@ -77,9 +90,10 @@ const GroupCreateModal = (props) => {
                         min='0'
                     />
                     <Button variant="contained"
-                    sx={{
-                        margin:'15px'
-                    }}
+                        onClick={createGroupAction}
+                        sx={{
+                            margin: '15px'
+                        }}
                     >그룹 생성하기</Button>
                 </Box>
             </Modal>
