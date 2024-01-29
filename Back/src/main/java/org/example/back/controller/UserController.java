@@ -1,6 +1,7 @@
 package org.example.back.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.example.back.dto.response.GetUserResponseDto;
 import org.example.back.entity.UserEntity;
 import org.example.back.service.UserService;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping("/")
     public ResponseEntity<GetUserResponseDto> getUser(Integer userIndex){

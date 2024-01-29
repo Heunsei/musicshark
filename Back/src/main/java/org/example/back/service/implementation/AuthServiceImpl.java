@@ -6,6 +6,7 @@ import org.example.back.config.JwtTokenProvider;
 import org.example.back.dto.request.JwtToken;
 import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
+import org.example.back.dto.response.ResponseDto;
 import org.example.back.dto.response.SignInResponseDto;
 import org.example.back.dto.response.SignUpResponseDto;
 import org.example.back.entity.UserEntity;
@@ -61,12 +62,11 @@ public class AuthServiceImpl implements AuthService {
 
         }
         catch (Exception e){
-
             e.printStackTrace();
-            return "에러@@";
+            return "회원가입 에러@@";
         }
 
-        return "회원가입 성공!!!";
+        return "회원가입 성공!!";
     }
 
     @Override
@@ -97,7 +97,6 @@ public class AuthServiceImpl implements AuthService {
             log.error("로그인 중 오류 발생: {}", e.getMessage());
             throw new RuntimeException("로그인 중 오류 발생");
         }
-
 
         throw new RuntimeException("로그인 중 오류 발생");
     }

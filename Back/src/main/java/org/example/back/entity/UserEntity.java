@@ -39,6 +39,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "profile_image")
     private String profileImage;
 
+    // roles 필드가 UserEntity 테이블과 관련된 별도의 테이블에 저장되어야 함을 나타냄
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();

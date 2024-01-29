@@ -1,5 +1,6 @@
 package org.example.back.service.implementation;
 
+import lombok.RequiredArgsConstructor;
 import org.example.back.dto.response.GetUserResponseDto;
 import org.example.back.entity.UserEntity;
 import org.example.back.repository.UserRepository;
@@ -8,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public GetUserResponseDto getUser(Integer userIdx) {

@@ -38,4 +38,6 @@ public class SignUpResponseDto {
     @Column(name = "profile_image")
     String profileImage;
 
+
+
 }

@@ -5,8 +5,6 @@ use ssatudio;
 -- 다른 테이블에서도 쓰는 변수는 테이블명 붙이기 ? --
 -- drop database ssatudio;
 
-
-
 -- 사용자
 create table if not exists `User` (
     user_idx int primary key auto_increment COMMENT '유저 인덱스',
@@ -27,8 +25,8 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
     roles text
 );
 
-INSERT INTO user (user_idx, nickname, password, gender, birth, user_isDelete, user_email) VALUES (1, "yaho", "123", "남", "1983-12-22", "0", "ssafy@123");
-INSERT INTO user_roles (user_user_idx, roles) VALUES (2, 'USER');
+-- INSERT INTO user (user_idx, nickname, password, gender, birth, user_isDelete, user_email) VALUES (1, "yaho", "123", "남", "1983-12-22", "0", "ssafy@123");
+-- INSERT INTO user_roles (user_user_idx, roles) VALUES (2, 'USER');
 
 select * from user;
 select * from user_roles;

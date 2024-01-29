@@ -26,13 +26,11 @@ public class JwtTokenProvider {
 
     private final Key key;
 
-    // properties에서 secret값 가져와서 key에 저장
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey){
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // user 정보 가지고 Access, RefreshToken 생성
     public JwtToken generateToken(Authentication authentication){
 
         String authorities = authentication.getAuthorities().stream()
@@ -41,10 +39,8 @@ public class JwtTokenProvider {
 
         long now = (new Date()).getTime();
 
-        // 만료 시간
         Date accessTokenExpiresIn = new Date(now + 86400000);
         
-        // AcessToken 생성
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -52,7 +48,6 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        // Refresh Token 생성
         String refreshToken = Jwts.builder()
                 .setExpiration(new Date(now + 86400000))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -65,28 +60,23 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    // Jwt 토큰을 복호화, 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken){
 
-        // Jwt 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
         if(claims.get("auth") == null){
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
-        // claim에서 권한 정보 가져오기
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get("auth").toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        // UserDetails 객체를 만들어서 Authentication return
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    // 토큰 정보 검증 메서드
     public boolean validateToken(String token){
 
         try{
@@ -107,8 +97,6 @@ public class JwtTokenProvider {
         }
         return false;
     }
-
-    // 토큰 복호화
     private Claims parseClaims(String accessToken){
 
         try{
