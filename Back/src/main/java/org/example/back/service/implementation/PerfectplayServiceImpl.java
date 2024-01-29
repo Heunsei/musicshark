@@ -20,10 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PerfectplayServiceImpl implements PerfectplayService {
 
-	@Autowired
 	PerfectplayRepository perfectplayRepository;
-
-	@Autowired
 	TierRepository tierRepository;
 
 	// 퍼펙트플레이 기록 조회

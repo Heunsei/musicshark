@@ -37,11 +37,11 @@ public class FriendEntity {
 	private int areFriend;
 
 	@ManyToOne
-	@JoinColumn(name = "from_user_idx", referencedColumnName = "user_idx")
+	@JoinColumn(name = "from_user_idx", referencedColumnName = "user_idx", insertable = false, updatable = false)
 	private UserEntity fromUser;
 
 	@ManyToOne
-	@JoinColumn(name = "to_user_idx", referencedColumnName = "user_idx")
+	@JoinColumn(name = "to_user_idx", referencedColumnName = "user_idx", insertable = false, updatable = false)
 	private UserEntity toUser;
 }
 

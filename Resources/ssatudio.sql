@@ -220,12 +220,46 @@ VALUES
    (11, 600, 650, 1743527200, 1743530800),
    (12, 650, 700, 183527200, 1843530800);
 
+-- friend 친구 목록 조회 (1이 2,6이랑 친구, 나머지는 요청 수락x)
+INSERT INTO `friend` (`from_user_idx`, `to_user_idx`, `are_friend`)
+VALUES
+    (1, 2, 1),
+    (2, 3, 1),
+    (3, 4, 1),
+    (4, 5, 1),
+    (5, 6, 1),
+    (6, 1, 1),
+    (1, 3, 1),
+    (2, 4, 1),
+    (3, 5, 1),
+    (4, 6, 1),
+    (2, 1, 1),
+    (1, 6, 1),
+    (3, 2, 0),
+    (4, 3, 0),
+    (5, 4, 0),
+    (6, 5, 0),
+    (3, 1, 0),
+    (4, 2, 0),
+    (5, 3, 0),
+    (6, 4, 0);
+
+select u.nickname, u.profile_image
+from user u
+where user_idx 
+IN (select f.from_user_idx from friend f
+where from_user_idx 
+IN (select f.to_user_idx from friend f where from_user_idx=1 and are_friend =1) 
+and to_user_idx=1
+and are_friend=1);
+
 -- select * from user;
 -- select * from tier;
 -- select* from song;
 -- select * from User;
 -- select * from perfectplay;
 -- select * from song_line;
+-- select * from friend;
 
 -- drop database ssatudio;
 
