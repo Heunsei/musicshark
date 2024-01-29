@@ -7,13 +7,10 @@
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/PerfectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/PerfectController.java" afterDir="false" />
-<<<<<<< HEAD
-=======
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/PerfectplayEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/PerfectplayEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/PerfectplayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/PerfectplayService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/ssatudio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/ssatudio.sql" afterDir="false" />
->>>>>>> e567aa7c055cb2398f1ed0f48555adbed76d3386
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,11 +74,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BackApplication.executor": "Run",
-<<<<<<< HEAD
-    "git-widget-placeholder": "4c5f5d29",
-=======
     "git-widget-placeholder": "backend-develop",
->>>>>>> e567aa7c055cb2398f1ed0f48555adbed76d3386
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/SSAFY/2024-2/work-space/S10P12E205/Back/src/main/java/org/example/back",
     "node.js.detected.package.eslint": "true",
@@ -135,13 +128,10 @@
       <updated>1706075371328</updated>
       <workItem from="1706075372523" duration="10984000" />
       <workItem from="1706086907803" duration="20000" />
-<<<<<<< HEAD
       <workItem from="1706139333237" duration="212000" />
       <workItem from="1706164141094" duration="3000" />
       <workItem from="1706164275008" duration="37000" />
-=======
       <workItem from="1706139333237" duration="16832000" />
->>>>>>> e567aa7c055cb2398f1ed0f48555adbed76d3386
     </task>
     <servers />
   </component>
