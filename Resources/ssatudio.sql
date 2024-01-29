@@ -66,7 +66,7 @@ create table if not exists `song` (
     singer varchar(50) COMMENT '가수',
     start_timing int NOT NULL COMMENT '시작 시간',
     running_time int NOT NULL COMMENT '재생 시간',
-    mr_file varchar(300) NOT NULL COMMENT '반주'
+    mr_file varchar(250) NOT NULL COMMENT '반주'
 );
 
 -- 노래 바
@@ -196,10 +196,37 @@ VALUES
     ('user5', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user5@example.com', NULL),
     ('user6', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user6@example.com', NULL);
 
-select * from tier;
-select* from song;
-select * from User;
-select * from perfectplay;
+-- song_line
+INSERT INTO `song_line` (`song_idx`, `start_node`, `end_node`, `start_time`, `end_time`)
+VALUES 
+   (1, 100, 200, 1643462400, 1643466000),
+   (1, 110, 200, 1643462400, 1643466000),
+   (1, 120, 200, 1643462400, 1643466000),
+   (1, 130, 200, 1643462400, 1643466000),
+   (2, 150, 250, 1643469600, 1643473200),
+   (2, 160, 250, 1643469600, 1643473200),
+   (2, 170, 250, 1643469600, 1643473200),
+   (3, 200, 300, 1643476800, 1643480400),
+   (3, 210, 300, 1643476800, 1643480400),
+   (3, 220, 300, 1643476800, 1643480400),
+   (3, 230, 300, 1643476800, 1643480400),
+   (4, 250, 350, 1643484000, 1643487600),
+   (5, 300, 400, 1643491200, 1643494800),
+   (6, 350, 450, 1643498400, 1643502000),
+   (7, 400, 500, 1643505600, 1643509200),
+   (8, 450, 550, 1643512800, 1643516400),
+   (9, 500, 600, 1643520000, 1643523600),
+   (10, 550, 650, 1643527200, 1643530800),
+   (11, 600, 650, 1743527200, 1743530800),
+   (12, 650, 700, 183527200, 1843530800);
+
+-- select * from user;
+-- select * from tier;
+-- select* from song;
+-- select * from User;
+-- select * from perfectplay;
+-- select * from song_line;
+
 -- drop database ssatudio;
 
  
