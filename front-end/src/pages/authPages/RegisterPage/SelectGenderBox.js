@@ -22,8 +22,8 @@ const SelectGenderBox = (props) => {
                     label="Gender"
                     onChange={handleValueChange}
                 >
-                    <MenuItem value='남자'>남자</MenuItem>
-                    <MenuItem value='여자'>여자</MenuItem>
+                    <MenuItem value='male'>남자</MenuItem>
+                    <MenuItem value='female'>여자</MenuItem>
                 </Select>
             </FormControl>
         </Box>
