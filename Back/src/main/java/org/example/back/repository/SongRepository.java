@@ -6,7 +6,9 @@ import org.example.back.entity.SongEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SongRepository extends JpaRepository<SongEntity, Integer> {
 
 	//전체 음악 조회
