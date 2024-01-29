@@ -8,5 +8,5 @@ import org.example.back.entity.PerfectplayEntity;
 
 public interface PerfectplayService {
 	List<PerfectplayResponseDto> perfectplayResult(int userIdx);
-	boolean createPerfectplayResult(int userIdx, PerfectplayRequestDto perfectplayRequestDto);
+	PerfectplayEntity createPerfectplayResult(int userIdx, PerfectplayRequestDto perfectplayRequestDto);
 }

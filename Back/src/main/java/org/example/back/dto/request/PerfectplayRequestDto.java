@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PerfectplayRequestDto {
-	private int userIdx;
 	private int songIdx;
 	private int score;
-	private boolean clear;
 }
