@@ -8,8 +8,12 @@ export const registerAction = async (props) => {
             data: props
         })
         console.log(response)
+
+        if (response.data === '이미 존재하는 닉네임' || response.data === '이미 존재하는 이메일') {
+            alert(`${response.data}입니다`)
+        }
     } catch (err) {
-        console.log(err)
+        alert(err)
         return {
             error: true,
             err
