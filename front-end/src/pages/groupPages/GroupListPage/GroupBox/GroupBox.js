@@ -72,13 +72,13 @@ const arr = [
 
 const GroupBox = (props) => {
     const navigate = useNavigate()
-    const { isShowBox } = props
     const itemsPerPage = 4
     const [currentPage, setCurrentPage] = useState(1)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const lastItem = currentPage * itemsPerPage
     const fisrtItem = lastItem - itemsPerPage
     const showGroup = arr.slice(fisrtItem, lastItem);
+    
     const handleChange = (event, value) => {
         setCurrentPage(value);
     };

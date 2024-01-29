@@ -1,10 +1,22 @@
 import React from 'react';
+import { styled } from '@mui/system'
 
-const CenterInfoBox = () => {
+import InnerContainer from './InnerContainer'
+
+const InfoContainer = styled('div')({
+    display : 'flex',
+    width : '69%',
+    justifyContent : 'center',
+    alignItems : 'center',
+})
+
+// InnerContainer > 요소들을 감쌀 div안의 작은 div
+const CenterInfoBox = (props) => {
+    const { groupDetail } = props
     return (
-        <div>
-            
-        </div>
+        <InfoContainer>
+            <InnerContainer groupDetail={groupDetail}/>
+        </InfoContainer>
     );
 };
 

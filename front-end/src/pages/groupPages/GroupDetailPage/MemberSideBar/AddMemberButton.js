@@ -5,10 +5,10 @@ import AddIcon from '@mui/icons-material/Add'
 const AddMemberButton = () => {
     return (
         <Button
-            // onClick={createNewRoomHandler}
+            // onClick={inviteNewMemberHandler}
             style={{
-                witdh: '48px',
-                height: '48px',
+                witdh: '5%',
+                height: '8%',
                 borderRadius: "16px",
                 margin: 0,
                 padding: 0,

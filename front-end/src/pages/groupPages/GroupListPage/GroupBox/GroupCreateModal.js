@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import InputWithLabel from './../../../../components/InputWithLabel';
+import { createGroupAction } from './createGroupAction';
 
 const style = {
     position: 'absolute',
@@ -23,22 +24,10 @@ const GroupCreateModal = (props) => {
     const [groupName, setGroupName] = useState('')
     const [groupIntro, setGroupIntro] = useState('')
     const [channelMax, setChannelMax] = useState(1)
-
-    const createGroupAction = () => {
-        // axios 요청을 보낼 함수 작성
-        console.log(groupName, groupIntro, channelMax)
-        const groupDetail = {
-            "channel_name": groupName,
-            "channel_intro": groupIntro,
-            "channel_max": channelMax,
-        }
-        axios.post('/channels', groupDetail)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    const groupDetail = {
+        "channel_name": groupName,
+        "channel_intro": groupIntro,
+        "channel_max": channelMax,
     }
 
     useEffect(() => {
@@ -90,7 +79,7 @@ const GroupCreateModal = (props) => {
                         min='0'
                     />
                     <Button variant="contained"
-                        onClick={createGroupAction}
+                        onClick={() => createGroupAction(groupDetail)}
                         sx={{
                             margin: '15px'
                         }}

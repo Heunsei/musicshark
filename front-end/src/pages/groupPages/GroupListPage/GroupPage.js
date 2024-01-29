@@ -14,12 +14,11 @@ const BoxWrapper = styled('div')({
     justifyContent: 'center',
     background: '#FFEDD8',
     flexDirection: 'column',
-
 })
 
-
+// 그룹페이지가 로드 될 때, back에 내가속한 그룹리스트를 요청하는 코드 실행.
+// 그 데이터를 groupbox 에 전달 해주어야함
 const GroupPage = () => {
-    const [isShowBox, setIsShowBox] = useState(true)
     const [searchText, setSearchText] = useState('')
 
     useEffect(() => {
@@ -32,7 +31,7 @@ const GroupPage = () => {
             <BoxWrapper>
                 <GroupInput value={searchText}
                     setValue={setSearchText} />
-                <GroupBox isShowBox={isShowBox}/>
+                <GroupBox/>
             </BoxWrapper>
         </>
 
