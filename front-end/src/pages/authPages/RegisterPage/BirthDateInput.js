@@ -2,8 +2,8 @@ import React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateField  } from '@mui/x-date-pickers/DateField';
-import dayjs from 'dayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
+import Box from '@mui/material/Box';
 
 const BirthDateInput = (props) => {
     const { birth, setBirth } = props
@@ -17,16 +17,18 @@ const BirthDateInput = (props) => {
     }
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DateField']}>
-                <DateField
-                    label="생년월일을 입력하세요"
-                    value={birth}
-                    onChange={(birth) => SetDateString(birth)}
-                    format='YYYY-MM-DD'
-                />
-            </DemoContainer>
-        </LocalizationProvider>
+        <Box sx={{ my: 2 }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DemoContainer components={['DateField']}>
+                    <DateField
+                        label="생년월일을 입력하세요"
+                        value={birth}
+                        onChange={(birth) => SetDateString(birth)}
+                        format='YYYY-MM-DD'
+                    />
+                </DemoContainer>
+            </LocalizationProvider>
+        </Box>
     );
 }
 

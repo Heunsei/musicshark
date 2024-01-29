@@ -1,25 +1,31 @@
 package org.example.back.dto.request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.back.entity.UserEntity;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class SignUpRequestDto {
+
 
     @NotBlank
     @Length(max=16)
     String nickname;
 
     @NotBlank
-    @Length(max=16)
     String password;
 
     @NotBlank
@@ -36,4 +42,7 @@ public class SignUpRequestDto {
     @URL
     @Column(name = "profile_image")
     String profileImage;
+
+    List<String> roles = new ArrayList<>();
+
 }
