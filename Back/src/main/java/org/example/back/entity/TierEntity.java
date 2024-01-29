@@ -3,6 +3,7 @@ package org.example.back.entity;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "TIER")
+@Data
+@Table(name = "Tier")
 public class TierEntity {
 
 	@Id

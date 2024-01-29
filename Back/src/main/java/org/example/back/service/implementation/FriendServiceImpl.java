@@ -3,6 +3,7 @@ package org.example.back.service.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
 import org.example.back.dto.response.PerfectplayResponseDto;
 import org.example.back.entity.PerfectplayEntity;
@@ -21,5 +22,11 @@ public class FriendServiceImpl implements FriendService {
 	public List<FriendResponseDto> findAllFriend(int userIdx) {
 		List<FriendResponseDto> friendResponseDtoList = friendRepository.findAllFriend(userIdx);
 		return friendResponseDtoList;
+	}
+
+	@Override
+	public FriendDetailResponseDto findFriendDetail(int userIdx) {
+		FriendDetailResponseDto friendDetailResponseDto = friendRepository.findFriendDetail(userIdx);
+		return friendDetailResponseDto;
 	}
 }

@@ -2,6 +2,7 @@ package org.example.back.repository;
 
 import java.util.List;
 
+import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
 import org.example.back.entity.FriendEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +27,13 @@ public interface FriendRepository extends JpaRepository<FriendEntity, Integer> {
 	)
 	List<FriendResponseDto> findAllFriend(@Param("userIdx") int userIdx);
 
+
+	@Query(
+		value = "SELECT new org.example.back.dto.response.FriendDetailResponseDto(u.userIdx, u.nickname, u.userEmail, u.profileImage, t.userTier, t.clearCnt) "
+			+ "FROM org.example.back.entity.UserEntity u "
+			+ "JOIN org.example.back.entity.TierEntity t "
+			+ "ON u.userIdx = t.userIdx "
+			+ "WHERE u.userIdx = :userIdx"
+	)
+	FriendDetailResponseDto findFriendDetail(int userIdx);
 }

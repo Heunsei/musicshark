@@ -3,7 +3,9 @@ package org.example.back.entity;
 import org.example.back.dto.request.SignUpRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,6 +13,8 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity(name = "User")
 public class UserEntity {
 
@@ -18,6 +22,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_idx")
     private int userIdx;
+
     private String nickname;
     private String password;
     private String gender;

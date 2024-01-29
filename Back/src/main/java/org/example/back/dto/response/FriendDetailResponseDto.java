@@ -3,16 +3,17 @@ package org.example.back.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FriendResponseDto {
+public class FriendDetailResponseDto {
 	private int userIdx;
 	private String nickName;
+	private String email;
 	private String profileImage;
-
+	private String userTier;
+	private int clearCnt;
 }
