@@ -54,18 +54,18 @@ public class UserEntity implements UserDetails {
         this.roles = roles;
     }
 
-
-    @Override
+     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
+    
+    // getUsername은 UserDetails의 오버라이딩
     @Override
     public String getUsername() {
         return userEmail;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

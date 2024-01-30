@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.back.dto.request.JwtToken;
 import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
-import org.example.back.dto.response.ResponseDto;
-import org.example.back.dto.response.SignUpResponseDto;
 import org.example.back.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

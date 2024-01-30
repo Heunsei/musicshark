@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
@@ -23,9 +25,12 @@ public class CustomUserDetailService implements UserDetailsService {
     // 사용자 정보 접근
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+        Optional<UserEntity> userEntity = userRepository.findByUserEmail(userEmail);
+
         return userRepository.findByUserEmail(userEmail)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 회원을 찾을 수 없습니다."));
+
     }
 
     // 해당하는 User의 데이터가 존재한다면 UserDetails 객체로 만들어서 return
