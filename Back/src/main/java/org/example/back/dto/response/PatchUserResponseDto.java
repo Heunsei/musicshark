@@ -40,7 +40,6 @@ public class PatchUserResponseDto {
 
     public PatchUserResponseDto(UserEntity userEntity){
         this.nickname = userEntity.getNickname();
-        this.password = userEntity.getPassword();
         this.gender = userEntity.getGender();
         this.birth = userEntity.getBirth();
         this.userEmail = userEntity.getUserEmail();

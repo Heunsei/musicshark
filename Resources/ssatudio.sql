@@ -43,7 +43,7 @@ create table if not exists `Channel` (
     channel_date timestamp NOT NULL default now() COMMENT '생성일자',
     channel_max int NOT NULL COMMENT '모집인원',
     channel_cur int NOT NULL DEFAULT 1 COMMENT '현재인원',
-    channel_isDelete tinyint NOT NULL COMMENT '삭제여부'
+    channel_isDelete tinyint NOT NULL DEFAULT 0 COMMENT '삭제여부'
 );
 
 -- 가입 채널
