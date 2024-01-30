@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
+import org.example.back.dto.response.UserSearchResponseDto;
 import org.example.back.entity.FriendEntity;
+import org.example.back.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,10 +19,10 @@ public interface FriendRepository extends JpaRepository<FriendEntity, Integer> {
 			+ "FROM User u "
 			+ "WHERE u.userIdx IN ("
 			+ "    SELECT f.fromUserIdx "
-			+ "    FROM FriendEntity f "
+			+ "    FROM FRIEND f "
 			+ "    WHERE f.fromUserIdx IN ("
 			+ "        SELECT f.toUserIdx "
-			+ "        FROM FriendEntity f "
+			+ "        FROM FRIEND f "
 			+ "        WHERE f.fromUserIdx = :userIdx AND f.areFriend = 1"
 			+ "    ) AND f.toUserIdx = :userIdx AND f.areFriend = 1"
 			+ ")"
@@ -30,10 +32,16 @@ public interface FriendRepository extends JpaRepository<FriendEntity, Integer> {
 
 	@Query(
 		value = "SELECT new org.example.back.dto.response.FriendDetailResponseDto(u.userIdx, u.nickname, u.userEmail, u.profileImage, t.userTier, t.clearCnt) "
-			+ "FROM org.example.back.entity.UserEntity u "
-			+ "JOIN org.example.back.entity.TierEntity t "
+			+ "FROM User u "
+			+ "JOIN Tier t "
 			+ "ON u.userIdx = t.userIdx "
 			+ "WHERE u.userIdx = :userIdx"
 	)
 	FriendDetailResponseDto findFriendDetail(int userIdx);
+
+	@Query("SELECT u FROM User u WHERE u.userEmail LIKE %:userEmail%")
+	List<UserEntity> findAllByUserEmail(@Param("userEmail") String userEmail);
+
+	@Query("SELECT u FROM User u WHERE u.userEmail LIKE %:userNickname%")
+	List<UserEntity> findAllByUserNickname(@Param("userNickname") String userNickname);
 }

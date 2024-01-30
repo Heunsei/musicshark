@@ -11,8 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Entity
-@Table(name = "PERFECTPLAY")
+@Entity(name = "PERFECTPLAY")
 public class PerfectplayEntity {
 
 	@Id

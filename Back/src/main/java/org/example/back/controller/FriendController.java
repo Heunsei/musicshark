@@ -7,11 +7,14 @@ import java.util.List;
 import org.example.back.common.ApiResponse;
 import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
+import org.example.back.dto.response.UserSearchResponseDto;
 import org.example.back.service.implementation.FriendServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -47,6 +50,32 @@ public class FriendController {
 			.message("친구 상세 조회")
 			.status(OK.value())
 			.data(friendDetailResponseDto)
+			.build();
+		return ResponseEntity.ok(apiResponse);
+	}
+
+	//유저 이메일로 조회
+	@GetMapping("/friend/email-search-list")
+	public ResponseEntity<ApiResponse> findByUserEmail (@RequestParam String userEmail){
+		List<UserSearchResponseDto> userSearchList = friendServiceImpl.userSearchByEmail(userEmail);
+
+		ApiResponse apiResponse = ApiResponse.builder()
+			.message("사용자 조회")
+			.status(OK.value())
+			.data(userSearchList)
+			.build();
+		return ResponseEntity.ok(apiResponse);
+	}
+
+	//유저 닉네임으로 조회
+	@GetMapping("/friend/nickname-search-list")
+	public ResponseEntity<ApiResponse> findByUserNickname(@RequestParam String userNickname){
+		List<UserSearchResponseDto> userSearchList = friendServiceImpl.userSearchByNickname(userNickname);
+
+		ApiResponse apiResponse = ApiResponse.builder()
+			.message("사용자 조회")
+			.status(OK.value())
+			.data(userSearchList)
 			.build();
 		return ResponseEntity.ok(apiResponse);
 	}

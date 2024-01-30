@@ -12,9 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "Tier")
 @Data
-@Table(name = "Tier")
 public class TierEntity {
 
 	@Id
