@@ -3,9 +3,11 @@ package org.example.back.service.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.example.back.dto.request.FriendRequestDto;
 import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
 import org.example.back.dto.response.UserSearchResponseDto;
+import org.example.back.entity.FriendEntity;
 import org.example.back.entity.UserEntity;
 import org.example.back.repository.FriendRepository;
 import org.example.back.service.FriendService;
@@ -60,5 +62,33 @@ public class FriendServiceImpl implements FriendService {
 			userSearchList.add(userSearchResponseDto);
 		}
 		return userSearchList;
+	}
+
+	public void sendFriendRequest(FriendRequestDto friendRequestDto) {
+		FriendEntity fromFriendEntity = new FriendEntity();
+		fromFriendEntity.setFromUserIdx(friendRequestDto.getRequestUserIdx());
+		fromFriendEntity.setToUserIdx(friendRequestDto.getResponseUserIdx());
+		fromFriendEntity.setAreFriend(1);
+
+		//요청 보낸 적 없는 경우에만 요청 등록
+		if(!isExistRequest(fromFriendEntity))
+			friendRepository.save(fromFriendEntity);
+
+		FriendEntity toFriendEntity = new FriendEntity();
+		toFriendEntity.setFromUserIdx(friendRequestDto.getResponseUserIdx());
+		toFriendEntity.setToUserIdx(friendRequestDto.getRequestUserIdx());
+		toFriendEntity.setAreFriend(0);
+
+		if(!isExistRequest(toFriendEntity))
+			friendRepository.save(toFriendEntity);
+	}
+
+	private boolean isExistRequest(FriendEntity entity) {
+		List<FriendEntity> friendEntity = friendRepository.findAll();
+		for(FriendEntity f : friendEntity) {
+			if(f.getFromUserIdx() == entity.getFromUserIdx() && f.getToUserIdx() == entity.getToUserIdx())
+				return true;
+		}
+		return false;
 	}
 }

@@ -8,15 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/FriendEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/FriendEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/PerfectplayEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/PerfectplayEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/SongEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/SongEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/SongLineEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/SongLineEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/TierEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/TierEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/UserEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/FriendRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/FriendRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/PerfectplayRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/PerfectplayRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/SongRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/SongRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/TierRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/TierRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/FriendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/FriendService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/FriendServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/FriendServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/ssatudio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/ssatudio.sql" afterDir="false" />
@@ -90,6 +82,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.back.dto.request" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\SSAFY\2024-2\work-space\S10P12E205\Back\src\main\java\org\example\back" />
       <recent name="C:\SSAFY\2024-2\work-space\S10P12E205\Back\src\main\java\org\example\back\repository" />

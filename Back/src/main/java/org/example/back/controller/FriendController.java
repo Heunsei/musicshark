@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.*;
 import java.util.List;
 
 import org.example.back.common.ApiResponse;
+import org.example.back.dto.request.FriendRequestDto;
 import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
 import org.example.back.dto.response.UserSearchResponseDto;
@@ -12,6 +13,7 @@ import org.example.back.service.implementation.FriendServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,4 +81,18 @@ public class FriendController {
 			.build();
 		return ResponseEntity.ok(apiResponse);
 	}
+
+	//친구 요청 보내기
+	@PostMapping("/friend/request")
+	public ResponseEntity<ApiResponse> friendRequest(@RequestBody FriendRequestDto friendRequestDto){
+		friendServiceImpl.sendFriendRequest(friendRequestDto);
+
+		ApiResponse apiResponse = ApiResponse.builder()
+			.message("친구 요청")
+			.status(OK.value())
+			.build();
+		return ResponseEntity.ok(apiResponse);
+	}
+
+	
 }

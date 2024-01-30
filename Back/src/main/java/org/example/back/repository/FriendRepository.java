@@ -2,6 +2,7 @@ package org.example.back.repository;
 
 import java.util.List;
 
+import org.example.back.dto.request.FriendRequestDto;
 import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
 import org.example.back.dto.response.UserSearchResponseDto;
@@ -44,4 +45,5 @@ public interface FriendRepository extends JpaRepository<FriendEntity, Integer> {
 
 	@Query("SELECT u FROM User u WHERE u.userEmail LIKE %:userNickname%")
 	List<UserEntity> findAllByUserNickname(@Param("userNickname") String userNickname);
+
 }

@@ -43,4 +43,3 @@ public class FriendEntity {
 	@JoinColumn(name = "to_user_idx", referencedColumnName = "user_idx", insertable = false, updatable = false)
 	private UserEntity toUser;
 }
-
