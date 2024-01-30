@@ -17,4 +17,5 @@ public interface FriendService {
 	List<UserSearchResponseDto> userSearchByNickname(String userEmail);
 
 	void sendFriendRequest(FriendRequestDto friendRequestDto);
+	void acceptFriendRequest(FriendRequestDto friendRequestDto);
 }

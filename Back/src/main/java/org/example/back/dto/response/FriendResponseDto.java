@@ -14,5 +14,4 @@ public class FriendResponseDto {
 	private int userIdx;
 	private String nickName;
 	private String profileImage;
-
 }

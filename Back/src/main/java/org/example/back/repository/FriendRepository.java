@@ -2,6 +2,8 @@ package org.example.back.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.example.back.dto.request.FriendRequestDto;
 import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
@@ -9,6 +11,7 @@ import org.example.back.dto.response.UserSearchResponseDto;
 import org.example.back.entity.FriendEntity;
 import org.example.back.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -46,4 +49,8 @@ public interface FriendRepository extends JpaRepository<FriendEntity, Integer> {
 	@Query("SELECT u FROM User u WHERE u.userEmail LIKE %:userNickname%")
 	List<UserEntity> findAllByUserNickname(@Param("userNickname") String userNickname);
 
+	@Modifying
+	@Transactional
+	@Query("UPDATE FRIEND SET areFriend = 1 WHERE fromUserIdx = :requestUserIdx AND toUserIdx = :responseUserIdx")
+	void acceptRequest(@Param("requestUserIdx") int requestUserIdx, @Param("responseUserIdx")int responseUserIdx);
 }

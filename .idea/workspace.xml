@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/FriendResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/FriendResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/FriendRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/FriendRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/FriendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/FriendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/FriendServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/FriendServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

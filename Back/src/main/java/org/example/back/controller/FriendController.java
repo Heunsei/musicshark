@@ -12,6 +12,7 @@ import org.example.back.dto.response.UserSearchResponseDto;
 import org.example.back.service.implementation.FriendServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -94,5 +95,16 @@ public class FriendController {
 		return ResponseEntity.ok(apiResponse);
 	}
 
-	
+	//친구 요청 수락
+	@PatchMapping("/friend/response")
+	public ResponseEntity<ApiResponse> friendResponse(@RequestBody FriendRequestDto friendRequestDto){
+		friendServiceImpl.acceptFriendRequest(friendRequestDto);
+
+		ApiResponse apiResponse = ApiResponse.builder()
+			.message("친구 요청 수락")
+			.status(OK.value())
+			.build();
+		return ResponseEntity.ok(apiResponse);
+	}
+
 }

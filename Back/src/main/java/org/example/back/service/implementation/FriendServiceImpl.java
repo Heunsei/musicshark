@@ -86,9 +86,15 @@ public class FriendServiceImpl implements FriendService {
 	private boolean isExistRequest(FriendEntity entity) {
 		List<FriendEntity> friendEntity = friendRepository.findAll();
 		for(FriendEntity f : friendEntity) {
-			if(f.getFromUserIdx() == entity.getFromUserIdx() && f.getToUserIdx() == entity.getToUserIdx())
-				return true;
+			if(f.getFromUserIdx() == entity.getFromUserIdx() && f.getToUserIdx() == entity.getToUserIdx()
+				&& f.getAreFriend() == 1) {
+					return true;
+			}
 		}
 		return false;
+	}
+
+	public void acceptFriendRequest(FriendRequestDto friendRequestDto) {
+		friendRepository.acceptRequest(friendRequestDto.getRequestUserIdx(), friendRequestDto.getResponseUserIdx());
 	}
 }
