@@ -15,9 +15,10 @@ const LoginPage = () => {
 
     const handleLogin = () => {
         const userDetails = {
-            mail, password
+            userEmail : mail,
+            password : password
         }
-        loginAction(userDetails, setPassword)
+        loginAction(userDetails)
     }
 
     // mail, password가 바뀔 때 마다 validate check

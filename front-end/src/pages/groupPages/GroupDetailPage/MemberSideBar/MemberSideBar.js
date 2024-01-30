@@ -20,14 +20,14 @@ const MemberSideBar = (props) => {
     return (
         <MainContainer>
             <TopIcon />
+            <AddMemberButton />
             {
-                groupMembers.map((e, i) => {
+                groupMembers.map((element, i) => {
                     return (
-                        <MemberIcon key={i} />
+                        <MemberIcon key={i} member={element} />
                     )
                 })
             }
-            <AddMemberButton />
         </MainContainer>
     );
 };

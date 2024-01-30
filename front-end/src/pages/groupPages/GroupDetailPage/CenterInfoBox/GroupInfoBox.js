@@ -13,7 +13,7 @@ const Container = styled('div')({
     borderRadius : '15px',
     overflow : 'auto'
 })
-
+// group detail은 GroupDetailPage에서 props 받아옴
 const GroupInfoBox = (props) => {
     const { groupDetail } = props
     return (

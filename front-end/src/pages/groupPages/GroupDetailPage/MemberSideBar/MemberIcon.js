@@ -2,6 +2,10 @@ import React from 'react';
 import Button from '@mui/material/Button'
 
 const MemberIcon = (props) => {
+    const { member } = props
+    if (member.user_nickname.length >= 4){
+        member.user_nickname = member.user_nickname.slice(0, 4) + "...";
+    }
     return (
         <Button style={{
             witdh: '5%',
@@ -12,10 +16,11 @@ const MemberIcon = (props) => {
             minWitdh: 0,
             marginTop: '10px',
             color: 'white',
-            backgroundColor: '#997B66'
+            backgroundColor: '#997B66',
+            overflow : 'hidden',
         }}
         >
-
+            {member.user_nickname}
         </Button>
     );
 };
