@@ -3,11 +3,13 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 
 import loginSlice from './loginSlice'
+import userSlice from './userSlice';
 
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
     login: loginSlice.reducer,
+    user : userSlice.reducer,
 });
 
 const persistConfig = {
@@ -15,6 +17,7 @@ const persistConfig = {
     storage,
     whitelist: [
         'login',
+        'user'
     ],
 };
 
