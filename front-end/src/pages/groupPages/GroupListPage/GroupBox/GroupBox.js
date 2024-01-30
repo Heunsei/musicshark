@@ -12,6 +12,7 @@ import GroupCreateModal from './GroupCreateModal';
 
 const arr = [
     {
+        channel_id : 1,
         channel_name: '채널1',
         channel_intro: '채널 1 intro',
         channel_max: 6,
@@ -19,6 +20,7 @@ const arr = [
         channel_date: '2024-01-01',
     },
     {
+        channel_id : 2,
         channel_name: '채널2',
         channel_intro: '채널 2 intro',
         channel_max: 6,

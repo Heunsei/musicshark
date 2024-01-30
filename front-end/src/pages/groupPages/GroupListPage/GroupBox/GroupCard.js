@@ -42,7 +42,7 @@ const GroupCard = (props) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => {navigate(`./1`)}}>참가하기</Button>
+                <Button size="small" onClick={() => {navigate(`./${channelInfo.channel_id}`)}}>참가하기</Button>
             </CardActions>
         </Card>
     );
