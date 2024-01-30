@@ -9,6 +9,7 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     setLogin(state, action) {
+      console.log(action.payload)
       state.login = action.payload;
     },
   },
