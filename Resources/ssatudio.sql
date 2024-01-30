@@ -192,18 +192,18 @@ create table if not exists `tier` (
    CONSTRAINT `fk_tier_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );
 
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목44','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목55','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목66','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목77','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목88','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목99','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목00','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목01','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목02','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목44','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목55','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목66','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목77','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목88','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목99','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목00','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목01','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목02','가수3',5,162,'엠알저장경로3');
 
 INSERT INTO `User` (nickname, password, gender, birth, user_isDelete, user_email, profile_image)
 VALUES
@@ -215,36 +215,60 @@ VALUES
     ('user6', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user6@example.com', NULL);
 
 -- song_line
-INSERT INTO `song_line` (`song_idx`, `start_node`, `end_node`, `start_time`, `end_time`)
-VALUES 
-   (1, 100, 200, 1643462400, 1643466000),
-   (1, 110, 200, 1643462400, 1643466000),
-   (1, 120, 200, 1643462400, 1643466000),
-   (1, 130, 200, 1643462400, 1643466000),
-   (2, 150, 250, 1643469600, 1643473200),
-   (2, 160, 250, 1643469600, 1643473200),
-   (2, 170, 250, 1643469600, 1643473200),
-   (3, 200, 300, 1643476800, 1643480400),
-   (3, 210, 300, 1643476800, 1643480400),
-   (3, 220, 300, 1643476800, 1643480400),
-   (3, 230, 300, 1643476800, 1643480400),
-   (4, 250, 350, 1643484000, 1643487600),
-   (5, 300, 400, 1643491200, 1643494800),
-   (6, 350, 450, 1643498400, 1643502000),
-   (7, 400, 500, 1643505600, 1643509200),
-   (8, 450, 550, 1643512800, 1643516400),
-   (9, 500, 600, 1643520000, 1643523600),
-   (10, 550, 650, 1643527200, 1643530800),
-   (11, 600, 650, 1743527200, 1743530800),
-   (12, 650, 700, 183527200, 1843530800);
+-- INSERT INTO `song_line` (`song_idx`, `start_node`, `end_node`, `start_time`, `end_time`)
+-- VALUES 
+--    (1, 100, 200, 1643462400, 1643466000),
+--    (1, 110, 200, 1643462400, 1643466000),
+--    (1, 120, 200, 1643462400, 1643466000),
+--    (1, 130, 200, 1643462400, 1643466000),
+--    (2, 150, 250, 1643469600, 1643473200),
+--    (2, 160, 250, 1643469600, 1643473200),
+--    (2, 170, 250, 1643469600, 1643473200),
+--    (3, 200, 300, 1643476800, 1643480400),
+--    (3, 210, 300, 1643476800, 1643480400),
+--    (3, 220, 300, 1643476800, 1643480400),
+--    (3, 230, 300, 1643476800, 1643480400),
+--    (4, 250, 350, 1643484000, 1643487600),
+--    (5, 300, 400, 1643491200, 1643494800),
+--    (6, 350, 450, 1643498400, 1643502000),
+--    (7, 400, 500, 1643505600, 1643509200),
+--    (8, 450, 550, 1643512800, 1643516400),
+--    (9, 500, 600, 1643520000, 1643523600),
+--    (10, 550, 650, 1643527200, 1643530800),
+--    (11, 600, 650, 1743527200, 1743530800),
+--    (12, 650, 700, 183527200, 1843530800);
+
+-- friend 친구 목록 조회 (1이 2,6이랑 친구, 나머지는 요청 수락x)
+-- INSERT INTO `friend` (`from_user_idx`, `to_user_idx`, `are_friend`)
+-- VALUES
+--     (1, 2, 1),
+--     (2, 3, 1),
+--     (3, 4, 1),
+--     (4, 5, 1),
+--     (5, 6, 1),
+--     (6, 1, 1),
+--     (1, 3, 1),
+--     (2, 4, 1),
+--     (3, 5, 1),
+--     (4, 6, 1),
+--     (2, 1, 1),
+--     (1, 6, 1),
+--     (3, 2, 0),
+--     (4, 3, 0),
+--     (5, 4, 0),
+--     (6, 5, 0),
+--     (3, 1, 0),
+--     (4, 2, 0),
+--     (5, 3, 0),
+--     (6, 4, 0);
 
 -- select * from user;
 -- select * from tier;
 -- select* from song;
--- select * from User;
+select * from User;
 -- select * from perfectplay;
 -- select * from song_line;
-
+-- select * from friend;
 -- drop database ssatudio;
 
  

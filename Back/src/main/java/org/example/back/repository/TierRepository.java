@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 public interface TierRepository extends JpaRepository<TierEntity, Integer> {
 	@Modifying
 	@Transactional
-	@Query("UPDATE TierEntity t SET t.clearCnt = t.clearCnt+1 WHERE t.userIdx = :userIdx")
+	@Query("UPDATE Tier t SET t.clearCnt = t.clearCnt+1 WHERE t.userIdx = :userIdx")
 	void updateClearCnt(@Param("userIdx") int userIdx);
 
 	@Modifying
 	@Transactional
-	@Query("UPDATE TierEntity t SET t.userTier = :nextTier WHERE t.userIdx = :userIdx")
+	@Query("UPDATE Tier t SET t.userTier = :nextTier WHERE t.userIdx = :userIdx")
 	void updateTier(@Param("userIdx") int userIdx, @Param("nextTier") String nextTier);
 
 

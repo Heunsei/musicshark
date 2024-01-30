@@ -4,7 +4,6 @@ import static org.springframework.http.HttpStatus.*;
 
 import java.util.List;
 
-import org.apache.coyote.Response;
 import org.example.back.common.ApiResponse;
 import org.example.back.dto.request.PerfectplayRequestDto;
 import org.example.back.dto.response.PerfectplayResponseDto;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -43,7 +41,7 @@ public class PerfectController {
 		List<SongResponseDto> songList = songServiceImpl.findAllSong();
 
 		ApiResponse apiResponse = ApiResponse.builder()
-			.message("조회 결과")
+			.message("전체 음악 조회")
 			.status(OK.value())
 			.data(songList)
 			.build();

@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "SONG_LINE")
+@Entity(name = "SONG_LINE")
 public class SongLineEntity {
 
 	@Id

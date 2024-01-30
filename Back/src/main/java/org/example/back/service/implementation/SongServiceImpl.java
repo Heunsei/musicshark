@@ -20,8 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SongServiceImpl implements SongService {
 
-	@Autowired
-	SongRepository songRepository;
+	private final SongRepository songRepository;
 
 	//전체 음악 조회
 	@Override

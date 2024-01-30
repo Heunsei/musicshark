@@ -2,9 +2,17 @@ package org.example.back.entity;
 
 import lombok.*;
 import org.example.back.dto.request.SignUpRequestDto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -17,6 +25,8 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity(name = "User")
 @EqualsAndHashCode(of = "userIdx")
 public class UserEntity implements UserDetails {
@@ -25,6 +35,7 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_idx")
     private int userIdx;
+
     private String nickname;
     private String password;
     private String gender;
