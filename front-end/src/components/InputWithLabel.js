@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Hidden, Tooltip } from '@mui/material';
+// import { Hidden, Tooltip } from '@mui/material';
 
 const Wrapper = styled('div')({
     display: 'flex',
@@ -37,7 +37,8 @@ const Input = styled("input")({
 })
 
 const InputWithLabel = (props) => {
-    const { value, setValue, label, type, placeholder, validateState } = props
+    const { value, setValue, label, type, placeholder, validateState,
+            maxLength, min, max } = props
 
     const handleValueChange = (event) => {
         setValue(event.target.value)
@@ -50,6 +51,9 @@ const InputWithLabel = (props) => {
                 onChange={handleValueChange}
                 type={type}
                 placeholder={placeholder}
+                min={min}
+                max={max}
+                maxLength={maxLength}
             />
             <div style= {{display: 'inline-block'}}>
                 <ValidChecker>{validateState}</ValidChecker>

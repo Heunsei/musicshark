@@ -25,8 +25,12 @@ const RegisterPage = () => {
 
     const handleRegister = () => {
         const userDetails = {
-            user_email: mail,
-            password, nickname, birth, gender
+            userEmail: mail,
+            password : password,
+            nickname : nickname,
+            birth : birth, 
+            gender : gender,
+            profile_image : null
         }
         registerAction(userDetails)
     }
