@@ -122,9 +122,8 @@ const GroupRoom = () => {
     return (
         <div>
             <button onClick={joinSession}>니나ㅣㄴ람늚나난</button>
-            <video ref={videoRef} autoPlay playsInline >
-                <track kind="captions" />
-            </video>
+            <UserVideoComponent
+                streamManager={publisher} />
             <button onClick={leaveSession}>나 떠나요</button>
         </div>
     );
