@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 import org.example.back.entity.UserEntity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetUserResponseDto {
+public class GetChannelMemberResponseDto {
 
     String nickname;
     String gender;
@@ -18,7 +20,7 @@ public class GetUserResponseDto {
     String userEmail;
     String profileImage;
 
-    public GetUserResponseDto(UserEntity userEntity){
+    public GetChannelMemberResponseDto(UserEntity userEntity){
 
         this.nickname = userEntity.getNickname();
         this.gender = userEntity.getGender();
@@ -26,5 +28,18 @@ public class GetUserResponseDto {
         this.userEmail = userEntity.getUserEmail();
         this.profileImage = userEntity.getProfileImage();
 
+    }
+
+    List<GetChannelMemberResponseDto> addList(List<UserEntity> userList){
+
+        List<GetChannelMemberResponseDto> list = new ArrayList<>();
+
+        for(UserEntity memberList : userList){
+
+            GetChannelMemberResponseDto dto = new GetChannelMemberResponseDto(memberList);
+            list.add(dto);
+        }
+
+        return list;
     }
 }

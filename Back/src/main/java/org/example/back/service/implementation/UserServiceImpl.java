@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
         try{
 
-                UserEntity userEntity = OptionalUserEntity.get();
+            UserEntity userEntity = OptionalUserEntity.get();
 
             userEntity.setUserIsdelete(1);
             userRepository.save(userEntity);
