@@ -5,6 +5,7 @@ import axios from 'axios'
 import MemberSideBar from './MemberSideBar/MemberSideBar';
 import RightChatBox from './RightChatBox/RightChatBox';
 import CenterInfoBox from './CenterInfoBox/CenterInfoBox';
+import GroupRoom from '../GroupRoom/GroupRoom';
 
 const Wrapper = styled("div")({
     width: "100%",
@@ -15,7 +16,7 @@ const Wrapper = styled("div")({
 
 const GroupDetailPage = () => {
     let { id } = useParams()
-    const [isUserInLobby, setIsUserInLobby] = useState(true)
+    const [isUserInLobby, setIsUserInLobby] = useState(false)
     const [groupDetail, setGroupDetail] = useState([])
     const [groupMembers, setGroupMembers] = useState([
         {
@@ -43,7 +44,7 @@ const GroupDetailPage = () => {
             <MemberSideBar groupMembers={groupMembers}/>
             {   
                 // 유저가 연습이동을 누르면 state를 변경하고 infobox를 practicebox로 변경
-                isUserInLobby ? <CenterInfoBox groupDetail={groupDetail} /> : {}
+                isUserInLobby ? <CenterInfoBox groupDetail={groupDetail} /> : <GroupRoom/>
             }
             <RightChatBox />
         </Wrapper>
