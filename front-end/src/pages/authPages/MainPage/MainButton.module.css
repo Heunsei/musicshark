@@ -1,0 +1,10 @@
+.groupBtn {
+    
+  }
+.singleBtn {
+    border: none;
+    
+    color:'#783F26';
+    background-color:'#FFFADD';
+    border-radius: 50%;
+}

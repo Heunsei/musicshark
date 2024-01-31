@@ -1,15 +1,18 @@
 import * as React from 'react';
 import {Box, AppBar, Toolbar, Typography} from '@mui/material';
 import NavButton from './NavButton';
+import LogoButton from './LogoButton';
+
 export default function Navbar(){
 
     return(
         <Box sx={{flexGrow:1}}>
-            <AppBar position="static" sx={{bgcolor: "#997B66"}} >
+            <AppBar position="static" sx={{bgcolor: "#997B66", position:"fixed", boxShadow:'none'}} >
                 <Toolbar>
                     
                     <Typography variant="h4" component="div" sx={{flexGrow:1}}>
-                        악기상어
+                        <LogoButton id="nav_logo" label={"악기상어"}></LogoButton>
+                        
                     </Typography>
                     
                         <NavButton id="nav_about" label={"악기상어 소개"}></NavButton>

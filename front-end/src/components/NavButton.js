@@ -3,22 +3,23 @@ import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom';
 
 
+
 const NavButton=(props)=>{
     const { label, id } = props
     const navigate = useNavigate()
     
     const handleMove = () => {
         if(id==="nav_about"){
-            navigate('/login')
+            navigate('/about')
         }
         else if(id==="nav_group"){
-            navigate('/register')
+            navigate('/group')
         }
         else if(id==="nav_single"){
-            navigate('/register')
+            navigate('/single')
         }
         else if(id==="nav_community"){
-            navigate('/register')
+            navigate('/community')
         }
         else if(id==="nav_mypage"){
             navigate('/register')

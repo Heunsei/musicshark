@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-import Navbar from '../../components/navbar';
+import Navbar from '../../components/Navbar';
 import GroupInput from './GroupInput/GroupInput';
 import GroupBox from './GroupBox/GroupBox';
 import GroupBottom from './GroupBottom/GroupBottom';

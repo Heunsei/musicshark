@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { registerAction } from './registerAction'
 import { validatePasswordConfirm } from './../validator'
 import { registerValidator } from './../validator'
-import Navbar from './../../../components/navbar'
+import Navbar from './../../../components/Navbar'
 
 const RegisterPage = () => {
     const navigate = useNavigate()
