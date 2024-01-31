@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { OpenVidu, StreamManager, Session } from 'openvidu-browser';
-import UserVideoComponent from './UserVideoComponent';
 
 const APPLICATION_SERVER_URL = 'https://demos.openvidu.io/'
 
@@ -125,7 +124,8 @@ const GroupRoom = () => {
     return (
         <div>
             <button onClick={joinSession}>니나ㅣㄴ람늚나난</button>
-            <UserVideoComponent
+            <video
+                ref={videoRef}
                 streamManager={mainStreamManager} />
             <button onClick={leaveSession}>나 떠나요</button>
         </div>
