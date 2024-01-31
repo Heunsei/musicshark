@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { OpenVidu, StreamManager, Session } from 'openvidu-browser';
@@ -9,6 +9,7 @@ const APPLICATION_SERVER_URL = 'https://demos.openvidu.io/'
 const GroupRoom = () => {
     const dispatch = useDispatch()
     const storeUser = useSelector((state) => state.user.nickname)
+    const videoRef = useRef(null)
     console.log(storeUser)
     // openvidu 관련 state
     const sessionId = 'SessionA'
@@ -121,16 +122,9 @@ const GroupRoom = () => {
     return (
         <div>
             <button onClick={joinSession}>니나ㅣㄴ람늚나난</button>
-            <UserVideoComponent
-                autoPlay
-                loop
-                muted
-                playsInline
-                width={73}
-                height={73}
-            >
+            <video ref={videoRef} autoPlay playsInline >
                 <track kind="captions" />
-            </UserVideoComponent>
+            </video>
             <button onClick={leaveSession}>나 떠나요</button>
         </div>
     );
