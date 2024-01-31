@@ -11,7 +11,9 @@ const GroupRoom = () => {
     const storeUser = useSelector((state) => state.user.nickname)
     const videoRef = useRef(null)
     console.log(storeUser)
+
     // openvidu 관련 state
+    const [mainStreamManager, setMainStreamManager] = useState('')
     const sessionId = 'SessionA'
     const [screenOV, setScreenOV] = useState('')
     const [session, setSession] = useState('')
@@ -95,6 +97,7 @@ const GroupRoom = () => {
                     })
                     mySession.publish(newpublisher)
                     publisher.push(newpublisher)
+                    setMainStreamManager(newpublisher)
                     setPublisher([...publisher])
                 })
 
@@ -123,7 +126,7 @@ const GroupRoom = () => {
         <div>
             <button onClick={joinSession}>니나ㅣㄴ람늚나난</button>
             <UserVideoComponent
-                streamManager={publisher} />
+                streamManager={mainStreamManager} />
             <button onClick={leaveSession}>나 떠나요</button>
         </div>
     );
