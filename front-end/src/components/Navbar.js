@@ -6,7 +6,7 @@ import LogoButton from './LogoButton';
 export default function Navbar(){
 
     return(
-        <Box sx={{flexGrow:1}}>
+        <Box border>
             <AppBar position="static" sx={{bgcolor: "#997B66", position:"fixed", boxShadow:'none'}} >
                 <Toolbar>
                     

@@ -33,7 +33,8 @@ const NavButton=(props)=>{
                 color:'#ffffff',
                 fontSize:'18px',
                 fontWeight:'bold',
-                mx:5
+                mx:5,
+                
             }}
             onClick={handleMove}
             >
