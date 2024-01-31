@@ -2,34 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { OpenVidu, StreamManager, Session } from 'openvidu-browser';
+import UserVideoComponent from './UserVideoComponent';
 
+const APPLICATION_SERVER_URL = 'https://demos.openvidu.io/'
 
 const GroupRoom = () => {
     const dispatch = useDispatch()
     const storeUser = useSelector((state) => state.user.nickname)
     console.log(storeUser)
     // openvidu 관련 state
+    const sessionId = 'SessionA'
     const [screenOV, setScreenOV] = useState('')
     const [session, setSession] = useState('')
     const [screenSession, setScreenSession] = useState('')
-
 
     // 화면관련 state
     const [publisher, setPublisher] = useState([]);
     const [subscribers, setSubscribers] = useState([]);
     const [player, setPlayer] = ([]);
 
+    const getToken = async () => {
+        const sessionId = await createSession('SessionA');
+        return await createToken(sessionId);
+    }
 
-    // const getToken = async () => {
-    //     const response = await axios.post(
-    //       `https://i8b302.p.example.io/openvidu/api/sessions/${storeSessionState.sessionId}/connection`,
-    //       {},
-    //       {
-    //         headers: { Authorization: 'Basic T1BFTlZJRFVBUFA6c3NhZnk=' },
-    //       },
-    //     );
-    //     return response.data.token;
-    //   };
+    const createToken = async (sessionId) => {
+        const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
+            headers: { 'Content-Type': 'application/json', },
+        });
+        return response.data; // The token
+    }
+
+    const createSession = async (session) => {
+        const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
+            headers: { 'Content-Type': 'application/json', },
+        });
+        return response.data; // The sessionId
+    }
+
     const deleteSubscriber = (streamManager) => {
         const newsubscribers = subscribers;
         const index = subscribers.indexOf(streamManager, 0);
@@ -45,9 +55,11 @@ const GroupRoom = () => {
         const newOV = new OpenVidu()
         const mySession = newOV.initSession();
         setSession(mySession)
+        const newScreenOV = new OpenVidu()
+        const myScreen = newScreenOV.initSession();
 
-        // 세션에 미디어 게시를 시작하면 전달되는 이벤트
-        // push 함수가 무사히 전달되면 이 이벤트를 시작?
+
+        // 스트림 시작해요 
         mySession.on('streamCreated', (event) => {
             if (event.stream.typeOfVideo === 'CAMERA') {
                 const subscriber = mySession.subscribe(event.stream, undefined);
@@ -57,30 +69,43 @@ const GroupRoom = () => {
             }
         });
 
+        // 스트림 없어져요
         mySession.on('streamDestroyed', (event) => {
             deleteSubscriber(event.stream.streamManager);
         });
 
-        // mySession
-        //     .connect(storeSessionState.sessionToken, {
-        //         clientData: storeUser.nickname,
-        //     })
-        //     .then(async () => {
-        //         const newpublisher = await newOV.initPublisherAsync(undefined, {
-        //             audioSource: undefined,
-        //             videoSource: undefined,
-        //             publishAudio: true,
-        //             publishVideo: true,
-        //             resolution: '480x480',
-        //             frameRate: 30,
-        //             insertMode: 'APPEND',
-        //             mirror: false,
-        //         });
+        // 경고 띄워주기
+        mySession.on('exception', (exception) => {
+            console.warn(exception);
+        });
 
-        //         mySession.publish(newpublisher);
-        //         publisher.push(newpublisher);
-        //         setPublisher([...publisher]);
-        //     });
+        getToken().then((token) => {
+            mySession.connect(token, { clientData: storeUser })
+                .then(async () => {
+                    let newpublisher = await newOV.initPublisherAsync(undefined, {
+                        audioSource: undefined,
+                        videoSource: undefined,
+                        publishAudio: true,
+                        publishVideo: true,
+                        resolution: '480x480',
+                        frameRate: 30,
+                        insertMode: 'APPEND',
+                        mirror: false,
+                    })
+                    mySession.publish(newpublisher)
+                    publisher.push(newpublisher)
+                    setPublisher([...publisher])
+                })
+
+        })
+
+        // 화면 공유 connect
+        getToken().then(tokenScreen => {
+            myScreen.connect(tokenScreen, {
+                clientData: storeUser
+            });
+            // setLoading(false);
+        });
     }
 
     const leaveSession = () => {
@@ -92,15 +117,27 @@ const GroupRoom = () => {
     }
 
 
+
     return (
         <div>
             <button onClick={joinSession}>니나ㅣㄴ람늚나난</button>
-            <video autoPlay>
+            <UserVideoComponent
+                autoPlay
+                loop
+                muted
+                playsInline
+                width={73}
+                height={73}
+            >
                 <track kind="captions" />
-            </video>
+            </UserVideoComponent>
             <button onClick={leaveSession}>나 떠나요</button>
         </div>
     );
+
+
 };
+
+
 
 export default GroupRoom;
