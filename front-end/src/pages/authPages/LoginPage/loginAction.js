@@ -1,14 +1,15 @@
 import axios from 'axios'
 import { setCookie, getCookie } from './../../../util/cookie';
 import { setLogin } from '../../../redux/store/loginSlice';
+import * as setUser from './../../../redux/store/userSlice'
 
-
-export const loginAction = async (userDetails, dispatch) => {
+export const loginAction = async (userDetails, dispatch, navigate) => {
+    console.log(JSON.stringify(userDetails))
     try {
         const response = await axios({
             method: 'post',
             url: 'http://localhost:8080/auth/sign-in',
-            data: userDetails
+            data: userDetails,
         })
 
         console.log(response)
@@ -37,11 +38,15 @@ export const loginAction = async (userDetails, dispatch) => {
                 url: 'http://localhost:8080/user/',
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: ACCESS_TOKEN,
+                    Authorization: `Bearer ${ACCESS_TOKEN}`,
                 }
             })
                 .then((res) => {
-                    console.log(res)
+                    dispatch(setUser.setEmail(res.data.userEmail))
+                    dispatch(setUser.setNickname(res.data.nickname))
+                    dispatch(setUser.setGender(res.data.gender))
+                    dispatch(setUser.setBrith(res.data.birth))
+                    navigate('/group')
                 })
                 .catch((err) => {
                     console.log(err)

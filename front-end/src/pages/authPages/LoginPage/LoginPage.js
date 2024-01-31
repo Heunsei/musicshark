@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import AuthBox from '../../../components/AuthBox';
 import LoginPageInputs from './LoginPageInputs';
 import LoginPageHeader from './LoginPageHeader';
@@ -10,6 +11,7 @@ import { loginValidator } from './../validator'
 
 const LoginPage = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     // 입력값을 감지하고 서버에 전송할 변수 선언
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
@@ -20,7 +22,7 @@ const LoginPage = () => {
             userEmail: mail,
             password: password
         }
-        loginAction(userDetails, dispatch)
+        loginAction(userDetails, dispatch, navigate)
     }
 
     // mail, password가 바뀔 때 마다 validate check
