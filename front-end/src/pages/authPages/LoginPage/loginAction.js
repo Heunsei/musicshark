@@ -5,10 +5,11 @@ import * as setUser from './../../../redux/store/userSlice'
 
 export const loginAction = async (userDetails, dispatch, navigate) => {
     console.log(JSON.stringify(userDetails))
+    const URL = process.env.REACT_APP_API_URL
     try {
         const response = await axios({
             method: 'post',
-            url: 'http://localhost:8080/auth/sign-in',
+            url: `${URL}/auth/sign-in`,
             data: userDetails,
         })
 

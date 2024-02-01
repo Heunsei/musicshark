@@ -6,6 +6,8 @@ import MemberSideBar from './MemberSideBar/MemberSideBar';
 import RightChatBox from './RightChatBox/RightChatBox';
 import CenterInfoBox from './CenterInfoBox/CenterInfoBox';
 import GroupRoom from '../GroupRoom/GroupRoom';
+import getGroupDetailAction from './getGroupDetailAction';
+import getGroupMemberAction from './getGroupMemberAction';
 
 const Wrapper = styled("div")({
     width: "100%",
@@ -17,35 +19,21 @@ const Wrapper = styled("div")({
 // 그룹 디테일 페이지에 들어올때 마다
 const GroupDetailPage = () => {
     let { id } = useParams()
-    const [isUserInLobby, setIsUserInLobby] = useState(false)
+    const [isUserInLobby, setIsUserInLobby] = useState(true)
     const [groupDetail, setGroupDetail] = useState([])
-    const [groupMembers, setGroupMembers] = useState([
-        {
-            user_nickname : 'heunoh',
-        },
-        {
-            user_nickname : 'wowow',
-        },
-
-    ])
-    const getCurrentGroupDetail = () => {
-        setGroupDetail({
-            channel_name: '채널1',
-            channel_intro: '채널 1 intro',
-            channel_max: 6,
-            channel_cur: 3,
-            channel_date: '2024-01-01',
-        })
-    }
+    const [groupMembers, setGroupMembers] = useState([])
+    console.log(`그룹 멤버들${groupMembers}`)
     useEffect(() => {
-        getCurrentGroupDetail()
-    },[])
+        getGroupDetailAction(id, setGroupDetail)
+        getGroupMemberAction(id, setGroupMembers)
+    }, [id])
+
     return (
         <Wrapper>
-            <MemberSideBar groupMembers={groupMembers}/>
-            {   
+            <MemberSideBar groupMembers={groupMembers} />
+            {
                 // 유저가 연습이동을 누르면 state를 변경하고 infobox를 practicebox로 변경
-                isUserInLobby ? <CenterInfoBox groupDetail={groupDetail} /> : <GroupRoom/>
+                isUserInLobby ? <CenterInfoBox groupDetail={groupDetail} /> : <GroupRoom />
             }
             <RightChatBox />
         </Wrapper>

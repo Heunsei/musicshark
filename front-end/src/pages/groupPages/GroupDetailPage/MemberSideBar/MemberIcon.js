@@ -3,8 +3,8 @@ import Button from '@mui/material/Button'
 
 const MemberIcon = (props) => {
     const { member } = props
-    if (member.user_nickname.length >= 4){
-        member.user_nickname = member.user_nickname.slice(0, 4) + "...";
+    if (member.nickname.length > 4) {
+        // member.nickname = member.nickname.slice(0, 4) + "...";
     }
     return (
         <Button style={{
@@ -17,10 +17,10 @@ const MemberIcon = (props) => {
             marginTop: '10px',
             color: 'white',
             backgroundColor: '#997B66',
-            overflow : 'hidden',
+            overflow: 'hidden',
         }}
         >
-            {member.user_nickname}
+            {member.nickname}
         </Button>
     );
 };

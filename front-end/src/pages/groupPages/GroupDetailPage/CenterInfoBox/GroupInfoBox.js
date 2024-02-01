@@ -18,10 +18,10 @@ const GroupInfoBox = (props) => {
     const { groupDetail } = props
     return (
         <Container>
-            <p>{ groupDetail.channel_name }</p>
-            <p>{groupDetail.channel_intro}</p>
-            <p>{`현재 인원 : ${groupDetail.channel_cur} / ${groupDetail.channel_max}`}</p>
-            <p>{`채널 생성일 : ${groupDetail.channel_date}`}</p>
+            <p>{ groupDetail.channelName }</p>
+            <p>{groupDetail.channelIntro}</p>
+            <p>{`현재 인원 : ${groupDetail.channelCur} / ${groupDetail.channelIdx}`}</p>
+            <p>{`채널 생성일 : ${groupDetail.channelDate}`}</p>
         </Container>
     );
 };

@@ -25,9 +25,9 @@ const GroupCreateModal = (props) => {
     const [groupIntro, setGroupIntro] = useState('')
     const [channelMax, setChannelMax] = useState(1)
     const groupDetail = {
-        "channel_name": groupName,
-        "channel_intro": groupIntro,
-        "channel_max": channelMax,
+        "channelName": groupName,
+        "channelIntro": groupIntro,
+        "channelMax": channelMax,
     }
 
     useEffect(() => {
@@ -36,6 +36,9 @@ const GroupCreateModal = (props) => {
         }
         if (channelMax >= 6) {
             setChannelMax(6)
+        }
+        if (channelMax >= 1){
+            setChannelMax(2)
         }
     }, [channelMax])
 
@@ -76,7 +79,7 @@ const GroupCreateModal = (props) => {
                         type='number'
                         placeholder='인원수'
                         max='6'
-                        min='0'
+                        min='2'
                     />
                     <Button variant="contained"
                         onClick={() => createGroupAction(groupDetail)}

@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 export const registerAction = async (props) => {
+    const URL = process.env.REACT_APP_API_URL
     console.log(props)
     try {
         const response = await axios({
             method: 'post',
-            url: 'http://localhost:8080/auth/sign-up',
+            url: `${URL}/auth/sign-up`,
             data: props
         })
         console.log(response)
