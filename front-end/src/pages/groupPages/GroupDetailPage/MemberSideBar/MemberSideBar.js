@@ -5,13 +5,13 @@ import AddMemberButton from './AddMemberButton';
 import MemberIcon from './MemberIcon';
 
 const MainContainer = styled("div")({
-    width: "6%",
+    width: "5%",
     height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#C0AB9A",
-    overflow: 'hidden'
+    overflow: 'hidden',
 });
 
 const MemberSideBar = (props) => {

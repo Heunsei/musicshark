@@ -19,7 +19,7 @@ const Wrapper = styled("div")({
 // 그룹 디테일 페이지에 들어올때 마다
 const GroupDetailPage = () => {
     let { id } = useParams()
-    const [isUserInLobby, setIsUserInLobby] = useState(true)
+    const [isUserInLobby, setIsUserInLobby] = useState(false)
     const [groupDetail, setGroupDetail] = useState([])
     const [groupMembers, setGroupMembers] = useState([])
     console.log(`그룹 멤버들${groupMembers}`)

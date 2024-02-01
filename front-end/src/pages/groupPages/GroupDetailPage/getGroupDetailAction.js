@@ -2,7 +2,6 @@ import axios from 'axios'
 import { getCookie } from '../../../util/cookie'
 
 const getGroupDetailAction = async (id, setGroupDetail) => {
-    console.log(`props로 받아온 id : ${id}`)
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     try {

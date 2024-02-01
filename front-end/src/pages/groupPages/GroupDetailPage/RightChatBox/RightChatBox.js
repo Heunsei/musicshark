@@ -9,7 +9,6 @@ const MainContainer = styled("div")({
     alignItems: "center",
     backgroundColor: "#C0AB9A",
     right : '0px',
-    position : 'absolute'
   });
 
 
