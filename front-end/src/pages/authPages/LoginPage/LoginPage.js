@@ -3,8 +3,8 @@ import AuthBox from '../../../components/AuthBox';
 import LoginPageInputs from './LoginPageInputs';
 import LoginPageHeader from './LoginPageHeader';
 import LoginPageFooter from './LoginPageFooter';
-import Navbar from '../../../components/navbar';
-import { loginAction } from './loginAction';
+import Navbar from '../../../components/Navbar';
+import { loginAction } from './LoginAction';
 import { loginValidator } from './../validator'
 
 const LoginPage = () => {
