@@ -4,13 +4,16 @@ import static org.springframework.http.HttpStatus.*;
 
 import java.util.List;
 
-import org.apache.coyote.Response;
 import org.example.back.common.ApiResponse;
 import org.example.back.dto.request.PerfectplayRequestDto;
 import org.example.back.dto.response.PerfectplayResponseDto;
+import org.example.back.dto.response.SongInfoResponseDto;
+import org.example.back.dto.response.SongLineResponseDto;
 import org.example.back.dto.response.SongResponseDto;
 import org.example.back.entity.PerfectplayEntity;
+import org.example.back.entity.SongEntity;
 import org.example.back.service.implementation.PerfectplayServiceImpl;
+import org.example.back.service.implementation.SongLineServiceImpl;
 import org.example.back.service.implementation.SongServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ public class PerfectController {
 
 	private final SongServiceImpl songServiceImpl;
 	private final PerfectplayServiceImpl perfectplayServiceImpl;
+	private final SongLineServiceImpl songLineServiceImpl;
 
 	// 전체 음악 조회
 	@GetMapping("/list")
@@ -38,7 +41,7 @@ public class PerfectController {
 		List<SongResponseDto> songList = songServiceImpl.findAllSong();
 
 		ApiResponse apiResponse = ApiResponse.builder()
-			.message("조회 결과")
+			.message("전체 음악 조회")
 			.status(OK.value())
 			.data(songList)
 			.build();
@@ -62,13 +65,28 @@ public class PerfectController {
 	public ResponseEntity<ApiResponse> perfectplayResultSave(@PathVariable int userIdx
 		,@RequestBody PerfectplayRequestDto perfectplayRequestDto) {
 
-		boolean check = perfectplayServiceImpl.createPerfectplayResult(userIdx, perfectplayRequestDto);
+		PerfectplayEntity perfectplayEntity = perfectplayServiceImpl.createPerfectplayResult(userIdx, perfectplayRequestDto);
 		ApiResponse apiResponse = ApiResponse.builder()
 			.message("생성 결과")
 			.status(OK.value())
-			.data(check)
+			.data(perfectplayEntity)
 			.build();
 		return ResponseEntity.ok(apiResponse);
 	}
 
+	@GetMapping("/{songIdx}/info")
+	public ResponseEntity<ApiResponse> getSongInfo(@PathVariable int songIdx) {
+		SongEntity song = songServiceImpl.getSongById(songIdx);
+		List<SongLineResponseDto> songLineList = songLineServiceImpl.getAllSongLineById(songIdx);
+		SongInfoResponseDto songInfoResponseDto = SongInfoResponseDto.builder()
+			.songEntity(song)
+			.songLineResponseDtoList(songLineList)
+			.build();
+		ApiResponse apiResponse = ApiResponse.builder()
+			.message("곡 정보")
+			.status(OK.value())
+			.data(songInfoResponseDto)
+			.build();
+		return ResponseEntity.ok(apiResponse);
+	}
 }

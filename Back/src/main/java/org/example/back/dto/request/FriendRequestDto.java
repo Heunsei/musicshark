@@ -1,15 +1,15 @@
 package org.example.back.dto.request;
 
-import java.sql.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class PerfectplayRequestDto {
-	private int songIdx;
-	private int score;
+public class FriendRequestDto {
+	private int requestUserIdx;
+	private int responseUserIdx;
 }

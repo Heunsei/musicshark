@@ -5,17 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/PerfectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/PerfectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/PerfectplayEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/PerfectplayEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/PerfectplayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/PerfectplayService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetUserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetUserResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/PerfectplayRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/PerfectplayRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/TierRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/TierRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/AuthServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/ssatudio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/ssatudio.sql" afterDir="false" />
->>>>>>> e567aa7c055cb2398f1ed0f48555adbed76d3386
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +53,8 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
-}</component>
+    &quot;associatedIndex&quot;: 1
+    }</component>
   <component name="ProjectId" id="2bO9grLSlJwu8OEktdCQ4XMRv0A" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -64,27 +63,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Back 빌드.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.BackApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;backend-develop-GetUser&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/SSAFY2/S10P12E205&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-=======
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Back 빌드.executor": "Run",
@@ -95,7 +73,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BackApplication.executor": "Run",
-    "git-widget-placeholder": "backend-develop",
+    "git-widget-placeholder": "backend-develop-User",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/SSAFY/2024-2/work-space/S10P12E205/Back/src/main/java/org/example/back",
     "node.js.detected.package.eslint": "true",
@@ -104,10 +82,12 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
->>>>>>> e567aa7c055cb2398f1ed0f48555adbed76d3386
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.back.dto.request" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\SSAFY\2024-2\work-space\S10P12E205\Back\src\main\java\org\example\back" />
       <recent name="C:\SSAFY\2024-2\work-space\S10P12E205\Back\src\main\java\org\example\back\repository" />
@@ -150,13 +130,12 @@
       <updated>1706075371328</updated>
       <workItem from="1706075372523" duration="10984000" />
       <workItem from="1706086907803" duration="20000" />
-<<<<<<< HEAD
       <workItem from="1706139333237" duration="212000" />
       <workItem from="1706409299333" duration="15000" />
       <workItem from="1706409324643" duration="9000" />
-=======
-      <workItem from="1706139333237" duration="16832000" />
->>>>>>> e567aa7c055cb2398f1ed0f48555adbed76d3386
+      <workItem from="1706659581473" duration="3877000" />
+      <workItem from="1706670315416" duration="3215000" />
+      <workItem from="1706747976876" duration="5312000" />
     </task>
     <servers />
   </component>
