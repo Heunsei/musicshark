@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from '@emotion/styled';
+import { styled } from '@mui/system';
 
 import Navbar from '../../../components/Navbar';
 import GroupInput from './GroupInput/GroupInput';

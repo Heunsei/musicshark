@@ -14,6 +14,7 @@ const Wrapper = styled("div")({
     backgroundColor: "#FFEDD8",
 });
 
+// 그룹 디테일 페이지에 들어올때 마다
 const GroupDetailPage = () => {
     let { id } = useParams()
     const [isUserInLobby, setIsUserInLobby] = useState(false)

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import { styled } from '@mui/system';
 import Navbar from '../../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 //import styles from './MainButton/MainButton.module.css';
