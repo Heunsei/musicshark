@@ -26,7 +26,7 @@ public class AuthController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/sign-in")
+    @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody SignInRequestDto requestDto){
         JwtToken result = authService.signIn(requestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);

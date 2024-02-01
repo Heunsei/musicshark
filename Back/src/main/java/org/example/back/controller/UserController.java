@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.back.dto.request.PatchUserRequestDto;
 import org.example.back.dto.response.GetUserResponseDto;
 import org.example.back.dto.response.PatchUserResponseDto;
+import org.example.back.repository.TierRepository;
 import org.example.back.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-
+    private final TierRepository tierRepository;
 
     @GetMapping("/")
     public ResponseEntity<?> getUser(@AuthenticationPrincipal UserDetails userDetails){
@@ -35,4 +36,11 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/tier")
+    public ResponseEntity<?> getUserTier(@AuthenticationPrincipal UserDetails userDetails){
+        int userIdx = userService.getUser(userDetails.getUsername()).getUserIdx();
+        String tier = tierRepository.findUserTierById(userIdx);
+
+        return new ResponseEntity<>(tier, HttpStatus.OK);
+    }
 }
