@@ -7,8 +7,10 @@ import org.example.back.config.JwtTokenProvider;
 import org.example.back.dto.request.JwtToken;
 import org.example.back.dto.request.SignInRequestDto;
 import org.example.back.dto.request.SignUpRequestDto;
+import org.example.back.entity.TierEntity;
 import org.example.back.dto.response.SignUpResponseDto;
 import org.example.back.entity.UserEntity;
+import org.example.back.repository.TierRepository;
 import org.example.back.repository.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -35,6 +37,8 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    private final TierRepository tierRepository;
+
     @Override
     public ApiResponse<SignUpResponseDto> signUp(SignUpRequestDto dto) {
 
@@ -53,14 +57,21 @@ public class AuthServiceImpl implements AuthService {
             return new ApiResponse("존재하는 이메일입니다.",  500, null);
         }
 
-        String encodePassword = passwordEncoder.encode(password);
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
+            String encodePassword = passwordEncoder.encode(password);
+            List<String> roles = new ArrayList<>();
+            roles.add("USER");
 
-        dto.setPassword(encodePassword);
-        UserEntity userEntity = new UserEntity(dto, roles);
-        userRepository.save(userEntity);
+            dto.setPassword(encodePassword);
+            UserEntity userEntity = new UserEntity(dto, roles);
+            userRepository.save(userEntity);
 
+            //회원 가입 시, 티어 테이블 생성
+            TierEntity tierEntity = new TierEntity();
+            tierEntity.setUserIdx(userEntity.getUserIdx());
+            tierEntity.setUserTier("bronze");
+            tierEntity.setClearCnt(0);
+
+            tierRepository.save(tierEntity);
         }
         catch (Exception e){
             e.printStackTrace();

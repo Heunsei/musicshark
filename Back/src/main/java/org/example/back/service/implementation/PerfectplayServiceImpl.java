@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PerfectplayServiceImpl implements PerfectplayService {
 
-	PerfectplayRepository perfectplayRepository;
-	TierRepository tierRepository;
+	private final PerfectplayRepository perfectplayRepository;
+	private final TierRepository tierRepository;
 
 	// 퍼펙트플레이 기록 조회
 	@Override
@@ -53,17 +53,6 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 
 		perfectplayRepository.save(perfectplayEntity);
 
-		//최초 클리어면 티어 테이블 생성
-		if(checkFirstClear(userIdx)&& perfectplayEntity.isClear()){
-			TierEntity newTierEntity = new TierEntity();
-			newTierEntity.setUserIdx(userIdx);
-			newTierEntity.setClearCnt(1);
-			newTierEntity.setUserTier("bronze");
-
-			tierRepository.save(newTierEntity);
-			return perfectplayEntity;
-		}
-
 		//클리어한 곡 수 증가
 		int songIdx = perfectplayEntity.getSongIdx();
 		if(!checkPerfectplayTable(userIdx,songIdx) && perfectplayEntity.isClear()) {
@@ -82,12 +71,6 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		}
 
 		return perfectplayEntity;
-	}
-	private boolean checkFirstClear(int userIdx){
-		Optional<TierEntity> tierEntity = tierRepository.findById(userIdx);
-
-		if(tierEntity.isPresent()) return false;
-		return true;
 	}
 	private String fineNextTier(String curTier) {
 		//bronze면 silver 반환

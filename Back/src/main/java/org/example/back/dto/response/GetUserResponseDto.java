@@ -12,14 +12,18 @@ import java.sql.Date;
 @AllArgsConstructor
 public class GetUserResponseDto {
 
+    int userIdx;
+
     String nickname;
     String gender;
     Date birth;
     String userEmail;
     String profileImage;
 
-    public GetUserResponseDto(UserEntity userEntity){
+    String userTier;
 
+    public GetUserResponseDto(UserEntity userEntity){
+        this.userIdx = userEntity.getUserIdx();
         this.nickname = userEntity.getNickname();
         this.gender = userEntity.getGender();
         this.birth = userEntity.getBirth();
