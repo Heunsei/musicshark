@@ -2,6 +2,10 @@ package org.example.back.entity;
 
 import lombok.*;
 import org.example.back.dto.request.SignUpRequestDto;
+<<<<<<< HEAD
+import org.example.back.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+=======
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +13,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+>>>>>>> 088c26bbb5a10b98847736f702c3ea7201c80fb5
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -97,4 +103,5 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

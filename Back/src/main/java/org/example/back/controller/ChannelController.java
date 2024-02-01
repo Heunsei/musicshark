@@ -102,4 +102,8 @@ public class ChannelController {
 
                  return ResponseEntity.ok(apiResponse);
              }
+
+             public ResponseEntity<ApiResponse> inviteMember(){
+
+             }
 }

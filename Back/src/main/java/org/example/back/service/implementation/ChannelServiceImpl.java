@@ -14,6 +14,7 @@ import org.example.back.repository.UserRepository;
 import org.example.back.service.ChannelService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -144,9 +145,22 @@ public class ChannelServiceImpl implements ChannelService {
 
         try{
 
-        BelongChannelEntity bchEntity = belongChannelRepository.findByChannelIdx(channelIdx);
-        List<UserEntity> userEntity = userRepository.findByUserIdxOrderByUserIdx(bchEntity.getUserIdx());
-        data = GetChannelMemberResponseDto.addList(userEntity);
+        List<BelongChannelEntity> bchEntity = belongChannelRepository.findByChannelIdx(channelIdx);
+            System.out.println(bchEntity);
+
+//                    list.add(userEntity);
+//                }
+//            }
+
+            List<UserEntity> userEntityList = new ArrayList<>();
+
+            for(BelongChannelEntity bch : bchEntity){
+
+                UserEntity userEntity = userRepository.findByUserIdx(bch.getUserIdx());
+                userEntityList.add(userEntity);
+            }
+
+            data = GetChannelMemberResponseDto.addList(userEntityList);
 
         }catch (Exception e){
             e.printStackTrace();
