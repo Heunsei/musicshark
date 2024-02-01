@@ -23,6 +23,7 @@ const GroupDetailPage = () => {
     const [groupDetail, setGroupDetail] = useState([])
     const [groupMembers, setGroupMembers] = useState([])
     console.log(`그룹 멤버들${groupMembers}`)
+
     useEffect(() => {
         getGroupDetailAction(id, setGroupDetail)
         getGroupMemberAction(id, setGroupMembers)

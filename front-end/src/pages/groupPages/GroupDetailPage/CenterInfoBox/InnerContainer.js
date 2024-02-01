@@ -19,7 +19,7 @@ const InnerContainer = (props) => {
     return (
         <Container>
             <GroupInfoBox groupDetail={groupDetail}/>
-            <GroupBottomBox/>
+            <GroupBottomBox />
         </Container>
     );
 };

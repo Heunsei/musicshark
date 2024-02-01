@@ -15,18 +15,19 @@ const Container = styled('div')({
 const GroupBottomBox = () => {
     return (
         <Container>
-            <Button sx={{
-                width: '45%',
-                height: '50%',
-                backgroundColor: '#C0AB9A',
-                margin: '15px',
-                color: 'black',
-                fontSize: '32px',
-                borderRadius: '15px',
-                ':hover': {
-                    bgcolor: '#588157',
-                },
-            }}> 연습하기 </Button>
+            <Button
+                sx={{
+                    width: '45%',
+                    height: '50%',
+                    backgroundColor: '#C0AB9A',
+                    margin: '15px',
+                    color: 'black',
+                    fontSize: '32px',
+                    borderRadius: '15px',
+                    ':hover': {
+                        bgcolor: '#588157',
+                    },
+                }}> 연습하기 </Button>
             <Button sx={{
                 width: '45%',
                 height: '50%',

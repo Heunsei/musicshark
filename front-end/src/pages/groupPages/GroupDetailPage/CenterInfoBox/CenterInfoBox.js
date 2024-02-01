@@ -15,7 +15,7 @@ const CenterInfoBox = (props) => {
     const { groupDetail } = props
     return (
         <InfoContainer>
-            <InnerContainer groupDetail={groupDetail}/>
+            <InnerContainer groupDetail={groupDetail} />
         </InfoContainer>
     );
 };
