@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { setCookie, getCookie } from './../../../util/cookie';
-import { setLogin } from '../../../redux/store/loginSlice';
 import getUserAction from './getUserAction';
 
 
