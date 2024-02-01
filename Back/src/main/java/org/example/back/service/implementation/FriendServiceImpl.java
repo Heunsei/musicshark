@@ -34,7 +34,7 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public List<UserSearchResponseDto> userSearchByEmail(String userEmail) {
-		List<UserEntity> userEntity = friendRepository.findAllByUserEmail(userEmail);
+		List<UserEntity> userEntity = friendRepository.findByUserEmail(userEmail);
 		List<UserSearchResponseDto> userSearchList = new ArrayList<>();
 		for (UserEntity result : userEntity) {
 			UserSearchResponseDto userSearchResponseDto = new UserSearchResponseDto(
@@ -49,7 +49,8 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public List<UserSearchResponseDto> userSearchByNickname(String userNickname) {
-		List<UserEntity> userEntity = friendRepository.findAllByUserNickname(userNickname);
+
+		List<UserEntity> userEntity = friendRepository.findByUserNickname(userNickname);
 		List<UserSearchResponseDto> userSearchList = new ArrayList<>();
 
 		for (UserEntity result : userEntity) {
