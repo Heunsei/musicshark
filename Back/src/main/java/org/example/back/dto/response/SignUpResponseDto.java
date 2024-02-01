@@ -28,7 +28,7 @@ public class SignUpResponseDto {
     String gender;
 
     @NotBlank
-    String birth;
+    Date birth;
 
     @NotBlank
     @Column(name = "user_email")
@@ -37,7 +37,5 @@ public class SignUpResponseDto {
     @URL
     @Column(name = "profile_image")
     String profileImage;
-
-
 
 }
