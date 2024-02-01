@@ -82,7 +82,7 @@ public class ChannelServiceImpl implements ChannelService {
 
     try{
 
-        List<ChannelEntity> channelList = channelRepository.findByChannelIsDeleteOrderByChannelDate(0);
+        List<ChannelEntity> channelList = channelRepository.findByChannelIsDeleteOrderByChannelDateDesc(0);
 
         data = GetChannelListResponseDto.addList(channelList);
 
@@ -168,5 +168,39 @@ public class ChannelServiceImpl implements ChannelService {
         }
 
         return new ApiResponse("채널 멤버 조회 성공", 500, data);
+    }
+
+    @Override
+    public ApiResponse<?> inviteMember(int channelIdx, String userNickname) {
+
+        try{
+            ChannelEntity channelEntity = channelRepository.findByChannelIdx(channelIdx);
+            UserEntity userEntity = userRepository.findByNickname(userNickname);
+
+            int curMember = channelEntity.getChannelCur();
+
+            if(curMember+1 > channelEntity.getChannelMax()) {
+                return new ApiResponse("채널에 더 이상 멤버를 초대할 수 없습니다.", 500, null);
+            }
+            channelEntity.setChannelCur(curMember+1);
+            channelRepository.save(channelEntity);
+
+            BelongChannelEntity belongChannelEntity = new BelongChannelEntity();
+            belongChannelEntity.setBelongChannelIdx(channelIdx);
+
+            int userIdx = userEntity.getUserIdx();
+
+            boolean usedIdx = belongChannelRepository.existsByUserIdx(userIdx);
+            if(usedIdx) new ApiResponse("이미 참여된 유저입니다.", 500, null);
+
+            belongChannelEntity.setUserIdx(userIdx);
+
+            belongChannelRepository.save(belongChannelEntity);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return new ApiResponse("친구 초대 성공", OK.value(), "성공 😀");
     }
 }

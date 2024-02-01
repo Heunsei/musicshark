@@ -11,5 +11,8 @@ import java.util.List;
 @Repository
 public interface BelongChannelRepository extends JpaRepository<BelongChannelEntity, Integer> {
     public List<BelongChannelEntity> findByChannelIdx(int channelIdx);
+
+    public BelongChannelEntity findTopByChannelIdx(int channelIdx);
     public List<BelongChannelEntity> findByUserIdx(int userIdx);
+    public boolean existsByUserIdx(int userIdx);
 }

@@ -15,5 +15,6 @@ public interface ChannelService {
     ApiResponse<PatchChannelResponseDto> patchChannel(int channelIdx, PatchChannelRequestDto dto);
     ApiResponse<?> deleteChannel(int channelIdx);
     ApiResponse<GetChannelMemberResponseDto> getChannelMember(int channelIdx);
+    ApiResponse<?> inviteMember(int channel, String userNickname);
 
 }

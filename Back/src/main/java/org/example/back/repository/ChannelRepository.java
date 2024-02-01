@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface ChannelRepository extends JpaRepository<ChannelEntity, Integer> {
 
     Optional<ChannelEntity> findByChannelName(String channelName);
-    public List<ChannelEntity> findByChannelIsDeleteOrderByChannelDate(int channelIsDelete);
+    public List<ChannelEntity> findByChannelIsDeleteOrderByChannelDateDesc(int channelIsDelete);
     public ChannelEntity findByChannelIdx(int channelIdx);
 }

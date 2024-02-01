@@ -36,27 +36,4 @@ public class BelongChannelEntity {
         this.isAdmin = entity.isAdmin;
     }
 
-    public static List<BelongChannelEntity> addList(List<BelongChannelEntity> bchList){
-
-        List<BelongChannelEntity> list = new ArrayList<>();
-
-        for(BelongChannelEntity entity : bchList){
-
-            BelongChannelEntity bch = new BelongChannelEntity(entity);
-
-            list.add(bch);
-        }
-
-        return list;
-    }
-
-    @Override
-    public String toString() {
-        return "BelongChannelEntity{" +
-                "belongChannelIdx=" + belongChannelIdx +
-                ", channelIdx=" + channelIdx +
-                ", userIdx=" + userIdx +
-                ", isAdmin=" + isAdmin +
-                '}';
-    }
 }
