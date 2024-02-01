@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios'
 import { OpenVidu, StreamManager } from 'openvidu-browser';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const APPLICATION_SERVER_URL = 'https://demos.openvidu.io/'
+const APPLICATION_SERVER_URL = 'http://localhost:5000/'
 
 const GroupRoom = () => {
-    const [sessionId, setSessionId] = useState('SessionA')
+    const videoRef = useRef(null);
+    const [sessionId, setSessionId] = useState('SSARIA')
     const [session, setSession] = useState('')
     const storeUser = useSelector((state) => state.user.nickname)
     const [mainStreamManager, setMainStreamManager] = useState('')
@@ -16,11 +17,24 @@ const GroupRoom = () => {
 
     // 토큰 주세요
     const getToken = async () => {
+        const getSessionId = await createSession(sessionId);
+        return await createToken(getSessionId);
+    };
+
+    const createSession = async (sessionId) => {
+        const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
+            headers: { 'Content-Type': 'application/json', },
+        });
+        return response.data;
+    }
+
+    const createToken = async (sessionId) => {
         const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
             headers: { 'Content-Type': 'application/json', },
         });
-        return response.data; // 토큰
-    };
+        return response.data;
+    }
+
 
     const deleteSubscriber = (streamManager) => {
         let index = subscribers.indexOf(streamManager, 0)
@@ -44,7 +58,12 @@ const GroupRoom = () => {
             const copy = [...subscribers, subscriber]
 
             setSubscribers(copy);
+
+            if (videoRef.current) {
+                subscriber.addVideoElement(videoRef.current);
+            }
         })
+
 
         mySession.on('streamDestroyed', (event) => {
             deleteSubscriber(event.stream.streamManager)
@@ -59,7 +78,7 @@ const GroupRoom = () => {
                             videoSource: undefined,
                             publishAudio: true,
                             publishVideo: true,
-                            resolution: '640x480',
+                            resolution: '480x480',
                             frameRate: 30,
                             insertMode: 'APPEND',
                             mirror: false,
@@ -92,7 +111,9 @@ const GroupRoom = () => {
         <div>
             <button onClick={joinSession}>gd</button>
             <button onClick={leaveSession}>qd</button>
-            <video autoPlay={true}/>
+            <div style={{ border: 'solid 1px black' }}>
+                <video autoPlay ref={videoRef} />
+            </div>
         </div>
     );
 };
