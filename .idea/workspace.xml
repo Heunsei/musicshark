@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetUserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetUserResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/PerfectplayRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/PerfectplayRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/TierRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/TierRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/AuthServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/ssatudio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/ssatudio.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +126,7 @@
       <workItem from="1706409324643" duration="9000" />
       <workItem from="1706659581473" duration="3877000" />
       <workItem from="1706670315416" duration="3215000" />
-      <workItem from="1706747976876" duration="5312000" />
+      <workItem from="1706747976876" duration="5911000" />
     </task>
     <servers />
   </component>
