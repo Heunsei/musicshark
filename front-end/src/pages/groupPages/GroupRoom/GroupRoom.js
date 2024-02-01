@@ -115,17 +115,29 @@ const GroupRoom = () => {
     // 사용자 비디오 컨트롤러
     const muteVideo = () => {
         setVideoState(!videoState)
+        publisher.publishVideo(videoState)
         console.log(videoState)
         // 비디오 상태에 따라서 class 변경
         // 비디오가 보일때 / 아닐때
-        if(videoState){
+        if (videoState) {
 
-        }else{
+        } else {
 
         }
 
     }
+    // 사용자 오디오 컨트롤러
+    const muteAudio = () => {
+        setAudioState(!audioState)
+        publisher.publishAudio(audioState);
+        console.log(audioState)
+        if (audioState) {
 
+        } else {
+
+        }
+
+    }
 
     return (
         <div className={styles.mainContainer}>
@@ -135,6 +147,7 @@ const GroupRoom = () => {
                     {
                         subscribers.map((sub, i) => {
                             <div style={{ border: 'solid 1px black' }}>
+                                {sub}
                                 <video autoPlay ref={videoRef} />
                             </div>
                         })
