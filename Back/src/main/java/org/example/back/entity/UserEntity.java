@@ -2,8 +2,11 @@ package org.example.back.entity;
 
 import lombok.*;
 import org.example.back.dto.request.SignUpRequestDto;
+import org.example.back.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -86,4 +89,5 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -8,6 +8,8 @@ import org.example.back.dto.request.PostChannelRequestDto;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlType;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -46,4 +48,7 @@ public class ChannelEntity {
         this.channelMax = dto.getChannelMax();
         this.channelCur = 1;
     }
+
+
+
 }

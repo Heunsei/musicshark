@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +29,34 @@ public class BelongChannelEntity {
     @Column(name = "is_admin")
     int isAdmin;
 
+    public BelongChannelEntity(BelongChannelEntity entity){
+        this.belongChannelIdx = entity.getBelongChannelIdx();
+        this.channelIdx = entity.getChannelIdx();
+        this.userIdx = entity.getUserIdx();
+        this.isAdmin = entity.isAdmin;
+    }
+
+    public static List<BelongChannelEntity> addList(List<BelongChannelEntity> bchList){
+
+        List<BelongChannelEntity> list = new ArrayList<>();
+
+        for(BelongChannelEntity entity : bchList){
+
+            BelongChannelEntity bch = new BelongChannelEntity(entity);
+
+            list.add(bch);
+        }
+
+        return list;
+    }
+
+    @Override
+    public String toString() {
+        return "BelongChannelEntity{" +
+                "belongChannelIdx=" + belongChannelIdx +
+                ", channelIdx=" + channelIdx +
+                ", userIdx=" + userIdx +
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 }
