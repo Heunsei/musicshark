@@ -14,7 +14,6 @@ import org.example.back.repository.UserRepository;
 import org.example.back.service.ChannelService;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,13 +141,12 @@ public class ChannelServiceImpl implements ChannelService {
     public ApiResponse<GetChannelMemberResponseDto> getChannelMember(int channelIdx) {
 
         List<GetChannelMemberResponseDto> data = null;
-//        ChannelEntity chEntity = channelRepository.findByChannelIdx(channelIdx);
-        BelongChannelEntity bchEntity = belongChannelRepository.findByChannelIdx(channelIdx);
-        List<UserEntity> userEntity = userRepository.findByUserIdxOrderByUserIdx(bchEntity.getUserIdx());
-
-
 
         try{
+
+        BelongChannelEntity bchEntity = belongChannelRepository.findByChannelIdx(channelIdx);
+        List<UserEntity> userEntity = userRepository.findByUserIdxOrderByUserIdx(bchEntity.getUserIdx());
+        data = GetChannelMemberResponseDto.addList(userEntity);
 
         }catch (Exception e){
             e.printStackTrace();

@@ -30,7 +30,7 @@ public class GetChannelListResponseDto {
         this.channelIntro = entity.getChannelIntro();
         this.channelDate = entity.getChannelDate();
         this.channelMax = entity.getChannelMax();
-        this.channelCur = entity.getChannelMax();
+        this.channelCur = entity.getChannelCur();
         this.channelIsDelete = entity.getChannelIsDelete();
     }
 

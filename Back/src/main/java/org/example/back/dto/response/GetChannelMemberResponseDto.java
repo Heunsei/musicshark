@@ -30,7 +30,7 @@ public class GetChannelMemberResponseDto {
 
     }
 
-    List<GetChannelMemberResponseDto> addList(List<UserEntity> userList){
+    public static List<GetChannelMemberResponseDto> addList(List<UserEntity> userList){
 
         List<GetChannelMemberResponseDto> list = new ArrayList<>();
 
