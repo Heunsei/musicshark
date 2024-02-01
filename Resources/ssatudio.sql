@@ -30,8 +30,6 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 select * from user;
 select * from user_roles;
-select * from channel;
-select * from belong_channel;
 
 -- ALTER TABLE User
 -- ADD COLUMN role_id int,
@@ -42,7 +40,7 @@ create table if not exists `Channel` (
     channel_idx int primary key auto_increment COMMENT '채널 인덱스',
     channel_name varchar(30) NOT NULL COMMENT '채널명',
     channel_intro varchar(200) NULL COMMENT '채널 소개',
-    channel_date DATE NOT NULL default now() COMMENT '생성일자',
+    channel_date timestamp NOT NULL DEFAULT now() COMMENT '생성일자',
     channel_max int NOT NULL COMMENT '모집인원',
     channel_cur int NOT NULL DEFAULT 1 COMMENT '현재인원',
     channel_isDelete tinyint NOT NULL DEFAULT 0 COMMENT '삭제여부'
@@ -60,6 +58,11 @@ create table if not exists `belong_channel` (
     CONSTRAINT `fk_belong_channel_channel_idx` FOREIGN KEY (channel_idx) REFERENCES `channel` (channel_idx),
     CONSTRAINT `fk_belong_channel_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );  
+
+select * from channel;
+select * from belong_channel;
+
+-- drop database ssatudio;  
 
 -- 공지사항
 create table if not exists `notice` (

@@ -138,4 +138,33 @@ public class ChannelController {
 
                  return ResponseEntity.ok(apiResponse);
              }
+
+             @GetMapping("/{channelIdx}/members/{userIdx}")
+             public ResponseEntity<ApiResponse> getDetailMember(@PathVariable int channelIdx,
+                                                                @PathVariable int userIdx){
+
+                 ApiResponse<GetDetailChannelMemberResponseDto> result = channelService.getDetailChannelMember(channelIdx, userIdx);
+
+                 String msg = result.getMessage();
+                 int status = result.getStatus();
+
+                 ApiResponse apiResponse = new ApiResponse(msg, status, result.getData());
+
+                 return ResponseEntity.ok(apiResponse);
+
+             }
+
+             @DeleteMapping("/{channelIdx}/members/{userIdx}")
+             public ResponseEntity<?> deleteChannelMember(@PathVariable int channelIdx,
+                                                          @PathVariable int userIdx){
+
+                 ApiResponse<?> result = channelService.deleteChannelMember(channelIdx, userIdx);
+
+                 String msg = result.getMessage();
+                 int status = result.getStatus();
+
+                 ApiResponse apiResponse = new ApiResponse(msg, status, result.getData());
+
+                 return ResponseEntity.ok(apiResponse);
+             }
 }

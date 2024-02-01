@@ -1,5 +1,6 @@
 package org.example.back.dto.response;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetUserResponseDto {
+public class GetDetailChannelMemberResponseDto {
 
     int userIdx;
     String nickname;
@@ -20,13 +21,13 @@ public class GetUserResponseDto {
     String profileImage;
     String userTier;
 
-    public GetUserResponseDto(UserEntity userEntity){
+    public GetDetailChannelMemberResponseDto(UserEntity userEntity, String userTier){
         this.userIdx = userEntity.getUserIdx();
         this.nickname = userEntity.getNickname();
         this.gender = userEntity.getGender();
         this.birth = userEntity.getBirth();
         this.userEmail = userEntity.getUserEmail();
         this.profileImage = userEntity.getProfileImage();
-
+        this.userTier = userTier;
     }
 }

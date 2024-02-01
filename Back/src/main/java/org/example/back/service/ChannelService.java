@@ -16,5 +16,7 @@ public interface ChannelService {
     ApiResponse<?> deleteChannel(int channelIdx);
     ApiResponse<GetChannelMemberResponseDto> getChannelMember(int channelIdx);
     ApiResponse<?> inviteMember(int channel, String userNickname);
+    ApiResponse<GetDetailChannelMemberResponseDto> getDetailChannelMember(int channelIdx, int userIdx);
+    ApiResponse<?> deleteChannelMember(int channelIdx, int userIdx);
 
 }

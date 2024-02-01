@@ -15,4 +15,6 @@ public interface BelongChannelRepository extends JpaRepository<BelongChannelEnti
     public BelongChannelEntity findTopByChannelIdx(int channelIdx);
     public List<BelongChannelEntity> findByUserIdx(int userIdx);
     public boolean existsByUserIdx(int userIdx);
+
+    void deleteByBelongChannelIdx(int channelIdx);
 }

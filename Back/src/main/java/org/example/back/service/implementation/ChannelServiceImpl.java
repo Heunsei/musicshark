@@ -10,6 +10,7 @@ import org.example.back.entity.ChannelEntity;
 import org.example.back.entity.UserEntity;
 import org.example.back.repository.BelongChannelRepository;
 import org.example.back.repository.ChannelRepository;
+import org.example.back.repository.TierRepository;
 import org.example.back.repository.UserRepository;
 import org.example.back.service.ChannelService;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class ChannelServiceImpl implements ChannelService {
     private final ChannelRepository channelRepository;
     private final UserRepository userRepository;
     private final BelongChannelRepository belongChannelRepository;
+    private final TierRepository tierRepository;
 
     @Override
     public ApiResponse<PostChannelResponseDto> postChannel(String userEmail, PostChannelRequestDto dto) {
@@ -202,5 +204,47 @@ public class ChannelServiceImpl implements ChannelService {
         }
 
         return new ApiResponse("친구 초대 성공", OK.value(), "성공 😀");
+    }
+
+    @Override
+    public ApiResponse<GetDetailChannelMemberResponseDto> getDetailChannelMember(int channelIdx, int userIdx) {
+
+        GetDetailChannelMemberResponseDto data = null;
+
+        try{
+            UserEntity userEntity = userRepository.findByUserIdx(userIdx);
+            String tier = tierRepository.findUserTierById(userIdx);
+
+            data = new GetDetailChannelMemberResponseDto(userEntity, tier);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ApiResponse("채널 멤버 상세조회 에러", 500, null);
+        }
+
+        return new ApiResponse("채널 멤버 상세조회 성공", OK.value(), data);
+    }
+
+    @Override
+    public ApiResponse<?> deleteChannelMember(int channelIdx, int userIdx) {
+
+        try{
+
+            ChannelEntity channelEntity = channelRepository.findByChannelIdx(channelIdx);
+
+            int curNum = channelEntity.getChannelCur();
+
+            channelEntity.setChannelCur(curNum-1);
+            channelRepository.save(channelEntity);
+
+            belongChannelRepository.deleteByBelongChannelIdx(channelIdx);
+//            BelongChannelEntity belongChannelEntity = belongChannelRepository.findTopByChannelIdx(channelIdx);
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ApiResponse("채널 멤버 삭제 에러", 500, null);
+        }
+        return new ApiResponse("채널 멤버 삭제 성공", OK.value(), "멤버 삭제 성공");
     }
 }
