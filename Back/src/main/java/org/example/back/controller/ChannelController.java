@@ -6,6 +6,7 @@ import org.example.back.dto.request.PatchChannelRequestDto;
 import org.example.back.dto.request.PostChannelRequestDto;
 import org.example.back.dto.response.*;
 import org.example.back.service.ChannelService;
+import org.example.back.service.FriendService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/channels")
 public class ChannelController {
 
              private final ChannelService channelService;
+             private final FriendService friendService;
 
              @PostMapping()
              public ResponseEntity<ApiResponse> postChannel(
@@ -103,7 +107,20 @@ public class ChannelController {
                  return ResponseEntity.ok(apiResponse);
              }
 
-             public ResponseEntity<ApiResponse> inviteMember(){
+
+             @PostMapping("/{channelIdx}/members")
+             public ResponseEntity<ApiResponse> inviteMember(@PathVariable int channelIdx){
+
+//                 List<UserSearchResponseDto> userSearchList = friendServiceImpl.userSearchByNickname(userNickname);
+//
+//                 ApiResponse apiResponse = ApiResponse.builder()
+//                         .message("사용자 조회")
+//                         .status(OK.value())
+//                         .data(userSearchList)
+//                         .build();
+//                 return ResponseEntity.ok(apiResponse);
+
+//                 ApiResponse<UserSearchResponseDto> userSearchList = friendService.userSearchByNickname
 
              }
 }

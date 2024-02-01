@@ -10,8 +10,6 @@ import java.util.List;
 
 @Repository
 public interface BelongChannelRepository extends JpaRepository<BelongChannelEntity, Integer> {
-//    public List<UserEntity> findByUserIdxOrderByUserIdx(int userIdx);
     public List<BelongChannelEntity> findByChannelIdx(int channelIdx);
     public List<BelongChannelEntity> findByUserIdx(int userIdx);
-//    public BelongChannelEntity findByChannelIdx(int channelIdx);
 }
