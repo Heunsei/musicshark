@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import api from "../../../api/axiosInstance";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 const ProfileBox = () => {
   const [iconSize, setIconSize] = useState("250px"); // 아이콘 크기 상태
   const [channels, setChannels] = useState(["채널 1", "채널 2", "채널 3"]); // 목업 채널 데이터
-  const userTier = "B4"; // 목업 티어 정보
+  const [userTier, setUserTier] = useState("");
 
   // 브라우저 창 크기에 따라 아이콘 크기를 업데이트하는 함수
   const updateIconSize = () => {
@@ -21,6 +23,24 @@ const ProfileBox = () => {
   useEffect(() => {
     window.addEventListener("resize", updateIconSize);
     updateIconSize(); // 초기 아이콘 크기 설정
+
+    // 서버로부터 티어 정보를 가져오는 함수
+    const fetchUserTier = async () => {
+      try {
+        const response = await api.get("/user/tier", {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        });
+        console.log("Data:", response.data); // axios는 자동으로 JSON을 파싱합니다.
+        setUserTier(response.data.userTier); // 상태 업데이트
+      } catch (error) {
+        console.error("Error fetching user tier:", error);
+      }
+    };
+
+    fetchUserTier(); // 함수 호출
+
     return () => {
       window.removeEventListener("resize", updateIconSize);
     };
