@@ -148,11 +148,6 @@ public class ChannelServiceImpl implements ChannelService {
         try{
 
         List<BelongChannelEntity> bchEntity = belongChannelRepository.findByChannelIdx(channelIdx);
-            System.out.println(bchEntity);
-
-//                    list.add(userEntity);
-//                }
-//            }
 
             List<UserEntity> userEntityList = new ArrayList<>();
 
@@ -173,11 +168,25 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public ApiResponse<?> inviteMember(int channelIdx, String userNickname) {
+    public ApiResponse<?> inviteMember(int channelIdx, int userIdx, String userEmail) {
+
+        GetChannelResponseDto data = null;
 
         try{
             ChannelEntity channelEntity = channelRepository.findByChannelIdx(channelIdx);
-            UserEntity userEntity = userRepository.findByNickname(userNickname);
+            Optional<UserEntity> userEntity = userRepository.findByUserEmail(userEmail); // 방장 권한 확인용
+
+            int adminUserIdx = userEntity.get().getUserIdx();
+
+            // 가입 그룹 유저 인덱스, 권한
+            BelongChannelEntity belongChannelEntity = belongChannelRepository.findTopByChannelIdx(channelIdx);
+            int belongChannelAdminUserIdx = belongChannelEntity.getUserIdx();
+            int belongChannelAdmin = belongChannelEntity.getIsAdmin();
+
+            System.out.println(adminUserIdx + " / " + belongChannelAdminUserIdx + " / " + belongChannelAdmin);
+            if(adminUserIdx != belongChannelAdminUserIdx || belongChannelAdmin != 0){
+                return new ApiResponse("초대 권한이 없습니다.", 500, null);
+            }
 
             int curMember = channelEntity.getChannelCur();
 
@@ -187,23 +196,37 @@ public class ChannelServiceImpl implements ChannelService {
             channelEntity.setChannelCur(curMember+1);
             channelRepository.save(channelEntity);
 
-            BelongChannelEntity belongChannelEntity = new BelongChannelEntity();
-            belongChannelEntity.setBelongChannelIdx(channelIdx);
+            BelongChannelEntity belongChannelEntityAdd = new BelongChannelEntity();
+            belongChannelEntityAdd.setChannelIdx(channelIdx);
+            belongChannelEntityAdd.setUserIdx(userIdx);
+            belongChannelEntityAdd.setIsAdmin(1);
 
-            int userIdx = userEntity.getUserIdx();
+//            int usedUserIdx = userEntity.get().getUserIdx();
 
-            boolean usedIdx = belongChannelRepository.existsByUserIdx(userIdx);
-            if(usedIdx) new ApiResponse("이미 참여된 유저입니다.", 500, null);
+            List<BelongChannelEntity> bchList = belongChannelRepository.findByChannelIdx(channelIdx);
+            for(BelongChannelEntity bch : bchList){
+                if(bch.getUserIdx() == userIdx){
+                    return new ApiResponse("이미 참여된 유저입니다.", 500, null);
+                }
+            }
+//            int checkUserIdx = belongChannelEntity.getUserIdx();
 
-            belongChannelEntity.setUserIdx(userIdx);
+//            if(userIdx == checkUserIdx){
+//                return new ApiResponse("이미 참여된 유저입니다.", 500, null);
+//            }
+//            boolean usedIdx = belongChannelRepository.existsByUserIdx(userIdx);
+//            System.out.println(usedIdx);
+//            if(usedIdx) new ApiResponse("이미 참여된 유저입니다.", 500, null);
 
-            belongChannelRepository.save(belongChannelEntity);
+            belongChannelRepository.save(belongChannelEntityAdd);
+
+            data = new GetChannelResponseDto(channelEntity);
 
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return new ApiResponse("친구 초대 성공", OK.value(), "성공 😀");
+        return new ApiResponse("친구 초대 성공", OK.value(), data);
     }
 
     @Override
@@ -212,39 +235,61 @@ public class ChannelServiceImpl implements ChannelService {
         GetDetailChannelMemberResponseDto data = null;
 
         try{
-            UserEntity userEntity = userRepository.findByUserIdx(userIdx);
-            String tier = tierRepository.findUserTierById(userIdx);
 
-            data = new GetDetailChannelMemberResponseDto(userEntity, tier);
+            List<BelongChannelEntity> bchEntity = belongChannelRepository.findByChannelIdx(channelIdx);
+
+            for(BelongChannelEntity bch : bchEntity){
+
+                System.out.println(bch.getChannelIdx() + " / " + channelIdx+ " | "
+                        + bch.getUserIdx() + " / "  + userIdx);
+                if(bch.getChannelIdx() == channelIdx && bch.getUserIdx() == userIdx){
+
+                    UserEntity userEntity = userRepository.findByUserIdx(userIdx);
+
+                    String tier = tierRepository.findUserTierById(userIdx);
+                    data = new GetDetailChannelMemberResponseDto(userEntity, tier);
+                    break;
+                }
+            }
 
         }catch (Exception e){
             e.printStackTrace();
             return new ApiResponse("채널 멤버 상세조회 에러", 500, null);
         }
 
+        if(data == null) return new ApiResponse("존재하지 않는 유저입니다", 500, null);
+
         return new ApiResponse("채널 멤버 상세조회 성공", OK.value(), data);
     }
 
     @Override
-    public ApiResponse<?> deleteChannelMember(int channelIdx, int userIdx) {
+    public ApiResponse<GetChannelResponseDto> deleteChannelMember(int channelIdx, String userEmail) {
+
+        GetChannelResponseDto data = null;
 
         try{
 
             ChannelEntity channelEntity = channelRepository.findByChannelIdx(channelIdx);
+            Optional<UserEntity> userEntity = userRepository.findByUserEmail(userEmail);
+            BelongChannelEntity belongChannelEntity = belongChannelRepository.findTopByChannelIdx(channelIdx);
+
+            int userIdx = userEntity.get().getUserIdx();
+            if (userIdx == belongChannelEntity.getUserIdx() && belongChannelEntity.getIsAdmin() == 0){
+                return new ApiResponse("방장은 탈퇴할 수 없습니다.", 500, null);
+            }
+
+            belongChannelRepository.deleteByUserIdx(userIdx);
 
             int curNum = channelEntity.getChannelCur();
 
             channelEntity.setChannelCur(curNum-1);
             channelRepository.save(channelEntity);
-
-            belongChannelRepository.deleteByBelongChannelIdx(channelIdx);
-//            BelongChannelEntity belongChannelEntity = belongChannelRepository.findTopByChannelIdx(channelIdx);
-
+            data = new GetChannelResponseDto(channelEntity);
 
         }catch (Exception e){
             e.printStackTrace();
             return new ApiResponse("채널 멤버 삭제 에러", 500, null);
         }
-        return new ApiResponse("채널 멤버 삭제 성공", OK.value(), "멤버 삭제 성공");
+        return new ApiResponse("채널 멤버 삭제 성공", OK.value(), data);
     }
 }

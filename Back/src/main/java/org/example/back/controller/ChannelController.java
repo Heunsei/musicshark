@@ -9,6 +9,7 @@ import org.example.back.service.ChannelService;
 import org.example.back.service.FriendService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,34 +108,18 @@ public class ChannelController {
                  return ResponseEntity.ok(apiResponse);
              }
 
-             @PostMapping("/{channelIdx}/members/{userNickname}")
+             @PostMapping("/{channelIdx}/members/{userIdx}")
              public ResponseEntity<?> inviteMember(@PathVariable int channelIdx,
-                                                             @PathVariable String userNickname){
+                                                   @PathVariable int userIdx,
+                                                   @AuthenticationPrincipal UserDetails userDetails){
 
-//                 List<UserSearchResponseDto> userSearchList = friendServiceImpl.userSearchByNickname(userNickname);
-//                 ApiResponse apiResponse = ApiResponse.builder()
-//                         .message("사용자 조회")
-//                         .status(OK.value())
-//                         .data(userSearchList)
-//                         .build();
-//                 return ResponseEntity.ok(apiResponse);
+                 String userEmail = userDetails.getUsername();
+                 ApiResponse<?> result = channelService.inviteMember(channelIdx, userIdx, userEmail);
 
-                 List<UserSearchResponseDto> userSearchList = friendService.userSearchByNickname(userNickname);
+                 String msg = result.getMessage();
+                 int status = result.getStatus();
 
-                 System.out.println(userSearchList.get(0).getEmailOrNickname());
-
-                 // 검색 결과를 가져왔으니까 거기서 유저 인덱스만 가져와서 초대 보내기
-
-                 channelService.inviteMember(channelIdx, userNickname);
-
-//                 ApiResponse apiResponse = ApiResponse.builder()
-//                         .message("사용자 조회")
-//                         .status(OK.value())
-//                         .data(userSearchList)
-//                         .build();
-//                 return ResponseEntity.ok(apiResponse);
-
-                 ApiResponse apiResponse = new ApiResponse("채널에 친구 초대", OK.value(), "멤버 초대");
+                 ApiResponse apiResponse = new ApiResponse(msg, status, result.getData());
 
                  return ResponseEntity.ok(apiResponse);
              }
@@ -143,7 +128,8 @@ public class ChannelController {
              public ResponseEntity<ApiResponse> getDetailMember(@PathVariable int channelIdx,
                                                                 @PathVariable int userIdx){
 
-                 ApiResponse<GetDetailChannelMemberResponseDto> result = channelService.getDetailChannelMember(channelIdx, userIdx);
+                 ApiResponse<GetDetailChannelMemberResponseDto> result =
+                         channelService.getDetailChannelMember(channelIdx, userIdx);
 
                  String msg = result.getMessage();
                  int status = result.getStatus();
@@ -154,11 +140,12 @@ public class ChannelController {
 
              }
 
-             @DeleteMapping("/{channelIdx}/members/{userIdx}")
+             @DeleteMapping("/{channelIdx}/members")
              public ResponseEntity<?> deleteChannelMember(@PathVariable int channelIdx,
-                                                          @PathVariable int userIdx){
+                                                          @AuthenticationPrincipal UserDetails userDetails){
 
-                 ApiResponse<?> result = channelService.deleteChannelMember(channelIdx, userIdx);
+                 String userEmail = userDetails.getUsername();
+                 ApiResponse<?> result = channelService.deleteChannelMember(channelIdx, userEmail);
 
                  String msg = result.getMessage();
                  int status = result.getStatus();
