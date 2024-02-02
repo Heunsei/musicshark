@@ -12,7 +12,7 @@ const GroupRoom = () => {
     const storeUser = useSelector((state) => state.user.nickname)
 
     const [screenOV, setScreenOV] = useState(undefined);
-    const [sessionId, setSessionId] = useState('SSARIA')
+    const [sessionId, setSessionId] = useState('SessionA')
     const [session, setSession] = useState('')
     const [screenSession, setScreenSession] = useState(undefined);
 
@@ -32,15 +32,18 @@ const GroupRoom = () => {
     };
 
     const createSession = async (sessionId) => {
-        const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
-            headers: { 'Content-Type': 'application/json', },
+        const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions/', { customSessionId: sessionId }, {
+            headers: {
+                Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU'
+            },
         });
+        console.log('createSession 로그', response.data)
         return response.data;
     }
 
     const createToken = async (sessionId) => {
         const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
-            headers: { 'Content-Type': 'application/json', },
+            headers: { Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU' },
         });
         return response.data;
     }
@@ -69,19 +72,20 @@ const GroupRoom = () => {
         mySession.on('streamCreated', (event) => {
             const subscriber = mySession.subscribe(event.stream, undefined)
             // 배열을 set으로 바꾸는거라 나중에 코드 확인 필요
-            const newSubscribers = [...subscribers];
-            newSubscribers.push(subscriber);
-            setSubscribers(newSubscribers)
+            console.log('다른사람의 캠 : ', subscriber)
+            setSubscribers(prevSubscrivers => [...prevSubscrivers, subscriber])
         })
 
         // 참가자가 떠날때
         mySession.on('streamDestroyed', (event) => {
+            console.log('세션 나갈때', subscribers)
             deleteSubscriber(event.stream.streamManager)
         })
 
         getToken()
             .then((token) => {
                 // 내 캠을 연결하는 과정
+                console.log('토큰확인 ', token)
                 mySession.connect(token, { clientData: storeUser })
                     .then(async () => {
                         const newPublisher = await newOV.initPublisherAsync(undefined, {
@@ -94,10 +98,14 @@ const GroupRoom = () => {
                             insertMode: 'APPEND',
                             mirror: false,
                         })
-                        mySession.publish(newPublisher);
-                        let copy = [...publisher]
-                        copy.push(newPublisher) 
-                        setPublisher(copy);
+                        // newPublisher.on('streamCreated', () => {
+                        //     console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                        // })
+                        // mySession.publish(newPublisher);
+                        // let copy = [...publisher]
+                        // copy.push(newPublisher) 
+                        // setSubscribers(copy)
+                        setPublisher(prevPub => [...prevPub, newPublisher]);
                     })
                     .catch((error) => {
                         console.log('There was an error connecting to the session:', error.code, error.message);
