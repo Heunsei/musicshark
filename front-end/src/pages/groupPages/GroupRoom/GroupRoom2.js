@@ -108,6 +108,7 @@ const GroupRoom = () => {
 
     const leaveSession = () => {
         const mySession = session
+        console.log('내세션', mySession)
         if (mySession) {
             mySession.disconnect()
         } else {

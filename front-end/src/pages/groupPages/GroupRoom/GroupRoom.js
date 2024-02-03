@@ -32,6 +32,9 @@ const GroupRoom = () => {
         const mySession = newOV.initSession();
         setScreenOV(newOV)
         setSession(mySession)
+        console.log('세션 받아온거', mySession)
+        console.log('세션 내가 넣을거', session)
+        console.log('ov에용', screenOV)
 
         // 다른사람들 캠 추가하는 로직
         mySession.on('streamCreated', (event) => {
@@ -49,7 +52,7 @@ const GroupRoom = () => {
             console.log(res)
             mySession.connect(res.token, { clientData: storeUser })
                 .then(async () => {
-                    let publisher = newOV.initPublisherAsync(undefined, {
+                    let publisher = await newOV.initPublisherAsync(undefined, {
                         audioSource: undefined,
                         videoSource: undefined,
                         publishAudio: true,
@@ -81,6 +84,7 @@ const GroupRoom = () => {
     }
 
     const leaveSession = () => {
+        console.log('세션',session)
         if (session) {
             session.disconnect()
         }
@@ -96,18 +100,18 @@ const GroupRoom = () => {
             <div className={styles.innerBox}>
                 <div className={styles.subScreen}>
                     {storeUser}
-                    {/* {
+                    {
                         subscribers.map(sub => {
                             return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
                         })
-                    } */}
+                    }
                 </div>
                 <div className={styles.mainScreen}>
-                    {/* {
+                    {
                         publisher.map(pub => {
                             return <VideoScreen streamManager={pub} key={pub.id} />
                         })
-                    } */}
+                    }
                 </div>
                 <div className={styles.buttonBox}>
                     <button onClick={joinSession}>연습 진입</button>
