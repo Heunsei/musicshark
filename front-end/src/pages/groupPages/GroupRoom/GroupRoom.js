@@ -1,5 +1,5 @@
 import { OpenVidu } from 'openvidu-browser';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import styles from './GroupRoom.module.css'
@@ -65,6 +65,7 @@ const GroupRoom = () => {
 
                     mySession.publish(publisher)
                     setPublisher(prevPub => [...prevPub, publisher])
+                    console.log('join session중 퍼블리셔', publisher)
                     // var devices = newOV.getDevices();
                     // var videoDevices = devices.filter(device => device.kind === 'videoinput');
                     // var currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
@@ -83,8 +84,22 @@ const GroupRoom = () => {
         })
     }
 
+    useEffect(() => {
+        console.log('===========================')
+        console.log('서브스크라이버가 바뀌었습니다')
+        console.log(subscribers)
+        console.log('===========================')
+    }, [subscribers])
+
+    useEffect(() => {
+        console.log('===========================')
+        console.log('퍼블리셔가 바뀌었습니다')
+        console.log(publisher)
+        console.log('===========================')
+    }, [publisher])
+
     const leaveSession = () => {
-        console.log('세션',session)
+        console.log('세션', session)
         if (session) {
             session.disconnect()
         }
