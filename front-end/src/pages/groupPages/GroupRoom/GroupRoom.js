@@ -96,18 +96,18 @@ const GroupRoom = () => {
             <div className={styles.innerBox}>
                 <div className={styles.subScreen}>
                     {storeUser}
-                    {
+                    {/* {
                         subscribers.map(sub => {
                             return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
                         })
-                    }
+                    } */}
                 </div>
                 <div className={styles.mainScreen}>
-                    {
+                    {/* {
                         publisher.map(pub => {
                             return <VideoScreen streamManager={pub} key={pub.id} />
                         })
-                    }
+                    } */}
                 </div>
                 <div className={styles.buttonBox}>
                     <button onClick={joinSession}>연습 진입</button>

@@ -55,5 +55,5 @@ export const createToken = async (sessionId) => {
 
 export const getToken = async (mySessionId) => {
     const res = await createSession(mySessionId)
-    return await createToken(res.sessionId)
+    return await createToken(mySessionId)
 }
