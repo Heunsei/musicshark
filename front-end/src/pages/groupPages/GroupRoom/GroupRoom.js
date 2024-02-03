@@ -1,5 +1,5 @@
 import { OpenVidu } from 'openvidu-browser';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import styles from './GroupRoom.module.css'
@@ -15,22 +15,32 @@ const GroupRoom = () => {
     const [screenOV, setScreenOV] = useState(undefined);
     const [session, setSession] = useState(undefined);
 
-    const [publisher, setPublisher] = useState([]);
+    const [publisher, setPublisher] = useState(undefined);
     const [subscribers, setSubscribers] = useState([]);
-    const [player, setPlayer] = useState([])
+    const [player, setPlayer] = useState([]);
+    const [isJoin, setIsJoin] = useState(false)
+    const joinButton = useRef(null)
+
+    if (!isJoin) {
+    } else {
+
+    }
+
 
     const deleteSubscriber = (streamManager) => {
-        const newsubscribers = subscribers;
-        const index = subscribers.indexOf(streamManager, 0);
-        if (index > -1) {
-            newsubscribers.splice(index, 1);
-            setSubscribers(newsubscribers);
-        }
+        setSubscribers((prevSub) => {
+            const index = [...prevSub].indexOf(streamManager, 0)
+            if (index > -1) {
+                prevSub.splice(index, 1)
+                return prevSub
+            }
+        })
     };
 
     const joinSession = () => {
         const newOV = new OpenVidu();
         const mySession = newOV.initSession();
+        setIsJoin(true)
         setScreenOV(newOV)
         setSession(mySession)
         console.log('세션 받아온거', mySession)
@@ -66,9 +76,12 @@ const GroupRoom = () => {
                     })
 
                     mySession.publish(publisher)
-                    setPublisher(prevPub => [...prevPub, publisher])
+                    setPublisher(publisher)
                     console.log('join session중 퍼블리셔', publisher)
-                    setPlayer([...publisher])
+                    setPlayer(publisher)
+                    console.log('=================================')
+                    console.log('님아 제발좀 나와주세요 ', player)
+                    console.log('=================================')
                     // var devices = newOV.getDevices();
                     // var videoDevices = devices.filter(device => device.kind === 'videoinput');
                     // var currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
@@ -106,10 +119,12 @@ const GroupRoom = () => {
         if (session) {
             session.disconnect()
         }
+        setIsJoin(false)
         setScreenOV(null)
         setSession(undefined)
         setSubscribers([])
-        setPublisher([])
+        console.log('나갔어용', subscribers)
+        setPublisher(undefined)
     }
 
 
@@ -118,26 +133,26 @@ const GroupRoom = () => {
             <div className={styles.innerBox}>
                 <div className={styles.subScreen}>
                     {storeUser}
-                    {
-                        publisher.map(pub => {
-                            return <VideoScreen streamManager={pub} key={pub.id} />
-                        })
+                    {   
+                        publisher !== undefined ? 
+                            <VideoScreen streamManager={publisher} key={publisher.id} /> : null
                     }
                     {
+                        subscribers !== undefined ?
                         subscribers.map(sub => {
                             return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
-                        })
+                        }) : null
                     }
                 </div>
                 <div className={styles.mainScreen}>
                     {
-                        player.length[0] !== 0 ?
+                        player.length !== 0 ?
                             <VideoScreen streamManager={player} /> : null
                     }
                 </div>
                 <div className={styles.buttonBox}>
-                    <button onClick={joinSession}>연습 진입</button>
-                    <button onClick={() => leaveSession(sessionId)}>방 나가기</button>
+                    <button ref={joinButton} className={`${styles.joinButton} ${!isJoin ? '' : styles.disable }`} onClick={joinSession} disabled={isJoin}>연습 진입</button>
+                    <button onClick={() => leaveSession(sessionId)} disabled={!isJoin} >방 나가기</button>
                     <button onClick={() => deleteSession(sessionId)}>세션 삭제</button>
                 </div>
             </div>

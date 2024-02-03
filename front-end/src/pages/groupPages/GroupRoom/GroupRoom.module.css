@@ -43,3 +43,11 @@
 button {
     margin: 0 15px;
 }
+
+.joinButton {
+    background-color: blue;
+}
+
+.disable {
+    background-color: red;
+}
