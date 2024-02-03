@@ -17,6 +17,7 @@ const GroupRoom = () => {
 
     const [publisher, setPublisher] = useState([]);
     const [subscribers, setSubscribers] = useState([]);
+    const [player, setPlayer] = useState([])
 
     const deleteSubscriber = (streamManager) => {
         const newsubscribers = subscribers;
@@ -48,6 +49,7 @@ const GroupRoom = () => {
         mySession.on('streamDestroyed', (event) => {
             deleteSubscriber(event.stream.streamManager)
         })
+
         getToken(sessionId).then((res) => {
             console.log(res)
             mySession.connect(res.token, { clientData: storeUser })
@@ -66,6 +68,7 @@ const GroupRoom = () => {
                     mySession.publish(publisher)
                     setPublisher(prevPub => [...prevPub, publisher])
                     console.log('join session중 퍼블리셔', publisher)
+                    setPlayer([...publisher])
                     // var devices = newOV.getDevices();
                     // var videoDevices = devices.filter(device => device.kind === 'videoinput');
                     // var currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
@@ -116,6 +119,11 @@ const GroupRoom = () => {
                 <div className={styles.subScreen}>
                     {storeUser}
                     {
+                        publisher.map(pub => {
+                            return <VideoScreen streamManager={pub} key={pub.id} />
+                        })
+                    }
+                    {
                         subscribers.map(sub => {
                             return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
                         })
@@ -123,9 +131,8 @@ const GroupRoom = () => {
                 </div>
                 <div className={styles.mainScreen}>
                     {
-                        publisher.map(pub => {
-                            return <VideoScreen streamManager={pub} key={pub.id} />
-                        })
+                        player.length[0] !== 0 ?
+                            <VideoScreen streamManager={player} /> : null
                     }
                 </div>
                 <div className={styles.buttonBox}>
