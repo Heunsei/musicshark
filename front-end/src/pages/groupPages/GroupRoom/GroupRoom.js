@@ -1,9 +1,11 @@
-import { OpenVidu } from 'openvidu-browser';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import styles from './GroupRoom.module.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { OpenVidu } from 'openvidu-browser';
+import CallEndIcon from '@mui/icons-material/CallEnd';
+
 import { getToken, createToken, createSession, deleteSession } from './groupActions'
+import styles from './GroupRoom.module.css'
 import VideoScreen from './VideoScreen';
 
 const GroupRoom = () => {
@@ -133,15 +135,15 @@ const GroupRoom = () => {
             <div className={styles.innerBox}>
                 <div className={styles.subScreen}>
                     {storeUser}
-                    {   
-                        publisher !== undefined ? 
+                    {
+                        publisher !== undefined ?
                             <VideoScreen streamManager={publisher} key={publisher.id} /> : null
                     }
                     {
                         subscribers !== undefined ?
-                        subscribers.map(sub => {
-                            return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
-                        }) : null
+                            subscribers.map(sub => {
+                                return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
+                            }) : null
                     }
                 </div>
                 <div className={styles.mainScreen}>
@@ -151,8 +153,10 @@ const GroupRoom = () => {
                     }
                 </div>
                 <div className={styles.buttonBox}>
-                    <button ref={joinButton} className={`${styles.joinButton} ${!isJoin ? '' : styles.disable }`} onClick={joinSession} disabled={isJoin}>연습 진입</button>
-                    <button onClick={() => leaveSession(sessionId)} disabled={!isJoin} >방 나가기</button>
+                    <button ref={joinButton} className={`${styles.joinButton} ${!isJoin ? '' : styles.disable}`} onClick={joinSession} disabled={isJoin}>연습 진입</button>
+                    <button onClick={() => leaveSession(sessionId)} disabled={!isJoin} >
+                        <CallEndIcon sx={{color : '#000000'}}/>
+                    </button>
                     <button onClick={() => deleteSession(sessionId)}>세션 삭제</button>
                 </div>
             </div>
