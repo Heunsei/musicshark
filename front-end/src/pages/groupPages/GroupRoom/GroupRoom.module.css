@@ -78,3 +78,56 @@ button {
 .outBtn {
     background-color: red;
 }
+
+.inviteBox {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addMemberBtn {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+}
+
+.memberInput {
+    width: 70%;
+    height: 30%;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px black solid;
+    box-shadow: 2px 2px 30px 2px lightgrey;
+    margin: 10px;
+}
+
+.btnDisable {
+    background-color: red;
+}
+
+.groupInfoModifyBtn{
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+}
+
+.editLabel {
+    font-weight: 900;
+
+}
+
+.editInput {
+    width: 90%;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px black solid;
+    box-shadow: 2px 2px 30px 2px lightgrey;
+    margin: 10px;
+}

@@ -9,7 +9,7 @@ const MemberIcon = (props) => {
     return (
         <Button style={{
             witdh: '5%',
-            height: '8%',
+            height: '5%',
             borderRadius: "16px",
             margin: 0,
             padding: 0,
