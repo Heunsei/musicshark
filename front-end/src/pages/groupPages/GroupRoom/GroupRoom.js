@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { OpenVidu } from 'openvidu-browser';
 
 import CallEndIcon from '@mui/icons-material/CallEnd';
@@ -11,12 +12,16 @@ import GroupCallButton from '../../../components/GroupRoomButtons/GroupCallButto
 import MuteMicButton from '../../../components/GroupRoomButtons/MuteMicButton';
 import MuteCamButton from '../../../components/GroupRoomButtons/MuteCamButton';
 
+
 import { getToken, createToken, createSession, deleteSession } from './groupActions'
 import styles from './GroupRoom.module.css'
 import VideoScreen from './VideoScreen';
+import { setLoby } from '../../../redux/store/lobySlice';
 
 const GroupRoom = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     // const storeUser = useSelector((state) => state.user.nickname)
     const storeUser = 'test1234'
     const sessionId = 'test123411'
@@ -181,7 +186,7 @@ const GroupRoom = () => {
                     <GroupCallButton isJoin={isJoin} leaveSession={leaveSession} joinSession={joinSession} sessionId={sessionId} />
                     <MuteMicButton muteMic={muteMic} isMicMute={isMicMute} />
                     <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
-                    <button className={styles.outBtn} onClick={() => deleteSession(sessionId)}>
+                    <button className={styles.outBtn} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
                         <LogoutIcon sx={{ color: '#ffffff' }} />
                     </button>
                 </div>

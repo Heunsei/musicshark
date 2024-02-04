@@ -4,10 +4,10 @@ import { styled } from '@mui/system'
 import InnerContainer from './InnerContainer'
 
 const InfoContainer = styled('div')({
-    display : 'flex',
-    width : '69%',
-    justifyContent : 'center',
-    alignItems : 'center',
+    display: 'flex',
+    width: '69%',
+    justifyContent: 'center',
+    alignItems: 'center',
 })
 
 // InnerContainer > 요소들을 감쌀 div안의 작은 div

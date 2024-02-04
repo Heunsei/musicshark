@@ -1,6 +1,8 @@
 import React from 'react';
 import { styled } from '@mui/system'
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { setLoby } from '../../../../redux/store/lobySlice';
 
 const Container = styled('div')({
     width: '90%',
@@ -13,9 +15,13 @@ const Container = styled('div')({
 
 // 연주 이동 버튼 & 캘린더 버튼 & 그룹 삭제 버튼
 const GroupBottomBox = () => {
+    const dispatch = useDispatch()
     return (
         <Container>
             <Button
+                onClick={() => {
+                    dispatch(setLoby(false))
+                }}
                 sx={{
                     width: '45%',
                     height: '50%',
