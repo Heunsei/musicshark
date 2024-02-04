@@ -143,7 +143,7 @@ const GroupRoom = () => {
         const micState = isMicMute
         if (isJoin) {
             setIsMicMute(!micState)
-            publisher.publishVideo(isMicMute)
+            publisher.publishAudio(isMicMute)
         }
     }
 
