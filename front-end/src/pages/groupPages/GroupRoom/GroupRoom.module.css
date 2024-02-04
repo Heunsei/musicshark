@@ -7,7 +7,6 @@
 
 .innerBox {
     position: relative;
-    border: 1px black solid;
     width: 70%;
     flex-direction: column;
 }
@@ -26,11 +25,29 @@
 }
 
 .subScreen {
+    border: 1px black solid;
+    height: 10%;
     display: flex;
+    background-color: #C0AB9A;
+    border-radius: 15px;
+    overflow-x: scroll;
+    align-items: center;
+    justify-content: center;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.subScreen ::-webkit-scrollbar {
+    display: none;
+}
+
+.subScreen video {
+    margin: 0px 15px;
+    height: 80%;
+    width: 15%;
 }
 
 .buttonBox {
-    border: 4px blue solid;
     position: absolute;
     bottom: 0px;
     width: 100%;
@@ -38,12 +55,14 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    background-color: #C0AB9A;
+    border-radius: 15px;
 }
 
 button {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     width: 45px;
     height: 45px;
     border: none;
@@ -56,10 +75,6 @@ button {
     background-color: #525252;
 }
 
-.joinButton {
-    background-color: #01BB1A;
-}
-
-.disable {
+.outBtn {
     background-color: red;
 }

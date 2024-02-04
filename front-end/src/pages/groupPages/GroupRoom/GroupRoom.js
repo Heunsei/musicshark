@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { OpenVidu } from 'openvidu-browser';
+
 import CallEndIcon from '@mui/icons-material/CallEnd';
+import CallIcon from '@mui/icons-material/Call';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+import GroupCallButton from '../../../components/GroupRoomButtons/GroupCallButton';
+import MuteMicButton from '../../../components/GroupRoomButtons/MuteMicButton';
+import MuteCamButton from '../../../components/GroupRoomButtons/MuteCamButton';
 
 import { getToken, createToken, createSession, deleteSession } from './groupActions'
 import styles from './GroupRoom.module.css'
@@ -14,19 +21,19 @@ const GroupRoom = () => {
     const storeUser = 'test1234'
     const sessionId = 'test123411'
 
+    // openvidu 관련 state
     const [screenOV, setScreenOV] = useState(undefined);
     const [session, setSession] = useState(undefined);
 
+    // 참가자 관련 state
     const [publisher, setPublisher] = useState(undefined);
     const [subscribers, setSubscribers] = useState([]);
     const [player, setPlayer] = useState([]);
+
+    // 버튼 관리할 state
     const [isJoin, setIsJoin] = useState(false)
-    const joinButton = useRef(null)
-
-    if (!isJoin) {
-    } else {
-
-    }
+    const [isMicMute, setIsMicMute] = useState(false)
+    const [isCamMute, setIsCamMute] = useState(false)
 
 
     const deleteSubscriber = (streamManager) => {
@@ -39,6 +46,7 @@ const GroupRoom = () => {
         })
     };
 
+    // 세선 접속
     const joinSession = () => {
         const newOV = new OpenVidu();
         const mySession = newOV.initSession();
@@ -102,6 +110,7 @@ const GroupRoom = () => {
         })
     }
 
+    // 출력용 useEffect
     useEffect(() => {
         console.log('===========================')
         console.log('서브스크라이버가 바뀌었습니다')
@@ -116,6 +125,7 @@ const GroupRoom = () => {
         console.log('===========================')
     }, [publisher])
 
+    // leave session
     const leaveSession = () => {
         console.log('세션', session)
         if (session) {
@@ -129,6 +139,21 @@ const GroupRoom = () => {
         setPublisher(undefined)
     }
 
+    const muteMic = () => {
+        const micState = isMicMute
+        if (isJoin) {
+            setIsMicMute(!micState)
+            publisher.publishVideo(isMicMute)
+        }
+    }
+
+    const muteCam = () => {
+        const camState = isCamMute
+        if (isJoin) {
+            setIsCamMute(!camState)
+            publisher.publishVideo(isCamMute)
+        }
+    }
 
     return (
         <div className={styles.mainContainer}>
@@ -153,11 +178,12 @@ const GroupRoom = () => {
                     }
                 </div>
                 <div className={styles.buttonBox}>
-                    <button ref={joinButton} className={`${styles.joinButton} ${!isJoin ? '' : styles.disable}`} onClick={joinSession} disabled={isJoin}>연습 진입</button>
-                    <button onClick={() => leaveSession(sessionId)} disabled={!isJoin} >
-                        <CallEndIcon sx={{color : '#000000'}}/>
+                    <GroupCallButton isJoin={isJoin} leaveSession={leaveSession} joinSession={joinSession} sessionId={sessionId} />
+                    <MuteMicButton muteMic={muteMic} isMicMute={isMicMute} />
+                    <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
+                    <button className={styles.outBtn} onClick={() => deleteSession(sessionId)}>
+                        <LogoutIcon sx={{ color: '#ffffff' }} />
                     </button>
-                    <button onClick={() => deleteSession(sessionId)}>세션 삭제</button>
                 </div>
             </div>
         </div>
