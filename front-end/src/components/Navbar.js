@@ -1,27 +1,73 @@
 import * as React from 'react';
 import {Box, AppBar, Toolbar, Typography} from '@mui/material';
-import NavButton from './NavButton';
-import LogoButton from './LogoButton';
+import { useNavigate } from 'react-router-dom';
+// import NavButton from './NavButton';
+// import LogoButton from './LogoButton';
+import styles from './Buttons.module.css';
 
 export default function Navbar(){
 
+        const navigate = useNavigate();
+    
+        const navigateToAbout = () => {
+            navigate('/about')
+        }
+        const navigateToGroup = () => {
+            navigate('/group')
+        }
+        const navigateToSingle = () => {
+            navigate('/single')
+        }
+        const navigateToCommunity = () => {
+            navigate('/community')
+        }
+        const navigateToMyPage = () => {
+            navigate('/mypage')
+        }
+        const navigateToRegister = () => {
+            navigate('/register')
+        }
+
+        const navigateToSignIn = () => {
+            navigate('/login');
+            
+        };
+    
+        const navigateToSignOut = () => {
+            navigate('/');
+        };
     return(
         <Box border>
             <AppBar position="static" sx={{bgcolor: "#997B66", position:"fixed", boxShadow:'none'}} >
-                <Toolbar>
+                <Toolbar position="static" sx={{bgcolor: "#997B66", height:'120px', width:'100%', position:"fixed", boxShadow:'none'}}>
                     
                     <Typography variant="h4" component="div" sx={{flexGrow:1}}>
-                        <LogoButton id="nav_logo" label={"악기상어"}></LogoButton>
+                        <p className={styles.logoBtn}>악기상어</p>
                         
                     </Typography>
                     
-                        <NavButton id="nav_about" label={"악기상어 소개"}></NavButton>
-                        <NavButton id="nav_group" label={"함께 연습하기"}></NavButton>
-                        <NavButton id="nav_single" label={"혼자 연습하기"}></NavButton>
-                        <NavButton id="nav_community" label={"커뮤니티"}></NavButton>
-                        <NavButton id="nav_mypage" label={"마이페이지"}></NavButton>
+                        
+                    <p className={styles.loginBtn} onClick={navigateToSignIn}>
+                        Login
+                    </p>
 
-                        {/* 로그인/로그아웃 배치 */}
+                        <p className={styles.navBtn} onClick={navigateToAbout}>
+                            악기상어 소개
+                        </p>
+                        <p className={styles.navBtn} onClick={navigateToGroup}>
+                            함께 연습하기
+                        </p>
+                        <p className={styles.navBtn} onClick={navigateToSingle}>
+                            혼자 연습하기
+                        </p>
+                        <p className={styles.navBtn} onClick={navigateToCommunity}>
+                            커뮤니티
+                        </p>
+                        <p className={styles.navBtn} onClick={navigateToMyPage}>
+                            마이페이지
+                        </p>
+
+                    {/* 로그인/로그아웃 배치 */}
                 </Toolbar>
             </AppBar>
         </Box>

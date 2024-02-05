@@ -4,7 +4,7 @@ const CommonTableColumn=({children})=>{
     return(
         <td className="common-table-column">
             {
-                children
+                {children}
             }
         </td>
     )
