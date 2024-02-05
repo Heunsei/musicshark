@@ -40,8 +40,9 @@ const Container = styled('div')({
 // group detail은 GroupDetailPage에서 props 받아옴
 const GroupInfoBox = (props) => {
     const { groupDetail } = props
-    console.log(groupDetail)
+    console.log('??????', groupDetail)
     const [open, setOpen] = useState(false);
+
     const [groupName, setGroupName] = useState(groupDetail.channelName)
     const [groupIntro, setGroupIntro] = useState(groupDetail.channelIntro)
     const [groupMax, setGroupMax] = useState(groupDetail.channelMax)
@@ -61,7 +62,7 @@ const GroupInfoBox = (props) => {
         setGroupMax(groupDetail.channelMax)
         setOpen(false)
     };
-    
+
     const handleEditGroup = async () => {
         const editInfo = {
             channelId: groupDetail.channelIdx,

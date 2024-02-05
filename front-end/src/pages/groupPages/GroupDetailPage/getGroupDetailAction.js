@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getCookie } from '../../../util/cookie'
 
-const getGroupDetailAction = async (id, setGroupDetail) => {
+export const getGroupDetailAction = async (id, setGroupDetail) => {
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     try {
@@ -20,7 +20,6 @@ const getGroupDetailAction = async (id, setGroupDetail) => {
                 console.log(err)
             })
     } catch (error) {
-        return error
+        return error.data
     }
 }
-export default getGroupDetailAction

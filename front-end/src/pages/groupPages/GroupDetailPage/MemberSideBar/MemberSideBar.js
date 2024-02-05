@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'
 import { styled } from '@mui/material';
 import TopIcon from './TopIcon';
 import AddMemberButton from './AddMemberButton';
@@ -15,12 +16,11 @@ const MainContainer = styled("div")({
 });
 
 const MemberSideBar = (props) => {
-    const { groupMembers } = props
-    console.log(groupMembers)
+    const { groupMembers, setGroupMembers, setGroupDetail} = props
     return (
         <MainContainer>
             <TopIcon />
-            <AddMemberButton />
+            <AddMemberButton setGroupMembers={setGroupMembers} setGroupDetail={setGroupDetail} />
             {
                 groupMembers.map((element, i) => {
                     return (

@@ -5,17 +5,20 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { addMemberAction } from './addMemberAction';
 import { useParams } from 'react-router-dom';
 
-const addMember = (id, userIdx) => {
-    addMemberAction(id, userIdx)
-}
-
 const SearchListBox = (props) => {
     const { id } = useParams()
-    const { emailOrNickname, profileImage, userIdx } = props
+    const { emailOrNickname, profileImage, userIdx, setOpen } = props
+
+    const addMember = async (id, userIdx) => {
+        await addMemberAction(id, userIdx)
+
+        setOpen(false)
+    }
+
     return (
         <div className={styles.wrapper}>
             <p> {emailOrNickname} </p>
-            <button onClick={() => {addMember(id, userIdx)}}>
+            <button onClick={() => { addMember(id, userIdx) }}>
                 <PersonAddIcon />
             </button>
         </div>

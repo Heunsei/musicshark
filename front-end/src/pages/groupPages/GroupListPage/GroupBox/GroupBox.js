@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
@@ -12,13 +12,14 @@ import GroupCreateModal from './GroupCreateModal';
 
 const GroupBox = (props) => {
     const navigate = useNavigate()
-    const { groupList } = props
+    const { groupList, setGroupList } = props
     const itemsPerPage = 4
     const [currentPage, setCurrentPage] = useState(1)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const lastItem = currentPage * itemsPerPage
     const fisrtItem = lastItem - itemsPerPage
     const showGroup = groupList.slice(fisrtItem, lastItem);
+
     const handleChange = (event, value) => {
         setCurrentPage(value);
     };
@@ -26,6 +27,7 @@ const GroupBox = (props) => {
     const handleOpenGroupCreatePage = () => {
         setIsModalOpen(true)
     }
+
     return (
         <>
             <div className={styles.groupBox}>
@@ -48,7 +50,7 @@ const GroupBox = (props) => {
                         </Stack>
                     </div>
                 </div>
-                <GroupCreateModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                <GroupCreateModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setGroupList={setGroupList} />
             </div>
         </>
     );

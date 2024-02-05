@@ -5,7 +5,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import InputWithLabel from './../../../../components/InputWithLabel';
+
 import { createGroupAction } from './createGroupAction';
+import loadGroupAction from '../loadGroupAction';
 
 const style = {
     position: 'absolute',
@@ -20,15 +22,21 @@ const style = {
 };
 
 const GroupCreateModal = (props) => {
-    const { isModalOpen, setIsModalOpen } = props
+    const { isModalOpen, setIsModalOpen, setGroupList } = props
     const [groupName, setGroupName] = useState('')
     const [groupIntro, setGroupIntro] = useState('')
     const [channelMax, setChannelMax] = useState(1)
+
     const groupDetail = {
         "channelName": groupName,
         "channelIntro": groupIntro,
         "channelMax": channelMax,
     }
+
+    useEffect(() => {
+        console.log(1234)
+        loadGroupAction(setGroupList)
+    }, [isModalOpen])
 
     useEffect(() => {
         if (!isNaN(channelMax)) {

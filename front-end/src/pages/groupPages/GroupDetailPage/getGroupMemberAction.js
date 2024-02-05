@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getCookie } from '../../../util/cookie'
 
-const getGroupMemberAction = async (id, setGroupMembers) => {
+export const getGroupMemberAction = async (id, setGroupMembers) => {
     console.log(`props로 받아온 id : ${id}`)
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
@@ -24,4 +24,3 @@ const getGroupMemberAction = async (id, setGroupMembers) => {
         return error
     }
 }
-export default getGroupMemberAction

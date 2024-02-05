@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box';
@@ -13,6 +13,8 @@ import { useParams } from 'react-router-dom';
 import { validateMail } from '../../../authPages/validator';
 import { searchUserByNameAction } from './searchUserByNameAction';
 import { searchUserByMailAction } from './searchUserByMailAction';
+import { getGroupMemberAction } from '../getGroupMemberAction';
+import { getGroupDetailAction } from '../getGroupDetailAction';
 import SearchListBox from './SearchListBox';
 
 const style = {
@@ -30,8 +32,9 @@ const style = {
     flexDirection: 'column'
 };
 
-const AddMemberButton = () => {
+const AddMemberButton = (props) => {
     const { id } = useParams()
+    const { setGroupMembers, setGroupDetail } = props
     const [open, setOpen] = useState(false);
     const [btnDisable, setBtnDisable] = useState(true)
     // 검색 텍스트
@@ -44,6 +47,11 @@ const AddMemberButton = () => {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    useEffect(() => {
+        getGroupMemberAction(id, setGroupMembers)
+        getGroupDetailAction(id, setGroupDetail)
+    }, [open])
 
     const handleValueChange = (event) => {
         const inputValue = event.target.value;
@@ -107,7 +115,7 @@ const AddMemberButton = () => {
                         {
                             searchData.map((e, i) => {
                                 return (
-                                    <SearchListBox key={i} emailOrNickname={e.emailOrNickname} profileImage={e.profileImage} userIdx={e.userIdx} />
+                                    <SearchListBox key={i} emailOrNickname={e.emailOrNickname} profileImage={e.profileImage} userIdx={e.userIdx} setOpen={setOpen} />
                                 )
                             })
                         }
