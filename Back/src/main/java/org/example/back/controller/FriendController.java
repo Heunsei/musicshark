@@ -79,7 +79,7 @@ public class FriendController {
 		return ResponseEntity.ok(apiResponse);
 	}
 
-	//유저 닉네임으로 조회
+	//유저 닉네임으로 조회sssssssssss
 	@GetMapping("/friend/nickname-search-list")
 	public ResponseEntity<ApiResponse> findByUserNickname(@RequestParam String userNickname){
 		List<UserSearchResponseDto> userSearchList = friendServiceImpl.userSearchByNickname(userNickname);
