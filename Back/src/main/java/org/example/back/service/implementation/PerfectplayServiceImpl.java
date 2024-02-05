@@ -63,7 +63,7 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		Optional<TierEntity> tierEntity = tierRepository.findById(userIdx);
 		if(tierEntity.isPresent()){
 			int clearCnt = tierEntity.get().getClearCnt();
-			if(clearCnt == 4 || clearCnt == 11) {
+			if(clearCnt == 6 || clearCnt == 11 || clearCnt == 16 || clearCnt == 21 ) {
 				String curTier = tierEntity.get().getUserTier();
 				String nextTier = fineNextTier(curTier);
 				tierRepository.updateTier(userIdx, nextTier);
@@ -76,14 +76,10 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		//bronze면 silver 반환
 		//silver면 gold 반환
 		if(curTier.equals("bronze")) return "silver";
-		return "gold";
-	}
-	private boolean checkClearCnt(int userIdx) {
-		Optional<TierEntity> tierEntity = tierRepository.findById(userIdx);
-
-		int clearCnt = tierEntity.get().getClearCnt();
-		if(clearCnt == 4 || clearCnt == 11) return true;
-		return false;
+		else if(curTier.equals("silver")) return "gold";
+		else if(curTier.equals("gold")) return "platinum";
+		else
+			return "diamonde";
 	}
 	private boolean checkPerfectplayTable(int userIdx, int songIdx){//플레이한 적 있으면 true반환
 		List<PerfectplayEntity> allResult = perfectplayRepository.perfectplayResult(userIdx);
