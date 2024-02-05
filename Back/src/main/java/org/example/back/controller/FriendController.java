@@ -78,7 +78,7 @@ public class FriendController {
 			.build();
 		return ResponseEntity.ok(apiResponse);
 	}
-
+	//
 	//유저 닉네임으로 조회
 	@GetMapping("/friend/nickname-search-list")
 	public ResponseEntity<ApiResponse> findByUserNickname(@RequestParam String userNickname){
