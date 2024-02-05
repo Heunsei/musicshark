@@ -10,18 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import lombok.*;
+import org.example.back.dto.request.CommentRequestDto;
+import org.example.back.dto.response.GetCommentsResponseDto;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 @Getter
 @Setter
 @Entity
 @Table(name= "comment")
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +34,8 @@ public class CommentEntity {
 	@JoinColumn(name = "user_idx", referencedColumnName = "user_idx")
 	private int userIdx;
 
-	@Column(name = "board_comment", columnDefinition = "TEXT")
-	private String boardComment;
+	@Column(name = "comment_content", columnDefinition = "TEXT")
+	private String commentContent;
 
 	@CreationTimestamp
 	@Column(name = "comment_date")
@@ -43,4 +44,9 @@ public class CommentEntity {
 	@ColumnDefault("false")
 	@Column(name = "comment_deleted", columnDefinition = "TINYINT(0)")
 	private boolean commentDeleted;
+
+	public CommentEntity(CommentRequestDto dto){
+		this.boardIdx = dto.getBoardIdx();
+		this.commentContent = dto.getCommentContent();
+	}
 }

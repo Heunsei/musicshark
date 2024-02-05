@@ -19,6 +19,11 @@ create table if not exists `user` (
     profile_image blob COMMENT '프로필 사진'
 ); 
 
+CREATE TABLE IF NOT EXISTS `user_roles` (
+    user_user_idx int PRIMARY KEY AUTO_INCREMENT,
+    roles text
+);
+
 -- 채널
 create table if not exists `channel` (
     channel_idx int primary key auto_increment COMMENT '채널 인덱스',
@@ -144,7 +149,7 @@ create table if not exists `comment` (
    board_idx int NOT NULL COMMENT '게시글 인덱스',
    comment_content text NOT NULL COMMENT '내용',
    comment_date timestamp NOT NULL DEFAULT now() COMMENT '작성일자',
-   comment_isDelete tinyint NOT NULL DEFAULT 0 COMMENT '삭제여부',
+   comment_deleted tinyint NOT NULL DEFAULT 0 COMMENT '삭제여부',
    user_idx int NOT NULL COMMENT '유저 인덱스',
    CONSTRAINT `fk_comment_board_idx` FOREIGN KEY (board_idx) REFERENCES `board` (board_idx),
    CONSTRAINT `fk_comment_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
@@ -198,3 +203,8 @@ values (1, "테스트!", "테스트 게시글입니다.");
 
 insert into `board` (user_idx, board_title, board_content, board_deleted)
 values (1, "삭제 테스트", "테스트 게시글임", 1);
+
+insert into `comment` (board_idx, comment_content, user_idx)
+values (1, "댓글 테스트!", 1);
+
+select * from `comment`;
