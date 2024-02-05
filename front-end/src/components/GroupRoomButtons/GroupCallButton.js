@@ -12,11 +12,11 @@ const GroupCallButton = (props) => {
             {
                 // 입장 퇴장 버튼을 isJoin State로 관리
                 !isJoin ?
-                    (<button className={`${styles.joinButton}`} onClick={joinSession} disabled={isJoin}>
+                    (<button className={`${styles.joinButton} ${styles.groupCallBtn}`} onClick={joinSession} disabled={isJoin}>
                         <CallIcon />
                     </button>)
                     :
-                    (<button className={styles.disable} onClick={() => leaveSession(sessionId)} disabled={!isJoin} >
+                    (<button className={`${styles.disable} ${styles.groupCallBtn}`} onClick={() => leaveSession(sessionId)} disabled={!isJoin} >
                         <CallEndIcon sx={{ color: '#ffffff' }} />
                     </button>)
             }

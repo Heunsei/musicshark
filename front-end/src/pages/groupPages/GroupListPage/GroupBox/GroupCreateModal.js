@@ -37,9 +37,6 @@ const GroupCreateModal = (props) => {
         if (channelMax >= 6) {
             setChannelMax(6)
         }
-        if (channelMax >= 1){
-            setChannelMax(2)
-        }
     }, [channelMax])
 
     return (
@@ -82,7 +79,10 @@ const GroupCreateModal = (props) => {
                         min='2'
                     />
                     <Button variant="contained"
-                        onClick={() => createGroupAction(groupDetail)}
+                        onClick={() => {
+                            createGroupAction(groupDetail)
+                            setIsModalOpen(false)
+                        }}
                         sx={{
                             margin: '15px'
                         }}

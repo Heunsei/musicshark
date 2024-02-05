@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/system'
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import styles from './../../GroupRoom/GroupRoom.module.css'
 import InputWithLabel from '../../../../components/InputWithLabel';
-
+import { editGroupAction } from './editGroupAction';
 
 const style = {
     position: 'absolute',
@@ -40,26 +40,56 @@ const Container = styled('div')({
 // group detail은 GroupDetailPage에서 props 받아옴
 const GroupInfoBox = (props) => {
     const { groupDetail } = props
+    console.log(groupDetail)
     const [open, setOpen] = useState(false);
-    const [GroupName, setGroupName] = useState(groupDetail.channelName)
-    const [GroupIntro, setGroupIntro] = useState(groupDetail.channelIntro)
-    const [GroupMax, setGroupMax] = useState(groupDetail.channelIdx)
-    const handleOpen = () => setOpen(true);
+    const [groupName, setGroupName] = useState(groupDetail.channelName)
+    const [groupIntro, setGroupIntro] = useState(groupDetail.channelIntro)
+    const [groupMax, setGroupMax] = useState(groupDetail.channelMax)
+
+    const [isValidMaxMember, setisValidMaxmember] = useState(true)
+
+    const handleOpen = () => {
+        setGroupName(groupDetail.channelName)
+        setGroupIntro(groupDetail.channelIntro)
+        setGroupMax(groupDetail.channelMax)
+        setOpen(true);
+    }
+
     const handleClose = () => {
-        setGroupName('')
-        setGroupIntro('')
-        setGroupMax(groupDetail.channelIdx)
+        setGroupName(groupDetail.channelName)
+        setGroupIntro(groupDetail.channelIntro)
+        setGroupMax(groupDetail.channelMax)
         setOpen(false)
     };
+    
+    const handleEditGroup = async () => {
+        const editInfo = {
+            channelId: groupDetail.channelIdx,
+            channelName: groupName,
+            channelIntro: groupIntro,
+            channelMax: groupMax
+        }
+        await editGroupAction(editInfo)
+        window.location.reload();
+        setOpen(false)
+    }
+
+    useEffect(() => {
+        if (groupMax >= 11) {
+            setGroupMax(groupMax % 10)
+        } else if (groupMax >= 6) {
+            setGroupMax(6)
+        }
+    }, [groupMax, setGroupMax, groupDetail.channelCur])
 
     return (
         <>
             <Container>
                 <p>{groupDetail.channelName}</p>
                 <p>{groupDetail.channelIntro}</p>
-                <p>{`현재 인원 : ${groupDetail.channelCur} / ${groupDetail.channelIdx}`}</p>
+                <p>{`현재 인원 : ${groupDetail.channelCur} / ${groupDetail.channelMax}`}</p>
                 <p>{`채널 생성일 : ${groupDetail.channelDate}`}</p>
-                <button className={styles.groupInfoModifyBtn} onClick={handleOpen}>
+                <button className={`${styles.groupInfoModifyBtn} ${styles.groupRoomBtn}`} onClick={handleOpen}>
                     <EditIcon />
                 </button>
             </Container>
@@ -70,14 +100,22 @@ const GroupInfoBox = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <InputWithLabel value={GroupName} setValue={setGroupName}
+                    <InputWithLabel value={groupName} setValue={setGroupName}
                         label='그룹명 변경' placeholder="변경할 그룹명을 입력하세요" type='text' />
-                    <InputWithLabel value={GroupIntro} setValue={setGroupIntro}
+                    <InputWithLabel value={groupIntro} setValue={setGroupIntro}
                         label='그룹소개 변경' placeholder="변경할 그룹소개를 입력하세요" type='text' />
-                    <InputWithLabel value={GroupMax} setValue={setGroupMax}
+                    <InputWithLabel value={groupMax} setValue={setGroupMax}
                         label='그룹최대 인원 변경' placeholder="최대 인원을 입력하세요" type='number' />
-                    <button> <CheckIcon /> </button>
-                    <button onClick={handleClose}> <ClearIcon /> </button>
+                    <div>
+                        {groupMax >= 6 ? <p>최대 인원수는 6명입니다</p> : null}
+                        {groupMax <= groupDetail.channelCur ? <p>최소 인원수는 {groupDetail.channelCur}명입니다</p> : null}
+                    </div>
+                    <div className={styles.groupInfoBtnBox}>
+                        <button className={`${styles.groupRoomBtn} ${groupMax <= groupDetail.channelCur ? styles.btnDisable : ''}`}
+                            disabled={groupMax <= groupDetail.channelCur} onClick={handleEditGroup}
+                        > <CheckIcon /> </button>
+                        <button className={`${styles.groupRoomBtn}`} onClick={handleClose}> <ClearIcon /> </button>
+                    </div>
                 </Box>
             </Modal>
         </>

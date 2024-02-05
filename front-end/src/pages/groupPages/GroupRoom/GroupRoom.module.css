@@ -59,7 +59,7 @@
     border-radius: 15px;
 }
 
-button {
+.groupRoomBtn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,12 +79,7 @@ button {
     background-color: red;
 }
 
-.inviteBox {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+
 
 .addMemberBtn {
     width: 20%;
@@ -112,7 +107,7 @@ button {
     background-color: red;
 }
 
-.groupInfoModifyBtn{
+.groupInfoModifyBtn {
     position: absolute;
     bottom: 2%;
     right: 2%;
@@ -130,4 +125,13 @@ button {
     border: 1px black solid;
     box-shadow: 2px 2px 30px 2px lightgrey;
     margin: 10px;
+}
+
+.groupInfoBtnBox {
+    width: 20%;
+    display: flex;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    justify-content: space-between;
 }

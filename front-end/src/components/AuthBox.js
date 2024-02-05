@@ -8,7 +8,7 @@ const BoxWrapper = styled('div')({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: '#FFEDD8'
+    background: '#FFEDD8',
 })
 
 const AuthBox = (props) => {
@@ -24,7 +24,7 @@ const AuthBox = (props) => {
                     display: 'flex',
                     flexDirection: 'column',
                     padding: '25px',
-                    overflow:'scroll',
+                    overflow: 'scroll',
                 }}
             >
                 {props.children}

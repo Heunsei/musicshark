@@ -186,7 +186,7 @@ const GroupRoom = () => {
                     <GroupCallButton isJoin={isJoin} leaveSession={leaveSession} joinSession={joinSession} sessionId={sessionId} />
                     <MuteMicButton muteMic={muteMic} isMicMute={isMicMute} />
                     <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
-                    <button className={styles.outBtn} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
+                    <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
                         <LogoutIcon sx={{ color: '#ffffff' }} />
                     </button>
                 </div>

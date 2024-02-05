@@ -7,17 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
-// const bull = (
-//     <Box
-//         component="span"
-//         sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-//     >
-//         •
-//     </Box>
-// );
-
 const GroupCard = (props) => {
-    const {groupData} = props
+    const { groupData } = props
     const navigate = useNavigate()
     return (
         <Card sx={{
@@ -42,7 +33,7 @@ const GroupCard = (props) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => {navigate(`./${groupData.channelIdx}`)}}>참가하기</Button>
+                <Button size="small" onClick={() => { navigate(`./${groupData.channelIdx}`) }}>참가하기</Button>
             </CardActions>
         </Card>
     );
