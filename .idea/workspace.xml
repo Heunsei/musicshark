@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/S10P12E205.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/S10P12E205.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/2024-01-25__3_27__________.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/2024-01-25_오후_3_27,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/ssatudio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/ssatudio.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +64,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BackApplication.executor": "Run",
-    "git-widget-placeholder": "backend-develop-perfectplay",
+    "git-widget-placeholder": "backend-develop-User",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/SSAFY/2024-2/work-space/S10P12E205/Back/src/main/java/org/example/back",
     "node.js.detected.package.eslint": "true",
