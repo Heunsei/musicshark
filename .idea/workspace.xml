@@ -5,47 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Back.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/ChannelController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/request/PatchChannelRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/request/PostChannelRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/DeleteUserResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetChannelListResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetChannelMemberResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetChannelResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetDetailChannelMemberResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/PatchChannelResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/PostChannelResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/BelongChannelEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/ChannelEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/BelongChannelRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/ChannelRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/ChannelService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/ChannelServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/S10P12E205.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/S10P12E205.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/2024-01-25__3_27__________.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/2024-01-25_오후_3_27,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetUserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/GetUserResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/PatchUserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/PatchUserResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/SignUpResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/dto/response/SignUpResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/entity/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/FriendRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/FriendRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/FriendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/FriendService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/AuthServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/FriendServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/FriendServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/PerfectplayServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/service/implementation/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/ssatudio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/ssatudio.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEST.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +64,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BackApplication.executor": "Run",
-    "git-widget-placeholder": "backend-develop-User 병합 중",
+    "git-widget-placeholder": "backend-develop-User",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/SSAFY/2024-2/work-space/S10P12E205/Back/src/main/java/org/example/back",
     "node.js.detected.package.eslint": "true",
