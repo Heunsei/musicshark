@@ -15,7 +15,7 @@ const SearchListBox = (props) => {
     return (
         <div className={styles.wrapper}>
             <p> {emailOrNickname} </p>
-            <button onClick={addMember(id, userIdx)}>
+            <button onClick={() => {addMember(id, userIdx)}}>
                 <PersonAddIcon />
             </button>
         </div>

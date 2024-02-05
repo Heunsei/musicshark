@@ -11,7 +11,7 @@ import { addMemberAction } from './addMemberAction'
 import styles from './AddMemberButton.module.css'
 import { useParams } from 'react-router-dom';
 import { validateMail } from '../../../authPages/validator';
-import { searchUserByName } from './searchUserByNameAction';
+import { searchUserByNameAction } from './searchUserByNameAction';
 import { searchUserByMailAction } from './searchUserByMailAction';
 import SearchListBox from './SearchListBox';
 
@@ -60,7 +60,7 @@ const AddMemberButton = () => {
             await searchUserByMailAction(inviteUser, setSearchData)
             console.log('데이터 확인', searchData)
         } else {
-            await searchUserByName(inviteUser, setSearchData)
+            await searchUserByNameAction(inviteUser, setSearchData)
             console.log('데이터 확인', searchData)
         }
     }

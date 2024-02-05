@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getCookie } from "../../../../util/cookie";
 
-export const searchUserByName = async (name, setSearchData) => {
+export const searchUserByNameAction = async (name, setSearchData) => {
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     const changeValue = (value) => {

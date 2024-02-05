@@ -16,18 +16,20 @@ const Wrapper = styled("div")({
     height: "100vh",
     display: "flex",
     backgroundColor: "#FFEDD8",
-    margin : '0',
-    padding : '0',
+    margin: '0',
+    padding: '0',
 });
 
 // 그룹 디테일 페이지에 들어올때 마다
 const GroupDetailPage = () => {
     let { id } = useParams()
     let lobyState = useSelector((state) => state.isLoby)
+
     if (lobyState) {
         console.log(lobyState.isLoby)
         console.log('로비에 있습니다')
     }
+
     const [groupDetail, setGroupDetail] = useState([])
     const [groupMembers, setGroupMembers] = useState([])
     console.log(`그룹 멤버들${groupMembers}`)
@@ -36,6 +38,8 @@ const GroupDetailPage = () => {
         getGroupDetailAction(id, setGroupDetail)
         getGroupMemberAction(id, setGroupMembers)
     }, [id])
+
+
 
     return (
         <Wrapper>

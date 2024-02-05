@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getCookie } from "../../../../util/cookie";
 
-export const searchUserByMailAction = async (mail, searchData) => {
+export const searchUserByMailAction = async (mail, setSearchData) => {
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     try {
@@ -12,7 +12,7 @@ export const searchUserByMailAction = async (mail, searchData) => {
                 Authorization: `Bearer ${accessToken}`
             }
         })
-        searchData(response.data.data)
+        setSearchData(response.data.data)
     } catch (err) {
         console.log(err)
     }
