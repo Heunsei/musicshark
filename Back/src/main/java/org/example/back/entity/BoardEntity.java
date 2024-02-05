@@ -4,7 +4,10 @@ import java.sql.Timestamp;
 
 import javax.persistence.*;
 
+import org.example.back.dto.request.PostBoardRequestDto;
+import org.example.back.repository.UserRepository;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 import lombok.Getter;
@@ -39,6 +42,7 @@ public class BoardEntity {
 	@Column(name = "board_deleted", columnDefinition = "TINYINT(0)")
 	private boolean boardDeleted;
 
+	@CreationTimestamp
 	@Column(name = "board_date")
 	private Timestamp boardDate;
 }
