@@ -56,7 +56,9 @@ public class ChannelController {
              }
 
              @GetMapping()
-             public ResponseEntity<ApiResponse> getChannelList(){
+             public ResponseEntity<ApiResponse> getChannelList(@AuthenticationPrincipal UserDetails userDetails){
+
+                 String userEmail = userDetails.getUsername();
 
                  ApiResponse<GetChannelListResponseDto> result = channelService.getChannelList();
 

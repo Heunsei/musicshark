@@ -82,6 +82,7 @@ public class ChannelServiceImpl implements ChannelService {
 
     List<GetChannelListResponseDto> data = null;
 
+
     try{
 
         List<ChannelEntity> channelList = channelRepository.findByChannelIsDeleteOrderByChannelDateDesc(0);
