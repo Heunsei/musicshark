@@ -10,6 +10,7 @@ import org.example.back.dto.response.FriendDetailResponseDto;
 import org.example.back.dto.response.FriendResponseDto;
 import org.example.back.dto.response.UserSearchResponseDto;
 import org.example.back.service.implementation.FriendServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -62,6 +63,14 @@ public class FriendController {
 	public ResponseEntity<ApiResponse> findByUserEmail (@RequestParam String userEmail){
 		List<UserSearchResponseDto> userSearchList = friendServiceImpl.userSearchByEmail(userEmail);
 
+		if (userSearchList.isEmpty()) {
+			ApiResponse apiErrorResponse = ApiResponse.builder()
+				.message("사용자를 찾을 수 없습니다.")
+				.status(HttpStatus.NOT_FOUND.value())
+				.build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiErrorResponse);
+		}
+
 		ApiResponse apiResponse = ApiResponse.builder()
 			.message("사용자 조회")
 			.status(OK.value())
@@ -74,6 +83,14 @@ public class FriendController {
 	@GetMapping("/friend/nickname-search-list")
 	public ResponseEntity<ApiResponse> findByUserNickname(@RequestParam String userNickname){
 		List<UserSearchResponseDto> userSearchList = friendServiceImpl.userSearchByNickname(userNickname);
+
+		if (userSearchList.isEmpty()) {
+			ApiResponse apiErrorResponse = ApiResponse.builder()
+				.message("사용자를 찾을 수 없습니다.")
+				.status(HttpStatus.NOT_FOUND.value())
+				.build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiErrorResponse);
+		}
 
 		ApiResponse apiResponse = ApiResponse.builder()
 			.message("사용자 조회")

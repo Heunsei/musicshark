@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 select * from user;
 select * from user_roles;
+select * from channel;
+select * from belong_channel;
 
 -- ALTER TABLE User
 -- ADD COLUMN role_id int,
@@ -40,18 +42,21 @@ create table if not exists `Channel` (
     channel_idx int primary key auto_increment COMMENT '채널 인덱스',
     channel_name varchar(30) NOT NULL COMMENT '채널명',
     channel_intro varchar(200) NULL COMMENT '채널 소개',
-    channel_date timestamp NOT NULL default now() COMMENT '생성일자',
+    channel_date DATE NOT NULL default now() COMMENT '생성일자',
     channel_max int NOT NULL COMMENT '모집인원',
     channel_cur int NOT NULL DEFAULT 1 COMMENT '현재인원',
-    channel_isDelete tinyint NOT NULL COMMENT '삭제여부'
+    channel_isDelete tinyint NOT NULL DEFAULT 0 COMMENT '삭제여부'
 );
+
+INSERT INTO CHANNEL(channel_name, channel_intro, channel_date, channel_max, channel_cur, channel_isDelete) 
+VALUES ("치기 기타", "하이", now(), 5, 1, 1);
 
 -- 가입 채널
 create table if not exists `belong_channel` (
     belong_channel_idx int primary key auto_increment COMMENT '가입채널 인덱스',
     channel_idx int NOT NULL COMMENT '채널 인덱스',
     user_idx int NOT NULL COMMENT '유저 인덱스',
-	is_admin tinyint NOT NULL COMMENT '채널장 여부',
+	is_admin tinyint DEFAULT 0 NOT NULL COMMENT '채널장 여부',
     CONSTRAINT `fk_belong_channel_channel_idx` FOREIGN KEY (channel_idx) REFERENCES `channel` (channel_idx),
     CONSTRAINT `fk_belong_channel_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );  
@@ -192,21 +197,23 @@ create table if not exists `tier` (
    CONSTRAINT `fk_tier_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );
 
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목44','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목55','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목66','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목77','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목88','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목99','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목00','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목01','가수3',5,162,'엠알저장경로3');
--- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목02','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목44','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목55','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목66','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목77','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목88','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목99','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목00','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목01','가수3',5,162,'엠알저장경로3');
+insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목02','가수3',5,162,'엠알저장경로3');
 
--- INSERT INTO `User` (nickname, password, gender, birth, user_isDelete, user_email, profile_image)
--- VALUES
+INSERT INTO `User` (nickname, password, gender, birth, user_isDelete, user_email, profile_image)
+VALUES
+       ('민민민민', 'password1', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('2000-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user11@example.com', NULL);
+
 --     ('user1', 'password1', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('2000-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user1@example.com', NULL),
 --     ('user2', 'password2', 'Female', FROM_UNIXTIME(UNIX_TIMESTAMP('1995-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user2@example.com', NULL),
 --     ('user3', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user3@example.com', NULL),
@@ -262,10 +269,9 @@ create table if not exists `tier` (
 --     (5, 3, 0),
 --     (6, 4, 0);
 
--- select * from user;
--- select * from tier;
--- select* from song;
--- select * from User;
+select * from user;
+select * from tier; 
+select* from song;
 -- select * from perfectplay;
 -- select * from song_line;
 -- select * from friend;

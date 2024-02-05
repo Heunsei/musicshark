@@ -9,13 +9,9 @@ import org.example.back.dto.response.UserSearchResponseDto;
 
 public interface FriendService {
 	List<FriendResponseDto> findAllFriend(int userIdx);
-
 	FriendDetailResponseDto findFriendDetail(int userIdx);
-
 	List<UserSearchResponseDto> userSearchByEmail(String userEmail);
-
 	List<UserSearchResponseDto> userSearchByNickname(String userEmail);
-
 	void sendFriendRequest(FriendRequestDto friendRequestDto);
 	void acceptFriendRequest(FriendRequestDto friendRequestDto);
 }

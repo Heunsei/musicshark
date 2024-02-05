@@ -2,7 +2,9 @@ package org.example.back.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.back.common.ApiResponse;
 import org.example.back.dto.request.PatchUserRequestDto;
+import org.example.back.dto.response.DeleteUserResponseDto;
 import org.example.back.dto.response.GetUserResponseDto;
 import org.example.back.dto.response.PatchUserResponseDto;
 import org.example.back.repository.TierRepository;
@@ -29,11 +31,29 @@ public class UserController {
     }
 
     @PatchMapping("/patch")
-    public ResponseEntity<?> patchUser(@AuthenticationPrincipal UserDetails userDetails,
-                                       @RequestBody PatchUserRequestDto requestDto){
+    public ResponseEntity<ApiResponse> patchUser(@AuthenticationPrincipal UserDetails userDetails,
+                                                 @RequestBody PatchUserRequestDto requestDto){
 
-        PatchUserResponseDto result = userService.patchUser(userDetails.getUsername(), requestDto);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        ApiResponse<PatchUserResponseDto> result = userService.patchUser(userDetails.getUsername(), requestDto);
+
+        String message = result.getMessage();
+        int status = result.getStatus();
+
+        ApiResponse apiResponse = new ApiResponse(message, status, result.getData());
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @PatchMapping("/delete")
+    public ResponseEntity<ApiResponse> deleteUser(@AuthenticationPrincipal UserDetails userDetails){
+
+        ApiResponse<DeleteUserResponseDto> result = userService.deleteUser(userDetails.getUsername());
+
+        String message = result.getMessage();
+        int status = result.getStatus();
+
+        ApiResponse apiResponse = new ApiResponse(message, status, result.getData());
+
+        return  ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping("/tier")

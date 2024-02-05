@@ -33,7 +33,6 @@ public interface FriendRepository extends JpaRepository<FriendEntity, Integer> {
 	)
 	List<FriendResponseDto> findAllFriend(@Param("userIdx") int userIdx);
 
-
 	@Query(
 		value = "SELECT new org.example.back.dto.response.FriendDetailResponseDto(u.userIdx, u.nickname, u.userEmail, u.profileImage, t.userTier, t.clearCnt) "
 			+ "FROM User u "
@@ -44,10 +43,10 @@ public interface FriendRepository extends JpaRepository<FriendEntity, Integer> {
 	FriendDetailResponseDto findFriendDetail(int userIdx);
 
 	@Query("SELECT u FROM User u WHERE u.userEmail LIKE %:userEmail%")
-	List<UserEntity> findAllByUserEmail(@Param("userEmail") String userEmail);
+	List<UserEntity> findByUserEmail(@Param("userEmail") String userEmail);
 
-	@Query("SELECT u FROM User u WHERE u.userEmail LIKE %:userNickname%")
-	List<UserEntity> findAllByUserNickname(@Param("userNickname") String userNickname);
+	@Query("SELECT u FROM User u WHERE u.nickname LIKE %:userNickname%")
+	List<UserEntity> findByUserNickname(@Param("userNickname") String userNickname);
 
 	@Modifying
 	@Transactional
