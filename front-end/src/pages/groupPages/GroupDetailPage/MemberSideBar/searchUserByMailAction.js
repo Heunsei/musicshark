@@ -12,7 +12,7 @@ export const searchUserByMailAction = async (mail, searchData) => {
                 Authorization: `Bearer ${accessToken}`
             }
         })
-        searchData('검색한 유저데이터',response.data.data)
+        searchData(response.data.data)
     } catch (err) {
         console.log(err)
     }

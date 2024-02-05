@@ -15,7 +15,7 @@ export const searchUserByName = async (name, setSearchData) => {
                 Authorization: `Bearer ${accessToken}`
             }
         })
-        changeValue('결과값은 이렇습니다',response.data.data)
+        changeValue(response.data.data)
     } catch (err) {
         console.log(err)
     }
