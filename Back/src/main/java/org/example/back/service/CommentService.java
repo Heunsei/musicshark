@@ -9,4 +9,6 @@ public interface CommentService {
 	List<GetCommentsResponseDto> getComments(int boardIdx);
 
 	void postComment(CommentRequestDto comment);
+
+	void updateComment(CommentRequestDto comment);
 }

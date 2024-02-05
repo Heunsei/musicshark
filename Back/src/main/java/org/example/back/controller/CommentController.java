@@ -34,8 +34,11 @@ public class CommentController {
 	@PostMapping
 	public ResponseEntity<?> postComment(@PathVariable("board_idx") int boardIdx, @RequestBody CommentRequestDto comment){
 		try {
-			commentService.postComment(comment);
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			if(boardIdx == comment.getBoardIdx()) {
+				commentService.postComment(comment);
+				return new ResponseEntity<Void>(HttpStatus.OK);
+			}
+			else return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		} catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
@@ -44,7 +47,11 @@ public class CommentController {
 	@PutMapping
 	public ResponseEntity<?> updateComment(@PathVariable("board_idx") int boardIdx, @RequestBody CommentRequestDto comment){
 		try{
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			if(boardIdx == comment.getBoardIdx()) {
+				commentService.updateComment(comment);
+				return new ResponseEntity<Void>(HttpStatus.OK);
+			}
+			else return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		} catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}

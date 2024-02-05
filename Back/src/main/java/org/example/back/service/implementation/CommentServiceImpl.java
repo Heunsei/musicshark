@@ -1,6 +1,7 @@
 package org.example.back.service.implementation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.back.common.NotFoundException;
 import org.example.back.dto.request.CommentRequestDto;
 import org.example.back.dto.response.GetCommentsResponseDto;
 import org.example.back.entity.CommentEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +47,13 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(result);
     }
 
+    @Override
+    public void updateComment(CommentRequestDto comment){
+        int boardIdx = comment.getBoardIdx();
+        Optional<CommentEntity> data = commentRepository.findByBoardIdx(boardIdx);
+//                .orElseThrow(() -> new Exception("에러"));
 
+
+
+    }
 }
