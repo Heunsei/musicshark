@@ -29,7 +29,7 @@ const GroupDetailPage = () => {
         console.log(lobyState.isLoby)
         console.log('로비에 있습니다')
     }
-
+    
     const [groupDetail, setGroupDetail] = useState([])
     const [groupMembers, setGroupMembers] = useState([])
     console.log(`그룹 멤버들${groupMembers}`)
