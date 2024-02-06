@@ -1,1 +1,22 @@
-/* test */
+.body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    background-color: beige;
+    justify-content: center;
+    align-items: center;
+}
+
+.moveBtn {
+    width: 500px;
+    height: 500px;
+    margin: 20px;
+    border: none;
+    background-color: cadetblue;
+}
+
+.moveBtnAfter {
+    border: 10px solid black;
+    transition: 0.3s;
+    cursor: pointer;
+}
