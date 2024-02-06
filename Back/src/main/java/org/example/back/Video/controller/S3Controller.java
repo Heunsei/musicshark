@@ -5,12 +5,11 @@ import org.example.back.Video.dto.request.UserVideoRequestDto;
 import org.example.back.Video.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,22 @@ public class S3Controller {
 
 	@Autowired
 	private final S3Service s3Service;
+
+	@PostMapping( "/personal/videos")
+	public ResponseEntity<Void> savePersonalVideo(
+			@ModelAttribute S3VideoRequestDto dto,
+			@AuthenticationPrincipal UserDetails userDetails){
+		try{
+			System.out.println("title: " + dto.getVideoTitle());
+			System.out.println("file: " + dto.getVideoFile().getOriginalFilename());
+			s3Service.savePersonalVideo(dto, userDetails);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}catch(Exception e){
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	
 
 	@PostMapping("/post")
 	public String saveFile(@RequestParam("image") MultipartFile multipartFile){
@@ -35,11 +50,12 @@ public class S3Controller {
 	@PostMapping("/videos")
 	public ResponseEntity<?> saveVideo(@RequestBody S3VideoRequestDto dto){
 		try{
-
+			s3Service.saveVideo(dto);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch(Exception e) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
 
 }

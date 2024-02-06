@@ -11,7 +11,7 @@ use ssatudio;
 create table if not exists `user` (
     user_idx int primary key auto_increment COMMENT '유저 인덱스',
     nickname varchar(16) NOT NULL unique COMMENT '닉네임',
-    password varchar(16) NOT NULL COMMENT '패스워드',
+    password text NOT NULL COMMENT '패스워드',
     gender varchar(8) NOT NULL COMMENT '성별',
     birth date NOT NULL COMMENT '생년월일',
     user_isDelete tinyint NOT NULL default 0 COMMENT '탈퇴 여부',
@@ -160,8 +160,9 @@ create table if not exists `video` (
    video_idx int primary key auto_increment COMMENT '영상 인덱스',
    video_date timestamp NOT NULL DEFAULT now() COMMENT '생성일자',
    video_title varchar(20) NOT NULL COMMENT '제목',
-   video_picture blob NOT NULL COMMENT '영상사진',
+   video_picture blob COMMENT '영상사진',
    user_idx int NOT NULL COMMENT '유저 인덱스',
+   video_path text NOT NULL,
    CONSTRAINT `fk_video_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );
 
