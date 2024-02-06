@@ -4,18 +4,34 @@ import api from "../../../api/axiosInstance";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 const ProfileBox = () => {
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
   const [iconSize, setIconSize] = useState("250px"); // 아이콘 크기 상태
   const [channels, setChannels] = useState(["채널 1", "채널 2", "채널 3"]); // 목업 채널 데이터
   const [userTier, setUserTier] = useState("");
 
   // 브라우저 창 크기에 따라 아이콘 크기를 업데이트하는 함수
   const updateIconSize = () => {
-    if (window.innerWidth < 600) {
+    if (window.innerWidth < 550) {
       setIconSize("100px");
-    } else if (window.innerWidth >= 600 && window.innerWidth < 900) {
-      setIconSize("160px");
+    } else if (window.innerWidth >= 550 && window.innerWidth < 950) {
+      setIconSize("130px");
     } else {
-      setIconSize("260px");
+      setIconSize("180px");
     }
   };
 
@@ -27,8 +43,10 @@ const ProfileBox = () => {
     // 서버로부터 티어 정보를 가져오는 함수
     const fetchUserTier = async () => {
       try {
+        const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
         const response = await api.get("/user/tier", {
           headers: {
+            Authorization: `Bearer ${accessToken}`, // 요청 헤더에 인증 토큰 추가
             "Cache-Control": "no-cache",
           },
         });
@@ -48,12 +66,12 @@ const ProfileBox = () => {
 
   const profileStyle = {
     position: "fixed", // 요소를 화면에 고정
-    marginTop: "5%", // 상단으로부터의 마진
-    // marginBottom: "0px",
+    marginTop: "4%", // 상단으로부터의 마진
+    // marginBottom: "5%",
     marginLeft: "2.5%", // 왼쪽으로부터의 마진
     marginRight: "Auto",
     width: "25%", // 너비 설정
-    height: "70%", // 높이 설정
+    height: "63%", // 높이 설정
     zIndex: "10", // z-인덱스
     backgroundColor: "rgba(153, 123, 102, 0.6)", // 배경 색상
     borderRadius: "15px", // 테두리 둥글기
@@ -79,7 +97,7 @@ const ProfileBox = () => {
   const profileText = {
     backgroundColor: "#764812", // 갈색 배경
     color: "white", // 흰색 텍스트
-    fontSize: "32px",
+    fontSize: "26px",
     zIndex: "16", // z-인덱스
     marginTop: "-36px",
     marginBottom: "20px",
@@ -94,32 +112,33 @@ const ProfileBox = () => {
   const channelTextStyle = {
     textAlign: "left", // 텍스트를 왼쪽으로 정렬
     width: "100%", // 부모 컨테이너의 전체 너비를 차지하도록 설정
-    marginTop: "6%",
-    marginLeft: "20%",
-    fontSize: "22px",
+    marginTop: "5%",
+    marginLeft: "15%",
+    fontSize: "17px",
   };
 
   const channelListStyle = {
     backgroundColor: "#EFD6BC",
-    width: "78%",
+    width: "84%",
     height: "26%",
     listStyleType: "none", // 리스트 항목 앞의 기본 마커를 제거합니다.
     paddingLeft: "0", // 기본 패딩을 제거하여 왼쪽 정렬을 맞춥니다.
-    marginTop: "-2%",
+    marginTop: "-3%",
     paddingTop: "3%",
     paddingLeft: "5%",
     borderRadius: "4%",
   };
 
   const channelItemStyle = {
-    fontSize: "18px",
-    marginTop: "2%",
+    fontSize: "16px",
+    marginTop: "1%",
     marginBottom: "5%",
+    marginLeft: "1%",
     // textAlign: "left",
   };
 
   const nameStyle = {
-    fontSize: "36px",
+    fontSize: "24px",
     margin: "10px 0", // 상하 마진 설정
   };
 

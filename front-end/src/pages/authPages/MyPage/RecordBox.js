@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import CustomCalendar from "./Calendar";
 
 const RecordBox = () => {
+  const [value, onChange] = useState(new Date());
+
   // 카드 스타일
   const cardStyle1 = {
     display: "block",
-    marginTop: "7.7%", // Navbar 아래에 위치하도록 마진 조정
+    marginTop: "6%", // Navbar 아래에 위치하도록 마진 조정
     marginLeft: "auto",
     marginRight: "auto",
-    width: "90%", // 전체 너비 사용
-    height: "420px",
+    width: "92%", // 전체 너비 사용
+    height: "40%",
     zIndex: "10",
     backgroundColor: "#EFD6BC",
     borderRadius: "10px",
@@ -22,8 +25,8 @@ const RecordBox = () => {
     marginTop: "50px", // Navbar 아래에 위치하도록 마진 조정
     marginLeft: "auto",
     marginRight: "auto",
-    width: "90%", // 전체 너비 사용
-    height: "350px",
+    width: "92%", // 전체 너비 사용
+    height: "250px",
     zIndex: "10",
     backgroundColor: "#EFD6BC",
     borderRadius: "10px",
@@ -34,11 +37,11 @@ const RecordBox = () => {
   const cardStyle3 = {
     display: "block",
     marginTop: "50px", // Navbar 아래에 위치하도록 마진 조정
-    marginBottom: "30px",
+    marginBottom: "14.5%",
     marginLeft: "auto",
     marginRight: "auto",
-    width: "90%", // 전체 너비 사용
-    height: "350px",
+    width: "92%", // 전체 너비 사용
+    height: "400px",
     zIndex: "10",
     backgroundColor: "#EFD6BC",
     borderRadius: "10px",
@@ -57,23 +60,26 @@ const RecordBox = () => {
     border: "3px solid #ccc",
     borderRadius: "3px",
     backgroundColor: "#F9FFF8",
-    paddingTop: "3%",
+    paddingTop: "0%",
     width: "30%", // 각 박스가 전체의 30% 차지
-    height: "300px",
+    height: "275px",
     textAlign: "center",
-    margin: "10px",
+    marginTop: "15px",
+    marginBottom: "15px",
+    marginLeft: "10px",
+    marginRight: "10px",
     alignItems: "center", // 가로축 기준으로 가운데 정렬합니다.
     // justifyContent: "center", // 세로축 기준으로 가운데 정렬합니다.
   };
 
   const boxTitle = {
-    fontSize: "28px",
+    fontSize: "23px",
     paddingLeft: "18px",
     marginTop: "8px",
   };
 
   const innerTitle = {
-    fontSize: "30px",
+    fontSize: "28px",
   };
 
   const tierBoxStyle = {
@@ -82,10 +88,12 @@ const RecordBox = () => {
     padding: "8px 12px", // 적당한 패딩을 추가합니다.
     borderRadius: "5px", // 모서리를 둥글게 합니다.
     fontWeight: "bold", // 글씨를 굵게 합니다.
-    marginBottom: "20px", // 'Gold 4' 텍스트와의 간격을 설정합니다.
+    marginTop: "4%",
+    marginBottom: "8%", // 'Gold 4' 텍스트와의 간격을 설정합니다.
   };
 
   const tierTextStyle = {
+    marginBottom: "3%",
     fontSize: "32px", // 'Gold 4' 텍스트 크기를 크게 설정합니다.
     color: "black", // 'Gold 4' 텍스트 색상을 검은색으로 설정합니다.
     fontWeight: "bold", // 글씨를 굵게 합니다.
@@ -121,6 +129,7 @@ const RecordBox = () => {
       </div>
       <div style={cardStyle3}>
         <h2 style={boxTitle}>녹화 캘린더</h2>
+        <CustomCalendar />
       </div>
     </div>
   );
