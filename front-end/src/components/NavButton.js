@@ -18,8 +18,8 @@ const NavButton=(props)=>{
         else if(id==="nav_single"){
             navigate('/single')
         }
-        else if(id==="nav_community"){
-            navigate('/community')
+        else if(id==="nav_board"){
+            navigate('/board')
         }
         else if(id==="nav_mypage"){
             navigate('/register')

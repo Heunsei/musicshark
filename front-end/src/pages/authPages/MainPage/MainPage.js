@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router-dom';
 //import styles from './MainButton/MainButton.module.css';
 
 const BoxWrapper = styled('div')({
-    //width: '200%',
+    width: '200%',
     height: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     background: '#997B66',
     flexDirection: 'column',
-
 })
 
 export default function MainPage(){
@@ -31,7 +30,7 @@ export default function MainPage(){
         <>
             <Navbar/>
             <BoxWrapper>
-                <div style={{ position : 'absolute',left:'10%',overflow:'hidden', width:'100%'}}>
+                <div style={{ position : 'absolute',overflow:'hidden', width:'100%'}}>
                     
                     <div>
                         <h2 style={{color:'white', margin:2}}>

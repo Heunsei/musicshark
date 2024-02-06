@@ -1,7 +1,8 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Comments from "./Comments";
+
+//import Comments from "./Comments";
 
 /*
 board_id, 

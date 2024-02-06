@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import { styled } from "@mui/material";
 
 const BoardUpdate=()=>{
     const navigate=useNavigate();
@@ -13,6 +15,17 @@ const BoardUpdate=()=>{
     })
 
     const{board_title,board_nickname,board_contents}=board;
+
+    
+const BoxWrapper = styled('div')({
+  width: '200%',
+  height: '100vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: '#FFEDD8',
+  flexDirection: 'column',
+})
 
     const onChange=(event)=>{
         const {value,nickname}=event.target;
@@ -43,33 +56,38 @@ const BoardUpdate=()=>{
       }, []);
     
       return (
-        <div>
+        <>
+        <BoxWrapper>
+          <Navbar/>
+        <div style={{textAlign:"center", minWidth:"90%"}}>
+          <h2 >게시글 작성</h2>
+          <hr/>
           <div>
             <span>제목</span>
-            <input type="text" nickname="board_title" value={board_title} onChange={onChange} />
+            
+            <input type="text" nickname="board_title" value={board_title} onChange={onChange} style={{width:"50%"}}/>
           </div>
-          <br />
+          <hr/>
           <div>
-            <span>작성자</span>
-            <input type="text" nickname="board_nickname" value={board_nickname} readOnly={true} />
-          </div>
-          <br />
-          <div>
-            <span>내용</span>
+            <label style={{verticalAlign:"top"}}>내용</label>
             <textarea
               nickname="contents"
               cols="30"
               rows="10"
               value={board_contents}
               onChange={onChange}
+              style={{width:"50%"}}
             ></textarea>
           </div>
           <br />
-          <div>
+          <div display="inline-block" position="absolute" style={{marginRright:0}}>
             <button onClick={updateBoard}>수정</button>
             <button onClick={backToDetail}>취소</button>
           </div>
         </div>
+        </BoxWrapper>
+        
+        </>
       );
     };
 

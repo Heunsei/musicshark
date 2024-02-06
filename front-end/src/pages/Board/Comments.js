@@ -3,11 +3,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 //import moment from 'moment';
 import { useLocation, useNavigate } from "react-router-dom";
-//import jwtUtils from "../../utils/jwtUtils";
-//import api from "../../../utils/api";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Dialog, DialogContent, IconButton, TextField } from "@mui/material";
+import { CommentsAction, commentsAction } from './CommentsAction';
 
 const Comments=({board_id})=>{
     const location=useLocation();
@@ -42,9 +41,7 @@ const Comments=({board_id})=>{
         const comment={
             board_id:board_id,
             content:content,
-            user_id:jwtUtils.getId(token)
         }
-        await api.post('/api/comment',comment);
         alert("댓글 등록 완료");
         window.location.reload();
     },[content]);
@@ -56,17 +53,12 @@ const Comments=({board_id})=>{
         navigate(`login?redirectUrl=${location.pathname}`);
     }
 
-    const isLogin=()=>{
-        if(!jwtUtils.isAuth(token)){
-            setShow(true);
-        }
-    }
     return(
         <div className="comments-wrapper">
             <div className="comments-header">
                 <TextField className="comments-header-textarea"
                 maxRows={3}
-                onClick={isLogin}
+                //onClick={isLogin}
                 onChange={(e)=>{
                     setContent(e.target.value)
                 }}
@@ -86,9 +78,9 @@ const Comments=({board_id})=>{
                 {commentList.map((item, index)=>(
                     <div key={index} className="comments-comment">
                         <div className="comment-username-date">
-                            <div className="comment-date">{
+                            {/* <div className="comment-date">{
                             moment(item.created).add(9,"hour").format('YYYY-MM-DD HH:mm:ss')}
-                            </div>
+                            </div> */}
                         </div>
                         <div className="comment-content">{item.content}</div>
                         <div className="comment-usename">{item.user.username}</div>
