@@ -51,7 +51,7 @@ const AddMemberButton = (props) => {
     useEffect(() => {
         getGroupMemberAction(id, setGroupMembers)
         getGroupDetailAction(id, setGroupDetail)
-    }, [open])
+    }, [open, id, setGroupMembers, setGroupDetail])
 
     const handleValueChange = (event) => {
         const inputValue = event.target.value;

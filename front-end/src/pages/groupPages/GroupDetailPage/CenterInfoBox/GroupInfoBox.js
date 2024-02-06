@@ -10,6 +10,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import styles from './../../GroupRoom/GroupRoom.module.css'
 import InputWithLabel from '../../../../components/InputWithLabel';
 import { editGroupAction } from './editGroupAction';
+import { getGroupMemberAction } from '../getGroupMemberAction';
+import { getGroupDetailAction } from '../getGroupDetailAction';
+import { useParams } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -23,7 +26,6 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
 
 const Container = styled('div')({
     backgroundColor: '#C0AB9A',
@@ -39,16 +41,18 @@ const Container = styled('div')({
 })
 // group detail은 GroupDetailPage에서 props 받아옴
 const GroupInfoBox = (props) => {
-    const { groupDetail } = props
-    console.log('??????', groupDetail)
+    const { groupDetail, setGroupDetail } = props
+    const { id } = useParams()
+    // 모달을 열고 닫을 state
     const [open, setOpen] = useState(false);
-
+    // 모달에서 받아올 그룹에 대한 정보
     const [groupName, setGroupName] = useState(groupDetail.channelName)
     const [groupIntro, setGroupIntro] = useState(groupDetail.channelIntro)
     const [groupMax, setGroupMax] = useState(groupDetail.channelMax)
 
     const [isValidMaxMember, setisValidMaxmember] = useState(true)
 
+    // modal을 열고 닫을때마다 이전데이터로 변경
     const handleOpen = () => {
         setGroupName(groupDetail.channelName)
         setGroupIntro(groupDetail.channelIntro)
@@ -63,6 +67,7 @@ const GroupInfoBox = (props) => {
         setOpen(false)
     };
 
+    // 수정버튼을 눌렀을 때 정보를 수정하고 reload -> 이걸 reload가 아닌 setData로 데이터 변경으로 변경
     const handleEditGroup = async () => {
         const editInfo = {
             channelId: groupDetail.channelIdx,
@@ -71,14 +76,15 @@ const GroupInfoBox = (props) => {
             channelMax: groupMax
         }
         await editGroupAction(editInfo)
-        window.location.reload();
+        await getGroupDetailAction(id, setGroupDetail)
         setOpen(false)
     }
 
+    // 그룹 수정 시, max값이 6을 넘긴다면 입력을 제한할 코드
     useEffect(() => {
-        if (groupMax >= 11) {
+        if (groupMax > 10) {
             setGroupMax(groupMax % 10)
-        } else if (groupMax >= 6) {
+        } else if (groupMax > 6) {
             setGroupMax(6)
         }
     }, [groupMax, setGroupMax, groupDetail.channelCur])

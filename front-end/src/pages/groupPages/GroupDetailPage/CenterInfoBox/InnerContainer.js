@@ -15,10 +15,10 @@ const Container = styled('div')({
 })
 
 const InnerContainer = (props) => {
-    const { groupDetail } = props
+    const { groupDetail, setGroupDetail } = props
     return (
         <Container>
-            <GroupInfoBox groupDetail={groupDetail} />
+            <GroupInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} />
             <GroupBottomBox />
         </Container>
     );

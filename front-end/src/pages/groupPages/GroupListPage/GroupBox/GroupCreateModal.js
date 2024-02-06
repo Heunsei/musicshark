@@ -34,16 +34,23 @@ const GroupCreateModal = (props) => {
     }
 
     useEffect(() => {
-        console.log(1234)
+        console.log('최초 생성시 useEffect확인')
         loadGroupAction(setGroupList)
-    }, [isModalOpen])
+    }, [isModalOpen, setGroupList, setIsModalOpen])
 
     useEffect(() => {
         if (!isNaN(channelMax)) {
             setChannelMax(parseInt(channelMax))
         }
         if (channelMax >= 6) {
-            setChannelMax(6)
+            if (channelMax > 10) {
+                setChannelMax(channelMax % 10)
+            } else {
+                setChannelMax(6)
+            }
+        }
+        if (channelMax <= 2) {
+            setChannelMax(2)
         }
     }, [channelMax])
 

@@ -60,7 +60,7 @@ const GroupDetailPage = () => {
                 alert('접근할 수 없는 페이지 입니다')
             }
         }
-    }, [isLoading, navigate]);
+    }, [isLoading, navigate, groupDetail, groupMembers, userName]);
 
     if (isLoading) {
         return (
@@ -72,7 +72,7 @@ const GroupDetailPage = () => {
             <MemberSideBar groupMembers={groupMembers} setGroupMembers={setGroupMembers} setGroupDetail={setGroupDetail} />
             {
                 // 유저가 연습이동을 누르면 state를 변경하고 infobox를 practicebox로 변경
-                lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} /> : <GroupRoom />
+                lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} /> : <GroupRoom />
             }
             <RightChatBox />
         </Wrapper>

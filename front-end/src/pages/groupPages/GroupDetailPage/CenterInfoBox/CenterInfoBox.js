@@ -12,10 +12,10 @@ const InfoContainer = styled('div')({
 
 // InnerContainer > 요소들을 감쌀 div안의 작은 div
 const CenterInfoBox = (props) => {
-    const { groupDetail } = props
+    const { groupDetail, setGroupDetail } = props
     return (
         <InfoContainer>
-            <InnerContainer groupDetail={groupDetail} />
+            <InnerContainer groupDetail={groupDetail} setGroupDetail={setGroupDetail} />
         </InfoContainer>
     );
 };
