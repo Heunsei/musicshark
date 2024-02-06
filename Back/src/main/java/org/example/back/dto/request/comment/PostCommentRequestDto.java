@@ -1,4 +1,4 @@
-package org.example.back.dto.request;
+package org.example.back.dto.request.comment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -8,10 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentRequestDto {
-    @JsonProperty("board_idx")
-    int boardIdx;
-
+public class PostCommentRequestDto {
     @JsonProperty("comment_content")
     String commentContent;
 

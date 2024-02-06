@@ -11,8 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import lombok.*;
-import org.example.back.dto.request.CommentRequestDto;
-import org.example.back.dto.response.GetCommentsResponseDto;
+import org.example.back.dto.request.comment.PostCommentRequestDto;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -45,8 +44,8 @@ public class CommentEntity {
 	@Column(name = "comment_deleted", columnDefinition = "TINYINT(0)")
 	private boolean commentDeleted;
 
-	public CommentEntity(CommentRequestDto dto){
-		this.boardIdx = dto.getBoardIdx();
-		this.commentContent = dto.getCommentContent();
+	public CommentEntity(int boardIdx, PostCommentRequestDto dto){
+		this.setBoardIdx(boardIdx);
+		this.setCommentContent(dto.getCommentContent());
 	}
 }

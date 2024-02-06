@@ -1,14 +1,18 @@
 package org.example.back.service.implementation;
 
 import lombok.RequiredArgsConstructor;
+
+import org.example.back.common.ErrorCode;
 import org.example.back.common.NotFoundException;
-import org.example.back.dto.request.CommentRequestDto;
-import org.example.back.dto.response.GetCommentsResponseDto;
+import org.example.back.dto.request.comment.PostCommentRequestDto;
+import org.example.back.dto.request.comment.PutCommentRequestDto;
+import org.example.back.dto.response.comment.GetCommentsResponseDto;
 import org.example.back.entity.CommentEntity;
 import org.example.back.entity.UserEntity;
 import org.example.back.repository.CommentRepository;
 import org.example.back.repository.UserRepository;
 import org.example.back.service.CommentService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,7 +27,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     @Override
     public List<GetCommentsResponseDto> getComments(int boardIdx) {
-        List<CommentEntity> dataList = commentRepository.findAllByBoardIdx(boardIdx);
+        List<CommentEntity> dataList = commentRepository.findAllByBoardIdxAndCommentDeleted(boardIdx, false);
         List<GetCommentsResponseDto> results = new ArrayList<>();
 
         for(CommentEntity data : dataList){
@@ -37,9 +41,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void postComment(CommentRequestDto comment) {
+    public void postComment(int boardIdx, PostCommentRequestDto comment) {
         System.out.println(comment);
-        CommentEntity result = new CommentEntity(comment);
+        CommentEntity result = new CommentEntity(boardIdx, comment);
         int userIdx = userRepository.findByNickname(comment.getUserNickname()).getUserIdx();
 
         result.setUserIdx(userIdx);
@@ -48,12 +52,26 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void updateComment(CommentRequestDto comment){
-        int boardIdx = comment.getBoardIdx();
-        Optional<CommentEntity> data = commentRepository.findByBoardIdx(boardIdx);
-//                .orElseThrow(() -> new Exception("에러"));
+    public void updateComment(UserDetails userDetails, PutCommentRequestDto comment) throws Exception {
+        UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new Exception("잘못된 접근입니다."));
+        CommentEntity data = commentRepository.findByCommentIdx(comment.getCommentIdx());
 
+        if(user.getUserIdx() == data.getUserIdx()){
+            data.setCommentContent(comment.getCommentContent());
+            commentRepository.save(data);
+        }
+        else throw new Exception("잘못된 접근입니다.");
+    }
 
+    @Override
+    public void deleteComment(int commentIdx, UserDetails userDetails) throws Exception {
+        UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new Exception("잘못된 접근입니다."));
+        CommentEntity data = commentRepository.findByCommentIdx(commentIdx);
 
+        if(user.getUserIdx() == data.getUserIdx()){
+            data.setCommentDeleted(true);
+            commentRepository.save(data);
+        }
+        else throw new Exception("잘못된 접근입니다.");
     }
 }

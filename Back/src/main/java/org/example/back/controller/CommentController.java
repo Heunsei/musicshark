@@ -1,12 +1,15 @@
 package org.example.back.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.back.dto.request.CommentRequestDto;
-import org.example.back.dto.response.GetCommentsResponseDto;
+import org.example.back.dto.request.comment.PostCommentRequestDto;
+import org.example.back.dto.request.comment.PutCommentRequestDto;
+import org.example.back.dto.response.comment.GetCommentsResponseDto;
 import org.example.back.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,26 +35,35 @@ public class CommentController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> postComment(@PathVariable("board_idx") int boardIdx, @RequestBody CommentRequestDto comment){
+	public ResponseEntity<?> postComment(@PathVariable("board_idx") int boardIdx, @RequestBody PostCommentRequestDto comment){
 		try {
-			if(boardIdx == comment.getBoardIdx()) {
-				commentService.postComment(comment);
-				return new ResponseEntity<Void>(HttpStatus.OK);
-			}
-			else return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			commentService.postComment(boardIdx, comment);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@PutMapping
-	public ResponseEntity<?> updateComment(@PathVariable("board_idx") int boardIdx, @RequestBody CommentRequestDto comment){
+	@PutMapping()
+	public ResponseEntity<?> updateComment(
+		@PathVariable("board_idx") int boardIdx,
+		@AuthenticationPrincipal UserDetails userDetails,
+		@RequestBody PutCommentRequestDto comment){
 		try{
-			if(boardIdx == comment.getBoardIdx()) {
-				commentService.updateComment(comment);
-				return new ResponseEntity<Void>(HttpStatus.OK);
-			}
-			else return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			commentService.updateComment(userDetails, comment);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PatchMapping("/{comment_idx")
+	public ResponseEntity<Void> deleteComment(
+		@PathVariable("board_idx") int boardIdx, @PathVariable("comment_idx") int commentIdx,
+		@AuthenticationPrincipal UserDetails userDetails){
+		try{
+			commentService.deleteComment(commentIdx, userDetails);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}

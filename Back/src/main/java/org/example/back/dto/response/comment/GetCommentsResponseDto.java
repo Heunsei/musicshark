@@ -1,4 +1,4 @@
-package org.example.back.dto.response;
+package org.example.back.dto.response.comment;
 
 import java.sql.Timestamp;
 
@@ -11,11 +11,13 @@ import org.example.back.entity.CommentEntity;
 @Getter
 @Setter
 public class GetCommentsResponseDto {
+	int commentIdx;
 	String commentContent;
 	Timestamp commentDate;
 	String userNickname;
 
 	public GetCommentsResponseDto(CommentEntity entity){
+		this.commentIdx = entity.getCommentIdx();
 		this.commentContent = entity.getCommentContent();
 		this.commentDate = entity.getCommentDate();
 	}
