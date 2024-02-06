@@ -7,14 +7,14 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ bgcolor: "#997B66", height: "14%" }}>
         <Toolbar>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
             악기상어
-            </Typography>
-            <NavButton label={"악기상어 소개"}></NavButton>
-            <NavButton label={"함께 연습하기"}></NavButton>
-            <NavButton label={"혼자 연습하기"}></NavButton>
-            <NavButton label={"커뮤니티"}></NavButton>
-            <NavButton label={"마이 페이지"}></NavButton>
+          </Typography>
+          <NavButton label={"악기상어 소개"}></NavButton>
+          <NavButton label={"함께 연습하기"}></NavButton>
+          <NavButton label={"혼자 연습하기"}></NavButton>
+          <NavButton label={"커뮤니티"}></NavButton>
+          <NavButton label={"마이 페이지"}></NavButton>
         </Toolbar>
       </AppBar>
     </Box>
