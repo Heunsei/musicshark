@@ -11,7 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import GroupCallButton from '../../../components/GroupRoomButtons/GroupCallButton';
 import MuteMicButton from '../../../components/GroupRoomButtons/MuteMicButton';
 import MuteCamButton from '../../../components/GroupRoomButtons/MuteCamButton';
-
+import RecordButton from '../../../components/GroupRoomButtons/RecordButton';
 
 import { getToken, createToken, createSession, deleteSession } from './groupActions'
 import styles from './GroupRoom.module.css'
@@ -39,7 +39,7 @@ const GroupRoom = () => {
     const [isJoin, setIsJoin] = useState(false)
     const [isMicMute, setIsMicMute] = useState(false)
     const [isCamMute, setIsCamMute] = useState(false)
-
+    const [isRecording, setIsRecording] = useState(false)
 
     const deleteSubscriber = (streamManager) => {
         setSubscribers((prevSub) => {
@@ -186,6 +186,7 @@ const GroupRoom = () => {
                     <GroupCallButton isJoin={isJoin} leaveSession={leaveSession} joinSession={joinSession} sessionId={sessionId} />
                     <MuteMicButton muteMic={muteMic} isMicMute={isMicMute} />
                     <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
+                    <RecordButton isRecording={isRecording}/>
                     <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
                         <LogoutIcon sx={{ color: '#ffffff' }} />
                     </button>

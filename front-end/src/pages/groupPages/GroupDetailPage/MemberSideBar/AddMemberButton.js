@@ -35,13 +35,14 @@ const style = {
 const AddMemberButton = (props) => {
     const { id } = useParams()
     const { setGroupMembers, setGroupDetail } = props
+    // 검색 모달을 관리할 state
     const [open, setOpen] = useState(false);
     const [btnDisable, setBtnDisable] = useState(true)
     // 검색 텍스트
     const [inviteUser, SetInviteUser] = useState('')
-    // mail or nickname
+    // mail or nickname 타입으로 검색했다는걸 표시해줄 state
     const [searchType, setSearchType] = useState('')
-    // searchData
+    // 검색해온 유저리스트
     const [searchData, setSearchData] = useState([])
 
 
