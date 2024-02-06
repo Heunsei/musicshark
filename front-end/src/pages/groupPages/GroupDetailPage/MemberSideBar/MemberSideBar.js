@@ -19,7 +19,7 @@ const MemberSideBar = (props) => {
     const { groupMembers, setGroupMembers, setGroupDetail} = props
     return (
         <MainContainer>
-            <TopIcon />
+            <TopIcon groupMembers={groupMembers}/>
             <AddMemberButton setGroupMembers={setGroupMembers} setGroupDetail={setGroupDetail} />
             {
                 groupMembers.map((element, i) => {
