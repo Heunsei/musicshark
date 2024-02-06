@@ -2,12 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { styled } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { addMemberAction } from './addMemberAction'
 import styles from './AddMemberButton.module.css'
 import { useParams } from 'react-router-dom';
 import { validateMail } from '../../../authPages/validator';
@@ -67,8 +64,10 @@ const AddMemberButton = (props) => {
         console.log('재 검색시 data초기화 확인', searchData)
         if (validateMail(inviteUser)) {
             await searchUserByMailAction(inviteUser, setSearchData)
+            setSearchType('mail')
             console.log('데이터 확인', searchData)
         } else {
+            setSearchType('name')
             await searchUserByNameAction(inviteUser, setSearchData)
             console.log('데이터 확인', searchData)
         }
