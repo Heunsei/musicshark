@@ -5,22 +5,35 @@ import java.sql.Timestamp;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import lombok.Data;
+import javax.validation.constraints.NotBlank;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Data
 @Entity
+@Table(name = "video")
 public class VideoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int video_idx;
+	@Column(name = "video_idx")
+	private int videoIdx;
 
 	@CreationTimestamp
-	private Timestamp video_date;
+	@Column(name = "video_date")
+	private Timestamp videoDate;
 
-	private String video_title;
+	@NotBlank
+	@Column(name = "video_title")
+	private String videoTitle;
 
 	@Lob
-	private String video_picture;
+	@Column(name = "video_picture")
+	private String videoPicture;
 
-	private int user_idx;
+	@JoinColumn(name = "user_idx", referencedColumnName = "user_idx")
+	private int userIdx;
 }
