@@ -8,7 +8,7 @@ import org.example.back.Channel.dto.request.PostChannelRequestDto;
 public interface ChannelService {
 
     ApiResponse<PostChannelResponseDto> postChannel(String userEmail, PostChannelRequestDto dto);
-    ApiResponse<GetChannelListResponseDto> getChannelList();
+    ApiResponse<GetChannelListResponseDto> getChannelList(String userEmail);
     ApiResponse<GetChannelResponseDto> getChannel(int channelIdx);
     ApiResponse<PatchChannelResponseDto> patchChannel(int channelIdx, PatchChannelRequestDto dto);
     ApiResponse<?> deleteChannel(int channelIdx);

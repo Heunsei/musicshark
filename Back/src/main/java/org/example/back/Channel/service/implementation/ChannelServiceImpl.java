@@ -78,14 +78,24 @@ public class ChannelServiceImpl implements ChannelService {
         return new ApiResponse("채널 조회 성공", 500, data);
     }
     @Override
-    public ApiResponse<GetChannelListResponseDto> getChannelList() {
+    public ApiResponse<GetChannelListResponseDto> getChannelList(String userEmail) {
 
     List<GetChannelListResponseDto> data = null;
 
-
     try{
+    Optional<UserEntity> userEntity = userRepository.findByUserEmail(userEmail);
+    int userIdx = userEntity.get().getUserIdx();
 
-        List<ChannelEntity> channelList = channelRepository.findByChannelIsDeleteOrderByChannelDateDesc(0);
+    List<BelongChannelEntity> belongChannelEntityList = belongChannelRepository.findByUserIdx(userIdx);
+
+    List<ChannelEntity> channelList = new ArrayList<>();
+
+        for(int i=belongChannelEntityList.size()-1; i>=0; i--){
+            int chIdx = belongChannelEntityList.get(i).getChannelIdx();
+            ChannelEntity channelEntity = channelRepository.findByChannelIdx(chIdx);
+            if(channelEntity.getChannelIsDelete() == 1) continue;
+            channelList.add(channelEntity);
+        }
 
         data = GetChannelListResponseDto.addList(channelList);
 

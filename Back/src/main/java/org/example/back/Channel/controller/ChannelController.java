@@ -53,7 +53,7 @@ public class ChannelController {
 
                  String userEmail = userDetails.getUsername();
 
-                 ApiResponse<GetChannelListResponseDto> result = channelService.getChannelList();
+                 ApiResponse<GetChannelListResponseDto> result = channelService.getChannelList(userEmail);
 
                  String message = result.getMessage();
                  int status = result.getStatus();
