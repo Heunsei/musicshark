@@ -5,6 +5,7 @@ import Navbar from '../../../components/Navbar';
 import GroupInput from './GroupInput/GroupInput';
 import GroupBox from './GroupBox/GroupBox';
 import GroupBottom from './GroupBottom/GroupBottom';
+import loadGroupAction from './loadGroupAction';
 
 const BoxWrapper = styled('div')({
     width: '100%',
@@ -20,18 +21,23 @@ const BoxWrapper = styled('div')({
 // 그 데이터를 groupbox 에 전달 해주어야함
 const GroupPage = () => {
     const [searchText, setSearchText] = useState('')
+    const [groupList, setGroupList] = useState([])
+
+    useEffect(() => {
+        loadGroupAction(setGroupList)
+    }, [])
 
     useEffect(() => {
         console.log(searchText)
-    },[searchText])
-    
+    }, [searchText])
+
     return (
         <>
             <Navbar />
             <BoxWrapper>
                 <GroupInput value={searchText}
                     setValue={setSearchText} />
-                <GroupBox/>
+                <GroupBox groupList={groupList} setGroupList={setGroupList}/>
             </BoxWrapper>
         </>
 

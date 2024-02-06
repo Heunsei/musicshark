@@ -1,14 +1,15 @@
 import axios from 'axios'
 import { setCookie, getCookie } from './../../../util/cookie';
-import { setLogin } from '../../../redux/store/loginSlice';
-import * as setUser from './../../../redux/store/userSlice'
+import getUserAction from './getUserAction';
+
 
 export const loginAction = async (userDetails, dispatch, navigate) => {
     console.log(JSON.stringify(userDetails))
+    const URL = process.env.REACT_APP_API_URL
     try {
         const response = await axios({
             method: 'post',
-            url: 'http://localhost:8080/auth/sign-in',
+            url: `${URL}/auth/sign-in`,
             data: userDetails,
         })
 
@@ -31,26 +32,7 @@ export const loginAction = async (userDetails, dispatch, navigate) => {
             });
         }
         if (ACCESS_TOKEN && REFRESH_TOKEN) {
-            const isLogin = true
-            dispatch(setLogin(isLogin))
-            axios({
-                method: 'get',
-                url: 'http://localhost:8080/user/',
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${ACCESS_TOKEN}`,
-                }
-            })
-                .then((res) => {
-                    dispatch(setUser.setEmail(res.data.userEmail))
-                    dispatch(setUser.setNickname(res.data.nickname))
-                    dispatch(setUser.setGender(res.data.gender))
-                    dispatch(setUser.setBrith(res.data.birth))
-                    navigate('/group')
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+            getUserAction(ACCESS_TOKEN, dispatch, navigate)
         }
     } catch (err) {
         console.log(err)
