@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const RecordScreen = () => {
 
@@ -9,7 +9,7 @@ const RecordScreen = () => {
     const [recording, setRecording] = useState(false);
     // 녹화된 결과물이 저장됩니다. type은 Blob[] 입니다. 
     const [recordedBlobs, setRecordedBlobs] = useState([]);
-
+    
     // 핵심이 되는 내용입니다. 오로지 "거울"역할만을 수행하며, 마치 화면이 녹화되는 듯한 UX를 제공합니다.
     const mirrorVideoRef = useRef(null);
     // dom내부에선 보여지지 않지만, 내부에서 "녹화"에 대한 기능만을 수행합니다. 
@@ -51,8 +51,8 @@ const RecordScreen = () => {
     },[stream])
 
     return (
-        <div>
-
+        <div style={{width: '100%', height : '100%'}}>
+            <video ref={mirrorVideoRef} autoPlay muted playsInline style={{width: '100%', height : '100%'}}/>
         </div>
     );
 };

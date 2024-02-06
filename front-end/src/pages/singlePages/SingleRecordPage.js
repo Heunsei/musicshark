@@ -7,6 +7,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import styles from './SingleRecordPage.module.css'
 import Navbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+import RecordScreen from './components/SingleRecordPlay/RecordScreen';
+
 
 const SingleRecordPage = () => {
     const [isPlaying, setIsPlaying] = useState(false)
@@ -25,7 +27,7 @@ const SingleRecordPage = () => {
                 <div className={styles.container}>
                     <div className={styles.screenBox}>
                         <div className={styles.screen}>
-                            녹화 화면 컴포넌트?
+                            <RecordScreen/>
                         </div>
                         <div className={styles.recordList}>
                             녹화 리스트 컴포넌트?
