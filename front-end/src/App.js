@@ -19,16 +19,16 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<MainPage/>}/>
+        <Route path='/' element={<MainPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/group' element={<GroupPage />} />
 
-        <Route path='/board' element={<BoardList/>}/>
-        <Route path='/create' element={<BoardWrite/>}/>
-        <Route path='/update/:board_id' element={<BoardUpdate/>}/>
-        <Route path='/board/:board_id' element={<BoardDetail/>}/>
-
+        <Route path='/board' element={<BoardList />} />
+        <Route path='/create' element={<BoardWrite />} />
+        <Route path='/update/:board_id' element={<BoardUpdate />} />
+        <Route path='/board/:board_id' element={<BoardDetail />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route path='/group/:id' element={<GroupDetailPage />} />
 
       </Routes>
