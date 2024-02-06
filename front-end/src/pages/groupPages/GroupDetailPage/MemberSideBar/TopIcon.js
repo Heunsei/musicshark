@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 import GroupIcon from '@mui/icons-material/Group';
+import styles from './TopIcon.module.css'
+
 
 const style = {
     position: 'absolute',
@@ -52,11 +54,16 @@ const TopIcon = (props) => {
                     {
                         groupMembers.map((element, i) => {
                             return (
-                                <p>{element.nickname}</p>
+                                <>
+                                    <div className={styles.userBox}>
+                                        <p>{element.nickname}</p>
+                                        <button>추방</button>
+                                    </div>
+                                </>
                             )
                         }
 
-                        )} 
+                        )}
                 </Box>
             </Modal>
         </>
