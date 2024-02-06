@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +37,11 @@ public class S3Controller {
 		}
 	}
 
-	
+	@GetMapping()
+	public String getPersonalVideos(@AuthenticationPrincipal UserDetails userDetails){
+		return null;
+	}
+
 
 	@PostMapping("/post")
 	public String saveFile(@RequestParam("image") MultipartFile multipartFile){
