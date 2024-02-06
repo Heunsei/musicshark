@@ -15,6 +15,8 @@ const BoxWrapper = styled('div')({
     justifyContent: 'center',
     background: '#FFEDD8',
     flexDirection: 'column',
+    padding:'105px 0 ',
+    flex:5
 })
 
 // 그룹페이지가 로드 될 때, back에 내가속한 그룹리스트를 요청하는 코드 실행.

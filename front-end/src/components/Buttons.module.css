@@ -1,5 +1,17 @@
 .navBtn{
     background-color:'#997B66';
+}
+
+table {
+    min-width: 400;
+}
+
+hr{
+    width:'50%';
+}
+
+.navBtn{
+    /* background-color:'#997B66'; */
     color:'#ffffff';
     font-size:'18px';
     font-weight:'bold';
