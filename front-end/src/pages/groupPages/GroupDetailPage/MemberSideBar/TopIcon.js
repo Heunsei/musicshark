@@ -1,12 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import GroupIcon from '@mui/icons-material/Group';
 import styles from './TopIcon.module.css'
 
+import { useParams, useNavigate } from 'react-router-dom';
+import { deleteGroupMemberAction } from './deleteGroupMemberAction';
+import { deleteGroupAction } from './deleteGroupAction';
 
 const style = {
     position: 'absolute',
@@ -22,9 +27,31 @@ const style = {
 
 const TopIcon = (props) => {
     const { groupMembers } = props
+    const { id } = useParams()
+    const navigate = useNavigate()
+    const userName = useSelector((state) => state.user.nickname)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleDeleteMember = async (id) => {
+        let result = window.confirm('진짜로 나갈건가요?')
+        if (result) {
+            await deleteGroupMemberAction(id)
+        }
+    }
+
+    const handleDeleteGroup = async (id) => {
+        let result = window.confirm('그룹을 삭제하시겠습니까?')
+        if (result) {
+            const res = await deleteGroupAction(id)
+            console.log('res : ', res)
+            if(res.data.message === '채널 삭제 성공'){
+                navigate('/group')
+            }
+        }
+    }
+
     return (
         <>
             <Button
@@ -57,13 +84,19 @@ const TopIcon = (props) => {
                                 <>
                                     <div className={styles.userBox}>
                                         <p>{element.nickname}</p>
-                                        <button>추방</button>
                                     </div>
                                 </>
                             )
-                        }
-
-                        )}
+                        })
+                    }
+                    <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteMember(id) }}>
+                        <DeleteForeverIcon className={styles.groupDeleteIcon} />
+                        <span>그룹 탈퇴</span>
+                    </button>
+                    <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteGroup(id) }}>
+                        <DeleteForeverIcon className={styles.groupDeleteIcon} />
+                        <span>그룹 삭제</span>
+                    </button>
                 </Box>
             </Modal>
         </>

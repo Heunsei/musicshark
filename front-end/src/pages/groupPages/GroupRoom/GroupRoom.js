@@ -23,7 +23,7 @@ const GroupRoom = () => {
     const navigate = useNavigate();
 
     // const storeUser = useSelector((state) => state.user.nickname)
-    const storeUser = 'test1234'
+    const storeUser = useSelector((state) => state.user.nickname)
     const sessionId = 'test123411'
 
     // openvidu 관련 state
