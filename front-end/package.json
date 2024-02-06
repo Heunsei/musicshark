@@ -13,18 +13,13 @@
     "axios": "^1.6.7",
     "bootstrap": "^5.1.3",
     "dayjs": "^1.11.10",
-<<<<<<< HEAD
     "moment": "^2.30.1",
-    "openvidu-browser": "^2.29.1",
-    "react": "^18.2.0",
     "react-calendar": "^4.8.0",
-=======
     "express": "^4.18.2",
     "mui": "^0.0.1",
     "openvidu-browser": "^2.29.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
->>>>>>> 0b508c2ac70021a34c08f2f17ae2992fa75c95cb
     "react-cookie": "^7.0.2",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
