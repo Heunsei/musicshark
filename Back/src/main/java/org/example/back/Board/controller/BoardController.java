@@ -8,6 +8,8 @@ import org.example.back.Board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,16 @@ public class BoardController {
 	public ResponseEntity<List<BoardEntity>> getAllBoard(){
 		List<BoardEntity> results = boardService.getAllBoard();
 		return new ResponseEntity<List<BoardEntity>>(results, HttpStatus.OK);
+	}
+
+	@GetMapping("/user/{user_nickname}")
+	public ResponseEntity<?> getUserBoard(@PathVariable("user_nickname") String nickname) {
+		try {
+			List<BoardEntity> list = boardService.getUserBoard(nickname);
+			return new ResponseEntity<List<BoardEntity>>(list, HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping("/{board_idx}")
@@ -64,9 +76,10 @@ public class BoardController {
 	}
 
 	@PutMapping("/{board_idx}/{nickname}")
-	public ResponseEntity<Void> deleteBoard(@PathVariable("board_idx") int board_idx, @PathVariable("nickname") String nickname){
+	public ResponseEntity<Void> deleteBoard(@PathVariable("board_idx") int board_idx, @AuthenticationPrincipal
+		UserDetails userDetails){
 		try{
-			boardService.deleteBoard(board_idx, nickname);
+			boardService.deleteBoard(board_idx, userDetails);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
