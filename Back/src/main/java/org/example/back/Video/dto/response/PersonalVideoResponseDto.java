@@ -9,5 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PersonalVideoResponseDto {
 	private int videoIdx;
+	private String videoTitle;
 	private String PersignedURL;
 }

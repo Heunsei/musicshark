@@ -1,7 +1,8 @@
 package org.example.back.Video.entity;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,10 +28,9 @@ public class VideoEntity {
 	@Column(name = "video_idx")
 	private int videoIdx;
 
-//	@Column(name = "video_date", columnDefinition = "DATE default current_date")
-	@Column(name = "video_date")
+	@Column(name = "video_date", columnDefinition = "DATE")
 	@CreationTimestamp
-	private Date videoDate;
+	private LocalDate videoDate;
 
 	@NotBlank
 	@Column(name = "video_title", columnDefinition = "TEXT")

@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.example.back.User.entity.UserEntity;
 import org.example.back.User.repository.UserRepository;
@@ -46,7 +47,6 @@ public class S3ServiceImpl implements S3Service {
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
-	private final String tempString = "nickname";
 
 	@Override
 	public void savePersonalVideo(PersonalVideoRequestDto dto, UserDetails userDetails) throws IOException {
@@ -60,7 +60,6 @@ public class S3ServiceImpl implements S3Service {
 		LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
 		String dateString = now.toString().replaceAll("-", "");
 
-		// String extension = StringUtils.getFilenameExtension(dto.getVideoFile().getOriginalFilename());
 		String key = personalVideoPath + user.getNickname() + "/" + dateString + "/" + dto.getVideoTitle() + ".webm";
 
 
@@ -117,6 +116,8 @@ public class S3ServiceImpl implements S3Service {
 		for(VideoEntity entity : list) {
 			PersonalVideoResponseDto dto = new PersonalVideoResponseDto();
 			dto.setVideoIdx(entity.getVideoIdx());
+			dto.setVideoTitle(entity.getVideoTitle());
+
 			String key = entity.getVideoPath();
 			String url = getPresignedURL(key, 60*30, HttpMethod.GET);
 			dto.setPersignedURL(url);
@@ -159,8 +160,10 @@ public class S3ServiceImpl implements S3Service {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
 			.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
-		
-		return false;
+		Optional<VideoEntity> video = videoRepository.findByUserIdxAndVideoTitleAndVideoDate(user.getUserIdx(), boardTitle, LocalDate.now(ZoneId.of("Asia/Seoul")));
+
+		if(video.isPresent()) return true;
+		else return false;
 	}
 
 	private List<String> listObjectsInDirectory(String dirPath){

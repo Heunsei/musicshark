@@ -1,5 +1,6 @@
 package org.example.back.Video.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.example.back.Video.dto.request.PersonalVideoRequestDto;
@@ -31,25 +32,12 @@ public class S3Controller {
 			@AuthenticationPrincipal UserDetails userDetails){
 		try{
 			s3Service.savePersonalVideo(dto, userDetails);
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		}catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 	}
-
-	@PostMapping("/personal/test")
-	public ResponseEntity<Void> savePersonalVideoTest(
-		@ModelAttribute PersonalVideoRequestDto dto,
-		@AuthenticationPrincipal UserDetails userDetails){
-		try {
-			s3Service.savePersonalVideoTest(dto, userDetails);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}catch(Exception e){
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-	}
-
-
+	
 	@GetMapping("/personal")
 	public ResponseEntity<?> getPersonalPresignedURL(@AuthenticationPrincipal UserDetails userDetails){
 		try {
@@ -64,16 +52,17 @@ public class S3Controller {
 	public ResponseEntity<?> deletePersonalVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam int boardIdx){
 		try {
 			s3Service.deletePersonalVideo(userDetails, boardIdx);
-			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch(Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@GetMapping("/video/personal")
+	// 당일 저장한 개인 영상 중 입력된 영상 제목과 일치하는 파일이 있는 지 확인
+	@GetMapping("/find/personal")
 	public ResponseEntity<?> findPersonalVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam String boardTitle){
 		boolean existed = s3Service.findPersonalVideoWithTitle(userDetails, boardTitle);
-		if(existed) return new ResponseEntity<Void>(HttpStatus.FOUND);
-		else return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		if(!existed) return new ResponseEntity<Void>(HttpStatus.OK);
+		else return new ResponseEntity<String>("이미 존재하는 파일", HttpStatus.BAD_REQUEST);
 	}
 }
