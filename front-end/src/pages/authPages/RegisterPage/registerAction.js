@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { loginAction } from '../LoginPage/loginAction'
 
 export const registerAction = async (props) => {
     const URL = process.env.REACT_APP_API_URL
@@ -10,9 +11,13 @@ export const registerAction = async (props) => {
             data: props
         })
         console.log(response)
+        if (response.data.status === 500 && (response.data.message === "존재하는 닉네임입니다." || response.data.message === '존재하는 이메일입니다.')) {
+            alert(`${response.data.message}`)
+            return false
+        }
 
-        if (response.data === '이미 존재하는 닉네임' || response.data === '이미 존재하는 이메일') {
-            alert(`${response.data}입니다`)
+        if (response.data.status === 200 && response.data.message === "회원가입 성공") {
+            return true
         }
     } catch (err) {
         alert(err)

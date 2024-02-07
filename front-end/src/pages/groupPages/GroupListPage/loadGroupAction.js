@@ -5,7 +5,7 @@ const loadGroupAction = async (setGroupList) => {
     const accessToken = getCookie('accessToken')
     const URL = process.env.REACT_APP_API_URL
     try {
-        await axios({
+        return await axios({
             method: 'get',
             url: `${URL}/channels`,
             headers: {
@@ -14,6 +14,10 @@ const loadGroupAction = async (setGroupList) => {
         })
             .then((res) => {
                 setGroupList(res.data.data)
+                return res.data.data
+            })
+            .catch((err) => {
+                console.log(err)
             })
     } catch (err) {
         console.log(err)

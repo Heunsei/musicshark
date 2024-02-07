@@ -20,7 +20,7 @@ const RegisterInput = ({
         label="E-mail"
         type='email'
         placeholder="이메일을 입력하세요"
-        validateState = {validateMail(mail) ? '' : 'check email'}
+        validateState={validateMail(mail) ? '' : 'check email'}
       />
       <InputWithLabel
         value={password}
@@ -28,7 +28,7 @@ const RegisterInput = ({
         label="password"
         type='password'
         placeholder="비밀번호를 입력하세요"
-        validateState = { validatePassword(password) ? '' : '비밀번호는 8글자이상 16글자 이하로 설정해주세요' }
+        validateState={validatePassword(password) ? '' : '비밀번호는 8글자이상 16글자 이하로 설정해주세요'}
       />
       <InputWithLabel
         value={passwordConfirm}
@@ -36,7 +36,7 @@ const RegisterInput = ({
         label="password Confirm"
         type='password'
         placeholder="비밀번호 확인"
-        validateState = { validatePasswordConfirm(password, passwordConfirm) ? '' : '비밀번호를 확인해주세요' }
+        validateState={validatePasswordConfirm(password, passwordConfirm) ? '' : '비밀번호를 확인해주세요'}
       />
       <InputWithLabel
         value={nickname}
@@ -44,7 +44,7 @@ const RegisterInput = ({
         label="nickname"
         type='text'
         placeholder="닉네임을 입력하세요"
-        validateState ={ validateNickname(nickname) ? '' : '닉네임은 8~16글자, 특수문자를 제외하고 설정해주세요'} 
+        validateState={validateNickname(nickname) ? '' : '닉네임은 8~16글자, 특수문자를 제외하고 설정해주세요'}
       />
       <BirthDateInput
         birth={birth}

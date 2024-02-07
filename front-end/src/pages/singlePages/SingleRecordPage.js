@@ -3,22 +3,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Modal from '@mui/material/Modal';
 
 import styles from './SingleRecordPage.module.css'
-import Navbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
-import RecordScreen from './components/SingleRecordPlay/RecordScreen';
 import { uploadVideoAction } from './actions/uploadVideoAction';
-import video from './video.mp4'
-import webm from './webm.webm'
+import { getSingleRecordListAction } from './actions/getSingleRecordListAction';
 
 const SingleRecordPage = () => {
     const [isRecording, setIsRecording] = useState(false)
     const navigate = useNavigate()
-    const handleRecord = () => {
-        setIsRecording(!isRecording)
-        console.log(isRecording)
-    }
 
     // 해당 값이 null -> 연결이 종료
     const [stream, setStream] = useState(null);
@@ -26,15 +20,20 @@ const SingleRecordPage = () => {
     const [recordedBlobs, setRecordedBlobs] = useState([]);
     // 녹화 영상 제목
     const [videoTitle, setVideoTitle] = useState('')
-
+    // 녹화 영상 리스트
+    const [recordList, setRecordList] = useState([])
     // 녹화되는 화면을 표시해주는 듯한 느낌을 줄 ref
     const mirrorVideoRef = useRef(null);
     // 녹화 화면을 담을 ref
     const mediaRecorderRef = useRef(null);
     const testVideoRef = useRef(null)
 
+    // modal state
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => setOpen(false);
+
     /**
-     * @returns 유저의 미디어를 받아오고 마이크가 없을 시 오류를 콘솔로 띄워줌
+     *  유저의 미디어를 받아오고 마이크가 없을 시 오류를 콘솔로 띄워줌
      */
     const getMedia = async () => {
         try {
@@ -56,6 +55,9 @@ const SingleRecordPage = () => {
         }
     };
 
+    /**
+     *  녹화를 시작하는 함수
+     */
     const handleStartRecording = () => {
         setRecordedBlobs([]);
         setIsRecording(true)
@@ -79,6 +81,9 @@ const SingleRecordPage = () => {
         }
     };
 
+    /**
+     * 녹화를 종료하는 함수
+     */
     const handleStopRecording = () => {
         setIsRecording(false)
         console.log('녹화 종료')
@@ -88,6 +93,10 @@ const SingleRecordPage = () => {
         setIsRecording(false);
     };
 
+
+    /**
+     * 다운로드 함수
+     */
     const handleDownload = () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
         const url = window.URL.createObjectURL(blob);
@@ -104,6 +113,9 @@ const SingleRecordPage = () => {
         }, 100);
     }
 
+    /**
+    *  blob객체를 생성하고 입력받은 videoTitle과 함께 데이터 폼으로 전달
+    */
     const handleUpload = async () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
         const formData = new FormData()
@@ -113,6 +125,13 @@ const SingleRecordPage = () => {
         setTimeout(() => {
             setRecordedBlobs([])
         }, 100);
+    }
+
+    /**
+     * 업로드용 확인 modal을 열어주는 함수
+     */
+    const openUploadModal = () => {
+        setOpen(true);
     }
 
     useEffect(() => {
@@ -129,21 +148,34 @@ const SingleRecordPage = () => {
         }
     }, [stream])
 
+    useEffect(() => {
+        const getList = async () => {
+            const res = await getSingleRecordListAction()
+            setRecordList(res)
+        }
+        getList()
+    }, [open])
 
     return (
         <>
             <div className={styles.background}>
                 <div className={styles.container}>
-                    <div className={styles.screenBox}>
-                        <div className={styles.screen}>
-                            <div style={{ width: '100%', height: '100%' }}>
-                                <video ref={mirrorVideoRef} autoPlay muted playsInline style={{ width: '100%', height: '100%', transform: 'scaleX(-1)' }} />
-                            </div>
+                    <div className={styles.topBox}>
+                        <div className={styles.screenBox}>
+                            <video ref={mirrorVideoRef} autoPlay muted playsInline style={{ width: '100%', height: '100%', transform: 'scaleX(-1)' }} />
                         </div>
                         <div className={styles.recordList}>
-                            <video ref={testVideoRef} controls style={{ width: '200px', height: '200px' }}>
-                                <source src={webm} type='video/webm' />
-                            </video>
+                            {
+                                recordList.length !== 0 ?
+                                    (recordList.map((element, i) => {
+                                        return (
+                                            <video ref={testVideoRef} controls style={{ width: '200px', height: '200px' }}>
+                                                <source src={element.persignedURL} type='video/webm' />
+                                            </video>
+                                        )
+                                    })) : null
+                            }
+
                         </div>
                     </div>
                     <div className={styles.buttonBox}>
@@ -160,7 +192,8 @@ const SingleRecordPage = () => {
                             recordedBlobs.length !== 0 ? <button onClick={() => handleDownload()}>다운로드</button> : null
                         }
                         {
-                            recordedBlobs.length !== 0 ? <button onClick={() => handleUpload()}>이건 업로드</button> : null
+                            recordedBlobs.length !== 0 ?
+                                <button onClick={() => openUploadModal()}>업로드</button> : null
                         }
                         <button onClick={() => navigate('/single')} style={{ position: 'absolute', right: '30px' }}>
                             <LogoutIcon />
@@ -168,6 +201,19 @@ const SingleRecordPage = () => {
                     </div>
                 </div>
             </div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+            >
+                <div className={styles.modalContainer}>
+                    <header>영상을 저장 하시겠습니까?</header>
+                    <input value={videoTitle} onChange={(event) => { setVideoTitle(event.target.value); console.log(videoTitle) }} placeholder='영상 제목을 입력해주세요' />
+                    <div className={styles.modalButtonBox}>
+                        <button onClick={() => { handleUpload() }}>저장</button>
+                        <button onClick={() => { setRecordedBlobs([]); handleClose() }}>취소</button>
+                    </div>
+                </div>
+            </Modal >
         </>
     );
 };
