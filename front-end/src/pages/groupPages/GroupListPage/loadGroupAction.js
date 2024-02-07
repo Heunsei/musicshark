@@ -12,9 +12,9 @@ const loadGroupAction = async (setGroupList) => {
                 Authorization: `Bearer ${accessToken}`
             }
         })
-        .then((res) => {
-            setGroupList(res.data.data)
-        })
+            .then((res) => {
+                setGroupList(res.data.data)
+            })
     } catch (err) {
         console.log(err)
     }

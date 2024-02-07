@@ -16,9 +16,17 @@ const GroupBox = (props) => {
     const itemsPerPage = 4
     const [currentPage, setCurrentPage] = useState(1)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const lastItem = currentPage * itemsPerPage
-    const fisrtItem = lastItem - itemsPerPage
-    const showGroup = groupList.slice(fisrtItem, lastItem);
+    let lastItem = currentPage * itemsPerPage
+    let fisrtItem = lastItem - itemsPerPage
+    const [showGroup, setShowGroup] = useState([])
+
+    useEffect(() => {
+        console.log(groupList)
+        if (groupList !== null) {
+            setShowGroup(groupList.slice(fisrtItem, lastItem));
+        }
+    }, [currentPage, setShowGroup, groupList, fisrtItem, lastItem, isModalOpen])
+
 
     const handleChange = (event, value) => {
         setCurrentPage(value);
@@ -42,11 +50,13 @@ const GroupBox = (props) => {
                     }
                     <div className={styles.innerFooter}>
                         <Stack spacing={2}>
-                            <Pagination
-                                count={Math.ceil(groupList.length / itemsPerPage)}
-                                page={currentPage}
-                                onChange={handleChange}
-                            />
+                            {
+                                groupList ? (<Pagination
+                                    count={Math.ceil(groupList.length / itemsPerPage)}
+                                    page={currentPage}
+                                    onChange={handleChange} />) : null
+                            }
+
                         </Stack>
                     </div>
                 </div>

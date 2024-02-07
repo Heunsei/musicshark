@@ -97,6 +97,9 @@ const GroupCreateModal = (props) => {
                         onClick={() => {
                             createGroupAction(groupDetail)
                             setIsModalOpen(false)
+                            setChannelMax(2)
+                            setGroupIntro('')
+                            setGroupName('')
                         }}
                         sx={{
                             margin: '15px'
