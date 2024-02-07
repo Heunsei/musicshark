@@ -61,8 +61,19 @@ public class S3Controller {
 	}
 
 	@DeleteMapping("/personal")
-	public ResponseEntity<Void> deletePersonalVideo(@AuthenticationPrincipal UserDetails userDetails){
+	public ResponseEntity<?> deletePersonalVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam int boardIdx){
+		try {
+			s3Service.deletePersonalVideo(userDetails, boardIdx);
+			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		} catch(Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 
-		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	@GetMapping("/video/personal")
+	public ResponseEntity<?> findPersonalVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam String boardTitle){
+		boolean existed = s3Service.findPersonalVideoWithTitle(userDetails, boardTitle);
+		if(existed) return new ResponseEntity<Void>(HttpStatus.FOUND);
+		else return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 	}
 }

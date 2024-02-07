@@ -20,6 +20,7 @@ import org.example.back.common.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
@@ -137,6 +138,29 @@ public class S3ServiceImpl implements S3Service {
 		String key = personalVideoPath + user.getNickname() + "/" + dateString + "/" + dto.getVideoTitle() + ".webm";
 
 		// amazonS3.putObject(bucket, key, dto.getVideoStream());
+	}
+
+	@Override
+	@Transactional
+	public void deletePersonalVideo(UserDetails userDetails, int boardIdx) throws Exception {
+		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
+			.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+		VideoEntity video = videoRepository.findByVideoIdx(boardIdx).orElseThrow(() -> new NullPointerException("해당 파일을 찾을 수 없습니다."));
+		if(user.getUserIdx() == video.getUserIdx()){
+			String key = video.getVideoPath();
+			videoRepository.deleteByVideoIdx(video.getVideoIdx());
+			amazonS3.deleteObject(bucket, key);
+		}
+	}
+
+	@Override
+	public boolean findPersonalVideoWithTitle(UserDetails userDetails, String boardTitle) {
+		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
+			.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+		
+		return false;
 	}
 
 	private List<String> listObjectsInDirectory(String dirPath){

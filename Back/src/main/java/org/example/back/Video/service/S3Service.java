@@ -17,4 +17,8 @@ public interface S3Service {
 	List<PersonalVideoResponseDto> getPersonalPresignedURL(UserDetails userDetails) throws Exception;
 
 	void savePersonalVideoTest(PersonalVideoRequestDto dto, UserDetails userDetails);
+
+	void deletePersonalVideo(UserDetails userDetails, int boardIdx) throws Exception;
+
+	boolean findPersonalVideoWithTitle(UserDetails userDetails, String boardTitle);
 }

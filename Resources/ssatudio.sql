@@ -158,8 +158,8 @@ create table if not exists `comment` (
 -- 영상
 create table if not exists `video` (
    video_idx int primary key auto_increment COMMENT '영상 인덱스',
-   video_date timestamp NOT NULL DEFAULT now() COMMENT '생성일자',
-   video_title varchar(20) NOT NULL COMMENT '제목',
+   video_date DATE NOT NULL default (current_date) COMMENT '생성일자',
+   video_title text NOT NULL COMMENT '제목',
    video_picture blob COMMENT '영상사진',
    user_idx int NOT NULL COMMENT '유저 인덱스',
    video_path text NOT NULL,
@@ -254,3 +254,5 @@ insert into `comment` (board_idx, comment_content, user_idx)
 values (1, "댓글 테스트!", 1);
 
 select * from `comment`;
+
+select * from video;

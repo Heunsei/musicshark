@@ -12,4 +12,7 @@ public interface VideoRepository extends JpaRepository<VideoEntity, Integer> {
     Optional<VideoEntity> findByVideoPath(String path);
 
     List<VideoEntity> findByUserIdx(int userIdx);
+
+    Optional<VideoEntity> findByVideoIdx(int videoIdx);
+    void deleteByVideoIdx(int videoIdx);
 }

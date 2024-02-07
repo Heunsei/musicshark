@@ -1,9 +1,12 @@
 package org.example.back.Video.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,12 +27,13 @@ public class VideoEntity {
 	@Column(name = "video_idx")
 	private int videoIdx;
 
-	@CreationTimestamp
+//	@Column(name = "video_date", columnDefinition = "DATE default current_date")
 	@Column(name = "video_date")
-	private Timestamp videoDate;
+	@CreationTimestamp
+	private Date videoDate;
 
 	@NotBlank
-	@Column(name = "video_title")
+	@Column(name = "video_title", columnDefinition = "TEXT")
 	private String videoTitle;
 
 	@Lob
