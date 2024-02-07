@@ -15,7 +15,7 @@ import org.example.back.Video.dto.request.PersonalVideoRequestDto;
 import org.example.back.Video.dto.response.PersonalVideoResponseDto;
 import org.example.back.Video.entity.VideoEntity;
 import org.example.back.Video.repository.VideoRepository;
-import org.example.back.Video.service.S3Service;
+import org.example.back.Video.service.PersonalVideoService;
 import org.example.back.common.ErrorCode;
 import org.example.back.common.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class S3ServiceImpl implements S3Service {
+public class PersonalVideoServiceImpl implements PersonalVideoService {
 
 	private final AmazonS3 amazonS3;
 	private final UserRepository userRepository;
@@ -49,7 +49,7 @@ public class S3ServiceImpl implements S3Service {
 	private String bucket;
 
 	@Override
-	public void savePersonalVideo(PersonalVideoRequestDto dto, UserDetails userDetails) throws IOException {
+	public void saveVideo(PersonalVideoRequestDto dto, UserDetails userDetails) throws IOException {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
 		ObjectMetadata metadata = new ObjectMetadata();
@@ -73,42 +73,7 @@ public class S3ServiceImpl implements S3Service {
 	}
 
 	@Override
-	public String getPresignedURL(String keyname, long expTimeSecond, HttpMethod method) throws Exception {
-		String preSignedURL;
-		Date expiration = new Date();
-		Long expTimeMillis = expiration.getTime();
-		expTimeMillis += 1000 * expTimeSecond;
-		expiration.setTime(expTimeMillis);
-
-		GeneratePresignedUrlRequest PresignedUrlRequest =
-			new GeneratePresignedUrlRequest(bucket, keyname)
-				.withMethod(method)
-				.withExpiration(expiration);
-		URL url = amazonS3.generatePresignedUrl(PresignedUrlRequest);
-		preSignedURL = url.toString();
-
-		return preSignedURL;
-	}
-
-	// @Override
-	// public List<String> getPersonalPresignedURL(UserDetails userDetails) throws Exception {
-	// 	UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow();
-	// 	String basePath = personalVideoPath + user.getNickname() + "/";
-	//
-	// 	List<String> objectKeys = listObjectsInDirectory(basePath);
-	// 	List<String> presignedUrls = new ArrayList<>();
-	//
-	// 	for(String objectKey : objectKeys){
-	// 		System.out.println(objectKey);
-	// 		String Url = getPresignedURL(objectKey, 30*60, HttpMethod.GET);
-	// 		presignedUrls.add(Url);
-	// 	}
-	//
-	// 	return presignedUrls;
-	// }
-
-	@Override
-	public List<PersonalVideoResponseDto> getPersonalPresignedURL(UserDetails userDetails) throws Exception {
+	public List<PersonalVideoResponseDto> getPresignedURL(UserDetails userDetails) throws Exception {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow();
 		List<VideoEntity> list = videoRepository.findByUserIdx(user.getUserIdx());
 
@@ -119,7 +84,7 @@ public class S3ServiceImpl implements S3Service {
 			dto.setVideoTitle(entity.getVideoTitle());
 
 			String key = entity.getVideoPath();
-			String url = getPresignedURL(key, 60*30, HttpMethod.GET);
+			String url = makePresignedURL(key, 60*30, HttpMethod.GET);
 			dto.setPresignedURL(url);
 			result.add(dto);
 		}
@@ -127,23 +92,8 @@ public class S3ServiceImpl implements S3Service {
 	}
 
 	@Override
-	public void savePersonalVideoTest(PersonalVideoRequestDto dto, UserDetails userDetails) {
-		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(
-			ErrorCode.USER_NOT_FOUND));
-
-		// 현재 날짜를 String으로 변환함.
-		LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
-		String dateString = now.toString().replaceAll("-", "");
-
-		// String extension = StringUtils.getFilenameExtension(dto.getVideoFile().getOriginalFilename());
-		String key = personalVideoPath + user.getNickname() + "/" + dateString + "/" + dto.getVideoTitle() + ".webm";
-
-		// amazonS3.putObject(bucket, key, dto.getVideoStream());
-	}
-
-	@Override
 	@Transactional
-	public void deletePersonalVideo(UserDetails userDetails, int boardIdx) throws Exception {
+	public void deleteVideo(UserDetails userDetails, int boardIdx) throws Exception {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
 			.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
@@ -156,7 +106,7 @@ public class S3ServiceImpl implements S3Service {
 	}
 
 	@Override
-	public boolean findPersonalVideoWithTitle(UserDetails userDetails, String videoTitle) {
+	public boolean findVideoWithTitle(UserDetails userDetails, String videoTitle) {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
 			.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
@@ -164,6 +114,23 @@ public class S3ServiceImpl implements S3Service {
 
 		if(video.isPresent()) return true;
 		else return false;
+	}
+
+	private String makePresignedURL(String keyname, long expTimeSecond, HttpMethod method) throws Exception {
+		String preSignedURL;
+		Date expiration = new Date();
+		Long expTimeMillis = expiration.getTime();
+		expTimeMillis += 1000 * expTimeSecond;
+		expiration.setTime(expTimeMillis);
+
+		GeneratePresignedUrlRequest PresignedUrlRequest =
+				new GeneratePresignedUrlRequest(bucket, keyname)
+						.withMethod(method)
+						.withExpiration(expiration);
+		URL url = amazonS3.generatePresignedUrl(PresignedUrlRequest);
+		preSignedURL = url.toString();
+
+		return preSignedURL;
 	}
 
 	private List<String> listObjectsInDirectory(String dirPath){

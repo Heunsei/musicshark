@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: frontend_test_01
+    build: ./front-end
+    restart: always
+    ports:
+      - "3000:3000"
+  
+  backend:
+    container_name: backend_test_01
+    build: ./Back
+    restart: always
+    ports:
+      - "8081:8080"
