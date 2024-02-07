@@ -10,10 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.HttpMethod;
 
 public interface S3Service {
-	String saveFile(MultipartFile multipartFile) throws IOException;
-
-    void saveVideo(S3VideoRequestDto dto);
-
     void savePersonalVideo(S3VideoRequestDto dto, UserDetails userDetails) throws IOException;
 
 	String getPresignedURL(String keyname, long expTime, HttpMethod method) throws Exception;

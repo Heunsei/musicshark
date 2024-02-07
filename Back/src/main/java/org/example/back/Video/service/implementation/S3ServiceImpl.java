@@ -48,20 +48,6 @@ public class S3ServiceImpl implements S3Service {
 	private String bucket;
 	private final String tempString = "nickname";
 
-	public String saveFile(MultipartFile multipartFile) throws IOException {
-		String originalFilename = multipartFile.getOriginalFilename();
-
-		ObjectMetadata metadata = new ObjectMetadata();
-		metadata.setContentLength(multipartFile.getSize());
-		metadata.setContentType(multipartFile.getContentType());
-
-		// S3에 파일 저장하는 경로
-		String path = "storage/" + tempString + "/" + originalFilename;
-
-		amazonS3.putObject(bucket, path, multipartFile.getInputStream(), metadata);
-		return amazonS3.getUrl(bucket, path).toString();
-	}
-
 	@Override
 	public void savePersonalVideo(S3VideoRequestDto dto, UserDetails userDetails) throws IOException {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
@@ -86,12 +72,6 @@ public class S3ServiceImpl implements S3Service {
 
 		videoRepository.save(data);
 	}
-
-	@Override
-	public void saveVideo(S3VideoRequestDto dto) {
-
-	}
-
 	@Override
 	public String getPresignedURL(String keyname, long expTimeSecond, HttpMethod method) throws Exception {
 		String preSignedURL;
