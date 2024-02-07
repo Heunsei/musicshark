@@ -2,14 +2,14 @@ version: "3.8"
 
 services:
   frontend:
-    container_name: frontend_test_01
+    container_name: akgishark_frontend
     build: ./front-end
     restart: always
     ports:
       - "3000:3000"
   
   backend:
-    container_name: backend_test_01
+    container_name: akgishark_backend
     build: ./Back
     restart: always
     ports:
