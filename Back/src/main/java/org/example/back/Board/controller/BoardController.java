@@ -8,6 +8,8 @@ import org.example.back.Board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,9 +46,10 @@ public class BoardController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> registBoard(@RequestBody PostBoardRequestDto boardDto){
+	public ResponseEntity<Void> registBoard(@RequestBody PostBoardRequestDto boardDto, @AuthenticationPrincipal
+		UserDetails userDetails){
 		try {
-			boardService.postBoard(boardDto);
+			boardService.postBoard(boardDto, userDetails);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -54,9 +57,10 @@ public class BoardController {
 	}
 
 	@PutMapping("/{board_idx}")
-	public ResponseEntity<Void> updateBoard(@PathVariable("board_idx") int board_idx, @RequestBody PostBoardRequestDto boardDto){
+	public ResponseEntity<Void> updateBoard(@PathVariable("board_idx") int board_idx
+		, @RequestBody PostBoardRequestDto boardDto, @AuthenticationPrincipal UserDetails userDetails){
 		try{
-			boardService.updateBoard(board_idx, boardDto);
+			boardService.updateBoard(board_idx, boardDto, userDetails);
 			return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 		} catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
