@@ -37,7 +37,7 @@ public class S3Controller {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/personal")
 	public ResponseEntity<?> getPersonalPresignedURL(@AuthenticationPrincipal UserDetails userDetails){
 		try {
@@ -60,8 +60,8 @@ public class S3Controller {
 
 	// 당일 저장한 개인 영상 중 입력된 영상 제목과 일치하는 파일이 있는 지 확인
 	@GetMapping("/find/personal")
-	public ResponseEntity<?> findPersonalVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam String boardTitle){
-		boolean existed = s3Service.findPersonalVideoWithTitle(userDetails, boardTitle);
+	public ResponseEntity<?> findPersonalVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam String videoTitle){
+		boolean existed = s3Service.findPersonalVideoWithTitle(userDetails, videoTitle);
 		if(!existed) return new ResponseEntity<Void>(HttpStatus.OK);
 		else return new ResponseEntity<String>("이미 존재하는 파일", HttpStatus.BAD_REQUEST);
 	}

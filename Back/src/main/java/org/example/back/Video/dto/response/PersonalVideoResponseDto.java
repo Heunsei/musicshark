@@ -1,5 +1,6 @@
 package org.example.back.Video.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PersonalVideoResponseDto {
+	@JsonProperty("video_idx")
 	private int videoIdx;
+
+	@JsonProperty("video_title")
 	private String videoTitle;
-	private String PersignedURL;
+
+	@JsonProperty("presigned_url")
+	private String PresignedURL;
 }

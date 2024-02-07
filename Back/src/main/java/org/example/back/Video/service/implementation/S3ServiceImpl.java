@@ -120,7 +120,7 @@ public class S3ServiceImpl implements S3Service {
 
 			String key = entity.getVideoPath();
 			String url = getPresignedURL(key, 60*30, HttpMethod.GET);
-			dto.setPersignedURL(url);
+			dto.setPresignedURL(url);
 			result.add(dto);
 		}
 		return result;
@@ -156,11 +156,11 @@ public class S3ServiceImpl implements S3Service {
 	}
 
 	@Override
-	public boolean findPersonalVideoWithTitle(UserDetails userDetails, String boardTitle) {
+	public boolean findPersonalVideoWithTitle(UserDetails userDetails, String videoTitle) {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
 			.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
-		Optional<VideoEntity> video = videoRepository.findByUserIdxAndVideoTitleAndVideoDate(user.getUserIdx(), boardTitle, LocalDate.now(ZoneId.of("Asia/Seoul")));
+		Optional<VideoEntity> video = videoRepository.findByUserIdxAndVideoTitleAndVideoDate(user.getUserIdx(), videoTitle, LocalDate.now(ZoneId.of("Asia/Seoul")));
 
 		if(video.isPresent()) return true;
 		else return false;
