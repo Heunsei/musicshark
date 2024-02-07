@@ -30,8 +30,6 @@ public class S3Controller {
 			@ModelAttribute PersonalVideoRequestDto dto,
 			@AuthenticationPrincipal UserDetails userDetails){
 		try{
-			System.out.println("title: " + dto.getVideoTitle());
-			System.out.println("file: " + dto.getVideoFile());
 			s3Service.savePersonalVideo(dto, userDetails);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}catch(Exception e){
