@@ -108,7 +108,7 @@ const SingleRecordPage = () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
         const formData = new FormData()
         formData.append('videoFile', blob)
-        formData.append('videoTitle', videoTitle)
+        formData.append('videoTitle', "타이틀!")
         await uploadVideoAction(formData)
         setTimeout(() => {
             setRecordedBlobs([])

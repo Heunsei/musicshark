@@ -10,7 +10,8 @@ import java.util.List;
 
 import org.example.back.User.entity.UserEntity;
 import org.example.back.User.repository.UserRepository;
-import org.example.back.Video.dto.request.S3VideoRequestDto;
+import org.example.back.Video.dto.request.PersonalVideoRequestDto;
+import org.example.back.Video.dto.response.PersonalVideoResponseDto;
 import org.example.back.Video.entity.VideoEntity;
 import org.example.back.Video.repository.VideoRepository;
 import org.example.back.Video.service.S3Service;
@@ -19,8 +20,6 @@ import org.example.back.common.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
@@ -49,7 +48,7 @@ public class S3ServiceImpl implements S3Service {
 	private final String tempString = "nickname";
 
 	@Override
-	public void savePersonalVideo(S3VideoRequestDto dto, UserDetails userDetails) throws IOException {
+	public void savePersonalVideo(PersonalVideoRequestDto dto, UserDetails userDetails) throws IOException {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
 		ObjectMetadata metadata = new ObjectMetadata();
@@ -60,8 +59,8 @@ public class S3ServiceImpl implements S3Service {
 		LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
 		String dateString = now.toString().replaceAll("-", "");
 
-		String extension = StringUtils.getFilenameExtension(dto.getVideoFile().getOriginalFilename());
-		String key = personalVideoPath + user.getNickname() + "/" + dateString + "/" + dto.getVideoTitle() + "." + extension;
+		// String extension = StringUtils.getFilenameExtension(dto.getVideoFile().getOriginalFilename());
+		String key = personalVideoPath + user.getNickname() + "/" + dateString + "/" + dto.getVideoTitle() + ".webm";
 
 
 		amazonS3.putObject(bucket, key, dto.getVideoFile().getInputStream(), metadata);
@@ -72,6 +71,7 @@ public class S3ServiceImpl implements S3Service {
 
 		videoRepository.save(data);
 	}
+
 	@Override
 	public String getPresignedURL(String keyname, long expTimeSecond, HttpMethod method) throws Exception {
 		String preSignedURL;
@@ -108,18 +108,35 @@ public class S3ServiceImpl implements S3Service {
 	// }
 
 	@Override
-	public List<String> getPersonalPresignedURL(UserDetails userDetails) throws Exception {
+	public List<PersonalVideoResponseDto> getPersonalPresignedURL(UserDetails userDetails) throws Exception {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow();
 		List<VideoEntity> list = videoRepository.findByUserIdx(user.getUserIdx());
 
-		List<String> result = new ArrayList<>();
+		List<PersonalVideoResponseDto> result = new ArrayList<>();
 		for(VideoEntity entity : list) {
+			PersonalVideoResponseDto dto = new PersonalVideoResponseDto();
+			dto.setVideoIdx(entity.getVideoIdx());
 			String key = entity.getVideoPath();
-			System.out.println(key);
 			String url = getPresignedURL(key, 60*30, HttpMethod.GET);
-			result.add(url);
+			dto.setPersignedURL(url);
+			result.add(dto);
 		}
 		return result;
+	}
+
+	@Override
+	public void savePersonalVideoTest(PersonalVideoRequestDto dto, UserDetails userDetails) {
+		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(
+			ErrorCode.USER_NOT_FOUND));
+
+		// 현재 날짜를 String으로 변환함.
+		LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+		String dateString = now.toString().replaceAll("-", "");
+
+		// String extension = StringUtils.getFilenameExtension(dto.getVideoFile().getOriginalFilename());
+		String key = personalVideoPath + user.getNickname() + "/" + dateString + "/" + dto.getVideoTitle() + ".webm";
+
+		// amazonS3.putObject(bucket, key, dto.getVideoStream());
 	}
 
 	private List<String> listObjectsInDirectory(String dirPath){
