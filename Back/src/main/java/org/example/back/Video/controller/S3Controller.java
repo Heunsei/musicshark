@@ -1,5 +1,7 @@
 package org.example.back.Video.controller;
 
+import java.util.List;
+
 import org.example.back.Video.dto.request.S3VideoRequestDto;
 import org.example.back.Video.dto.request.UserVideoRequestDto;
 import org.example.back.Video.service.S3Service;
@@ -34,6 +36,16 @@ public class S3Controller {
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/presigned/personal")
+	public ResponseEntity<?> getPersonalPresignedURL(@AuthenticationPrincipal UserDetails userDetails){
+		try {
+			List<String> urls = s3Service.getPersonalPresignedURL(userDetails);
+			return new ResponseEntity<List<String>>(urls, HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
