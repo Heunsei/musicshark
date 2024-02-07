@@ -11,7 +11,7 @@ use ssatudio;
 create table if not exists `user` (
     user_idx int primary key auto_increment COMMENT '유저 인덱스',
     nickname varchar(16) NOT NULL unique COMMENT '닉네임',
-    password varchar(16) NOT NULL COMMENT '패스워드',
+    password text NOT NULL COMMENT '패스워드',
     gender varchar(8) NOT NULL COMMENT '성별',
     birth date NOT NULL COMMENT '생년월일',
     user_isDelete tinyint NOT NULL default 0 COMMENT '탈퇴 여부',
