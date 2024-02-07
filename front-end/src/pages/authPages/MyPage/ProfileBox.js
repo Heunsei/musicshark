@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import api from "../../../api/axiosInstance";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
@@ -21,8 +20,9 @@ const ProfileBox = () => {
   }
 
   const [iconSize, setIconSize] = useState("250px"); // 아이콘 크기 상태
-  const [channels, setChannels] = useState(["채널 1", "채널 2", "채널 3"]); // 목업 채널 데이터
+  const [userNickname, setUserNickname] = useState("");
   const [userTier, setUserTier] = useState("");
+  const [channels, setChannels] = useState([]);
 
   // 브라우저 창 크기에 따라 아이콘 크기를 업데이트하는 함수
   const updateIconSize = () => {
@@ -40,6 +40,23 @@ const ProfileBox = () => {
     window.addEventListener("resize", updateIconSize);
     updateIconSize(); // 초기 아이콘 크기 설정
 
+    const fetchUserInfo = async () => {
+      try {
+        const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
+        const response = await api.get("/user/", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // 요청 헤더에 인증 토큰 추가
+            "Cache-Control": "no-cache",
+          },
+        });
+        console.log("User Info:", response.data); // 응답 데이터 로깅
+        setUserNickname(response.data.nickname); // 유저 닉네임 상태 업데이트
+        // 추가로 필요한 유저 정보가 있으면 여기서 상태 업데이트
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+
     // 서버로부터 티어 정보를 가져오는 함수
     const fetchUserTier = async () => {
       try {
@@ -50,19 +67,104 @@ const ProfileBox = () => {
             "Cache-Control": "no-cache",
           },
         });
-        console.log("Data:", response.data); // axios는 자동으로 JSON을 파싱합니다.
-        setUserTier(response.data.userTier); // 상태 업데이트
+        console.log("Tier:", response.data); // axios는 자동으로 JSON을 파싱합니다.
+        setUserTier(response.data); // 상태 업데이트
       } catch (error) {
         console.error("Error fetching user tier:", error);
       }
     };
 
-    fetchUserTier(); // 함수 호출
+    // 채널 정보를 조회하는 새로운 함수
+    const fetchChannels = async () => {
+      try {
+        const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
+        const response = await api.get("/channels", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Cache-Control": "no-cache",
+          },
+        });
+        console.log("Channels:", response.data); // 응답 데이터 구조 확인
+        const channelData = response.data.data; // 실제 채널 데이터 접근
+        if (Array.isArray(channelData)) {
+          // 응답 데이터가 배열인지 확인
+          setChannels(channelData); // 배열이면 상태 업데이트
+        } else {
+          console.error("Received data is not an array"); // 배열이 아니면 에러 로깅
+        }
+      } catch (error) {
+        console.error("Error fetching channels:", error);
+      }
+    };
+
+    fetchUserInfo(); // 유저 정보 조회 함수 호출
+    fetchUserTier(); // 티어 정보 조회 함수 호출
+    fetchChannels(); // 채널 정보 조회 함수 호출
 
     return () => {
       window.removeEventListener("resize", updateIconSize);
     };
   }, []);
+
+  const getTierAbbreviation = (tier) => {
+    switch (
+      tier.toLowerCase() // 소문자로 변환하여 대소문자 구분 없이 비교
+    ) {
+      case "bronze":
+        return "BR";
+      case "silver":
+        return "SV";
+      case "gold":
+        return "GD";
+      case "platinum":
+        return "PT";
+      case "diamond":
+        return "DM";
+      default:
+        return ""; // 일치하는 티어가 없는 경우 빈 문자열 반환
+    }
+  };
+
+  const getTierStyle = (tier) => {
+    const baseStyle = { ...userTierStyle }; // 기본 userTierStyle을 복사하여 사용
+
+    switch (tier) {
+      case "bronze":
+        return {
+          ...baseStyle,
+          backgroundColor: "#cd7f32", // Bronze 색상
+          color: "white",
+          marginLeft: "1.5%",
+          marginRight: "3%",
+        };
+      case "silver":
+        return {
+          ...baseStyle,
+          backgroundColor: "#C0C0C0", // Silver 색상
+          color: "white",
+        };
+      case "gold":
+        return {
+          ...baseStyle,
+          backgroundColor: "#FFD700", // Gold 색상
+          color: "white",
+        };
+      case "platinum":
+        return {
+          ...baseStyle,
+          backgroundColor: "#E5E4E2", // Platinum 색상
+          color: "white",
+        };
+      case "diamond":
+        return {
+          ...baseStyle,
+          backgroundColor: "#b9f2ff", // Diamond 색상
+          color: "black", // Diamond는 밝은 색상이므로 텍스트 색상을 검정으로 변경
+        };
+      default:
+        return baseStyle; // 일치하는 티어가 없는 경우 기본 스타일 사용
+    }
+  };
 
   const profileStyle = {
     position: "fixed", // 요소를 화면에 고정
@@ -121,25 +223,32 @@ const ProfileBox = () => {
     backgroundColor: "#EFD6BC",
     width: "84%",
     height: "26%",
+    border: "solid #615750",
     listStyleType: "none", // 리스트 항목 앞의 기본 마커를 제거합니다.
     paddingLeft: "0", // 기본 패딩을 제거하여 왼쪽 정렬을 맞춥니다.
     marginTop: "-3%",
     paddingTop: "3%",
     paddingLeft: "5%",
-    borderRadius: "4%",
+    paddingRight: "3%",
+    borderRadius: "0%",
+    overflowY: "auto",
   };
 
   const channelItemStyle = {
     fontSize: "16px",
+    fontWeight: '650',
     marginTop: "1%",
     marginBottom: "5%",
     marginLeft: "1%",
+    paddingBottom: "1%",
     // textAlign: "left",
+    borderBottom: "1px solid #C7BDB6",
   };
 
   const nameStyle = {
     fontSize: "24px",
-    margin: "10px 0", // 상하 마진 설정
+    marginTop: "10px",
+    marginBottom: "10px",
   };
 
   const userInfoStyle = {
@@ -165,12 +274,16 @@ const ProfileBox = () => {
   };
 
   const editButtonStyle = {
+    width: "12%",
     color: "white",
     backgroundColor: "#764812",
     border: "#764812",
-    padding: "0px 15px", // 상하, 좌우
+    paddingTop: "0px",
+    paddingBottom: "0px",
+    paddingLeft: "0px",
+    paddingRight: "0px",
     height: "60%",
-    borderRadius: "25%",
+    borderRadius: "10%",
   };
 
   return (
@@ -183,16 +296,16 @@ const ProfileBox = () => {
       )}
       <div style={userInfoStyle}>
         <div style={nameTextStyle}>
-          <span style={userTierStyle}>{userTier}</span>
-          <h2 style={nameStyle}>기타왕김동우</h2>
+          <span style={getTierStyle(userTier)}>{getTierAbbreviation(userTier)}</span>
+          <h2 style={nameStyle}>{userNickname}</h2>
         </div>
         <button style={editButtonStyle}>수정</button>
       </div>
       <h3 style={channelTextStyle}>소속 채널</h3>
       <ul style={channelListStyle}>
-        {channels.map((channel, index) => (
-          <li key={index} style={channelItemStyle}>
-            {channel}
+        {channels.map((channel) => (
+          <li key={channel.channelIdx} style={channelItemStyle}>
+            > {channel.channelName}
           </li>
         ))}
       </ul>

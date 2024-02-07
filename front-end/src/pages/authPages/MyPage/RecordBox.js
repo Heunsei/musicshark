@@ -1,8 +1,187 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomCalendar from "./Calendar";
-// test
+import api from "../../../api/axiosInstance";
+
 const RecordBox = () => {
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  const [userId, setUserId] = useState(-1);
+  const [userTier, setUserTier] = useState("");
+  const [songs, setSongs] = useState([]); // 음악 목록을 저장할 상태
+  const [clearedSongs, setClearedSongs] = useState(0); // 클리어 곡 수를 저장할 상태
   const [value, onChange] = useState(new Date());
+
+  const userTierStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center", // 수평 중앙 정렬 추가
+    width: "40%", // 필요에 따라 조정하거나 제거
+    height: "10%",
+    border: "solid", // 필요에 따라 테두리 스타일을 조정
+  };
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
+        const response = await api.get("/user/", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // 요청 헤더에 인증 토큰 추가
+            "Cache-Control": "no-cache",
+          },
+        });
+        console.log("User Info:", response.data); // 응답 데이터 로깅
+        setUserId(response.data.userIdx); // 유저 닉네임 상태 업데이트
+        // 추가로 필요한 유저 정보가 있으면 여기서 상태 업데이트
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+
+    // 서버로부터 티어 정보를 가져오는 함수
+    const fetchUserTier = async () => {
+      try {
+        const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
+        const response = await api.get("/user/tier", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // 요청 헤더에 인증 토큰 추가
+            "Cache-Control": "no-cache",
+          },
+        });
+        console.log("Data:", response.data); // axios는 자동으로 JSON을 파싱합니다.
+        setUserTier(response.data); // 상태 업데이트
+      } catch (error) {
+        console.error("Error fetching user tier:", error);
+      }
+    };
+
+    const fetchSongs = async () => {
+      try {
+        const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
+        const response = await api.get("/perfectplay/list", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // 요청 헤더에 인증 토큰 추가
+            "Cache-Control": "no-cache",
+          },
+        });
+        console.log("Songs:", response.data); // 응답 데이터 로깅
+        const songData = response.data.data; // 실제 채널 데이터 접근
+        if (Array.isArray(songData)) {
+          // 응답 데이터가 배열인지 확인
+          setSongs(songData); // 배열이면 상태 업데이트
+        } else {
+          console.error("Received data is not an array"); // 배열이 아니면 에러 로깅
+        }
+      } catch (error) {
+        console.error("Error fetching songs:", error);
+      }
+    };
+
+  
+
+    fetchUserInfo(); // 유저 정보 조회 함수 호출
+    fetchUserTier(); // 유저 티어 조회 함수 호출
+    fetchSongs(); // 음악 목록 조회 함수 호출
+  }, []);
+
+  const fetchClearedSongs = async () => {
+    // if (!userIdx) return; // userIdx가 없다면 함수 실행 중단
+
+    try {
+      const response = await api.get(`/perfectplay/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${getCookie("accessToken")}`, // 요청 헤더에 인증 토큰 추가
+          "Cache-Control": "no-cache",
+        },
+      });
+      console.log("Cleared Songs:", response.data.data[0].totalClear);
+      setClearedSongs(response.data.data[0].totalClear)
+    } catch (error) {
+      console.error("Error fetching cleared songs:", error);
+    }
+  };
+
+  // userId가 변경될 때마다 fetchClearedSongs 실행
+  useEffect(() => {
+    if (userId !== -1) { // 초기 값이 아니라 실제로 설정된 경우에만 실행
+      fetchClearedSongs();
+    }
+  }, [userId]); 
+
+
+  const getTierAbbreviation = (tier) => {
+    switch (
+      tier.toLowerCase() // 소문자로 변환하여 대소문자 구분 없이 비교
+    ) {
+      case "bronze":
+        return "BR";
+      case "silver":
+        return "SV";
+      case "gold":
+        return "GD";
+      case "platinum":
+        return "PT";
+      case "diamond":
+        return "DM";
+      default:
+        return ""; // 일치하는 티어가 없는 경우 빈 문자열 반환
+    }
+  };
+
+  const getTierStyle = (tier) => {
+    const baseStyle = { ...userTierStyle }; // 기본 userTierStyle을 복사하여 사용
+
+    switch (tier) {
+      case "bronze":
+        return {
+          ...baseStyle,
+          backgroundColor: "#cd7f32", // Bronze 색상
+          color: "white",
+          marginLeft: "1.5%",
+          marginRight: "3%",
+        };
+      case "silver":
+        return {
+          ...baseStyle,
+          backgroundColor: "#C0C0C0", // Silver 색상
+          color: "white",
+        };
+      case "gold":
+        return {
+          ...baseStyle,
+          backgroundColor: "#FFD700", // Gold 색상
+          color: "white",
+        };
+      case "platinum":
+        return {
+          ...baseStyle,
+          backgroundColor: "#E5E4E2", // Platinum 색상
+          color: "white",
+        };
+      case "diamond":
+        return {
+          ...baseStyle,
+          backgroundColor: "#b9f2ff", // Diamond 색상
+          color: "black", // Diamond는 밝은 색상이므로 텍스트 색상을 검정으로 변경
+        };
+      default:
+        return baseStyle; // 일치하는 티어가 없는 경우 기본 스타일 사용
+    }
+  };
 
   // 카드 스타일
   const cardStyle1 = {
@@ -106,18 +285,17 @@ const RecordBox = () => {
         <div style={containerStyle}>
           <div style={innerBoxStyle}>
             <h2 style={innerTitle}>나의 티어</h2>
-            <div style={tierBoxStyle}>G4</div>
-            <div style={tierTextStyle}>Gold 4</div>
+            <div style={getTierStyle(userTier)}>{getTierAbbreviation(userTier)}</div>
             <br />
             <button>전체 티어표 보기</button>
           </div>
           <div style={innerBoxStyle}>
             <h2 style={innerTitle}>클리어한 곡</h2>
             <br />
-            <div style={tierTextStyle}>24곡</div>
+            <div style={tierTextStyle}>{clearedSongs}곡</div>
             <br />
             <br />
-            <div style={{ fontSize: "20px" }}>총 366곡</div>
+            <div style={{ fontSize: "20px" }}>총 {songs.length}곡</div>
           </div>
           <div style={innerBoxStyle}>
             <h2 style={innerTitle}>스트릭</h2>
