@@ -41,28 +41,31 @@ const GroupBox = (props) => {
     const [groupIntro, setGroupIntro] = useState('')
     const [channelMax, setChannelMax] = useState(1)
 
-    // 페이지에 로드할 그룹리스트를 요청하고 그룹 리스트가 존재한다면 보여줄 그룹을 랜더링
-    useEffect(() => {
-        const check = async () => {
-            await loadGroupAction(setGroupList)
-            if (groupList !== null) {
-                setShowGroup(groupList.slice(fisrtItem, lastItem));
-            }
-        }
-        check()
-    }, [currentPage, setShowGroup, groupList, fisrtItem, lastItem, isModalOpen])
-
-
     const groupDetail = {
         "channelName": groupName,
         "channelIntro": groupIntro,
         "channelMax": channelMax,
     }
 
+    // 페이지에 로드할 그룹리스트를 요청하고 그룹 리스트가 존재한다면 보여줄 그룹을 랜더링
+    useEffect(() => {
+        const check = async () => {
+            const res = await loadGroupAction(setGroupList)
+            console.log('페이지 로드 시 확인', res)
+            setGroupList(res)
+            setShowGroup(res.slice(fisrtItem, lastItem));
+        }
+        check()
+    }, [])
+
+
     // modal이 열고 닫힐때 마다, 그룹을 로드
     useEffect(() => {
         const action = async () => {
-            await loadGroupAction(setGroupList)
+            const res = await loadGroupAction(setGroupList)
+            console.log('모달 확인용')
+            setGroupList(res)
+            setShowGroup(res.slice(fisrtItem, lastItem));
         }
         action()
     }, [isModalOpen, setGroupList, setIsModalOpen])
