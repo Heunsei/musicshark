@@ -27,6 +27,7 @@ const SingleRecordPage = () => {
     // 녹화 화면을 담을 ref
     const mediaRecorderRef = useRef(null);
     const testVideoRef = useRef(null)
+
     // modal state
     const [open, setOpen] = React.useState(false);
     const handleClose = () => setOpen(false);

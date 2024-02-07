@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { OpenVidu } from 'openvidu-browser';
 
 import CallEndIcon from '@mui/icons-material/CallEnd';
@@ -21,10 +21,10 @@ import { setLoby } from '../../../redux/store/lobySlice';
 const GroupRoom = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { id } = useParams()
     // const storeUser = useSelector((state) => state.user.nickname)
     const storeUser = useSelector((state) => state.user.nickname)
-    const sessionId = 'test123411'
+    const sessionId = id
 
     // openvidu 관련 state
     const [screenOV, setScreenOV] = useState(undefined);
@@ -40,6 +40,75 @@ const GroupRoom = () => {
     const [isMicMute, setIsMicMute] = useState(false)
     const [isCamMute, setIsCamMute] = useState(false)
     const [isRecording, setIsRecording] = useState(false)
+
+    // 녹화 관련 state
+    const [recordedBlobs, setRecordedBlobs] = useState([]);
+    // 녹화 영상 제목
+    const [videoTitle, setVideoTitle] = useState('')
+    // 녹화 영상 리스트
+    const [recordList, setRecordList] = useState([])
+    // 녹화를 담을 ref
+    const mediaRecorderRef = useRef(null);
+    // 녹화를 다음을 stream
+    const [stream, setStream] = useState(null);
+
+    /**
+     *  그룹에 진입 시 녹화를 할 media를 등록
+     */
+    const getMedia = async () => {
+        try {
+            const constraints = {
+                audio: true,
+                video: {
+                    width: 640,
+                    height: 480,
+                },
+            };
+            const mediaStream =
+                await navigator.mediaDevices.getUserMedia(constraints);
+            setStream(mediaStream);
+        } catch (e) {
+            console.log(`현재 마이크와 카메라가 연결되지 않았습니다`);
+        }
+    };
+
+    /**
+ *  녹화를 시작하는 함수
+ */
+    const handleStartRecording = () => {
+        setRecordedBlobs([]);
+        setIsRecording(true)
+        try {
+            mediaRecorderRef.current = new MediaRecorder(stream, {
+                audioBitsPerSecond: 100000,
+                videoBitsPerSecond: 100000,
+                mimeType: "video/webm",
+            });
+            mediaRecorderRef.current.ondataavailable = (event) => {
+                if (event.data && event.data.size > 0) {
+                    setRecordedBlobs((prev) => [...prev, event.data]);
+                }
+            };
+            mediaRecorderRef.current.start();
+            setIsRecording(true);
+            console.log('녹화 시작')
+        } catch (e) {
+            console.log(`MediaRecorder error`, e);
+            setIsRecording(false)
+        }
+    };
+
+    /**
+     * 녹화를 종료하는 함수
+     */
+    const handleStopRecording = () => {
+        setIsRecording(false)
+        console.log('녹화 종료')
+        if (mediaRecorderRef.current) {
+            mediaRecorderRef.current.stop();
+        }
+        setIsRecording(false);
+    };
 
     const deleteSubscriber = (streamManager) => {
         setSubscribers((prevSub) => {
@@ -61,7 +130,10 @@ const GroupRoom = () => {
         console.log('세션 받아온거', mySession)
         console.log('세션 내가 넣을거', session)
         console.log('ov에용', screenOV)
-
+        // stream없으면 stream추가
+        if (!stream) {
+            getMedia()
+        }
         // 다른사람들 캠 추가하는 로직
         mySession.on('streamCreated', (event) => {
             if (event.stream.typeOfVideo === 'CAMERA') {
@@ -132,6 +204,13 @@ const GroupRoom = () => {
 
     // leave session
     const leaveSession = () => {
+        // 세션 나갈때 녹화 캠 켜져있으면 연결 해제
+        if (stream) {
+            stream.getTracks().forEach((track) => {
+                track.stop()
+            });
+        }
+        // 세션 종류 후 혹시나모를 데이터 초기화
         console.log('세션', session)
         if (session) {
             session.disconnect()
@@ -144,6 +223,7 @@ const GroupRoom = () => {
         setPublisher(undefined)
     }
 
+    // 마이크 끄기
     const muteMic = () => {
         const micState = isMicMute
         if (isJoin) {
@@ -152,6 +232,7 @@ const GroupRoom = () => {
         }
     }
 
+    // 캠 끄기
     const muteCam = () => {
         const camState = isCamMute
         if (isJoin) {
@@ -186,7 +267,8 @@ const GroupRoom = () => {
                     <GroupCallButton isJoin={isJoin} leaveSession={leaveSession} joinSession={joinSession} sessionId={sessionId} />
                     <MuteMicButton muteMic={muteMic} isMicMute={isMicMute} />
                     <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
-                    <RecordButton isRecording={isRecording} />
+                    <RecordButton isRecording={isRecording} stream={stream}
+                        handleStartRecording={handleStartRecording} handleStopRecording={handleStopRecording} />
                     <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
                         <LogoutIcon sx={{ color: '#ffffff' }} />
                     </button>

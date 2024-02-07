@@ -4,7 +4,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 
 const RecordButton = (props) => {
-    const { isRecording, } = props
+    const { isRecording, stream, handleStartRecording, handleStopRecording } = props
     return (
         <>
             {

@@ -56,7 +56,7 @@ const GroupBox = (props) => {
             setShowGroup(res.slice(fisrtItem, lastItem));
         }
         check()
-    }, [])
+    }, [fisrtItem, lastItem])
 
 
     // modal이 열고 닫힐때 마다, 그룹을 로드
