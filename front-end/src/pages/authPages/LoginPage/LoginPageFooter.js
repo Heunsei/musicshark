@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
 import Button from '@mui/material/Button'
-import styled from '@emotion/styled';
+import { styled } from '@mui/system';
 import CustomPrimaryButton from '../../../components/CustomPrimaryButton';
 import RedirectInfo from '../../../components/RedirectInfo';
 
@@ -51,7 +51,7 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
                     />
                 </div>
             </Tooltip>
-            <div style={{margin : '10px'}}>
+            <div style={{ margin: '10px' }}>
                 <RedirectInfo
                     redirectText={'비밀번호 찾기'}
                     redirectHandler={handlePushToPasswordFindPage}
@@ -70,7 +70,7 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
                 fontWeight: 500,
                 width: '100%',
                 height: '40px',
-            }} onClick={() => {navigate('/register')}}>회원가입</Button>
+            }} onClick={() => { navigate('/register') }}>회원가입</Button>
         </>
     );
 };

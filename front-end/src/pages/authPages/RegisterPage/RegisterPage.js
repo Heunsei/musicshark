@@ -6,7 +6,9 @@ import RegisterPageFooter from './RegisterPageFooter';
 import { useNavigate } from 'react-router-dom';
 import { registerAction } from './registerAction'
 import { validatePasswordConfirm } from './../validator'
-import {registerValidator} from './../validator'
+import { registerValidator } from './../validator'
+import Navbar from './../../../components/Navbar'
+
 const RegisterPage = () => {
     const navigate = useNavigate()
 
@@ -23,7 +25,12 @@ const RegisterPage = () => {
 
     const handleRegister = () => {
         const userDetails = {
-            mail, password, nickname, birth, gender
+            userEmail: mail,
+            password : password,
+            nickname : nickname,
+            birth : birth, 
+            gender : gender,
+            profile_image : null
         }
         registerAction(userDetails)
     }
@@ -37,27 +44,30 @@ const RegisterPage = () => {
     }, [password, passwordConfirm, setIsPasswordVaild, setPasswordConfirm])
 
     return (
-        <RegisterAuthBox>
-            <RegisterPageHeader />
-            <RegisterInput
-                mail={mail}
-                setMail={setMail}
-                password={password}
-                setPassword={setPassword}
-                passwordConfirm={passwordConfirm}
-                setPasswordConfirm={setPasswordConfirm}
-                nickname={nickname}
-                setNickname={setNickname}
-                gender={gender}
-                setGender={setGender}
-                birth={birth}
-                setBirth={setBirth}
-            />
-            <RegisterPageFooter
-                isFormValid={isFormValid}
-                handleRegister={handleRegister}
-            />
-        </RegisterAuthBox>
+        <>
+            <Navbar />
+            <RegisterAuthBox>
+                <RegisterPageHeader />
+                <RegisterInput
+                    mail={mail}
+                    setMail={setMail}
+                    password={password}
+                    setPassword={setPassword}
+                    passwordConfirm={passwordConfirm}
+                    setPasswordConfirm={setPasswordConfirm}
+                    nickname={nickname}
+                    setNickname={setNickname}
+                    gender={gender}
+                    setGender={setGender}
+                    birth={birth}
+                    setBirth={setBirth}
+                />
+                <RegisterPageFooter
+                    isFormValid={isFormValid}
+                    handleRegister={handleRegister}
+                />
+            </RegisterAuthBox>
+        </>
     );
 };
 
