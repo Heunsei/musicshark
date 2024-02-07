@@ -18,4 +18,5 @@ public class PerfectplayResponseDto {
 	private int score;
 	private boolean clear;
 	private Timestamp date;
+	private int totalClear;
 }

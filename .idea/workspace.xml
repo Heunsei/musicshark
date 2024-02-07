@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/controller/FriendController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Back.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Back.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/dto/response/PerfectplayResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/dto/response/PerfectplayResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/service/implementation/PerfectplayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/service/implementation/PerfectplayServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +67,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BackApplication.executor": "Run",
-    "git-widget-placeholder": "backend-develop-User",
+    "git-widget-placeholder": "backend-develop-perfectplay",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/SSAFY/2024-2/work-space/S10P12E205/Back/src/main/java/org/example/back",
     "node.js.detected.package.eslint": "true",
@@ -133,6 +136,7 @@
       <workItem from="1706854533698" duration="3066000" />
       <workItem from="1706955618339" duration="600000" />
       <workItem from="1707098872122" duration="1977000" />
+      <workItem from="1707283082310" duration="151000" />
     </task>
     <servers />
   </component>

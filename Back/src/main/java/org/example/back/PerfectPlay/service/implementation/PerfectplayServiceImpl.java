@@ -38,7 +38,8 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 				result.getSong().getSinger(),
 				result.getScore(),
 				result.isClear(),
-				result.getDate()
+				result.getDate(),
+				getTotalClear(allResult) //총 클리어한 곡 수
 			);
 			perfectplayResponseDtos.add(perfectplayResponseDto);
 		}
@@ -99,5 +100,12 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		entity.setScore(perfectplayRequestDto.getScore());
 		entity.setClear(isClear);
 		return entity;
+	}
+	private int getTotalClear(List<PerfectplayEntity> allResult) {
+		int cnt = 0;
+		for (PerfectplayEntity result : allResult) {
+			if(result.isClear()) cnt++;
+		}
+		return cnt;
 	}
 }
