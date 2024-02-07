@@ -34,8 +34,11 @@ const GroupCreateModal = (props) => {
     }
 
     useEffect(() => {
-        console.log('최초 생성시 useEffect확인')
-        loadGroupAction(setGroupList)
+        const action = async () => {
+            console.log('이거실행되나요?')
+            await loadGroupAction(setGroupList)
+        }
+        action()
     }, [isModalOpen, setGroupList, setIsModalOpen])
 
     useEffect(() => {
