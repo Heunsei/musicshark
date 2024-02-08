@@ -17,6 +17,8 @@ import BoardDetail from './pages/Board/BoardDetail';
 import BoardWrite from './pages/Board/BoardWrite';
 import BoardUpdate from './pages/Board/BoardUpdate'
 
+import PrivateRoute from "./util/PrivateRoute";
+
 import './App.css';
 
 function App() {
@@ -26,7 +28,6 @@ function App() {
         <Route path='/' element={<MainPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
-        <Route path='/group' element={<GroupPage />} />
         <Route path='/single/record' element={<SingleRecordPage />} />
         <Route path='/single/perfect' element={<PerfectPlayLobyPage />} />
         <Route path='/single/perfect/:song_idx' element={<PerfectPlayPlayPage />} />
@@ -36,7 +37,11 @@ function App() {
         <Route path='/update/:board_id' element={<BoardUpdate />} />
         <Route path='/board/:board_id' element={<BoardDetail />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path='/group/:id' element={<GroupDetailPage />} />
+        {/* 로그인이 필요한 서비스들을 아래에 배치 */}
+        <Route element={<PrivateRoute />}>
+          <Route path='/group' element={<GroupPage />} />
+          <Route path='/group/:id' element={<GroupDetailPage />} />
+        </Route>
 
       </Routes>
     </>
