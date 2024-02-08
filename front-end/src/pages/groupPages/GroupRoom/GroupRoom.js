@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -134,16 +134,31 @@ const GroupRoom = () => {
         }, 100);
     }
 
-    const deleteSubscriber = (streamManager) => {
-        setSubscribers((prevSub) => {
-            const index = [...prevSub].indexOf(streamManager, 0)
-            if (index > -1) {
-                prevSub.splice(index, 1)
-                return prevSub
-            }
-        })
-    };
+    // const deleteSubscriber = (streamManager) => {
+    //     setSubscribers((prevSub) => {
+    //         // change [...prevSub] to prevSub
+    //         const newaa = prevSub;
+    //         const index = newaa.indexOf(streamManager, 0)
+    //         if (index > -1) {
+    //             const tmp = newaa.splice(index, 1)
+    //             // prevSub.splice(index, 1)
+    //             return tmp
+    //         }
+    //     })
+    // };
 
+    const deleteSubscriber = useCallback((streamManager) => {
+        setSubscribers((prevSubscribers) => {
+            const index = prevSubscribers.indexOf(streamManager);
+            if (index > -1) {
+                const newSubscribers = [...prevSubscribers];
+                newSubscribers.splice(index, 1);
+                return newSubscribers;
+            } else {
+                return prevSubscribers;
+            }
+        });
+    }, []);
 
     // 세선 접속
     const joinSession = () => {
@@ -161,9 +176,14 @@ const GroupRoom = () => {
         }
         // 다른사람들 캠 추가하는 로직
         mySession.on('streamCreated', (event) => {
+            console.log('==============================================')
+            console.log('streamCreate 실행')
+            console.log('==============================================')
             if (event.stream.typeOfVideo === 'CAMERA') {
                 const subscriber = mySession.subscribe(event.stream, undefined);
-                setSubscribers(prevSub => [...prevSub, subscriber]);
+                console.log(subscriber)
+                setSubscribers((prevSub) => [...prevSub, subscriber])
+                // setSubscribers(subscriber)
             }
         })
 
@@ -239,6 +259,7 @@ const GroupRoom = () => {
         console.log('세션', session)
         if (session) {
             session.disconnect()
+            // deleteSession(id)
         }
         setIsJoin(false)
         setScreenOV(null)
