@@ -10,11 +10,13 @@ const RecordButton = (props) => {
             {
                 isRecording ?
                     <button className={`${styles.groupCallBtn}`} >
-                        <RadioButtonCheckedIcon sx={{ color: '#ff4043' }} />
+                        <RadioButtonCheckedIcon sx={{ color: '#ff4043' }}
+                            onClick={() => { handleStopRecording() }} />
                     </button>
                     :
                     <button className={`${styles.groupCallBtn}`} >
-                        <RadioButtonUncheckedIcon sx={{ color: '#f1faee' }} />
+                        <RadioButtonUncheckedIcon sx={{ color: '#f1faee' }}
+                            onClick={() => { handleStartRecording() }} />
                     </button>
             }
         </>

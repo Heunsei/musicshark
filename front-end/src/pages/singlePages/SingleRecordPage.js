@@ -9,6 +9,7 @@ import styles from './SingleRecordPage.module.css'
 import { useNavigate } from 'react-router-dom';
 import { uploadVideoAction } from './actions/uploadVideoAction';
 import { getSingleRecordListAction } from './actions/getSingleRecordListAction';
+import { checkDuplicateTitle } from './actions/checkDuplicateTitle';
 
 const SingleRecordPage = () => {
     const [isRecording, setIsRecording] = useState(false)
@@ -18,6 +19,7 @@ const SingleRecordPage = () => {
     const [stream, setStream] = useState(null);
     // 녹화를 저장할 blob
     const [recordedBlobs, setRecordedBlobs] = useState([]);
+    const [isDuplicateTitle, setIsDuplicateTitle] = useState(false)
     // 녹화 영상 제목
     const [videoTitle, setVideoTitle] = useState('')
     // 녹화 영상 리스트
@@ -26,11 +28,11 @@ const SingleRecordPage = () => {
     const mirrorVideoRef = useRef(null);
     // 녹화 화면을 담을 ref
     const mediaRecorderRef = useRef(null);
-    const testVideoRef = useRef(null)
+
 
     // modal state
     const [open, setOpen] = React.useState(false);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => { setOpen(false); setIsDuplicateTitle(false); setVideoTitle('') }
 
     /**
      *  유저의 미디어를 받아오고 마이크가 없을 시 오류를 콘솔로 띄워줌
@@ -121,10 +123,18 @@ const SingleRecordPage = () => {
         const formData = new FormData()
         formData.append('videoFile', blob)
         formData.append('videoTitle', videoTitle)
-        await uploadVideoAction(formData)
-        setTimeout(() => {
-            setRecordedBlobs([])
-        }, 100);
+        const isduplicated = await checkDuplicateTitle(videoTitle)
+        console.log(isduplicated)
+
+        if (!isduplicated) {
+            await uploadVideoAction(formData)
+            handleClose()
+            setTimeout(() => {
+                setRecordedBlobs([])
+            }, 100);
+        } else {
+            setIsDuplicateTitle(isduplicated)
+        }
     }
 
     /**
@@ -166,11 +176,13 @@ const SingleRecordPage = () => {
                         </div>
                         <div className={styles.recordList}>
                             {
+                                // 녹화한 영상들을 띄워주는 코드
+                                // ref={testRef} 삭제했음
                                 recordList.length !== 0 ?
                                     (recordList.map((element, i) => {
                                         return (
-                                            <video ref={testVideoRef} controls style={{ width: '200px', height: '200px' }}>
-                                                <source src={element.persignedURL} type='video/webm' />
+                                            <video controls style={{ width: '200px', height: '200px' }}>
+                                                <source src={element.presigned_url} type='video/webm' />
                                             </video>
                                         )
                                     })) : null
@@ -208,8 +220,9 @@ const SingleRecordPage = () => {
                 <div className={styles.modalContainer}>
                     <header>영상을 저장 하시겠습니까?</header>
                     <input value={videoTitle} onChange={(event) => { setVideoTitle(event.target.value); console.log(videoTitle) }} placeholder='영상 제목을 입력해주세요' />
+                    {isDuplicateTitle ? <p style={{ padding: '0', margin: '0' }}>중복되는 이름의 영상이 존재합니다</p> : null}
                     <div className={styles.modalButtonBox}>
-                        <button onClick={() => { handleUpload() }}>저장</button>
+                        <button onClick={() => { handleUpload(); }}>저장</button>
                         <button onClick={() => { setRecordedBlobs([]); handleClose() }}>취소</button>
                     </div>
                 </div>

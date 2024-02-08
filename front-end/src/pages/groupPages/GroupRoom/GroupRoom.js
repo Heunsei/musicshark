@@ -7,6 +7,7 @@ import { OpenVidu } from 'openvidu-browser';
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import CallIcon from '@mui/icons-material/Call';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Modal from '@mui/material/Modal';
 
 import GroupCallButton from '../../../components/GroupRoomButtons/GroupCallButton';
 import MuteMicButton from '../../../components/GroupRoomButtons/MuteMicButton';
@@ -17,22 +18,23 @@ import { getToken, createToken, createSession, deleteSession } from './groupActi
 import styles from './GroupRoom.module.css'
 import VideoScreen from './VideoScreen';
 import { setLoby } from '../../../redux/store/lobySlice';
+import { uploadGroupVideoAction } from './uploadGroupVideoAction';
 
 const GroupRoom = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { id } = useParams()
     // const storeUser = useSelector((state) => state.user.nickname)
     const storeUser = useSelector((state) => state.user.nickname)
     const sessionId = id
 
     // openvidu 관련 state
-    const [screenOV, setScreenOV] = useState(undefined);
-    const [session, setSession] = useState(undefined);
+    const [screenOV, setScreenOV] = useState(undefined)
+    const [session, setSession] = useState(undefined)
 
     // 참가자 관련 state
-    const [publisher, setPublisher] = useState(undefined);
-    const [subscribers, setSubscribers] = useState([]);
+    const [publisher, setPublisher] = useState(undefined)
+    const [subscribers, setSubscribers] = useState([])
     const [player, setPlayer] = useState([]);
 
     // 버튼 관리할 state
@@ -41,17 +43,23 @@ const GroupRoom = () => {
     const [isCamMute, setIsCamMute] = useState(false)
     const [isRecording, setIsRecording] = useState(false)
 
+    // modal 관련 state
+    const [open, setOpen] = useState(false)
+    const handleClose = () => setOpen(false)
+
     // 녹화 관련 state
-    const [recordedBlobs, setRecordedBlobs] = useState([]);
+    const [recordedBlobs, setRecordedBlobs] = useState([])
     // 녹화 영상 제목
     const [videoTitle, setVideoTitle] = useState('')
     // 녹화 영상 리스트
     const [recordList, setRecordList] = useState([])
     // 녹화를 담을 ref
     const mediaRecorderRef = useRef(null);
-    // 녹화를 다음을 stream
-    const [stream, setStream] = useState(null);
+    const testRecordRef = useRef(null)
 
+    const [videoURL, setVideoUrl] = useState('')
+    // 녹화를 담을 stream
+    const [stream, setStream] = useState(null);
     /**
      *  그룹에 진입 시 녹화를 할 media를 등록
      */
@@ -67,34 +75,38 @@ const GroupRoom = () => {
             const mediaStream =
                 await navigator.mediaDevices.getUserMedia(constraints);
             setStream(mediaStream);
+            console.log('미디어 연걸 성공')
         } catch (e) {
             console.log(`현재 마이크와 카메라가 연결되지 않았습니다`);
         }
     };
 
     /**
- *  녹화를 시작하는 함수
- */
+    *  녹화를 시작하는 함수
+    */
     const handleStartRecording = () => {
-        setRecordedBlobs([]);
-        setIsRecording(true)
-        try {
-            mediaRecorderRef.current = new MediaRecorder(stream, {
-                audioBitsPerSecond: 100000,
-                videoBitsPerSecond: 100000,
-                mimeType: "video/webm",
-            });
-            mediaRecorderRef.current.ondataavailable = (event) => {
-                if (event.data && event.data.size > 0) {
-                    setRecordedBlobs((prev) => [...prev, event.data]);
-                }
-            };
-            mediaRecorderRef.current.start();
-            setIsRecording(true);
+        if (isJoin) {
             console.log('녹화 시작')
-        } catch (e) {
-            console.log(`MediaRecorder error`, e);
-            setIsRecording(false)
+            setRecordedBlobs([]);
+            setIsRecording(true)
+            try {
+                mediaRecorderRef.current = new MediaRecorder(stream, {
+                    audioBitsPerSecond: 100000,
+                    videoBitsPerSecond: 100000,
+                    mimeType: "video/webm",
+                });
+                mediaRecorderRef.current.ondataavailable = (event) => {
+                    if (event.data && event.data.size > 0) {
+                        setRecordedBlobs((prev) => [...prev, event.data]);
+                    }
+                };
+                mediaRecorderRef.current.start();
+                setIsRecording(true);
+                console.log('녹화 시작')
+            } catch (e) {
+                console.log(`MediaRecorder error`, e);
+                setIsRecording(false)
+            }
         }
     };
 
@@ -108,7 +120,19 @@ const GroupRoom = () => {
             mediaRecorderRef.current.stop();
         }
         setIsRecording(false);
+        setOpen(true)
     };
+
+    const handleUpload = async () => {
+        const blob = new Blob(recordedBlobs, { type: "video/webm" });
+        const formData = new FormData()
+        formData.append('videoFile', blob)
+        formData.append('videoTitle', videoTitle)
+        await uploadGroupVideoAction(formData, id)
+        setTimeout(() => {
+            setRecordedBlobs([])
+        }, 100);
+    }
 
     const deleteSubscriber = (streamManager) => {
         setSubscribers((prevSub) => {
@@ -119,6 +143,7 @@ const GroupRoom = () => {
             }
         })
     };
+
 
     // 세선 접속
     const joinSession = () => {
@@ -242,39 +267,55 @@ const GroupRoom = () => {
     }
 
     return (
-        <div className={styles.mainContainer}>
-            <div className={styles.innerBox}>
-                <div className={styles.subScreen}>
-                    {storeUser}
-                    {
-                        publisher !== undefined ?
-                            <VideoScreen streamManager={publisher} key={publisher.id} /> : null
-                    }
-                    {
-                        subscribers !== undefined ?
-                            subscribers.map(sub => {
-                                return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
-                            }) : null
-                    }
-                </div>
-                <div className={styles.mainScreen}>
-                    {
-                        player.length !== 0 ?
-                            <VideoScreen streamManager={player} /> : null
-                    }
-                </div>
-                <div className={styles.buttonBox}>
-                    <GroupCallButton isJoin={isJoin} leaveSession={leaveSession} joinSession={joinSession} sessionId={sessionId} />
-                    <MuteMicButton muteMic={muteMic} isMicMute={isMicMute} />
-                    <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
-                    <RecordButton isRecording={isRecording} stream={stream}
-                        handleStartRecording={handleStartRecording} handleStopRecording={handleStopRecording} />
-                    <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
-                        <LogoutIcon sx={{ color: '#ffffff' }} />
-                    </button>
+        <>
+            <div className={styles.mainContainer}>
+                <div className={styles.innerBox}>
+                    <div className={styles.subScreen}>
+                        {storeUser}
+                        {
+                            publisher !== undefined ?
+                                <VideoScreen streamManager={publisher} key={publisher.id} /> : null
+                        }
+                        {
+                            subscribers !== undefined ?
+                                subscribers.map(sub => {
+                                    return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
+                                }) : null
+                        }
+                    </div>
+                    <div className={styles.mainScreen}>
+                        {
+                            player.length !== 0 ?
+                                <VideoScreen streamManager={player} /> : null
+                        }
+                    </div>
+                    <div className={styles.buttonBox}>
+                        <GroupCallButton isJoin={isJoin} leaveSession={leaveSession} joinSession={joinSession} sessionId={sessionId} />
+                        <MuteMicButton muteMic={muteMic} isMicMute={isMicMute} />
+                        <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
+                        <RecordButton isRecording={isRecording} stream={stream}
+                            handleStartRecording={handleStartRecording} handleStopRecording={handleStopRecording} />
+                        <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
+                            <LogoutIcon sx={{ color: '#ffffff' }} />
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+            >
+                <div className={styles.modalContainer}>
+                    <header>영상을 저장 하시겠습니까?</header>
+                    <input value={videoTitle} onChange={(event) => { setVideoTitle(event.target.value); console.log(videoTitle) }} placeholder='영상 제목을 입력해주세요' />
+                    <div className={styles.modalButtonBox}>
+                        <button onClick={() => { handleUpload(); handleClose() }}>저장</button>
+                        <button onClick={() => { setRecordedBlobs([]); handleClose() }}>취소</button>
+                    </div>
+                </div>
+            </Modal >
+        </>
+
     );
 }
 export default GroupRoom;
