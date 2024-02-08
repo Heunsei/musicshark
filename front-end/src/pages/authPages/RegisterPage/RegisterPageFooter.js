@@ -19,7 +19,7 @@ const RegisterPageFooter = (props) => {
     const handleToPushLoginPage = () => {
         navigate('/login')
     }
-    
+
     return (
         <>
             <Tooltip

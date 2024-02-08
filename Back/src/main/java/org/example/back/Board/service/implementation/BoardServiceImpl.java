@@ -10,6 +10,7 @@ import org.example.back.User.repository.UserRepository;
 import org.example.back.Board.service.BoardService;
 import org.example.back.common.ErrorCode;
 import org.example.back.common.NotFoundException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +49,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void postBoard(PostBoardRequestDto boardDto) {
-		UserEntity writer = userRepository.findByNickname(boardDto.getUserNickname());
+	public void postBoard(PostBoardRequestDto boardDto, UserDetails userDetails) {
+		UserEntity writer = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(
+			ErrorCode.USER_NOT_FOUND));
 		BoardEntity data = new BoardEntity();
 
 		data.setBoardTitle(boardDto.getBoardTitle());
@@ -60,12 +62,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void updateBoard(int boardIdx, PostBoardRequestDto boardDto) {
+	public void updateBoard(int boardIdx, PostBoardRequestDto boardDto, UserDetails userDetails) {
 		BoardEntity board =
 			boardRepository.findByBoardIdx(boardIdx)
 			.orElseThrow(() -> new NullPointerException("잘못된 접근입니다."));
 
-		UserEntity writer = userRepository.findByNickname(boardDto.getUserNickname());
+		UserEntity writer = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
 		if(writer.getUserIdx() == board.getUserIdx()) {
 			board.setBoardTitle(boardDto.getBoardTitle());

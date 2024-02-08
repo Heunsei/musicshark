@@ -13,9 +13,9 @@ public interface BoardService {
 
 	void deleteBoard(int boardIdx, UserDetails userDetails) throws Exception;
 
-	void postBoard(PostBoardRequestDto boardDto);
-
-	void updateBoard(int boardIdx, PostBoardRequestDto boardDto);
+	void postBoard(PostBoardRequestDto boardDto, UserDetails userDetails);
 
 	List<BoardEntity> getUserBoard(String nickname);
+	void updateBoard(int boardIdx, PostBoardRequestDto boardDto, UserDetails userDetails);
+
 }

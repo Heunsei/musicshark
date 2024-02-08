@@ -1,0 +1,19 @@
+.wrapper {
+    border: 1px solid black;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.wrapper p {
+    width: 70%;
+}
+
+.wrapper button {
+    width: 20%;
+    border-radius: 15px;
+}
+
+.searchBox {
+    width: 100%;
+}
