@@ -66,8 +66,8 @@ const RightChatBox = (props) => {
     return (
         <div className={styles.mainContainer}>
             <div className={styles.topButtonTap}>
-                <button className={`${isChatBoxOpen ? styles.selected : null}`} onClick={() => { openChatBox() }}>채팅</button>
-                <button className={`${!isChatBoxOpen ? styles.selected : null}`} onClick={() => { openVideoBox() }}>그룹 녹화 영상</button>
+                <button className={`${isChatBoxOpen ? styles.selected : null} ${styles.chatBtn}`} onClick={() => { openChatBox() }}>채팅</button>
+                <button className={`${!isChatBoxOpen ? styles.selected : null} ${styles.videoBtn}`} onClick={() => { openVideoBox() }}>그룹 녹화 영상</button>
             </div>
             <div className={styles.container}>
                 {
@@ -79,9 +79,13 @@ const RightChatBox = (props) => {
                                         chatList.map((e, i) => {
                                             return (
                                                 <>
-                                                    <div className={`${e.nickname===userName ? styles.myChat : styles.anotherChat} `}>
-                                                        <p>{e.nickname}</p>
-                                                        <p>{e.message}</p>
+                                                    <div className={`${e.nickname === userName ? styles.myChat : styles.anotherChat} `}>
+                                                        <div className={styles.nicknameBox}>
+                                                            <p>{e.nickname}</p>
+                                                        </div>
+                                                        <div className={styles.messageBox}>
+                                                            <p>{e.message}</p>
+                                                        </div>
                                                     </div>
                                                 </>
                                             )
