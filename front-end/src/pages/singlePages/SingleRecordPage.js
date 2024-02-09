@@ -181,9 +181,11 @@ const SingleRecordPage = () => {
                                 recordList.length !== 0 ?
                                     (recordList.map((element, i) => {
                                         return (
-                                            <video controls style={{ width: '200px', height: '200px' }}>
-                                                <source src={element.presigned_url} type='video/webm' />
-                                            </video>
+                                            <div className={styles.videoContainer}>
+                                                <video controls key={i} className={styles.recordVideo}>
+                                                    <source src={element.presigned_url} type='video/webm' />
+                                                </video>
+                                            </div>
                                         )
                                     })) : null
                             }

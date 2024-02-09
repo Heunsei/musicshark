@@ -31,6 +31,8 @@ const GroupDetailPage = () => {
     const [groupMembers, setGroupMembers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -50,7 +52,8 @@ const GroupDetailPage = () => {
         }
         if (!isLoading && groupMembers) {
             let isMemberInGroup = false
-            groupMembers.map((e) => {
+            // 0209 -> change map to forEach
+            groupMembers.forEach((e) => {
                 if (e.nickname === userName) {
                     isMemberInGroup = true
                 }
@@ -74,7 +77,7 @@ const GroupDetailPage = () => {
                 // 유저가 연습이동을 누르면 state를 변경하고 infobox를 practicebox로 변경
                 lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} /> : <GroupRoom />
             }
-            <RightChatBox />
+            <RightChatBox id={id} userName={userName} />
         </Wrapper>
     );
 };
