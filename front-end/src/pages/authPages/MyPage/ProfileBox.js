@@ -214,18 +214,17 @@ const ProfileBox = () => {
   const channelTextStyle = {
     textAlign: "left", // 텍스트를 왼쪽으로 정렬
     width: "100%", // 부모 컨테이너의 전체 너비를 차지하도록 설정
-    marginTop: "5%",
-    marginLeft: "15%",
+    marginTop: "5.5%",
+    marginLeft: "12%",
     fontSize: "17px",
   };
 
   const channelListStyle = {
     backgroundColor: "#EFD6BC",
-    width: "84%",
+    width: "82%",
     height: "26%",
     border: "solid #615750",
     listStyleType: "none", // 리스트 항목 앞의 기본 마커를 제거합니다.
-    paddingLeft: "0", // 기본 패딩을 제거하여 왼쪽 정렬을 맞춥니다.
     marginTop: "-3%",
     paddingTop: "3%",
     paddingLeft: "5%",
@@ -236,7 +235,7 @@ const ProfileBox = () => {
 
   const channelItemStyle = {
     fontSize: "16px",
-    fontWeight: '650',
+    fontWeight: "650",
     marginTop: "1%",
     marginBottom: "5%",
     marginLeft: "1%",
