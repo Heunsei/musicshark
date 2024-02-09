@@ -130,10 +130,12 @@ const GroupRoom = () => {
         console.log('세션 받아온거', mySession)
         console.log('세션 내가 넣을거', session)
         console.log('ov에용', screenOV)
+        console.log('REACT OPENVIDU APP URL : ', process.env.REACT_APP_OPENVIDU_URL);
         // stream없으면 stream추가
         if (!stream) {
             getMedia()
         }
+        
         // 다른사람들 캠 추가하는 로직
         mySession.on('streamCreated', (event) => {
             if (event.stream.typeOfVideo === 'CAMERA') {
