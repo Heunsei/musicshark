@@ -27,11 +27,12 @@ const GroupDetailPage = () => {
     let lobyState = useSelector((state) => state.isLoby)
     const userName = useSelector((state) => state.user.nickname)
 
+    const [screenOV, setScreenOV] = useState(undefined)
+    const [session, setSession] = useState(undefined)
+
     const [groupDetail, setGroupDetail] = useState([])
     const [groupMembers, setGroupMembers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -75,9 +76,11 @@ const GroupDetailPage = () => {
             <MemberSideBar groupMembers={groupMembers} setGroupMembers={setGroupMembers} setGroupDetail={setGroupDetail} />
             {
                 // 유저가 연습이동을 누르면 state를 변경하고 infobox를 practicebox로 변경
-                lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} /> : <GroupRoom />
+                lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} />
+                    :
+                    <GroupRoom screenOV={screenOV} setScreenOV={setScreenOV} session={session} setSession={setSession} />
             }
-            <RightChatBox id={id} userName={userName} />
+            <RightChatBox id={id} userName={userName} session={session} setSession={setSession} />
         </Wrapper>
     );
 };

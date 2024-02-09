@@ -20,7 +20,8 @@ import VideoScreen from './VideoScreen';
 import { setLoby } from '../../../redux/store/lobySlice';
 import { uploadGroupVideoAction } from './uploadGroupVideoAction';
 
-const GroupRoom = () => {
+const GroupRoom = (props) => {
+    const { session, setSession, screenOV, setScreenOV } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { id } = useParams()
@@ -29,8 +30,8 @@ const GroupRoom = () => {
     const sessionId = id
 
     // openvidu 관련 state
-    const [screenOV, setScreenOV] = useState(undefined)
-    const [session, setSession] = useState(undefined)
+    // const [screenOV, setScreenOV] = useState(undefined)
+    // const [session, setSession] = useState(undefined)
 
     // 참가자 관련 state
     const [publisher, setPublisher] = useState(undefined)
@@ -75,7 +76,7 @@ const GroupRoom = () => {
             const mediaStream =
                 await navigator.mediaDevices.getUserMedia(constraints);
             setStream(mediaStream);
-            console.log('미디어 연걸 성공')
+            console.log('미디어 연결 성공')
         } catch (e) {
             console.log(`현재 마이크와 카메라가 연결되지 않았습니다`);
         }
@@ -175,7 +176,7 @@ const GroupRoom = () => {
         if (!stream) {
             getMedia()
         }
-        
+
         // 다른사람들 캠 추가하는 로직
         mySession.on('streamCreated', (event) => {
             console.log('==============================================')
@@ -195,8 +196,8 @@ const GroupRoom = () => {
         })
 
         getToken(sessionId).then((res) => {
-            console.log(res)
-            mySession.connect(res.token, { clientData: storeUser })
+            console.log('내가 제출하는 토큰', res)
+            mySession.connect(res, { clientData: storeUser })
                 .then(async () => {
                     let publisher = await newOV.initPublisherAsync(undefined, {
                         audioSource: undefined,

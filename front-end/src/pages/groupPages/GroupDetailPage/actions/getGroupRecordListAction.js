@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { getCookie } from '../../../util/cookie'
-
+import { getCookie } from '../../../../util/cookie'
 
 /** 그룹의 영상 목록들을 가져올 action
 * @param {int} id 채널 아이디
