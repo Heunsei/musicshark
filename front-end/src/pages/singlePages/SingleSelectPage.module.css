@@ -7,16 +7,41 @@
     align-items: center;
 }
 
-.moveBtn {
+.perfectBtn {
     width: 500px;
     height: 500px;
     margin: 20px;
     border: none;
-    background-color: cadetblue;
+    background-image: url(./components/img/perfectPlay.png);
+    background-size: cover;
+    font-family: 'galmuri';
+    font-size: 32px;
+    color: blue;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: yellow;
+    transition: 0.3s;
+}
+
+.recordBtn {
+    width: 500px;
+    height: 500px;
+    margin: 20px;
+    border: none;
+    background-image: url(./components/img/singlePlay.png);
+    background-size: cover;
+    font-family: 'galmuri';
+    font-size: 32px;
+    color: rgb(55, 255, 0);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(255, 0, 0);
+    transition: 0.3s;
 }
 
 .moveBtnAfter {
+    width: 700px;
+    height: 700px;
     border: 10px solid black;
     transition: 0.3s;
+    font-size: 64px;
     cursor: pointer;
 }

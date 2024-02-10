@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { getCookie } from '../../../util/cookie'
 
-export const getSingleRecordListAction = async (videoIdx) => {
+export const deleteSingleRecordAction = async (videoIdx) => {
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     try {
         const response = await axios({
             method: 'delete',
-            url: `${URL}/videos/personal?video_idx=${videoIdx}`,
+            url: `${URL}/videos/personal?boardIdx=${videoIdx}`,
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
