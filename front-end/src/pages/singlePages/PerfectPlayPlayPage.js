@@ -14,9 +14,15 @@ const PerfectPlayPlayPage = () => {
     const [songDetail, setSongDetail] = useState([])
     const [isPlaying, setIsPlaying] = useState(false)
     const navigate = useNavigate()
-    const handlePlay = () => {
-        setIsPlaying(!isPlaying)
-        console.log(isPlaying)
+    
+    const startPlay = () => {
+        //setIsPlaying(true)
+        //console.log(isPlaying)
+        //startButtonClick();
+    }
+    const stopPlay = () => {
+        //setIsPlaying(false);
+        //stopButtonClick();
     }
 
     useEffect(() => {
@@ -36,10 +42,10 @@ const PerfectPlayPlayPage = () => {
                 <div className={styles.buttonBox}>
                     {
                         !isPlaying ?
-                            (<button onClick={() => handlePlay()}>
+                            (<button onClick={() => startPlay()}>
                                 <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
                             </button>) :
-                            (<button onClick={() => handlePlay()}>
+                            (<button onClick={() => stopPlay()}>
                                 <StopCircleIcon /> <span>중지</span>
                             </button>)
                     }
