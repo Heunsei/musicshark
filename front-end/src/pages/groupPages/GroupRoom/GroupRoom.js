@@ -197,7 +197,7 @@ const GroupRoom = (props) => {
 
         getToken(sessionId).then((res) => {
             console.log('내가 제출하는 토큰', res)
-            mySession.connect(res, { clientData: storeUser })
+            mySession.connect(res.token, { clientData: storeUser })
                 .then(async () => {
                     let publisher = await newOV.initPublisherAsync(undefined, {
                         audioSource: undefined,
