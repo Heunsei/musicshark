@@ -1,4 +1,4 @@
-import styles from './PlayScreen.module.css'
+import styles from './PerfectPlayPlayPage.module.css'
 import React, { useRef, useEffect, useState } from 'react';
 import { PitchDetector } from 'pitchy';
 import { useCanvas } from './useCanvas';
@@ -7,12 +7,17 @@ import randomData from './randomData.json';
 import * as data from './PerfectScoreData';
 import Popup from './Popup';
 import './Popup.css';
+import { useNavigate } from 'react-router-dom';
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const PlayScreen = () => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [number, setNumber] = useState(3);
+    const navigate = useNavigate()
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -42,7 +47,7 @@ const PlayScreen = () => {
                 // Step 3: 3초 후에 숫자를 없애는 로직
                 setNumber("시작!");
             }, 4000);
-           // setIsPlaying(true);
+            // setIsPlaying(true);
 
         } catch (error) {
             console.error('Error resuming AudioContext:', error);
@@ -58,7 +63,7 @@ const PlayScreen = () => {
         // 재생을 다시 시작하는 로직
         // const pausedDuration = Date.now() - pausedTimeRef.current; // 멈춘 시간 계산
         // startTimeRef.current = Date.now() - pausedDuration; //재생 시작 시간 초기화
-        
+
         startTimeRef.current = Date.now();
         particles.length = 0; // 파티클 초기화
 
@@ -82,7 +87,7 @@ const PlayScreen = () => {
         setIsPlaying(true);
     };
 
-    const buttonLabel = isPlaying ? 'Stop' : 'Start';
+    const buttonLabel = isPlaying ? <StopCircleIcon /> : <PlayCircleFilledWhiteIcon />;
 
     const halfSize = data.NOTE_WINDOW_SIZE / 2;
     const voiceNoteWindowRef = useRef(new Array(halfSize));
@@ -443,17 +448,36 @@ const PlayScreen = () => {
         fetchMusic();
     }, []);
     return (
-        <div>
-            <NumberDisplay number={number} />
-            <canvas
-                id="screen-screen"
-                width={canvasWidth}
-                height={canvasHeight}
-                ref={canvasRef}
-            />
-            {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
-            <button id="start" onClick={isPlaying ? stopButtonClick : startButtonClick}>{buttonLabel}</button>
+        <div className={styles.body}>
+            <div className={styles.container}>
+                <div className={styles.screenBox}>
+
+                    <NumberDisplay number={number} />
+                    <canvas
+                        id="screen-screen"
+                        width={canvasWidth}
+                        height={canvasHeight}
+                        ref={canvasRef}
+                    />
+                </div>
+                {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
+                <div className={styles.buttonBox}>
+                    {
+                        !isPlaying ?
+                            (<button onClick={() => startButtonClick()}>
+                                <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
+                            </button>) :
+                            (<button onClick={() => stopButtonClick()}>
+                                <StopCircleIcon /> <span>중지</span>
+                            </button>)
+                    }
+                    <button onClick={() => navigate('/single/perfect')} style={{ position: 'absolute', right: '30px' }}>
+                        <LogoutIcon />
+                    </button>
+                </div>
+            </div>
         </div>
+
     );
 };
 
