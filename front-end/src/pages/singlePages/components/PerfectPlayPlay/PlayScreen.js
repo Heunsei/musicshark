@@ -87,8 +87,6 @@ const PlayScreen = () => {
         setIsPlaying(true);
     };
 
-    const buttonLabel = isPlaying ? <StopCircleIcon /> : <PlayCircleFilledWhiteIcon />;
-
     const halfSize = data.NOTE_WINDOW_SIZE / 2;
     const voiceNoteWindowRef = useRef(new Array(halfSize));
     const songNoteWindowRef = useRef(Array.from({ length: data.NOTE_WINDOW_SIZE }, () => [0, 0, 0]));
@@ -270,8 +268,8 @@ const PlayScreen = () => {
 
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
-        if (songIndex >= 100) {
-            //console.log("len:", songData.length);
+        if (songIndex >= songData.length) {
+            console.log("!!종료!!");
             return;
         }
         if (currentTime > songData[songIndex].time) {
@@ -434,7 +432,12 @@ const PlayScreen = () => {
         if (isPlaying) {
             play();
         }
-    }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
+        if (songIndex >= songData.length) {
+            // songIndex가 songData.length를 넘어가면 애니메이션 종료
+            setIsPlaying(false);
+            return;
+        }
+    }, 0, [dataArrayRef, pitchDetectorRef, analyser, songIndex, songData.length]);
 
     // 노래 재생
     useEffect(() => {
