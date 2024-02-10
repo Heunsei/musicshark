@@ -1,6 +1,5 @@
 .mainContainer {
     width: 70%;
-    border: 4px black solid;
     justify-content: center;
     display: flex;
 }
@@ -12,20 +11,19 @@
 }
 
 .mainScreen {
-    border: 1px black solid;
     position: absolute;
-    bottom: 10%;
+    padding-top: 15px;
     width: 100%;
-    height: 80%;
+    height: 70%;
 }
 
 .mainScreen video {
+    border-radius: 15px;
     width: 100%;
     height: 100%;
 }
 
 .subScreen {
-    border: 1px black solid;
     height: 10%;
     display: flex;
     background-color: #C0AB9A;
@@ -33,18 +31,13 @@
     overflow-x: scroll;
     align-items: center;
     justify-content: center;
+    align-items: center;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
 .subScreen ::-webkit-scrollbar {
     display: none;
-}
-
-.subScreen video {
-    margin: 0px 15px;
-    height: 80%;
-    width: 15%;
 }
 
 .buttonBox {
@@ -79,7 +72,9 @@
     background-color: red;
 }
 
-
+.isRecording {
+    border: 4px solid yellow;
+}
 
 .addMemberBtn {
     width: 20%;
@@ -166,4 +161,17 @@
     position: absolute;
     top: 15px;
     left: 15px;
+}
+
+.subScreenVideo {
+    display: flex;
+    width: 20%;
+    height: 80%;
+}
+
+.subScreenVideo video {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
 }

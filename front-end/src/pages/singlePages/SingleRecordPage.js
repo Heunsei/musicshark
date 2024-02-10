@@ -197,7 +197,7 @@ const SingleRecordPage = () => {
             <div className={styles.background}>
                 <div className={styles.container}>
                     <div className={styles.topBox}>
-                        <div className={styles.screenBox}>
+                        <div className={`${styles.screenBox} ${isRecording ? styles.recording : ''}`}>
                             <video ref={mirrorVideoRef} autoPlay muted playsInline style={{ width: '100%', height: '100%', transform: 'scaleX(-1)' }} />
                         </div>
                         <div className={styles.recordList}>

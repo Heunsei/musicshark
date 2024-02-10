@@ -161,6 +161,7 @@ const GroupRoom = (props) => {
         });
     }, []);
 
+
     // 세선 접속
     const joinSession = () => {
         const newOV = new OpenVidu();
@@ -195,6 +196,10 @@ const GroupRoom = (props) => {
             deleteSubscriber(event.stream.streamManager)
         })
 
+        mySession.on('signal:nextPlayer', (event) => {
+            changePlayer(event.from)
+        })
+
         getToken(sessionId).then((res) => {
             console.log('내가 제출하는 토큰', res)
             mySession.connect(res.token, { clientData: storeUser })
@@ -213,7 +218,7 @@ const GroupRoom = (props) => {
                     mySession.publish(publisher)
                     setPublisher(publisher)
                     console.log('join session중 퍼블리셔', publisher)
-                    setPlayer(publisher)
+                    // setPlayer(publisher)
                     console.log('=================================')
                     console.log('님아 제발좀 나와주세요 ', player)
                     console.log('=================================')
@@ -235,11 +240,35 @@ const GroupRoom = (props) => {
         })
     }
 
+    const changePlayer = (from) => {
+        console.log('우오아아아아아', from.stream.streamManager)
+        const newPlayer = from.stream.streamManager
+        console.log('추가전 플레이어 확인', player)
+        setPlayer(newPlayer)
+    }
+
+    /**
+     *@todo 만약 안돼면 joinSession안에있는 setPlayer 주석해제 
+     */
+    const nextPlayer = () => {
+        // 세션이 있을때만 퍼블리셔를 사용해서 체인지?
+        if (session) {
+            session.signal({
+                type: 'nextPlayer',
+                to: [],
+                data: ''
+            });
+        }
+    }
+
     // 출력용 useEffect
     useEffect(() => {
         console.log('===========================')
         console.log('서브스크라이버가 바뀌었습니다')
         console.log(subscribers)
+        subscribers.forEach((element) => {
+            console.log(element.id)
+        })
         console.log('===========================')
     }, [subscribers])
 
@@ -249,6 +278,12 @@ const GroupRoom = (props) => {
         console.log(publisher)
         console.log('===========================')
     }, [publisher])
+
+    useEffect(() => {
+        if (session) {
+            console.log('player확인', player)
+        }
+    }, [session, player])
 
     // leave session
     const leaveSession = () => {
@@ -267,8 +302,8 @@ const GroupRoom = (props) => {
         setIsJoin(false)
         setScreenOV(null)
         setSession(undefined)
+        setIsRecording(false)
         setSubscribers([])
-        console.log('나갔어용', subscribers)
         setPublisher(undefined)
     }
 
@@ -295,22 +330,28 @@ const GroupRoom = (props) => {
             <div className={styles.mainContainer}>
                 <div className={styles.innerBox}>
                     <div className={styles.subScreen}>
-                        {storeUser}
                         {
                             publisher !== undefined ?
-                                <VideoScreen streamManager={publisher} key={publisher.id} /> : null
+                                <div className={styles.subScreenVideo}>
+                                    <VideoScreen streamManager={publisher} key={publisher.id} />
+                                </div> : null
                         }
                         {
                             subscribers !== undefined ?
                                 subscribers.map(sub => {
-                                    return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
+                                    return (
+                                        <div className={`${styles.subScreenVideo}`}>
+                                            <VideoScreen streamManager={sub} key={sub.stream.streamId} />
+                                        </div>)
                                 }) : null
                         }
                     </div>
-                    <div className={styles.mainScreen}>
+                    <div className={`${styles.mainScreen}`}>
                         {
                             player.length !== 0 ?
-                                <VideoScreen streamManager={player} /> : null
+                                <div >
+                                    <VideoScreen streamManager={player} />
+                                </div> : null
                         }
                     </div>
                     <div className={styles.buttonBox}>
@@ -319,6 +360,7 @@ const GroupRoom = (props) => {
                         <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
                         <RecordButton isRecording={isRecording} stream={stream}
                             handleStartRecording={handleStartRecording} handleStopRecording={handleStopRecording} />
+                        <button onClick={() => nextPlayer()}>발표하기</button>
                         <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
                             <LogoutIcon sx={{ color: '#ffffff' }} />
                         </button>

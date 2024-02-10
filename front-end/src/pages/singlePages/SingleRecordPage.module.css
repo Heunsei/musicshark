@@ -113,6 +113,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 .modalContainer input {
@@ -152,4 +153,8 @@
     border-radius: 20em;
     margin: 0 15px;
     background-color: #ffb4a2;
+}
+
+.recording {
+    border: 5px solid yellow;
 }
