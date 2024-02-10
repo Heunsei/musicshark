@@ -48,7 +48,7 @@ public class WebSecurityConfig {
                 .antMatchers("/channel/**").hasRole("USER")
                 .antMatchers("/board/**").hasRole("USER")
                 .antMatchers("/videos/**").hasRole("USER")
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/openvidu/**").permitAll()
 //            .antMatchers("/board/{board_idx}/{nickname}").permitAll()
 //                .antMatchers(HttpMethod.GET).permitAll()
 //                .antMatchers(HttpMethod.POST).permitAll()
