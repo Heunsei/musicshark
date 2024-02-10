@@ -3,7 +3,7 @@ import axios from 'axios'
 export const createSession = async (sessionId) => {
     try {
         const response = await axios({
-            url: `${process.env.REACT_APP_OPENVIDU_URL}/api/sessions`,
+            url: `${process.env.REACT_APP_OPENVIDU_URL}/openvidu/api/sessions`,
             method: 'post',
             data: { customSessionId: sessionId },
             headers: {
@@ -22,7 +22,7 @@ export const createSession = async (sessionId) => {
 export const deleteSession = async (sessionId) => {
     try {
         const response = await axios({
-            url: `${process.env.REACT_APP_OPENVIDU_URL}/api/sessions/${sessionId}`,
+            url: `${process.env.REACT_APP_OPENVIDU_URL}/openvidu/api/sessions/${sessionId}`,
             method: 'delete',
             headers: {
                 Authorization: `Basic ${process.env.OPENVIDU_AUTH}`,
@@ -38,7 +38,7 @@ export const deleteSession = async (sessionId) => {
 export const createToken = async (sessionId) => {
     try {
         const response = await axios({
-            url: `${process.env.REACT_APP_OPENVIDU_URL}/api/sessions/${sessionId}/connection`,
+            url: `${process.env.REACT_APP_OPENVIDU_URL}/openvidu/api/sessions/${sessionId}/connection`,
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

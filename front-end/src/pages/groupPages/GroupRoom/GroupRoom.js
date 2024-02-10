@@ -150,8 +150,8 @@ const GroupRoom = () => {
         })
 
         getToken(sessionId).then((res) => {
-            console.log(res)
-            mySession.connect(res, { clientData: storeUser })
+            console.log("getToken's res:", res)
+            mySession.connect(res.token, { clientData: storeUser })
                 .then(async () => {
                     let publisher = await newOV.initPublisherAsync(undefined, {
                         audioSource: undefined,
