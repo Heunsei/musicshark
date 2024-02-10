@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
@@ -13,8 +13,7 @@ const PerfectPlayPlayPage = () => {
     const { song_idx } = useParams()
     const [songDetail, setSongDetail] = useState([])
     const [isPlaying, setIsPlaying] = useState(false)
-    const navigate = useNavigate()
-    
+
     const startPlay = () => {
         //setIsPlaying(true)
         //console.log(isPlaying)
@@ -34,28 +33,8 @@ const PerfectPlayPlayPage = () => {
     }, [])
 
     return (
-        <div className={styles.body}>
-            <div className={styles.container}>
-                <div className={styles.screenBox}>
-                    <PlayScreen />
-                </div>
-                <div className={styles.buttonBox}>
-                    {
-                        !isPlaying ?
-                            (<button onClick={() => startPlay()}>
-                                <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
-                            </button>) :
-                            (<button onClick={() => stopPlay()}>
-                                <StopCircleIcon /> <span>중지</span>
-                            </button>)
-                    }
+        <PlayScreen />
 
-                    <button onClick={() => navigate('/single/perfect')} style={{ position: 'absolute', right: '30px' }}>
-                        <LogoutIcon />
-                    </button>
-                </div>
-            </div>
-        </div>
     );
 };
 
