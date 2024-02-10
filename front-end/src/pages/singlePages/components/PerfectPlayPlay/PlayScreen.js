@@ -86,7 +86,6 @@ const PlayScreen = () => {
         }, 4000);
         setIsPlaying(true);
     };
-
     const halfSize = data.NOTE_WINDOW_SIZE / 2;
     const voiceNoteWindowRef = useRef(new Array(halfSize));
     const songNoteWindowRef = useRef(Array.from({ length: data.NOTE_WINDOW_SIZE }, () => [0, 0, 0]));
