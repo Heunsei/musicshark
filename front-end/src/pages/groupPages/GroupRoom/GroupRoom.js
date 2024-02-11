@@ -241,10 +241,16 @@ const GroupRoom = (props) => {
     }
 
     const changePlayer = (from) => {
-        console.log('우오아아아아아', from.stream.streamManager)
+        console.log('누른사람 확인 : ', from.stream.streamManager)
         const newPlayer = from.stream.streamManager
-        console.log('추가전 플레이어 확인', player)
-        setPlayer(newPlayer)
+        if (player[0] === newPlayer) {
+            console.log('player가 같습니다')
+            console.log(player[0])
+            console.log(newPlayer)
+            setPlayer([])
+        }else if (player[0] === undefined){
+            setPlayer(newPlayer)
+        }
     }
 
     /**
