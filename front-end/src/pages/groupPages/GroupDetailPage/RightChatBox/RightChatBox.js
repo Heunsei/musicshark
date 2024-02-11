@@ -15,7 +15,7 @@ const RightChatBox = (props) => {
     // const [recordList, setRecordList] = useState([])
     const [chatList, setChatList] = useState([])
     const [message, setMessage] = useState([])
-    const [searchTitle, setSearchtitle] = useState('')
+    const [searchTitle, setSearchTitle] = useState('')
 
     const [isChatBoxOpen, setIsChatBoxOpen] = useState(true)
 
@@ -74,6 +74,7 @@ const RightChatBox = (props) => {
 
     const handleSearchRecord = async () => {
         const res = await searchGroupRecord(id, searchTitle)
+        setRecordList(res)
     }
 
     const handleDeleteRecord = async (videoIdx) => {
@@ -131,7 +132,7 @@ const RightChatBox = (props) => {
                         :
                         <div className={styles.recordList}>
                             <div className={styles.searchBox}>
-                                <input onChange={(event) => setSearchtitle(event.target.value)}
+                                <input onChange={(event) => setSearchTitle(event.target.value)}
                                     value={searchTitle} placeholder='검색할 영상 제목을 입력하세요' />
                                 <button onClick={() => { handleSearchRecord() }} >검색</button>
                             </div>

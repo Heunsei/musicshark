@@ -6,7 +6,7 @@ export const searchGroupRecord = async (channel_id, videoTitle) => {
     const accessToken = getCookie('accessToken')
     try {
         const response = await axios({
-            method: 'post',
+            method: 'get',
             url: `${URL}/videos/channels/${channel_id}/search?videoTitle=${videoTitle}`,
             headers: {
                 Authorization: `Bearer ${accessToken}`
