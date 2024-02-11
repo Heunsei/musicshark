@@ -151,9 +151,10 @@ public class ChannelVideoServiceImpl implements ChannelVideoService {
         List<SearchVideoResponseDto> list  = new ArrayList<>();
         for(ChannelVideoEntity video: listVideo){
             Optional<VideoEntity> entity = videoRepository.findByVideoIdx(video.getVideoIdx());
-            if(!entity.isPresent() || !entity.get().getVideoTitle().equals(videoTitle)) continue;
+            if(!entity.isPresent() || !entity.get().getVideoTitle().contains(videoTitle)) continue;
 
             SearchVideoResponseDto dto = new SearchVideoResponseDto();
+            dto.setVideoIdx(video.getVideoIdx());
             dto.setVideoDate(entity.get().getVideoDate());
             dto.setVideoTitle(videoTitle);
             dto.setPreSignedURL(makePresignedURL(entity.get().getVideoPath(), accessExpiredTime, HttpMethod.GET));
