@@ -12,6 +12,7 @@ export const getGroupRecordListAction = async (channelId) => {
         const res = await axios({
             method: 'get',
             url: `${URL}/videos/channels/${channelId}`,
+            data: { channel_id : channelId },
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
