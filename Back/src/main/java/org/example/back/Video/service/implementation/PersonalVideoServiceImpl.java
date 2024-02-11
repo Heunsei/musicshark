@@ -13,6 +13,7 @@ import org.example.back.User.entity.UserEntity;
 import org.example.back.User.repository.UserRepository;
 import org.example.back.Video.dto.request.PersonalVideoRequestDto;
 import org.example.back.Video.dto.response.PersonalVideoResponseDto;
+import org.example.back.Video.dto.response.SearchVideoResponseDto;
 import org.example.back.Video.entity.VideoEntity;
 import org.example.back.Video.repository.VideoRepository;
 import org.example.back.Video.service.PersonalVideoService;
@@ -42,7 +43,7 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 	private final VideoRepository videoRepository;
 
 	private final String personalVideoPath = "storage/video/personal/";
-
+	private final long accessExpiredTime = 30 * 60; // 접근 제한 시간 30분
 
 
 	@Value("${cloud.aws.s3.bucket}")
@@ -84,7 +85,7 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 			dto.setVideoTitle(entity.getVideoTitle());
 
 			String key = entity.getVideoPath();
-			String url = makePresignedURL(key, 60*30, HttpMethod.GET);
+			String url = makePresignedURL(key, accessExpiredTime, HttpMethod.GET);
 			dto.setPresignedURL(url);
 			result.add(dto);
 		}
@@ -114,6 +115,26 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 
 		if(video.isPresent()) return true;
 		else return false;
+	}
+
+	@Override
+	public List<SearchVideoResponseDto> searchVideo(UserDetails userDetails, String videoTitle) throws Exception {
+		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
+				.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+		List<VideoEntity> videoList = videoRepository.findByUserIdxAndVideoTitle(user.getUserIdx(), videoTitle);
+		List<SearchVideoResponseDto> list = new ArrayList<>();
+
+		for(VideoEntity video : videoList){
+			SearchVideoResponseDto dto = new SearchVideoResponseDto();
+			dto.setVideoDate(video.getVideoDate());
+			dto.setVideoTitle(videoTitle);
+			dto.setPreSignedURL(makePresignedURL(video.getVideoPath(), accessExpiredTime, HttpMethod.GET));
+
+			list.add(dto);
+		}
+
+		return list;
 	}
 
 	private String makePresignedURL(String keyname, long expTimeSecond, HttpMethod method) throws Exception {

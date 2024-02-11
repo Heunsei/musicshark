@@ -12,6 +12,7 @@ import org.example.back.User.entity.UserEntity;
 import org.example.back.User.repository.UserRepository;
 import org.example.back.Video.dto.request.ChannelVideoRequestDto;
 import org.example.back.Video.dto.response.ChannelVideoResponseDto;
+import org.example.back.Video.dto.response.SearchVideoResponseDto;
 import org.example.back.Video.entity.ChannelVideoEntity;
 import org.example.back.Video.entity.VideoEntity;
 import org.example.back.Video.repository.ChannelVideoRepository;
@@ -31,6 +32,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +47,7 @@ public class ChannelVideoServiceImpl implements ChannelVideoService {
     private final BelongChannelRepository belongRepository;
     private final ChannelVideoRepository channelVideoRepository;
     private final String channelVideoPath = "storage/video/channel/";
+    private final long accessExpiredTime = 30 * 60; // 접근 제한 시간 30분
 
 
     @Value("${cloud.aws.s3.bucket}")
@@ -133,6 +136,32 @@ public class ChannelVideoServiceImpl implements ChannelVideoService {
         amazonS3.deleteObject(bucket, key);
 
 
+    }
+
+    @Override
+    public List<SearchVideoResponseDto> searchVideo(UserDetails userDetails, int channelIdx, String videoTitle) throws Exception {
+        UserEntity user = userRepository.findByUserEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+        // 유저가 채널의 소속인지 파악
+        BelongChannelEntity belong =
+                belongRepository.findByChannelIdxAndUserIdx(channelIdx, user.getUserIdx())
+                        .orElseThrow(() -> new Exception("잘못된 접근입니다."));
+
+        List<ChannelVideoEntity> listVideo = channelVideoRepository.findByChannelIdxOrderByVideoIdxDesc(channelIdx);
+        List<SearchVideoResponseDto> list  = new ArrayList<>();
+        for(ChannelVideoEntity video: listVideo){
+            Optional<VideoEntity> entity = videoRepository.findByVideoIdx(video.getVideoIdx());
+            if(!entity.isPresent() || !entity.get().getVideoTitle().equals(videoTitle)) continue;
+
+            SearchVideoResponseDto dto = new SearchVideoResponseDto();
+            dto.setVideoDate(entity.get().getVideoDate());
+            dto.setVideoTitle(videoTitle);
+            dto.setPreSignedURL(makePresignedURL(entity.get().getVideoPath(), accessExpiredTime, HttpMethod.GET));
+
+            list.add(dto);
+        }
+
+        return list;
     }
 
     private String makePresignedURL(String keyname, long expTimeSecond, HttpMethod method) throws Exception {

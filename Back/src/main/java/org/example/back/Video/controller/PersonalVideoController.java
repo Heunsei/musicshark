@@ -1,9 +1,11 @@
 package org.example.back.Video.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.example.back.Video.dto.request.PersonalVideoRequestDto;
 import org.example.back.Video.dto.response.PersonalVideoResponseDto;
+import org.example.back.Video.dto.response.SearchVideoResponseDto;
 import org.example.back.Video.service.PersonalVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class PersonalVideoController {
 	@Autowired
 	private final PersonalVideoService s3Service;
 
+	// 유저의 영상 모두 조회
 	@GetMapping()
 	public ResponseEntity<?> getPresignedURL(@AuthenticationPrincipal UserDetails userDetails){
 		try {
@@ -32,9 +35,21 @@ public class PersonalVideoController {
 		}
 	}
 
+
 	@GetMapping("/{video_idx}")
 	public ResponseEntity<?> getVideo(@PathVariable("video_idx") int videoIdx, @AuthenticationPrincipal UserDetails userDetails){
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<?> searchVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("videoTitle") String videoTitle){
+		try {
+			List<SearchVideoResponseDto> list = new ArrayList<>();
+			list = s3Service.searchVideo(userDetails, videoTitle);
+			return new ResponseEntity<List<SearchVideoResponseDto>>(list, HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PostMapping()

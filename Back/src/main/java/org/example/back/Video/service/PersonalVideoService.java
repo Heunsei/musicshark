@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.example.back.Video.dto.request.PersonalVideoRequestDto;
 import org.example.back.Video.dto.response.PersonalVideoResponseDto;
+import org.example.back.Video.dto.response.SearchVideoResponseDto;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface PersonalVideoService {
@@ -15,4 +16,6 @@ public interface PersonalVideoService {
 	void deleteVideo(UserDetails userDetails, int boardIdx) throws Exception;
 
 	boolean findVideoWithTitle(UserDetails userDetails, String boardTitle);
+
+	List<SearchVideoResponseDto> searchVideo(UserDetails userDetails, String videoTitle) throws Exception;
 }
