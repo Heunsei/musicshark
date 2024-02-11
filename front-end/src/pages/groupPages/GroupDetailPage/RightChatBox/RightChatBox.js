@@ -47,12 +47,14 @@ const RightChatBox = (props) => {
     const openChatBox = () => {
         if (!isChatBoxOpen) {
             setIsChatBoxOpen(true)
+            setSearchTitle('')
         }
     }
 
     const openVideoBox = () => {
         if (isChatBoxOpen) {
             setIsChatBoxOpen(false)
+            setSearchTitle('')
         }
     }
 
