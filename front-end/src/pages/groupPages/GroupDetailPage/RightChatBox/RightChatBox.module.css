@@ -122,3 +122,46 @@
     background-color: #219ebc;
     border-radius: 15px 15px 15px 0px;
 }
+
+.recordList {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #9CD08F;
+    flex-direction: column;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.videoContainer {
+    background-color: black 60%;
+    width: 80%;
+    height: 20%;
+    display: flex;
+    position: relative;
+    margin-bottom: 5px;
+    flex-direction: column;
+}
+
+.recordDeleteButton {
+    position: absolute;
+    display: none;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.activeBtn {
+    display: inline;
+}
+
+.recordVideo {
+    border-radius: 15px;
+    width: 100%;
+    height: 80%;
+}

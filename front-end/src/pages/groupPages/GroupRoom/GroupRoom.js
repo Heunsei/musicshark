@@ -19,9 +19,10 @@ import styles from './GroupRoom.module.css'
 import VideoScreen from './VideoScreen';
 import { setLoby } from '../../../redux/store/lobySlice';
 import { uploadGroupVideoAction } from './uploadGroupVideoAction';
+import { getGroupRecordListAction } from '../GroupDetailPage/actions/getGroupRecordListAction';
 
 const GroupRoom = (props) => {
-    const { session, setSession, screenOV, setScreenOV } = props
+    const { session, setSession, screenOV, setScreenOV, recordList, setRecordList } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { id } = useParams()
@@ -46,14 +47,17 @@ const GroupRoom = (props) => {
 
     // modal 관련 state
     const [open, setOpen] = useState(false)
-    const handleClose = () => setOpen(false)
+    const handleClose = () => {
+        setOpen(false)
+        setVideoTitle('')
+    }
 
     // 녹화 관련 state
     const [recordedBlobs, setRecordedBlobs] = useState([])
     // 녹화 영상 제목
     const [videoTitle, setVideoTitle] = useState('')
     // 녹화 영상 리스트
-    const [recordList, setRecordList] = useState([])
+    // const [recordList, setRecordList] = useState([])
     // 녹화를 담을 ref
     const mediaRecorderRef = useRef(null);
     const testRecordRef = useRef(null)
@@ -248,7 +252,7 @@ const GroupRoom = (props) => {
             console.log(player[0])
             console.log(newPlayer)
             setPlayer([])
-        }else if (player[0] === undefined){
+        } else if (player[0] === undefined) {
             setPlayer(newPlayer)
         }
     }
@@ -268,28 +272,36 @@ const GroupRoom = (props) => {
     }
 
     // 출력용 useEffect
-    useEffect(() => {
-        console.log('===========================')
-        console.log('서브스크라이버가 바뀌었습니다')
-        console.log(subscribers)
-        subscribers.forEach((element) => {
-            console.log(element.id)
-        })
-        console.log('===========================')
-    }, [subscribers])
+    // useEffect(() => {
+    //     console.log('===========================')
+    //     console.log('서브스크라이버가 바뀌었습니다')
+    //     console.log(subscribers)
+    //     subscribers.forEach((element) => {
+    //         console.log(element.id)
+    //     })
+    //     console.log('===========================')
+    // }, [subscribers])
+
+    // useEffect(() => {
+    //     console.log('===========================')
+    //     console.log('퍼블리셔가 바뀌었습니다')
+    //     console.log(publisher)
+    //     console.log('===========================')
+    // }, [publisher])
+
+    // useEffect(() => {
+    //     if (session) {
+    //         console.log('player확인', player)
+    //     }
+    // }, [session, player])
 
     useEffect(() => {
-        console.log('===========================')
-        console.log('퍼블리셔가 바뀌었습니다')
-        console.log(publisher)
-        console.log('===========================')
-    }, [publisher])
-
-    useEffect(() => {
-        if (session) {
-            console.log('player확인', player)
+        const getList = async () => {
+            const res = await getGroupRecordListAction()
+            setRecordList(res)
         }
-    }, [session, player])
+        getList()
+    }, [open])
 
     // leave session
     const leaveSession = () => {
@@ -303,7 +315,6 @@ const GroupRoom = (props) => {
         console.log('세션', session)
         if (session) {
             session.disconnect()
-            // deleteSession(id)
         }
         setIsJoin(false)
         setScreenOV(null)

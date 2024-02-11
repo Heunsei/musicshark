@@ -2,18 +2,33 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './RightChatBox.module.css'
 import { getGroupRecordListAction } from '../actions/getGroupRecordListAction'
+import { deleteGroupRecordListAction } from '../actions/deleteGroupRecordAction';
 
 const RightChatBox = (props) => {
     // 채팅을 연결할 세션, ov를 받아와야함
-    const { id, userName, session, setSession } = props
+    const { id, userName, session, setSession, recordList, setRecordList } = props
 
     // 기본적으로 채팅박스를 보여주고 그게 아니라면 영상 리스트를 제공
-    const [recordList, setRecordList] = useState([])
+    // const [recordList, setRecordList] = useState([])
     const [chatList, setChatList] = useState([])
     const [message, setMessage] = useState([])
 
 
     const [isChatBoxOpen, setIsChatBoxOpen] = useState(true)
+
+    const [isHover, setIsHover] = useState(false)
+    const [hoverDivId, setHoverDivId] = useState('')
+    const [isClick, setIsClick] = useState(false)
+
+    const handleMouseOver = (i) => {
+        setHoverDivId(i)
+        setIsHover(true)
+    }
+
+    const handleMouseOut = () => {
+        setIsHover(false)
+        setHoverDivId('')
+    }
 
     useEffect(() => {
         if (session) {
@@ -54,6 +69,12 @@ const RightChatBox = (props) => {
         setMessage('')
     }
 
+    const handleDeleteRecord = async (videoIdx) => {
+        setIsClick(true)
+        await deleteGroupRecordListAction(id, videoIdx)
+        setIsClick(false)
+    }
+
     useEffect(() => {
         const getRecoudList = async () => {
             console.log('getRecordList 무한로딩 확인')
@@ -61,7 +82,7 @@ const RightChatBox = (props) => {
             setRecordList(res)
         }
         getRecoudList()
-    }, [isChatBoxOpen, id])
+    }, [isChatBoxOpen, id, isClick])
 
     return (
         <div className={styles.mainContainer}>
@@ -100,17 +121,24 @@ const RightChatBox = (props) => {
                         </>
 
                         :
-                        <div>
-                            {/* {
+                        <div className={styles.recordList}>
+                            {
+                                // 녹화한 영상들을 띄워주는 코드
+                                // ref={testRef} 삭제했음
                                 recordList.length !== 0 ?
                                     (recordList.map((element, i) => {
                                         return (
-                                            <video key={i} controls style={{ width: '200px', height: '200px' }}>
-                                                <source src={element.presigned_url} type='video/webm' />
-                                            </video>
+                                            <div key={i} className={styles.videoContainer} onMouseOver={() => handleMouseOver(i)} onMouseLeave={() => handleMouseOut()} >
+                                                <span>{element.video_title}</span>
+                                                <button className={`${styles.recordDeleteButton} ${isHover && i === hoverDivId ? styles.activeBtn : ''}`}
+                                                    onClick={() => handleDeleteRecord(element.video_idx)}>영상삭제</button>
+                                                <video controls className={styles.recordVideo} >
+                                                    <source src={element.presigned_url} type='video/webm' />
+                                                </video>
+                                            </div>
                                         )
                                     })) : null
-                            } */}
+                            }
                         </div>
                 }
             </div>

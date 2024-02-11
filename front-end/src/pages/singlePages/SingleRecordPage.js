@@ -218,7 +218,6 @@ const SingleRecordPage = () => {
                                         )
                                     })) : null
                             }
-
                         </div>
                     </div>
                     <div className={styles.buttonBox}>
