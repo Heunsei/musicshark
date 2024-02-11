@@ -40,6 +40,7 @@ const SingleRecordPage = () => {
     const [isHover, setIsHover] = useState(false)
     const [hoverDivId, setHoverDivId] = useState('')
     const [isClick, setIsClick] = useState(false)
+    const [recordTimer, setRecordTimer] = useState(0)
 
     const handleMouseOver = (i) => {
         setHoverDivId(i)

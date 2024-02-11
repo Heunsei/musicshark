@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
+import SendIcon from '@mui/icons-material/Send';
+
 import styles from './RightChatBox.module.css'
 import { getGroupRecordListAction } from '../actions/getGroupRecordListAction'
 import { deleteGroupRecordListAction } from '../actions/deleteGroupRecordAction';
+import { searchGroupRecord } from '../../GroupRoom/searchGroupRecord';
 import { useParams } from 'react-router-dom';
 
 const RightChatBox = (props) => {
@@ -12,7 +15,7 @@ const RightChatBox = (props) => {
     // const [recordList, setRecordList] = useState([])
     const [chatList, setChatList] = useState([])
     const [message, setMessage] = useState([])
-
+    const [searchTitle, setSearchtitle] = useState('')
 
     const [isChatBoxOpen, setIsChatBoxOpen] = useState(true)
 
@@ -69,6 +72,10 @@ const RightChatBox = (props) => {
         setMessage('')
     }
 
+    const handleSearchRecord = async () => {
+        const res = await searchGroupRecord(id, searchTitle)
+    }
+
     const handleDeleteRecord = async (videoIdx) => {
         setIsClick(true)
         await deleteGroupRecordListAction(id, videoIdx)
@@ -117,12 +124,17 @@ const RightChatBox = (props) => {
                             <div className={styles.messageInputBox}>
                                 <input value={message} onChange={(event) => { setMessage(event.target.value) }}
                                     placeholder='메세지를 입력하세요' className={styles.messageInput} />
-                                <button className={styles.sendMessageBtn} onClick={() => sendMessage()}>전송</button>
+                                <button className={styles.sendMessageBtn} onClick={() => sendMessage()}><SendIcon /></button>
                             </div>
                         </>
 
                         :
                         <div className={styles.recordList}>
+                            <div className={styles.searchBox}>
+                                <input onChange={(event) => setSearchtitle(event.target.value)}
+                                    value={searchTitle} placeholder='검색할 영상 제목을 입력하세요' />
+                                <button onClick={() => { handleSearchRecord() }} >검색</button>
+                            </div>
                             {
                                 // 녹화한 영상들을 띄워주는 코드
                                 // ref={testRef} 삭제했음

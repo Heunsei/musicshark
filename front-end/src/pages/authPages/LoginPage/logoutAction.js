@@ -5,7 +5,6 @@ import { removeCookie } from '../../../util/cookie';
  */
 export const logoutAction = (navigate) => {
     localStorage.clear()
-    sessionStorage.claer()
     removeCookie()
     navigate('/login')
 }

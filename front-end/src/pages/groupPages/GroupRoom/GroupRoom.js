@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { OpenVidu } from 'openvidu-browser';
 
-import CallEndIcon from '@mui/icons-material/CallEnd';
-import CallIcon from '@mui/icons-material/Call';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AirplayIcon from '@mui/icons-material/Airplay';
 import Modal from '@mui/material/Modal';
 
 import GroupCallButton from '../../../components/GroupRoomButtons/GroupCallButton';
@@ -377,7 +376,7 @@ const GroupRoom = (props) => {
                         <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
                         <RecordButton isRecording={isRecording} stream={stream}
                             handleStartRecording={handleStartRecording} handleStopRecording={handleStopRecording} />
-                        <button onClick={() => nextPlayer()}>발표하기</button>
+                        <button className={`${styles.groupRoomBtn}`} onClick={() => nextPlayer()}>< AirplayIcon sx={{ color: 'white' }} /></button>
                         <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
                             <LogoutIcon sx={{ color: '#ffffff' }} />
                         </button>
