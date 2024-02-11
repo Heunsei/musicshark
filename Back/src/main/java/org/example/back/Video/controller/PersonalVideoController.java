@@ -37,15 +37,15 @@ public class PersonalVideoController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@PostMapping( )
-	public ResponseEntity<Void> saveVideo(
+	@PostMapping()
+	public ResponseEntity<?> saveVideo(
 			@ModelAttribute PersonalVideoRequestDto dto,
 			@AuthenticationPrincipal UserDetails userDetails){
 		try{
 			s3Service.saveVideo(dto, userDetails);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		}catch(Exception e){
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
