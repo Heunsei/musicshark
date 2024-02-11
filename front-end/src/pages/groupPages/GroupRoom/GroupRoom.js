@@ -301,7 +301,7 @@ const GroupRoom = (props) => {
             setRecordList(res)
         }
         getList()
-    }, [open])
+    }, [open, id, setRecordList])
 
     // leave session
     const leaveSession = () => {
