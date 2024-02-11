@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Back.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Back.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/dto/response/PerfectplayResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/dto/response/PerfectplayResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/service/implementation/PerfectplayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/PerfectPlay/service/implementation/PerfectplayServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/Video/service/implementation/ChannelVideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/Video/service/implementation/ChannelVideoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/java/org/example/back/Video/service/implementation/PersonalVideoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/java/org/example/back/Video/service/implementation/PersonalVideoServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +65,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BackApplication.executor": "Run",
-    "git-widget-placeholder": "backend-develop-perfectplay",
+    "git-widget-placeholder": "Merging frontend-develop-group-room",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/SSAFY/2024-2/work-space/S10P12E205/Back/src/main/java/org/example/back",
     "node.js.detected.package.eslint": "true",
@@ -111,11 +109,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Spring Boot.BackApplication" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

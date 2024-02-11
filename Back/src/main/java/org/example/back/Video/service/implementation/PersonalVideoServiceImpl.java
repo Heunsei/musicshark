@@ -132,7 +132,11 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 
 			dto.setVideoIdx(video.getUserIdx());
 			dto.setVideoDate(video.getVideoDate());
+<<<<<<< HEAD
 			dto.setVideoTitle(videoTitle);
+=======
+			dto.setVideoTitle(video.getVideoTitle());
+>>>>>>> 7d63f0d8aaee9aa48ff08dc0c7df965a60917bdf
 			dto.setPresignedURL(makePresignedURL(video.getVideoPath(), accessExpiredTime, HttpMethod.GET));
 
 			list.add(dto);
