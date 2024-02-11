@@ -76,6 +76,8 @@ create table if not exists `song` (
     mr_file varchar(300) NOT NULL COMMENT '반주'
 );
 
+select * from song;
+
 -- 노래 바
 create table if not exists `song_line` (
    song_line_idx int primary key auto_increment COMMENT '노래바 인덱스',
@@ -87,7 +89,9 @@ create table if not exists `song_line` (
    CONSTRAINT `fk_song_line_song_idx` FOREIGN KEY (song_idx) REFERENCES `song` (song_idx)
 );
 
+select * from perfectplay;
 -- 퍼펙트 플레이
+
 create table if not exists `perfectplay`(
     pp_idx int primary key auto_increment COMMENT '퍼펙트 플레이 인덱스',
     user_idx int NOT NULL COMMENT '유저 인덱스',
@@ -205,8 +209,8 @@ VALUES
     ('user2', 'password2', 'Female', FROM_UNIXTIME(UNIX_TIMESTAMP('1995-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user2@example.com', NULL),
     ('user3', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'userN@example.com', NULL);
 
--- INSERT INTO `perfectplay` (user_idx, score, song_idx, clear)
--- VALUES
+INSERT INTO `perfectplay` (user_idx, score, song_idx, clear)
+VALUES (13, 70, 1, 1);
 
 --     (1, 2, 1),
 --     (2, 3, 1),
