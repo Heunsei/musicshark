@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box'
-import styled from '@emotion/styled';
+import { styled } from '@mui/system';
 
 const BoxWrapper = styled('div')({
     width: '100%',
@@ -8,7 +8,7 @@ const BoxWrapper = styled('div')({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: '#FFEDD8'
+    background: '#FFEDD8',
 })
 
 const AuthBox = (props) => {
@@ -17,13 +17,14 @@ const AuthBox = (props) => {
             <Box
                 sx={{
                     width: 700,
-                    height: 500,
+                    height: '50vh',
                     bgcolor: '#ffffff',
                     borderRadius: '5px',
                     boxShadow: '0 2px 10px 0 rgb(0 0 0.5/ 20%)',
                     display: 'flex',
                     flexDirection: 'column',
                     padding: '25px',
+                    overflow: 'scroll',
                 }}
             >
                 {props.children}
