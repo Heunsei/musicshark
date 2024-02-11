@@ -156,8 +156,8 @@ public class ChannelVideoServiceImpl implements ChannelVideoService {
             SearchVideoResponseDto dto = new SearchVideoResponseDto();
             dto.setVideoIdx(video.getVideoIdx());
             dto.setVideoDate(entity.get().getVideoDate());
-            dto.setVideoTitle(videoTitle);
-            dto.setPreSignedURL(makePresignedURL(entity.get().getVideoPath(), accessExpiredTime, HttpMethod.GET));
+            dto.setVideoTitle(entity.get().getVideoTitle());
+            dto.setPresignedURL(makePresignedURL(entity.get().getVideoPath(), accessExpiredTime, HttpMethod.GET));
 
             list.add(dto);
         }
