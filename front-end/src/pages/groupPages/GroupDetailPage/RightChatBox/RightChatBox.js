@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react'
 import styles from './RightChatBox.module.css'
 import { getGroupRecordListAction } from '../actions/getGroupRecordListAction'
 import { deleteGroupRecordListAction } from '../actions/deleteGroupRecordAction';
+import { useParams } from 'react-router-dom';
 
 const RightChatBox = (props) => {
     // 채팅을 연결할 세션, ov를 받아와야함
     const { id, userName, session, setSession, recordList, setRecordList } = props
-
     // 기본적으로 채팅박스를 보여주고 그게 아니라면 영상 리스트를 제공
     // const [recordList, setRecordList] = useState([])
     const [chatList, setChatList] = useState([])
@@ -76,13 +76,14 @@ const RightChatBox = (props) => {
     }
 
     useEffect(() => {
-        const getRecoudList = async () => {
+        const getRecoudList = async (id) => {
             console.log('getRecordList 무한로딩 확인')
+            console.log(id)
             const res = await getGroupRecordListAction(id)
             setRecordList(res)
         }
-        getRecoudList()
-    }, [isChatBoxOpen, id, isClick])
+        getRecoudList(id)
+    }, [isChatBoxOpen, id, isClick, setRecordList])
 
     return (
         <div className={styles.mainContainer}>
@@ -100,7 +101,7 @@ const RightChatBox = (props) => {
                                         chatList.map((e, i) => {
                                             return (
                                                 <>
-                                                    <div className={`${e.nickname === userName ? styles.myChat : styles.anotherChat} `}>
+                                                    <div key={i} className={`${e.nickname === userName ? styles.myChat : styles.anotherChat} `}>
                                                         <div className={styles.nicknameBox}>
                                                             <p>{e.nickname}</p>
                                                         </div>

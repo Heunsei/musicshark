@@ -22,7 +22,7 @@ const Wrapper = styled("div")({
 
 // 그룹 디테일 페이지에 들어올때 마다
 const GroupDetailPage = () => {
-    let { id } = useParams()
+    const { id } = useParams()
     const navigate = useNavigate()
     let lobyState = useSelector((state) => state.isLoby)
     const userName = useSelector((state) => state.user.nickname)
@@ -79,7 +79,7 @@ const GroupDetailPage = () => {
                 // 유저가 연습이동을 누르면 state를 변경하고 infobox를 practicebox로 변경
                 lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} />
                     :
-                    <GroupRoom screenOV={screenOV} setScreenOV={setScreenOV} session={session} setSession={setSession}
+                    <GroupRoom id={id} screenOV={screenOV} setScreenOV={setScreenOV} session={session} setSession={setSession}
                         recordList={recordList} setRecordList={setRecordList} />
             }
             <RightChatBox id={id} userName={userName} session={session} setSession={setSession}

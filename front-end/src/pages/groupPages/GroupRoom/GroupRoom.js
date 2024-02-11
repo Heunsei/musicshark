@@ -22,10 +22,10 @@ import { uploadGroupVideoAction } from './uploadGroupVideoAction';
 import { getGroupRecordListAction } from '../GroupDetailPage/actions/getGroupRecordListAction';
 
 const GroupRoom = (props) => {
-    const { session, setSession, screenOV, setScreenOV, recordList, setRecordList } = props
+    const { id, session, setSession, screenOV, setScreenOV, recordList, setRecordList } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { id } = useParams()
+    // const { id } = useParams()
     // const storeUser = useSelector((state) => state.user.nickname)
     const storeUser = useSelector((state) => state.user.nickname)
     const sessionId = id
@@ -297,7 +297,7 @@ const GroupRoom = (props) => {
 
     useEffect(() => {
         const getList = async () => {
-            const res = await getGroupRecordListAction()
+            const res = await getGroupRecordListAction(id)
             setRecordList(res)
         }
         getList()
