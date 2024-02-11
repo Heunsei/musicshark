@@ -20,4 +20,6 @@ public interface VideoRepository extends JpaRepository<VideoEntity, Integer> {
     void deleteByVideoIdx(int videoIdx);
 
     Optional<VideoEntity> findByUserIdxAndVideoTitleAndVideoDate(int userIdx, String videoTitle, LocalDate date);
+
+    List<VideoEntity> findByUserIdxAndVideoTitle(int userIdx, String videoTitle);
 }
