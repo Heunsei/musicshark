@@ -168,6 +168,7 @@ create table if not exists `video` (
 
 -- 채널 영상
 create table if not exists `channel_video` (
+	channel_video_idx int primary key auto_increment,
    channel_idx int NOT NULL COMMENT '채널 인덱스',
    video_idx int NOT NULL COMMENT '영상 인덱스',
    user_idx int NOT NULL COMMENT '유저 인덱스',
@@ -241,7 +242,7 @@ create table if not exists `tier` (
 -- select * from User;
 -- select * from perfectplay;
 
--- select * from `user`;
+select * from `user`;
 
 -- select * from `board`;
 -- insert into `board` (user_idx, board_title, board_content)
@@ -256,3 +257,8 @@ create table if not exists `tier` (
 -- select * from `comment`;
 
 -- select * from video;
+
+select * from channel;
+select * from belong_channel;
+select * from video;
+select * from channel_video;
