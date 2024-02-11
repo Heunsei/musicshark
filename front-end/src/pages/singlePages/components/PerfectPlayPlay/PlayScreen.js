@@ -220,10 +220,12 @@ const PlayScreen = () => {
     let block = 1;
     let scoreText = '';
     let barColor = '';
-    
-    const [totalScore, setTotalScore] = useState(0);
-    const [avgScore, setAvgScore] = useState(0);
-    
+
+    // const [totalScore, setTotalScore] = useState(0);
+    // const [avgScore, setAvgScore] = useState(0);
+
+    let totalScore = 0;
+    let avgScore = 0;
     const play = () => {
 
         if (
@@ -299,31 +301,57 @@ const PlayScreen = () => {
                     correct += 1;
                 }
             }
+            // if (correct > block * 0.5) {
+            //     barColor = 1;
+            //     scoreText = 'PERFECT';
+            // } else if (correct > block * 0.3) {
+            //     barColor = 2;
+            //     scoreText = 'GREAT';
+            // } else if (correct > block * 0.1) {
+            //     barColor = 3;
+            //     scoreText = 'GOOD';
+            // } else if (correct > 0) {
+            //     barColor = 4;
+            //     scoreText = 'NORMAL';
+            // } else {
+            //     barColor = 5;
+            //     scoreText = 'BAD';
+            // }
             if (correct > block * 0.5) {
                 barColor = 1;
                 scoreText = 'PERFECT';
-                setTotalScore(totalScore+100);
-                setAvgScore(totalScore / randomData.length);
+                // setTotalScore(totalScore + 100);
+                // setAvgScore(totalScore / randomData.length);
+                totalScore +=100;
+                avgScore = totalScore/randomData.length;
             } else if (correct > block * 0.3) {
                 barColor = 2;
                 scoreText = 'GREAT';
-                setTotalScore(totalScore+75);
-                setAvgScore(totalScore / randomData.length);
+                // setTotalScore(totalScore + 75);
+                // setAvgScore(totalScore / randomData.length);
+                totalScore +=75;
+                avgScore = totalScore/randomData.length;
             } else if (correct > block * 0.1) {
                 barColor = 3;
                 scoreText = 'GOOD';
-                setTotalScore(totalScore+50);
-                setAvgScore(totalScore / randomData.length);
+                // setTotalScore(totalScore + 50);
+                // setAvgScore(totalScore / randomData.length);
+                totalScore +=50;
+                avgScore = totalScore/randomData.length;
             } else if (correct > 0) {
                 barColor = 4;
                 scoreText = 'NORMAL';
-                setTotalScore(totalScore+25);
-                setAvgScore(totalScore / randomData.length);
+                // setTotalScore(totalScore + 25);
+                // setAvgScore(totalScore / randomData.length);
+                totalScore +=25;
+                avgScore = totalScore/randomData.length;
             } else {
                 barColor = 5;
                 scoreText = 'BAD';
-                setTotalScore(totalScore+0);
-                setAvgScore(totalScore / randomData.length);
+                // setTotalScore(totalScore + 0);
+                // setAvgScore(totalScore / randomData.length);
+                totalScore +=0;
+                avgScore = totalScore/randomData.length;
             }
             for (let i = 0; i < block; i++) {
                 songNoteWindow[halfSize - i][1] = barColor;
@@ -429,7 +457,7 @@ const PlayScreen = () => {
             ctx.strokeStyle = '#fff';
             ctx.lineWidth = 3;
             ctx.moveTo(canvasWidth * 0.5, 0);
-            ctx.lineTo(canvasWidth * 0.5, canvasHeight);
+            ctx.lineTo(canvasWidth * 0.5, canvasHeight-55);
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
@@ -438,6 +466,8 @@ const PlayScreen = () => {
             ctx.fillStyle = barColorList[barColor];
             ctx.textAlign = 'center';
             ctx.fillText(scoreText, canvasWidth * 0.4, 50);
+            ctx.fillStyle = 'white';
+            ctx.fillText(avgScore.toFixed(2), canvasWidth/2, canvasHeight-20);
         }
     };
 
@@ -450,7 +480,7 @@ const PlayScreen = () => {
             setIsPlaying(false);
             return;
         }
-    }, 0, []);
+    }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
 
     // 노래 재생
     useEffect(() => {
@@ -463,6 +493,7 @@ const PlayScreen = () => {
 
         fetchMusic();
     }, []);
+
     return (
         <div className={styles.body}>
             <div className={styles.container}>
@@ -474,9 +505,8 @@ const PlayScreen = () => {
                         height={canvasHeight}
                         ref={canvasRef}
                     />
-                    <div>점수 : {avgScore.toFixed(2)}</div>
                 </div>
-                
+
                 {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 <div className={styles.buttonBox}>
                     {
