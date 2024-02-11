@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PersonalVideoRequestDto {
-	public String videoTitle;
-	public MultipartFile videoFile;
+	private String videoTitle;
+	private MultipartFile videoFile;
 }

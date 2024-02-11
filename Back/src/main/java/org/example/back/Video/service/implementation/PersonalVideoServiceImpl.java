@@ -42,7 +42,7 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 	private final VideoRepository videoRepository;
 
 	private final String personalVideoPath = "storage/video/personal/";
-	private final String channelVideoPath = "storage/video/channel/";
+
 
 
 	@Value("${cloud.aws.s3.bucket}")
