@@ -122,11 +122,15 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
 				.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
-		List<VideoEntity> videoList = videoRepository.findByUserIdxAndVideoTitle(user.getUserIdx(), videoTitle);
+		List<VideoEntity> videoList = videoRepository.findByUserIdx(user.getUserIdx());
 		List<SearchVideoResponseDto> list = new ArrayList<>();
 
 		for(VideoEntity video : videoList){
 			SearchVideoResponseDto dto = new SearchVideoResponseDto();
+
+			if(!video.getVideoTitle().contains(videoTitle)) continue;
+
+			dto.setVideoIdx(video.getUserIdx());
 			dto.setVideoDate(video.getVideoDate());
 			dto.setVideoTitle(videoTitle);
 			dto.setPreSignedURL(makePresignedURL(video.getVideoPath(), accessExpiredTime, HttpMethod.GET));
