@@ -1,9 +1,13 @@
 package org.example.back.KaKao.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.example.back.KaKao.service.KakaoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /*
@@ -14,13 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/auth/kakao")
+@RequiredArgsConstructor
 public class KakaoController {
 
-    private final String KAKAO_REST_API_KEY = "a1d71ef7ee8a62c397eea8c14103b31d";
-    private final String REDIRECT_URI = "https://i10e205.p.ssafy.io/auth/kakao";
+
+
+    @Autowired
+    private final KakaoService service;
 
     @GetMapping()
-    public ResponseEntity<?> KakaoAuthorize() {
+    public ResponseEntity<?> KakaoAuthorize(@RequestParam("code") String code) {
+        String[] access_token = service.getKakaoAccessToken(code);
         return new ResponseEntity<Void>(HttpStatus.METHOD_NOT_ALLOWED);
     }
 }

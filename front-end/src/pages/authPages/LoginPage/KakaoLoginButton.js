@@ -3,14 +3,6 @@ const kakaoLoginAPI = `https://kauth.kakao.com/oauth/authorize
 &response_type=code`;
 // 결과 예시: http://localhost:3000/auth/kakao?code=kyMxePa3bkiEoZB3FYypJAdWRYnPAE5-3pms9nlpop_GbiPHHZ2Boi1TmUoKPXTaAAABjZtKG5hyxKx5jTsi9A
 
-const openKakaoLogin = () => {
-    window.open(kakaoLoginAPI, "_self");
-}
-
-const KakaoLoginAction = () => {
-    
-}
-
 export const KakaoLoginButton = () => {
     return (
         <>
