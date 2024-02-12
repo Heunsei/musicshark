@@ -233,6 +233,7 @@ const GroupRoom = (props) => {
 
     const changePlayer = (from) => {
         console.log('누른사람 확인 : ', from.stream.streamManager)
+        console.log('플레이어 확인', player)
         const newPlayer = from.stream.streamManager
         if (player[0] === newPlayer) {
             console.log('player가 같습니다')
@@ -240,7 +241,9 @@ const GroupRoom = (props) => {
             console.log(newPlayer)
             setPlayer([])
         } else if (player[0] === undefined) {
-            setPlayer(newPlayer)
+            player.push(newPlayer)
+            setPlayer([...player])
+            console.log('빈배열에서의 플레이어', player)
         }
     }
 
@@ -309,6 +312,7 @@ const GroupRoom = (props) => {
         setIsRecording(false)
         setSubscribers([])
         setPublisher(undefined)
+        setPlayer([])
     }
 
     // 마이크 끄기
@@ -365,10 +369,15 @@ const GroupRoom = (props) => {
                     </div>
                     <div className={`${styles.mainScreen}`}>
                         {
-                            player.length !== 0 ?
-                                <div >
-                                    <VideoScreen streamManager={player} />
-                                </div> : null
+                            player !== undefined ?
+                                player.map((player) => {
+                                    return (
+                                        <div >
+                                            <VideoScreen streamManager={player} />
+                                        </div>
+                                    )
+                                })
+                                : null
                         }
                     </div>
                     <div className={styles.buttonBox}>
