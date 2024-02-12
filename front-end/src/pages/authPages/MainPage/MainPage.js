@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //import styles from './MainButton/MainButton.module.css';
 
 const BoxWrapper = styled('div')({
-    width: '200%',
+    width: '100%',
     height: '100vh',
     display: 'flex',
     alignItems: 'center',
@@ -30,10 +30,10 @@ export default function MainPage(){
         <>
             <Navbar/>
             <BoxWrapper>
-                <div style={{ position : 'absolute',overflow:'hidden', width:'100%'}}>
+                <div style={{textAlign:'left', margin:'5%',marginRight:'70%'}}>
                     
                     <div>
-                        <h2 style={{color:'white', margin:2}}>
+                        <h2 style={{color:'white', margin:2, textAlign:'left'}}>
                             아름다운 선율을 연주하게 될<br/>
                             당신을 위해<br/>
                         </h2>
