@@ -7,6 +7,7 @@ import CommunityPage from './pages/authPages/CommunityPage/CommunityPage';
 import GroupPage from './pages/groupPages/GroupListPage/GroupPage';
 import GroupDetailPage from './pages/groupPages/GroupDetailPage/GroupDetailPage';
 import MyPage from "./pages/authPages/MyPage/MyPage";
+import ProfileEdit from "./pages/authPages/MyPage/ProfileEdit";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path='/community' element={<CommunityPage/>}/>
         <Route path='/group/:id' element={<GroupDetailPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/:userId" element={<ProfileEdit />} />
       </Routes>
     </>
   );

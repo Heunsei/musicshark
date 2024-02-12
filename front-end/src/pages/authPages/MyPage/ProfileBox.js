@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 const ProfileBox = () => {
@@ -23,6 +24,19 @@ const ProfileBox = () => {
   const [userNickname, setUserNickname] = useState("");
   const [userTier, setUserTier] = useState("");
   const [channels, setChannels] = useState([]);
+  const [userId, setUserId] = useState(-1); // 유저 ID 상태
+  const [userImageUrl, setUserImageUrl] = useState("");
+  const navigate = useNavigate(); // useNavigate Hook을 사용합니다.
+  const [isHovered, setIsHovered] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setIsClicked(false); // 마우스를 떼면 클릭 상태도 초기화
+  };
+  const handleMouseDown = () => setIsClicked(true);
+  const handleMouseUp = () => setIsClicked(false);
 
   // 브라우저 창 크기에 따라 아이콘 크기를 업데이트하는 함수
   const updateIconSize = () => {
@@ -51,6 +65,7 @@ const ProfileBox = () => {
         });
         console.log("User Info:", response.data); // 응답 데이터 로깅
         setUserNickname(response.data.nickname); // 유저 닉네임 상태 업데이트
+        setUserId(response.data.userIdx); // 유저 ID 상태 업데이트
         // 추가로 필요한 유저 정보가 있으면 여기서 상태 업데이트
       } catch (error) {
         console.error("Error fetching user info:", error);
@@ -106,6 +121,19 @@ const ProfileBox = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // userId에 따라 userImageUrl 업데이트
+    const updateUserImageUrl = () => {
+      const imageIndex = userId % 3; // userId를 4로 나눈 나머지를 사용하여 이미지 인덱스 결정
+      setUserImageUrl(`${process.env.PUBLIC_URL}/shark${imageIndex + 1}.png`); // 이미지 인덱스에 1을 더해 실제 이미지 파일명과 매칭
+    };
+
+    if (userId !== -1) {
+      // userId가 설정된 후에만 이미지 URL 업데이트 실행
+      updateUserImageUrl();
+    }
+  }, [userId]); // userId 값이 변경될 때마다 실행
+
   const getTierAbbreviation = (tier) => {
     switch (
       tier.toLowerCase() // 소문자로 변환하여 대소문자 구분 없이 비교
@@ -153,7 +181,7 @@ const ProfileBox = () => {
         return {
           ...baseStyle,
           backgroundColor: "#E5E4E2", // Platinum 색상
-          color: "white",
+          color: "black",
         };
       case "diamond":
         return {
@@ -164,6 +192,11 @@ const ProfileBox = () => {
       default:
         return baseStyle; // 일치하는 티어가 없는 경우 기본 스타일 사용
     }
+  };
+
+  // 수정 버튼 클릭 시 호출될 함수
+  const handleEditClick = () => {
+    navigate(`/mypage/${userId}`); // 프로그래매틱 네비게이션으로 페이지 이동
   };
 
   const profileStyle = {
@@ -185,16 +218,16 @@ const ProfileBox = () => {
   };
 
   const profileImageStyle = {
-    width: "50%", // 프로필 이미지 크기를 조정합니다.
-    height: "50%", // 프로필 이미지 크기를 조정합니다.
-    marginTop: "100px",
+    width: "10.3vw", // 프로필 이미지 크기를 조정합니다.
+    height: "10.3vw", // 프로필 이미지 크기를 조정합니다.
+    marginTop: "0%",
     borderRadius: "50%", // 이미지를 원형으로 만듭니다.
     objectFit: "cover", // 이미지 비율을 유지하면서 컨테이너에 맞춥니다.
-    border: "3px solid yellow", // 테두리도 티어에 따라 바뀌게 설정해야 함
+    border: "3px solid #FFD600", // 테두리도 티어에 따라 바뀌게 설정해야 함
     marginBottom: "20px", // 텍스트와의 간격을 조정합니다.
   };
 
-  let userImageUrl = null; // 유저 이미지 등록하면 그 이미지로 바뀌게 수정해야 함
+  // let userImageUrl = `${process.env.PUBLIC_URL}/shark1.png`;
 
   const profileText = {
     backgroundColor: "#764812", // 갈색 배경
@@ -285,11 +318,20 @@ const ProfileBox = () => {
     borderRadius: "10%",
   };
 
+  const dynamicButtonStyle = {
+    ...editButtonStyle,
+    backgroundColor: isClicked
+      ? "#9e5f42"
+      : isHovered
+      ? "#886048"
+      : editButtonStyle.backgroundColor,
+  };
+
   return (
     <div style={profileStyle}>
       <h3 style={profileText}>프로필</h3>
       {userImageUrl ? (
-        <img src="userImageUrl" style={profileImageStyle} />
+        <img src={userImageUrl} style={profileImageStyle} />
       ) : (
         <AccountCircleRoundedIcon style={{ fontSize: iconSize, color: "white" }} />
       )}
@@ -298,7 +340,16 @@ const ProfileBox = () => {
           <span style={getTierStyle(userTier)}>{getTierAbbreviation(userTier)}</span>
           <h2 style={nameStyle}>{userNickname}</h2>
         </div>
-        <button style={editButtonStyle}>수정</button>
+        <button
+          style={dynamicButtonStyle}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onClick={handleEditClick}
+        >
+          수정
+        </button>
       </div>
       <h3 style={channelTextStyle}>소속 채널</h3>
       <ul style={channelListStyle}>
