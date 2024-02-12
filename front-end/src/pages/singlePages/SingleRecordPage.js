@@ -110,6 +110,7 @@ const SingleRecordPage = () => {
         }
     };
 
+
     /**
      * 녹화를 종료하는 함수
      */

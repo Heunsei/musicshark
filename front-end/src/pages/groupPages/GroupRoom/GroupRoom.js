@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { OpenVidu } from 'openvidu-browser';
 
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -13,19 +12,19 @@ import MuteMicButton from '../../../components/GroupRoomButtons/MuteMicButton';
 import MuteCamButton from '../../../components/GroupRoomButtons/MuteCamButton';
 import RecordButton from '../../../components/GroupRoomButtons/RecordButton';
 
-import { getToken, createToken, createSession, deleteSession } from './groupActions'
+import { getToken } from './groupActions'
 import styles from './GroupRoom.module.css'
 import VideoScreen from './VideoScreen';
 import { setLoby } from '../../../redux/store/lobySlice';
 import { uploadGroupVideoAction } from './uploadGroupVideoAction';
 import { getGroupRecordListAction } from '../GroupDetailPage/actions/getGroupRecordListAction';
+import { searchGroupRecord } from './searchGroupRecord';
 
 const GroupRoom = (props) => {
     const { id, session, setSession, screenOV, setScreenOV, recordList, setRecordList } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
     // const { id } = useParams()
-    // const storeUser = useSelector((state) => state.user.nickname)
     const storeUser = useSelector((state) => state.user.nickname)
     const sessionId = id
 
@@ -55,11 +54,9 @@ const GroupRoom = (props) => {
     const [recordedBlobs, setRecordedBlobs] = useState([])
     // 녹화 영상 제목
     const [videoTitle, setVideoTitle] = useState('')
-    // 녹화 영상 리스트
-    // const [recordList, setRecordList] = useState([])
+    const [isDuplicate, setIsDuplicate] = useState(false)
     // 녹화를 담을 ref
     const mediaRecorderRef = useRef(null);
-    const testRecordRef = useRef(null)
 
     const [videoURL, setVideoUrl] = useState('')
     // 녹화를 담을 stream
@@ -127,6 +124,10 @@ const GroupRoom = (props) => {
         setOpen(true)
     };
 
+
+    /**
+     * @todo 저장시 중복 확인하기
+     */
     const handleUpload = async () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
         const formData = new FormData()
@@ -137,19 +138,6 @@ const GroupRoom = (props) => {
             setRecordedBlobs([])
         }, 100);
     }
-
-    // const deleteSubscriber = (streamManager) => {
-    //     setSubscribers((prevSub) => {
-    //         // change [...prevSub] to prevSub
-    //         const newaa = prevSub;
-    //         const index = newaa.indexOf(streamManager, 0)
-    //         if (index > -1) {
-    //             const tmp = newaa.splice(index, 1)
-    //             // prevSub.splice(index, 1)
-    //             return tmp
-    //         }
-    //     })
-    // };
 
     const deleteSubscriber = useCallback((streamManager) => {
         setSubscribers((prevSubscribers) => {
@@ -341,6 +329,19 @@ const GroupRoom = (props) => {
         }
     }
 
+    const handleInputChange = (event) => {
+        const inputValue = event.target.value;
+        setVideoTitle(inputValue);
+
+        // 사용자가 입력한 videoTitle이 배열 안에 있는지 확인
+        const hasDuplicate = recordList.some((video) =>
+            video.video_title.toLowerCase() === inputValue.toLowerCase()
+        );
+
+        // 중복 여부 업데이트
+        setIsDuplicate(hasDuplicate);
+    };
+
     return (
         <>
             <div className={styles.mainContainer}>
@@ -389,9 +390,12 @@ const GroupRoom = (props) => {
             >
                 <div className={styles.modalContainer}>
                     <header>영상을 저장 하시겠습니까?</header>
-                    <input value={videoTitle} onChange={(event) => { setVideoTitle(event.target.value); console.log(videoTitle) }} placeholder='영상 제목을 입력해주세요' />
+                    <input value={videoTitle} onChange={handleInputChange} placeholder='영상 제목을 입력해주세요' />
+                    {
+                        isDuplicate ? <p>중복된 이름의 영상이 존재합니다</p> : null
+                    }
                     <div className={styles.modalButtonBox}>
-                        <button onClick={() => { handleUpload(); handleClose() }}>저장</button>
+                        <button onClick={() => { handleUpload(); handleClose() }} disabled={isDuplicate}>저장</button>
                         <button onClick={() => { setRecordedBlobs([]); handleClose() }}>취소</button>
                     </div>
                 </div>

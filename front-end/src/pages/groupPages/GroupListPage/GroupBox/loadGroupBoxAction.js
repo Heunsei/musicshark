@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getCookie } from './../../../../util/cookie'
 
 export const loadGroupBoxAction = async () => {
     const accessToken = getCookie('accessToken')

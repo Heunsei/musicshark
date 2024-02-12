@@ -67,6 +67,14 @@ const GroupInfoBox = (props) => {
         setOpen(false)
     };
 
+    // useEffect(() => {
+    //     if (groupMax < groupDetail.channelCur) {
+    //         setisValidMaxmember(false)
+    //     } else {
+    //         setisValidMaxmember(true)
+    //     }
+    // }, [groupMax, groupDetail])
+
     // 수정버튼을 눌렀을 때 정보를 수정하고 reload -> 이걸 reload가 아닌 setData로 데이터 변경으로 변경
     const handleEditGroup = async () => {
         const editInfo = {
