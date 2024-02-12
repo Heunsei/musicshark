@@ -322,36 +322,36 @@ const PlayScreen = () => {
                 scoreText = 'PERFECT';
                 // setTotalScore(totalScore + 100);
                 // setAvgScore(totalScore / randomData.length);
-                totalScore +=100;
-                avgScore = totalScore/randomData.length;
+                // totalScore +=100;
+                // avgScore = totalScore/randomData.length;
             } else if (correct > block * 0.3) {
                 barColor = 2;
                 scoreText = 'GREAT';
                 // setTotalScore(totalScore + 75);
                 // setAvgScore(totalScore / randomData.length);
-                totalScore +=75;
-                avgScore = totalScore/randomData.length;
+                // totalScore +=75;
+                // avgScore = totalScore/randomData.length;
             } else if (correct > block * 0.1) {
                 barColor = 3;
                 scoreText = 'GOOD';
                 // setTotalScore(totalScore + 50);
                 // setAvgScore(totalScore / randomData.length);
-                totalScore +=50;
-                avgScore = totalScore/randomData.length;
+                // totalScore +=50;
+                // avgScore = totalScore/randomData.length;
             } else if (correct > 0) {
                 barColor = 4;
                 scoreText = 'NORMAL';
                 // setTotalScore(totalScore + 25);
                 // setAvgScore(totalScore / randomData.length);
-                totalScore +=25;
-                avgScore = totalScore/randomData.length;
+                // totalScore +=25;
+                // avgScore = totalScore/randomData.length;
             } else {
                 barColor = 5;
                 scoreText = 'BAD';
                 // setTotalScore(totalScore + 0);
                 // setAvgScore(totalScore / randomData.length);
-                totalScore +=0;
-                avgScore = totalScore/randomData.length;
+                // totalScore +=0;
+                // avgScore = totalScore/randomData.length;
             }
             for (let i = 0; i < block; i++) {
                 songNoteWindow[halfSize - i][1] = barColor;
