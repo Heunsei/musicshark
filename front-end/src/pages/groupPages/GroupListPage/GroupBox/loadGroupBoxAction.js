@@ -1,15 +1,17 @@
 import axios from 'axios'
+import { getCookie } from './../../../../util/cookie'
 
 export const loadGroupBoxAction = async () => {
-    try{
-        // const token = 
-        const response = axios({
-            method : 'get',
-            url : 'http://localhost:8080/channels',
-            headers : {
-                // Authorization : 
+    const accessToken = getCookie('accessToken')
+    try {
+        const URL = process.env.REACT_APP_API_URL
+        const response = await axios({
+            method: 'get',
+            url: `${URL}/channels`,
+            headers: {
+                Authorization: `Bearer ${accessToken}`
             }
-        }) 
+        })
     } catch (err) {
         console.log(err)
     }

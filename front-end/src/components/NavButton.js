@@ -18,8 +18,8 @@ const NavButton=(props)=>{
         else if(id==="nav_single"){
             navigate('/single')
         }
-        else if(id==="nav_community"){
-            navigate('/community')
+        else if(id==="nav_board"){
+            navigate('/board')
         }
         else if(id==="nav_mypage"){
             navigate('/register')
@@ -33,7 +33,11 @@ const NavButton=(props)=>{
                 color:'#ffffff',
                 fontSize:'18px',
                 fontWeight:'bold',
-                mx:5
+                position:'center',
+                mt:7,
+                mx:6,
+                width:'150px'
+                
             }}
             onClick={handleMove}
             >

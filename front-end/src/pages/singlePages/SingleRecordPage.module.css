@@ -1,0 +1,159 @@
+.background {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    background-color: beige;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 90%;
+    height: 90%;
+}
+
+.topBox {
+    border-radius: 15px;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonBox {
+    background-color: #9CD08F;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    margin-top: 15px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.buttonBox button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    width: 15%;
+    height: 80%;
+    font-size: 1rem;
+    background-color: #A58D8D;
+    cursor: pointer;
+}
+
+.screenBox {
+    border-radius: 15px;
+    width: 69%;
+    height: 100%;
+    margin-right: 5px;
+    display: flex;
+    background-color: black;
+}
+
+.recordList {
+    border-radius: 15px;
+    margin-left: 5px;
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #9CD08F;
+    flex-direction: column;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.videoContainer {
+    background-color: black 60%;
+    width: 80%;
+    height: 20%;
+    display: flex;
+    position: relative;
+    margin-bottom: 5px;
+    flex-direction: column;
+}
+
+.recordDeleteButton {
+    position: absolute;
+    display: none;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.activeBtn {
+    display: inline;
+}
+
+.recordVideo {
+    border-radius: 15px;
+    width: 100%;
+    height: 80%;
+}
+
+.modalContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 200px;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 24;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.modalContainer input {
+    margin-top: 40px;
+    width: 400px;
+    height: 42px;
+    border: 1px solid black;
+    border-radius: 15px;
+    font-size: 1.5rem;
+}
+
+.modalButtonBox {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.modalContainer>header {
+    font-size: 24px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.modalButtonBox button {
+    width: 100px;
+    height: 30px;
+    margin: 15px 15px;
+    cursor: pointer;
+    border-radius: 15px;
+
+}
+
+.buttonBox button {
+    border: none;
+    border-radius: 20em;
+    margin: 0 15px;
+    background-color: #ffb4a2;
+}
+
+.recording {
+    border: 5px solid yellow;
+}

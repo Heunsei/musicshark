@@ -3,13 +3,13 @@ import Button from '@mui/material/Button'
 
 const MemberIcon = (props) => {
     const { member } = props
-    if (member.user_nickname.length >= 4){
-        member.user_nickname = member.user_nickname.slice(0, 4) + "...";
+    if (member.nickname.length > 6) {
+        // member.nickname = member.nickname.slice(0, 6) + "...";
     }
     return (
         <Button style={{
             witdh: '5%',
-            height: '8%',
+            height: '5%',
             borderRadius: "16px",
             margin: 0,
             padding: 0,
@@ -17,10 +17,10 @@ const MemberIcon = (props) => {
             marginTop: '10px',
             color: 'white',
             backgroundColor: '#997B66',
-            overflow : 'hidden',
+            overflow: 'hidden',
         }}
         >
-            {member.user_nickname}
+            {member.nickname}
         </Button>
     );
 };

@@ -5,7 +5,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import InputWithLabel from './../../../../components/InputWithLabel';
+
 import { createGroupAction } from './createGroupAction';
+import loadGroupAction from '../loadGroupAction';
 
 const style = {
     position: 'absolute',
@@ -20,22 +22,38 @@ const style = {
 };
 
 const GroupCreateModal = (props) => {
-    const { isModalOpen, setIsModalOpen } = props
+    const { isModalOpen, setIsModalOpen, setGroupList } = props
     const [groupName, setGroupName] = useState('')
     const [groupIntro, setGroupIntro] = useState('')
     const [channelMax, setChannelMax] = useState(1)
+
     const groupDetail = {
-        "channel_name": groupName,
-        "channel_intro": groupIntro,
-        "channel_max": channelMax,
+        "channelName": groupName,
+        "channelIntro": groupIntro,
+        "channelMax": channelMax,
     }
+
+    useEffect(() => {
+        const action = async () => {
+            console.log('이거실행되나요?')
+            await loadGroupAction(setGroupList)
+        }
+        action()
+    }, [isModalOpen, setGroupList, setIsModalOpen])
 
     useEffect(() => {
         if (!isNaN(channelMax)) {
             setChannelMax(parseInt(channelMax))
         }
         if (channelMax >= 6) {
-            setChannelMax(6)
+            if (channelMax > 10) {
+                setChannelMax(channelMax % 10)
+            } else {
+                setChannelMax(6)
+            }
+        }
+        if (channelMax <= 2) {
+            setChannelMax(2)
         }
     }, [channelMax])
 
@@ -76,10 +94,16 @@ const GroupCreateModal = (props) => {
                         type='number'
                         placeholder='인원수'
                         max='6'
-                        min='0'
+                        min='2'
                     />
                     <Button variant="contained"
-                        onClick={() => createGroupAction(groupDetail)}
+                        onClick={() => {
+                            createGroupAction(groupDetail)
+                            setIsModalOpen(false)
+                            setChannelMax(2)
+                            setGroupIntro('')
+                            setGroupName('')
+                        }}
                         sx={{
                             margin: '15px'
                         }}

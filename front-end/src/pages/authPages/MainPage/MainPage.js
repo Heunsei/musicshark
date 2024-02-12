@@ -12,7 +12,6 @@ const BoxWrapper = styled('div')({
     justifyContent: 'center',
     background: '#997B66',
     flexDirection: 'column',
-
 })
 
 export default function MainPage(){
@@ -31,7 +30,8 @@ export default function MainPage(){
         <>
             <Navbar/>
             <BoxWrapper>
-                <div style={{ position : 'absolute',left:'10%',overflow:'hidden', width:'100%'}}>
+                <div style={{ position : 'absolute',overflow:'hidden', width:'100%'}}>
+                    
                     <div>
                         <h2 style={{color:'white', margin:2}}>
                             아름다운 선율을 연주하게 될<br/>

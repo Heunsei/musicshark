@@ -1,3 +1,8 @@
 body {
   background-color: rgba(255, 237, 216, 0.4);
 }
+
+@font-face {
+  font-family: 'galmuri';
+  src: url(./components/font/Galmuri11-Bold.ttf);
+}

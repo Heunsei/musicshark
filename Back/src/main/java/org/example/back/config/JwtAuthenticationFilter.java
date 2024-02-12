@@ -1,8 +1,10 @@
 package org.example.back.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,56 +14,34 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+@RequiredArgsConstructor
+public class JwtAuthenticationFilter extends GenericFilter {
 
-    @Autowired private TokenProvider tokenProvider;
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-        throws ServletException, IOException {
+    private final JwtTokenProvider jwtTokenProvider;
 
-        try{
-            String jwt = parseToken(request);
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-            boolean hasJwt = jwt != null && !jwt.equalsIgnoreCase("null");
+        String token = resolveToken((HttpServletRequest) request);
 
-            if(!hasJwt){
-                filterChain.doFilter(request, response);
-                return;
-            }
+        if(token != null && jwtTokenProvider.validateToken(token)){
 
-            String userId = tokenProvider.validate(jwt);
-
-            AbstractAuthenticationToken authenticationToken
-                    = new UsernamePasswordAuthenticationToken(userId, null, AuthorityUtils.NO_AUTHORITIES);
-
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-            securityContext.setAuthentication(authenticationToken);
-            SecurityContextHolder.setContext(securityContext);
-        }catch (Exception exception){
-            exception.printStackTrace();
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        filterChain.doFilter(request, response);
+        chain.doFilter(request, response);
     }
 
-    private String parseToken(HttpServletRequest request){
-
-        String token = request.getHeader("Authorization");
-
-        boolean hasToken = StringUtils.hasText(token);
-        if(!hasToken) return null;
-
-        boolean isBearer = token.startsWith("Bearer ");
-        if(!isBearer) return null;
-
-        String jwt = token.substring(7);
-        return jwt;
+    private String resolveToken(HttpServletRequest request){
+        String bearerToken = request.getHeader("Authorization");
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")){
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 }
