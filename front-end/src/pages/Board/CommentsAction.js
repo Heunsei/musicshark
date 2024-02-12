@@ -8,7 +8,7 @@ export const commentsAction=async(contentDetails,dispatch,navigate)=>{
     try{
         const response = await axios({
             method:'post',
-            url:'http://localhost:8080/board/{board_id/comments',
+            url:`http://localhost:8080/board/{board_id}/comments`,
             data:contentDetails,
         })
         console.log(response)

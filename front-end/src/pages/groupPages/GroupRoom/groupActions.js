@@ -3,13 +3,13 @@ import axios from 'axios'
 export const createSession = async (sessionId) => {
     try {
         const response = await axios({
-            url: `${process.env.REACT_APP_OPENVIDU_URL}/api/sessions`,
+            url: `${process.env.REACT_APP_OPENVIDU_URL}/openvidu/api/sessions`,
             method: 'post',
             data: { customSessionId: sessionId },
             headers: {
-                Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU',
+                Authorization: `Basic ${process.env.OPENVIDU_AUTH}`,
                 'Content-Type': 'application/json'
-            }
+            },
         })
         console.log('받아온 sessionId 데이터 : ', response.data)
         return response.data // 세선 아이디를 반환
@@ -22,11 +22,11 @@ export const createSession = async (sessionId) => {
 export const deleteSession = async (sessionId) => {
     try {
         const response = await axios({
-            url: `${process.env.REACT_APP_OPENVIDU_URL}/api/sessions/${sessionId}`,
+            url: `${process.env.REACT_APP_OPENVIDU_URL}/openvidu/api/sessions/${sessionId}`,
             method: 'delete',
             headers: {
-                Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU'
-            }
+                Authorization: `Basic ${process.env.OPENVIDU_AUTH}`,
+            },
         })
         console.log(response)
     } catch (error) {
@@ -38,22 +38,21 @@ export const deleteSession = async (sessionId) => {
 export const createToken = async (sessionId) => {
     try {
         const response = await axios({
-            url: `${process.env.REACT_APP_OPENVIDU_URL}/api/sessions/${sessionId}/connection`,
+            url: `${process.env.REACT_APP_OPENVIDU_URL}/openvidu/api/sessions/${sessionId}/connection`,
             method: 'post',
             headers: {
-                Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU',
                 'Content-Type': 'application/json'
-            }
+            },
         })
         console.log('받아온 token 데이터 : ', response.data)
         return response.data // 세션에 접속했다는 뜻
     } catch (error) {
         console.log('createToken에서 오류')
-        console.log(error)
+        console.log(error);
     }
 }
 
 export const getToken = async (mySessionId) => {
     const res = await createSession(mySessionId)
-    return await createToken(mySessionId)
+    return await createToken(res)
 }

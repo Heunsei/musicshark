@@ -22,14 +22,18 @@ const Wrapper = styled("div")({
 
 // 그룹 디테일 페이지에 들어올때 마다
 const GroupDetailPage = () => {
-    let { id } = useParams()
+    const { id } = useParams()
     const navigate = useNavigate()
     let lobyState = useSelector((state) => state.isLoby)
     const userName = useSelector((state) => state.user.nickname)
 
+    const [screenOV, setScreenOV] = useState(undefined)
+    const [session, setSession] = useState(undefined)
+
     const [groupDetail, setGroupDetail] = useState([])
     const [groupMembers, setGroupMembers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [recordList, setRecordList] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,7 +54,8 @@ const GroupDetailPage = () => {
         }
         if (!isLoading && groupMembers) {
             let isMemberInGroup = false
-            groupMembers.map((e) => {
+            // 0209 -> change map to forEach
+            groupMembers.forEach((e) => {
                 if (e.nickname === userName) {
                     isMemberInGroup = true
                 }
@@ -72,9 +77,13 @@ const GroupDetailPage = () => {
             <MemberSideBar groupMembers={groupMembers} setGroupMembers={setGroupMembers} setGroupDetail={setGroupDetail} />
             {
                 // 유저가 연습이동을 누르면 state를 변경하고 infobox를 practicebox로 변경
-                lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} /> : <GroupRoom />
+                lobyState.isLoby && groupDetail ? <CenterInfoBox groupDetail={groupDetail} setGroupDetail={setGroupDetail} />
+                    :
+                    <GroupRoom id={id} screenOV={screenOV} setScreenOV={setScreenOV} session={session} setSession={setSession}
+                        recordList={recordList} setRecordList={setRecordList} />
             }
-            <RightChatBox />
+            <RightChatBox id={id} userName={userName} session={session} setSession={setSession}
+                recordList={recordList} setRecordList={setRecordList} />
         </Wrapper>
     );
 };

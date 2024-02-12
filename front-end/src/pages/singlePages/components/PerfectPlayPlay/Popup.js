@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
 import './Popup.css';
 import { useNavigate } from 'react-router-dom';
 
 const Popup = ({ onClose, onRestartPlayback }) => {
-  const navigate = useNavigate();
-   
+  const navigate = useNavigate();   
   const handleCancel = () => {
     // "모달만 닫습니다.
     onClose();

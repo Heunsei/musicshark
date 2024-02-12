@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BelongChannelRepository extends JpaRepository<BelongChannelEntity, Integer> {
@@ -17,6 +18,9 @@ public interface BelongChannelRepository extends JpaRepository<BelongChannelEnti
     @Query("SELECT b FROM BelongChannelEntity b WHERE b.userIdx = :userIdx")
     BelongChannelEntity findByUserIdx2(@Param("userIdx") int userIdx);
     public boolean existsByUserIdx(int userIdx);
+
+    public Optional<BelongChannelEntity> findByChannelIdxAndUserIdx(int channelIdx, int userIdx);
+
     @Transactional
     void deleteByUserIdx(int userIdx);
 }

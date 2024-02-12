@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { OpenVidu } from 'openvidu-browser';
 
-import CallEndIcon from '@mui/icons-material/CallEnd';
-import CallIcon from '@mui/icons-material/Call';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AirplayIcon from '@mui/icons-material/Airplay';
 import Modal from '@mui/material/Modal';
 
 import GroupCallButton from '../../../components/GroupRoomButtons/GroupCallButton';
@@ -14,23 +12,25 @@ import MuteMicButton from '../../../components/GroupRoomButtons/MuteMicButton';
 import MuteCamButton from '../../../components/GroupRoomButtons/MuteCamButton';
 import RecordButton from '../../../components/GroupRoomButtons/RecordButton';
 
-import { getToken, createToken, createSession, deleteSession } from './groupActions'
+import { getToken } from './groupActions'
 import styles from './GroupRoom.module.css'
 import VideoScreen from './VideoScreen';
 import { setLoby } from '../../../redux/store/lobySlice';
 import { uploadGroupVideoAction } from './uploadGroupVideoAction';
+import { getGroupRecordListAction } from '../GroupDetailPage/actions/getGroupRecordListAction';
+import { searchGroupRecord } from './searchGroupRecord';
 
-const GroupRoom = () => {
+const GroupRoom = (props) => {
+    const { id, session, setSession, screenOV, setScreenOV, recordList, setRecordList } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { id } = useParams()
-    // const storeUser = useSelector((state) => state.user.nickname)
+    // const { id } = useParams()
     const storeUser = useSelector((state) => state.user.nickname)
     const sessionId = id
 
     // openvidu 관련 state
-    const [screenOV, setScreenOV] = useState(undefined)
-    const [session, setSession] = useState(undefined)
+    // const [screenOV, setScreenOV] = useState(undefined)
+    // const [session, setSession] = useState(undefined)
 
     // 참가자 관련 state
     const [publisher, setPublisher] = useState(undefined)
@@ -45,17 +45,18 @@ const GroupRoom = () => {
 
     // modal 관련 state
     const [open, setOpen] = useState(false)
-    const handleClose = () => setOpen(false)
+    const handleClose = () => {
+        setOpen(false)
+        setVideoTitle('')
+    }
 
     // 녹화 관련 state
     const [recordedBlobs, setRecordedBlobs] = useState([])
     // 녹화 영상 제목
     const [videoTitle, setVideoTitle] = useState('')
-    // 녹화 영상 리스트
-    const [recordList, setRecordList] = useState([])
+    const [isDuplicate, setIsDuplicate] = useState(false)
     // 녹화를 담을 ref
     const mediaRecorderRef = useRef(null);
-    const testRecordRef = useRef(null)
 
     const [videoURL, setVideoUrl] = useState('')
     // 녹화를 담을 stream
@@ -75,7 +76,7 @@ const GroupRoom = () => {
             const mediaStream =
                 await navigator.mediaDevices.getUserMedia(constraints);
             setStream(mediaStream);
-            console.log('미디어 연걸 성공')
+            console.log('미디어 연결 성공')
         } catch (e) {
             console.log(`현재 마이크와 카메라가 연결되지 않았습니다`);
         }
@@ -123,6 +124,10 @@ const GroupRoom = () => {
         setOpen(true)
     };
 
+
+    /**
+     * @todo 저장시 중복 확인하기
+     */
     const handleUpload = async () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
         const formData = new FormData()
@@ -133,19 +138,6 @@ const GroupRoom = () => {
             setRecordedBlobs([])
         }, 100);
     }
-
-    // const deleteSubscriber = (streamManager) => {
-    //     setSubscribers((prevSub) => {
-    //         // change [...prevSub] to prevSub
-    //         const newaa = prevSub;
-    //         const index = newaa.indexOf(streamManager, 0)
-    //         if (index > -1) {
-    //             const tmp = newaa.splice(index, 1)
-    //             // prevSub.splice(index, 1)
-    //             return tmp
-    //         }
-    //     })
-    // };
 
     const deleteSubscriber = useCallback((streamManager) => {
         setSubscribers((prevSubscribers) => {
@@ -160,6 +152,7 @@ const GroupRoom = () => {
         });
     }, []);
 
+
     // 세선 접속
     const joinSession = () => {
         const newOV = new OpenVidu();
@@ -170,10 +163,12 @@ const GroupRoom = () => {
         console.log('세션 받아온거', mySession)
         console.log('세션 내가 넣을거', session)
         console.log('ov에용', screenOV)
+        console.log('REACT OPENVIDU APP URL : ', process.env.REACT_APP_OPENVIDU_URL);
         // stream없으면 stream추가
         if (!stream) {
             getMedia()
         }
+
         // 다른사람들 캠 추가하는 로직
         mySession.on('streamCreated', (event) => {
             console.log('==============================================')
@@ -192,8 +187,12 @@ const GroupRoom = () => {
             deleteSubscriber(event.stream.streamManager)
         })
 
+        mySession.on('signal:nextPlayer', (event) => {
+            changePlayer(event.from)
+        })
+
         getToken(sessionId).then((res) => {
-            console.log(res)
+            console.log('내가 제출하는 토큰', res)
             mySession.connect(res.token, { clientData: storeUser })
                 .then(async () => {
                     let publisher = await newOV.initPublisherAsync(undefined, {
@@ -210,7 +209,7 @@ const GroupRoom = () => {
                     mySession.publish(publisher)
                     setPublisher(publisher)
                     console.log('join session중 퍼블리셔', publisher)
-                    setPlayer(publisher)
+                    // setPlayer(publisher)
                     console.log('=================================')
                     console.log('님아 제발좀 나와주세요 ', player)
                     console.log('=================================')
@@ -232,20 +231,64 @@ const GroupRoom = () => {
         })
     }
 
+    const changePlayer = (from) => {
+        console.log('누른사람 확인 : ', from.stream.streamManager)
+        const newPlayer = from.stream.streamManager
+        if (player[0] === newPlayer) {
+            console.log('player가 같습니다')
+            console.log(player[0])
+            console.log(newPlayer)
+            setPlayer([])
+        } else if (player[0] === undefined) {
+            setPlayer(newPlayer)
+        }
+    }
+
+    /**
+     *@todo 만약 안돼면 joinSession안에있는 setPlayer 주석해제 
+     */
+    const nextPlayer = () => {
+        // 세션이 있을때만 퍼블리셔를 사용해서 체인지?
+        if (session) {
+            session.signal({
+                type: 'nextPlayer',
+                to: [],
+                data: ''
+            });
+        }
+    }
+
     // 출력용 useEffect
-    useEffect(() => {
-        console.log('===========================')
-        console.log('서브스크라이버가 바뀌었습니다')
-        console.log(subscribers)
-        console.log('===========================')
-    }, [subscribers])
+    // useEffect(() => {
+    //     console.log('===========================')
+    //     console.log('서브스크라이버가 바뀌었습니다')
+    //     console.log(subscribers)
+    //     subscribers.forEach((element) => {
+    //         console.log(element.id)
+    //     })
+    //     console.log('===========================')
+    // }, [subscribers])
+
+    // useEffect(() => {
+    //     console.log('===========================')
+    //     console.log('퍼블리셔가 바뀌었습니다')
+    //     console.log(publisher)
+    //     console.log('===========================')
+    // }, [publisher])
+
+    // useEffect(() => {
+    //     if (session) {
+    //         console.log('player확인', player)
+    //     }
+    // }, [session, player])
 
     useEffect(() => {
-        console.log('===========================')
-        console.log('퍼블리셔가 바뀌었습니다')
-        console.log(publisher)
-        console.log('===========================')
-    }, [publisher])
+        const getList = async () => {
+            const res = await getGroupRecordListAction(id)
+            setRecordList(res)
+        }
+        getList()
+    }, [open, id, setRecordList])
 
     // leave session
     const leaveSession = () => {
@@ -259,13 +302,12 @@ const GroupRoom = () => {
         console.log('세션', session)
         if (session) {
             session.disconnect()
-            // deleteSession(id)
         }
         setIsJoin(false)
         setScreenOV(null)
         setSession(undefined)
+        setIsRecording(false)
         setSubscribers([])
-        console.log('나갔어용', subscribers)
         setPublisher(undefined)
     }
 
@@ -287,27 +329,46 @@ const GroupRoom = () => {
         }
     }
 
+    const handleInputChange = (event) => {
+        const inputValue = event.target.value;
+        setVideoTitle(inputValue);
+
+        // 사용자가 입력한 videoTitle이 배열 안에 있는지 확인
+        const hasDuplicate = recordList.some((video) =>
+            video.video_title.toLowerCase() === inputValue.toLowerCase()
+        );
+
+        // 중복 여부 업데이트
+        setIsDuplicate(hasDuplicate);
+    };
+
     return (
         <>
             <div className={styles.mainContainer}>
                 <div className={styles.innerBox}>
                     <div className={styles.subScreen}>
-                        {storeUser}
                         {
                             publisher !== undefined ?
-                                <VideoScreen streamManager={publisher} key={publisher.id} /> : null
+                                <div className={styles.subScreenVideo}>
+                                    <VideoScreen streamManager={publisher} key={publisher.id} />
+                                </div> : null
                         }
                         {
                             subscribers !== undefined ?
                                 subscribers.map(sub => {
-                                    return <VideoScreen streamManager={sub} key={sub.stream.streamId} />
+                                    return (
+                                        <div className={`${styles.subScreenVideo}`}>
+                                            <VideoScreen streamManager={sub} key={sub.stream.streamId} />
+                                        </div>)
                                 }) : null
                         }
                     </div>
-                    <div className={styles.mainScreen}>
+                    <div className={`${styles.mainScreen}`}>
                         {
                             player.length !== 0 ?
-                                <VideoScreen streamManager={player} /> : null
+                                <div >
+                                    <VideoScreen streamManager={player} />
+                                </div> : null
                         }
                     </div>
                     <div className={styles.buttonBox}>
@@ -316,6 +377,7 @@ const GroupRoom = () => {
                         <MuteCamButton muteCam={muteCam} isCamMute={isCamMute} />
                         <RecordButton isRecording={isRecording} stream={stream}
                             handleStartRecording={handleStartRecording} handleStopRecording={handleStopRecording} />
+                        <button className={`${styles.groupRoomBtn}`} onClick={() => nextPlayer()}>< AirplayIcon sx={{ color: 'white' }} /></button>
                         <button className={`${styles.outBtn} ${styles.groupRoomBtn}`} onClick={() => { leaveSession(); dispatch(setLoby(true)) }}>
                             <LogoutIcon sx={{ color: '#ffffff' }} />
                         </button>
@@ -328,9 +390,12 @@ const GroupRoom = () => {
             >
                 <div className={styles.modalContainer}>
                     <header>영상을 저장 하시겠습니까?</header>
-                    <input value={videoTitle} onChange={(event) => { setVideoTitle(event.target.value); console.log(videoTitle) }} placeholder='영상 제목을 입력해주세요' />
+                    <input value={videoTitle} onChange={handleInputChange} placeholder='영상 제목을 입력해주세요' />
+                    {
+                        isDuplicate ? <p>중복된 이름의 영상이 존재합니다</p> : null
+                    }
                     <div className={styles.modalButtonBox}>
-                        <button onClick={() => { handleUpload(); handleClose() }}>저장</button>
+                        <button onClick={() => { handleUpload(); handleClose() }} disabled={isDuplicate}>저장</button>
                         <button onClick={() => { setRecordedBlobs([]); handleClose() }}>취소</button>
                     </div>
                 </div>

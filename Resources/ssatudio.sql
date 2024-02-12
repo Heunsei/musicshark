@@ -162,15 +162,17 @@ create table if not exists `comment` (
 -- 영상
 create table if not exists `video` (
    video_idx int primary key auto_increment COMMENT '영상 인덱스',
-   video_date timestamp NOT NULL DEFAULT now() COMMENT '생성일자',
-   video_title varchar(20) NOT NULL COMMENT '제목',
-   video_picture blob NOT NULL COMMENT '영상사진',
+   video_date DATE NOT NULL default (current_date) COMMENT '생성일자',
+   video_title text NOT NULL COMMENT '제목',
+   video_picture blob COMMENT '영상사진',
    user_idx int NOT NULL COMMENT '유저 인덱스',
+   video_path text NOT NULL,
    CONSTRAINT `fk_video_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );
 
 -- 채널 영상
 create table if not exists `channel_video` (
+	channel_video_idx int primary key auto_increment,
    channel_idx int NOT NULL COMMENT '채널 인덱스',
    video_idx int NOT NULL COMMENT '영상 인덱스',
    user_idx int NOT NULL COMMENT '유저 인덱스',
@@ -187,27 +189,27 @@ create table if not exists `tier` (
    CONSTRAINT `fk_tier_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx)
 );
 
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목44','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목55','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목66','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목77','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목88','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목99','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목00','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목01','가수3',5,162,'엠알저장경로3');
-insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목02','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목44','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목55','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목66','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목77','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목88','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목99','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목00','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목01','가수3',5,162,'엠알저장경로3');
+-- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목02','가수3',5,162,'엠알저장경로3');
 -- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목11','가수1',3,102,'엠알저장경로1');
 -- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목22','가수2',4,142,'엠알저장경로2');
 -- insert into song (title, singer, start_timing, running_time, mr_file) values ('노래제목33','가수3',5,162,'엠알저장경로3');
 
-INSERT INTO `User` (nickname, password, gender, birth, user_isDelete, user_email, profile_image)
-VALUES
-    ('user1', 'password1', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('2000-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user1@example.com', NULL),
-    ('user2', 'password2', 'Female', FROM_UNIXTIME(UNIX_TIMESTAMP('1995-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user2@example.com', NULL),
-    ('user3', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'userN@example.com', NULL);
+-- INSERT INTO `User` (nickname, password, gender, birth, user_isDelete, user_email, profile_image)
+-- VALUES
+--     ('user1', 'password1', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('2000-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user1@example.com', NULL),
+--     ('user2', 'password2', 'Female', FROM_UNIXTIME(UNIX_TIMESTAMP('1995-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'user2@example.com', NULL),
+--     ('user3', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'userN@example.com', NULL);
 
 INSERT INTO `perfectplay` (user_idx, score, song_idx, clear)
 VALUES (13, 70, 1, 1);
@@ -233,9 +235,9 @@ VALUES (13, 70, 1, 1);
 --     (5, 3, 0),
 --     (6, 4, 0);
 
-select * from user;
-select * from tier; 
-select* from song;
+-- select * from user;
+-- select * from tier; 
+-- select* from song;
 --     (1, FLOOR(1 + RAND() * 100), 1, 1),
 --     (2, FLOOR(1 + RAND() * 100), 2, 0),
 --     (3, FLOOR(1 + RAND() * 100), 3,  1);
@@ -246,14 +248,21 @@ select* from song;
 
 select * from `user`;
 
-select * from `board`;
-insert into `board` (user_idx, board_title, board_content)
-values (1, "테스트!", "테스트 게시글입니다.");
+-- select * from `board`;
+-- insert into `board` (user_idx, board_title, board_content)
+-- values (1, "테스트!", "테스트 게시글입니다.");
 
-insert into `board` (user_idx, board_title, board_content, board_deleted)
-values (1, "삭제 테스트", "테스트 게시글임", 1);
+-- insert into `board` (user_idx, board_title, board_content, board_deleted)
+-- values (1, "삭제 테스트", "테스트 게시글임", 1);
 
-insert into `comment` (board_idx, comment_content, user_idx)
-values (1, "댓글 테스트!", 1);
+-- insert into `comment` (board_idx, comment_content, user_idx)
+-- values (1, "댓글 테스트!", 1);
 
-select * from `comment`;
+-- select * from `comment`;
+
+-- select * from video;
+
+select * from channel;
+select * from belong_channel;
+select * from video;
+select * from channel_video;
