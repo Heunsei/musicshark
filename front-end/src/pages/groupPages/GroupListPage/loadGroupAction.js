@@ -13,6 +13,7 @@ const loadGroupAction = async (setGroupList) => {
             }
         })
             .then((res) => {
+                console.log(res)
                 setGroupList(res.data.data)
                 return res.data.data
             })

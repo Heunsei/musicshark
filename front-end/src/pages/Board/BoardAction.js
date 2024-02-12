@@ -3,21 +3,21 @@ import { setCookie } from "../../util/cookie"
 import { setLogin } from "../../redux/store/loginSlice"
 import * as setUser from "./../../redux/store/userSlice";
 
-function createData(board_id, board_genre, board_title, board_nickname, board_views,board_date){
-    return {board_id, board_genre, board_title, board_nickname, board_views,board_date};
-}
+// function createData(board_id, board_genre, board_title, board_nickname, board_views,board_date){
+//     return {board_id, board_genre, board_title, board_nickname, board_views,board_date};
+// }
 
-const rows=[
-    createData(1,'자유','가입','kim@ssafy.com',6,'2024-02-01'),
-    createData(2,'자유','인사','kim@ssafy.com',6,'2024-02-01'),
-];
+// const rows=[
+//     createData(1,'자유','가입','kim@ssafy.com',6,'2024-02-01'),
+//     createData(2,'자유','인사','kim@ssafy.com',6,'2024-02-01'),
+// ];
 
 export const BoardAction=async(contentDetails,dispatch,navigate)=>{
     console.log(JSON.stringify(contentDetails))
     try{
         const response = await axios({
             method:'post',
-            url:'http://localhost:8080/board/{board_id}/',
+            url:'http://localhost:8080/board/',
             data:contentDetails,
         })
         console.log(response)
@@ -43,7 +43,7 @@ export const BoardAction=async(contentDetails,dispatch,navigate)=>{
             dispatch(setLogin(isLogin));
             axios({
                 method:'get',
-                url:'http://localhost:8080/board/{board_id}/',
+                url:'http://localhost:8080/board/',
                 headers:{
                     "Content-Type":"application/json",
                     Authorization:`Bearer ${ACCESS_TOKEN},`

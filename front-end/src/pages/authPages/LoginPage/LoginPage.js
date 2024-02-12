@@ -18,6 +18,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState("")
     const [isFormValid, setIsFormValid] = useState(true)
 
+
     const handleLogin = () => {
         const userDetails = {
             userEmail: mail,

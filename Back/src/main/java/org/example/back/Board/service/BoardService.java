@@ -18,4 +18,5 @@ public interface BoardService {
 	List<BoardEntity> getUserBoard(String nickname);
 	void updateBoard(int boardIdx, PostBoardRequestDto boardDto, UserDetails userDetails);
 
+	void countUp(int boardIdx);
 }

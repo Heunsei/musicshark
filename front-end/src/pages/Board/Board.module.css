@@ -1,0 +1,19 @@
+hr{
+    width:70%;
+}
+
+input{
+    width:60%;
+    font-size: large;
+}
+
+textarea{
+    resize:none;
+    width:60%;
+    height: 300px;
+    font-size: large;
+}
+
+label{
+    font-size: large;
+}
