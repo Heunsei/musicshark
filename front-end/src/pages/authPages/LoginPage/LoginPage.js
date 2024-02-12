@@ -8,6 +8,7 @@ import LoginPageFooter from './LoginPageFooter';
 import Navbar from './../../../components/Navbar'
 import { loginAction } from './loginAction';
 import { loginValidator } from './../validator'
+import { KakaoLoginButton } from './KakaoLoginButton';
 
 const LoginPage = () => {
     const dispatch = useDispatch()
@@ -42,9 +43,7 @@ const LoginPage = () => {
                     setPassword={setPassword}
                 />
                 <LoginPageFooter isFormValid={isFormValid} handleLogin={handleLogin} />
-                <a href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}'>
-                    <img src={process.env.PUBLIC_URL + '/button/kakao_login_medium_wide.png'}/>
-                </a>
+                <KakaoLoginButton />
             </AuthBox>
         </>
     );
