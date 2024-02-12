@@ -5,6 +5,7 @@ const initialState = {
   email: '',
   gender: '',
   birth: '',
+  userId : '',
 };
 
 const userSlice = createSlice({
@@ -23,9 +24,12 @@ const userSlice = createSlice({
     setBrith(state, action) {
       state.birth = action.payload;
     },
+    setUserId(state, action){
+      state.userId = action.payload;
+    }
   },
 });
 
-export const { setNickname, setEmail, setGender, setBrith } = userSlice.actions;
+export const { setNickname, setEmail, setGender, setBrith, setUserId } = userSlice.actions;
 
 export default userSlice;
