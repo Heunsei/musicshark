@@ -11,11 +11,10 @@ import PerfectPlayLobyPage from "./pages/singlePages/PerfectPlayLobyPage";
 import PerfectPlayPlayPage from "./pages/singlePages/PerfectPlayPlayPage";
 import SingleRecordPage from "./pages/singlePages/SingleRecordPage";
 
-import Board from './pages/Board/Board';
 import BoardList from './pages/Board/BoardList';
 import BoardDetail from './pages/Board/BoardDetail';
-import BoardWrite from './pages/Board/BoardWrite';
-import BoardUpdate from './pages/Board/BoardUpdate'
+import BoardCreate from './pages/Board/BoardCreate';
+import BoardUpdate from './pages/Board/BoardUpdate';
 
 import PrivateRoute from "./util/PrivateRoute";
 
@@ -34,16 +33,20 @@ function App() {
         <Route path='/single/perfect' element={<PerfectPlayLobyPage />} />
         <Route path='/single/perfect/:song_idx' element={<PerfectPlayPlayPage />} />
         <Route path='/single' element={<SingleSelectPage />} />
-        <Route path='/board' element={<BoardList />} />
-        <Route path='/create' element={<BoardWrite />} />
-        <Route path='/update/:board_id' element={<BoardUpdate />} />
-        <Route path='/board/:board_id' element={<BoardDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/:userId" element={<ProfileEdit />} />
         <Route element={<PrivateRoute />}>
           <Route path='/group' element={<GroupPage />} />
           <Route path='/group/:id' element={<GroupDetailPage />} />
+          <Route path='/board' element={<BoardList />} />
+          <Route path='/board/create' element={<BoardCreate />} />
+          <Route path='/update/:board_id' element={<BoardUpdate />} />
+          <Route path='/board/:board_id' element={<BoardDetail />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path='/group/:id' element={<GroupDetailPage />} />
+          {/* <Route path='/about' element={<AboutPage />} /> */}
         </Route>
+
 
       </Routes>
     </>

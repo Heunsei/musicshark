@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { styled, Table,TableCell,tableCellClasses,TableContainer,TableHead,TableRow,Paper, TableBody } from "@mui/material";
+import { styled, Table,TableCell,tableCellClasses,TableHead,TableRow, TableBody } from "@mui/material";
 import Navbar from './../../components/Navbar';
 import styles from "./BoardList.module.css";
 import { Button } from "bootstrap";
+import { getCookie } from "../../util/cookie";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     textAlign:'center',
@@ -35,8 +36,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 
 
-    function createData(board_id, board_genre, board_title, board_nickname, board_views,board_date){
-        return {board_id, board_genre, board_title, board_nickname, board_views,board_date};
+    function createData(boardIdx, boardTitle, userIdx, boardCount,boardDate){
+        return {boardIdx, boardTitle, userIdx, boardCount,boardDate};
     }
 
     const rows=[
@@ -44,59 +45,51 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         createData(2,'자유','인사','kim@ssafy.com',6,'2024-02-01'),
     ];
 
-
 export default function BoardList(){
-    
-//     // const naviate=useNavigate();
-//     // const [boardList,setBoardList]=useState([]);
+    const [rows, setRow] = useState([])
 
-//     // const getBoardList=async()=>{
-//     //     const resp=(await axios.get('localhost:8080/board')).data
-//     //     setBoardList(resp.data);
+    const authToken = getCookie('accessToken')
+    const URL = process.env.REACT_APP_API_URL
+    const naviate=useNavigate();
+    const [boardList,setBoardList]=useState([]);
 
-//     //     const pngn=resp.pagination;
-//     //     console.log(pngn);
-//     // }
+    const getBoardList=async()=>{
+      try{
+        const res = await axios({
+          metehod : "get",
+          url : `${URL}/board`,
+          headers : {
+            Authorization : `Bearer ${authToken}`
+          }
+        })
+        console.log(res.data[0].boardTitle)
+        await setRow(res.data)
+      }
+      catch (err) {
+        console.log(err)
+      }
 
-//     // const moveToWrite=()=>{
-//     //     naviate('/write');
-//     // }
+        // const resp=(await axios.get('localhost:8080/board')).data
+        // setBoardList(resp.data);
 
-//     // useEffect(()=>{
-//     //     getBoardList();
-//     // },[])
+        // const pngn=resp.pagination;
+        // console.log(pngn);
+    }
+
+    const moveToCreate=()=>{
+        naviate('/board/create');
+    }
+
+    useEffect(()=>{
+      getBoardList()
+    },[])
 
 
     
 
     return(
 
-        // <TableContainer component={Paper}>
-        //     <Table sx={{minWidth:700}} aria-label="customized table">
-        //         <TableHead>
-        //             <TableRow>
-        //                 <StyledTableCell>아이디</StyledTableCell>
-        //                 <StyledTableCell>분류</StyledTableCell>
-        //                 <StyledTableCell>제목</StyledTableCell>
-        //                 <StyledTableCell>작성자</StyledTableCell>
-        //                 <StyledTableCell>조회</StyledTableCell>
-        //                 <StyledTableCell>날짜</StyledTableCell>
-        //             </TableRow>
-        //         </TableHead>
-        //         <TableBody>
-        //             {rows.map((row)=>(
-        //                 <StyledTableRow key={row.board_id}>
-        //                     <StyledTableCell>{row.board_id}</StyledTableCell>
-        //                     <StyledTableCell>{row.board_genre}</StyledTableCell>
-        //                     <StyledTableCell>{row.board_title}</StyledTableCell>
-        //                     <StyledTableCell>{row.board_nickname}</StyledTableCell>
-        //                     <StyledTableCell>{row.board_views}</StyledTableCell>
-        //                     <StyledTableCell>{row.board_date}</StyledTableCell>
-        //                 </StyledTableRow>
-        //             ))}
-        //         </TableBody>
-        //     </Table>
-        // </TableContainer>
+
 //              {/* <ul>
 //                 {boardList.map((board)=>(
 //                     <li key={board.idx}>
@@ -113,29 +106,29 @@ export default function BoardList(){
             <Table>
                 
                  <TableHead>
-                    <TableRow>
+                    <StyledTableRow>
                         <StyledTableCell>번호</StyledTableCell>
-                        <StyledTableCell>분류</StyledTableCell>
                         <StyledTableCell>제목</StyledTableCell>
                         <StyledTableCell>작성자</StyledTableCell>
                         <StyledTableCell>조회</StyledTableCell>
                         <StyledTableCell>날짜</StyledTableCell>
-                     </TableRow>
+                     </StyledTableRow>
                  </TableHead>
                  <TableBody>
-                 {rows.map((row)=>(
-                        <StyledTableRow key={row.board_id}>
-                            <StyledTableCell>{row.board_id}</StyledTableCell>
-                            <StyledTableCell>{row.board_genre}</StyledTableCell>
-                            <StyledTableCell>{row.board_title}</StyledTableCell>
-                            <StyledTableCell>{row.board_nickname}</StyledTableCell>
-                            <StyledTableCell>{row.board_views}</StyledTableCell>
-                            <StyledTableCell>{row.board_date}</StyledTableCell>
+                 {rows.map((row, i)=>(
+                        <StyledTableRow key={row.boardIdx}>
+                            <StyledTableCell>{row.boardIdx}</StyledTableCell>
+                            <StyledTableCell><Link to={`/board/${row.boardIdx}`}>{row.boardTitle}</Link></StyledTableCell>
+                            <StyledTableCell>{row.userIdx}</StyledTableCell>
+                            <StyledTableCell>{row.boardCount}</StyledTableCell>
+                            <StyledTableCell>{row.boardDate}</StyledTableCell>
                          </StyledTableRow>
                      ))}
                  </TableBody>
             </Table>
-
+            <div>
+                 <button onClick={() => moveToCreate()}>글쓰기</button>
+             </div>
 </>
            
     );
