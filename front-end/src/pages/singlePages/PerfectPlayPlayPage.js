@@ -17,7 +17,7 @@ const PerfectPlayPlayPage = () => {
     }, [])
 
     return (
-        <PlayScreen />
+        <PlayScreen songIdx={song_idx}/>
     );
 };
 

@@ -11,8 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { postPlayScoreAction } from '../../actions/postPlayScoreAction';
 
-const PlayScreen = () => {
+const PlayScreen = ({ songIdx }) => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -478,6 +479,7 @@ const PlayScreen = () => {
         if (songIndex >= songData.length) {
             // songIndex가 songData.length를 넘어가면 애니메이션 종료
             setIsPlaying(false);
+            //postPlayScoreAction(userIdx, songIdx, avgScore);
             return;
         }
     }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
