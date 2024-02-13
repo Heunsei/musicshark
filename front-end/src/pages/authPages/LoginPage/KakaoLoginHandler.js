@@ -55,7 +55,9 @@ const KakaoLoginHandler = () => {
                             });
                         }
                         else {
-                            window.alert("탈퇴한 회원입니다. 메인 페이지로 이동합니다.");
+                            // console.log(error.response);
+                            window.alert(`${error.response.data} 메인 페이지로 이동합니다.`);
+                            // window.alert("탈퇴한 회원입니다. 메인 페이지로 이동합니다.");
                             navigate("/");
                         }
                     });

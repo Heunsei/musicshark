@@ -34,23 +34,26 @@ public class KakaoController {
 
     @GetMapping()
     public ResponseEntity<?> KakaoAuthorize(@RequestParam("code") String code) {
-        String accessToken = service.getKakaoAccessToken(code);
-        String email = service.getUserInfo(accessToken).replaceAll("\"", "");
+        try {
+            String accessToken = service.getKakaoAccessToken(code);
+            String email = service.getUserInfo(accessToken).replaceAll("\"", "");
 
-        KakaoLoginResponse dto = new KakaoLoginResponse();
-        Optional<UserEntity> user = userRepository.findByUserEmail(email);
-        System.out.println(email + " " + user.isPresent());
-        if(user.isPresent() && user.get().getUserIsdelete() == 0){ // DB에 있는 유저이며, 탈퇴한 회원이 아닌 경우
-            JwtToken result = service.signInWithKakao(user.get());
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        else if(user.isEmpty()){ // DB에 없는 유저 -> 회원가입 한 적이 없는 유저
-            dto.setKakao(true);
-            dto.setEmail(email);
-            return new ResponseEntity<KakaoLoginResponse>(dto, HttpStatus.NOT_FOUND);
-        }
+            KakaoLoginResponse dto = new KakaoLoginResponse();
+            Optional<UserEntity> user = userRepository.findByUserEmail(email);
+            System.out.println(email + " " + user.isPresent());
+            if (user.isPresent() && user.get().getUserIsdelete() == 0) { // DB에 있는 유저이며, 탈퇴한 회원이 아닌 경우
+                JwtToken result = service.signInWithKakao(user.get());
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            } else if (user.isEmpty()) { // DB에 없는 유저 -> 회원가입 한 적이 없는 유저
+                dto.setKakao(true);
+                dto.setEmail(email);
+                return new ResponseEntity<KakaoLoginResponse>(dto, HttpStatus.NOT_FOUND);
+            }
 
-        // 회원가입을 하였으나 이미 탈퇴한 회원
-        return new ResponseEntity<String>("탈퇴한 회원입니다.", HttpStatus.BAD_REQUEST);
+            // 회원가입을 하였으나 이미 탈퇴한 회원
+            return new ResponseEntity<String>("탈퇴한 회원입니다.", HttpStatus.BAD_REQUEST);
+        } catch(Exception e){
+            return new ResponseEntity<String>("서버에 문제가 발생하였습니다.", HttpStatus.BAD_REQUEST);
+        }
     }
 }
