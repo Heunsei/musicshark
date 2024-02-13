@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="" />
+    <list default="true" id="ff4aaf59-43bb-4e89-8916-6df67d0b8949" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Back/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/pages/Board/BoardCreate.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/pages/Board/BoardCreate.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,6 +59,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Back 빌드.executor": "Run",
+    "Gradle.BackApplicationTests.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -62,7 +67,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BackApplication.executor": "Run",
-    "git-widget-placeholder": "Merging frontend-develop-group-room",
+    "git-widget-placeholder": "yeji",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/SSAFY/2024-2/work-space/S10P12E205/Back/src/main/java/org/example/back",
     "node.js.detected.package.eslint": "true",
@@ -111,6 +116,7 @@
     <attachedChunks>
       <set>
         <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+        <option value="jdk-17.0.9-azul-17.0.9-4caba194b151-171533a4" />
       </set>
     </attachedChunks>
   </component>

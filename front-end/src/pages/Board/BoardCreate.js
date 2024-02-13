@@ -10,13 +10,13 @@ import { useSelector } from 'react-redux';
 import Navbar from "../../components/Navbar";
 
 const BoardCreate=()=>{
-    // const nickname = useSelector((state) => state.user.nickname)
-    // console.log(nickname)
+     //const nickname = useSelector((state) => state.user.nickname)
+     //console.log(nickname)
     const navigate=useNavigate();
     const [board,setBoard]=useState({
                 boardTitle:'',
                 boardContent:'',
-                // userNickname:nickname
+                 //userNickname:nickname
             })
 const {boardTitle, boardContent}=board;
    
@@ -89,6 +89,7 @@ const {boardTitle, boardContent}=board;
                         <button onClick={backToList}>목록</button>
                         <button onClick={()=>{
                             boardCreateAction(board)
+                            navigate('/board')
                     }}>등록</button>
                        
                     </div>

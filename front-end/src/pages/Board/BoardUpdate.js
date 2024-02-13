@@ -9,9 +9,11 @@ import { useSelector } from "react-redux";
 import { getCookie } from "../../util/cookie";
 
 const BoardUpdate=()=>{
+
+  
   const nickname = useSelector((state) => state.user.nickname)
   const {board_id}=useParams();
-  const [loading, setLoading]=useState(true);
+  const [loading, setLoading]=useState();
   const [board, setBoard]=useState({
       boardTitle:'',
               boardContent:'',
@@ -23,8 +25,21 @@ const {boardTitle, boardContent}=board;
 
   const navigate=useNavigate();
   const URL = process.env.REACT_APP_API_URL
-  const [data, setData] = useState([])
 
+
+ 
+          
+  
+
+
+  const handleChange=(event)=>{
+      console.log(event.target.value);
+      const{value,name}=event.target;
+      setBoard({
+          ...board,
+          [name]:value,
+      })
+  }
     
 const BoxWrapper = styled('div')({
   width: '200%',
@@ -71,6 +86,35 @@ const BoxWrapper = styled('div')({
           <h2 >게시글 수정</h2>
           <hr/>
           <div>
+                        <label>제목</label> &nbsp;&nbsp;&nbsp;
+                        <input 
+                        type="text" 
+                        name="boardTitle"
+                        value={boardTitle}
+                        onChange={handleChange}
+                        />
+                        
+                    </div>
+                    <hr/>
+                    <div>
+                        <label style={{verticalAlign:"top"}}>내용</label> &nbsp;&nbsp;&nbsp;
+                        <textarea placeholder="내용을 입력하세요"
+                        name="boardContent"
+                        cols="30"
+                        rows="10"
+                        value={boardContent}
+                        onChange={handleChange}
+                        />
+                    </div>
+                    <hr/>
+                    <div>
+                        <button onClick={backToDetail}>취소</button>
+                        <button onClick={()=>{
+                            boardUpdateAction(board)
+                    }}>수정</button>
+                       
+                    </div>
+          {/* <div>
             <label>제목</label>&nbsp;&nbsp;&nbsp;
             
             <input type="text" nickname="board_title" value={boardTitle} onChange={onChange} style={{width:"50%"}}/>
@@ -93,7 +137,7 @@ const BoxWrapper = styled('div')({
                             boardUpdateAction(board)
                     }}>수정</button>
             <button onClick={backToDetail}>취소</button>
-          </div>
+          </div> */}
         </div>
         
         </>
