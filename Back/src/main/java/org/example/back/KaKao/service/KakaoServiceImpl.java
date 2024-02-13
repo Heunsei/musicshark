@@ -4,6 +4,8 @@ import org.example.back.User.entity.UserEntity;
 import org.example.back.User.repository.UserRepository;
 import org.example.back.config.JwtToken;
 import org.example.back.config.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -42,8 +44,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class KakaoServiceImpl implements KakaoService {
-    private final String KAKAO_REST_API_KEY = "a1d71ef7ee8a62c397eea8c14103b31d";
-    private final String REDIRECT_URI = "${kakaoservice.redirecturi}";
+
+    @Value("${KAKAO_RESTAPI_KEY}")
+    private String KAKAO_REST_API_KEY;
+
+    @Value("${KAKAO_REDIRECT_URI}")
+    private String REDIRECT_URI;
 
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -58,6 +64,8 @@ public class KakaoServiceImpl implements KakaoService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        System.out.println(REDIRECT_URI);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
