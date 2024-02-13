@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { getCookie } from '../../util/cookie'
 import { useNavigate } from 'react-router-dom';
+import BoardDetail from './BoardDetail';
 
 
 export const boardUpdateAction=async(board_id,boardDetail)=>{
@@ -12,7 +13,7 @@ export const boardUpdateAction=async(board_id,boardDetail)=>{
         await axios({
             method : 'put' ,
             url:`http://localhost:8080/board/${board_id}`,
-            data : board_id,
+            data : board_id,boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`
             }

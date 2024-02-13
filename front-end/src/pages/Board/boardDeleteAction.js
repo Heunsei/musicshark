@@ -12,7 +12,7 @@ export const boardDeleteAction=async(boardDetail,board_id,nickname)=>{
     if(window.confirm('게시글을 삭제하시겠습니까?')){
         await axios(`${URL}/board/${board_id}/${nickname}`,{
             method:'put',
-            data : boardDetail,
+            data : board_id,
             headers : {
                 Authorization: `Bearer ${accessToken}`
             }

@@ -16,8 +16,8 @@ const BoardUpdate=()=>{
   const [loading, setLoading]=useState();
       const [data, setData] = useState([])
   const [board, setBoard]=useState({
-      boardTitle:`${boardTitle}`,
-              boardContent:`${boardContent}`,
+      boardTitle:``,
+              boardContent:``,
           })
           
 const {boardTitle, boardContent}=board;
@@ -66,20 +66,19 @@ const BoxWrapper = styled('div')({
         })
     }
 
-    const getBoard=async()=>{
+    const getBoard=async(boardDetail)=>{
       // const resp=await(await axios.get(`//localhost:8080/board/${board_id}`)).data;
       const response = await axios ({
           url : `${URL}/board/${board_id}`,
           headers : {
               Authorization : `Bearer ${accessToken}`
           },
-          data : {board_idx  : board_id}
-
-      })
+          data :board_id,boardDetail,
+              })
       console.log('보드 업데이트 확인',response.data)
       setData(response.data)
       setBoard(response.data);
-      setLoading(false);
+      setLoading(true);
     }
     // const getBoard = async () => {
     //     const resp = await (await axios.get(`${URL}/board/${board_id}`)).data;
@@ -132,7 +131,7 @@ const BoxWrapper = styled('div')({
                     <div>
                         <button onClick={backToDetail}>취소</button>
                         <button onClick={()=>{
-                          handleUpdataAction()
+                          handleUpdataAction(board)
                             // boardUpdateAction(board, )
                     }}>수정</button>
                        
