@@ -27,9 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth/kakao")
 @RequiredArgsConstructor
 public class KakaoController {
-
-
-
     @Autowired
     private final KakaoService service;
 

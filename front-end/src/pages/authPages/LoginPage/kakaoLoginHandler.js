@@ -22,7 +22,7 @@ const KakaoLoginHandler = () => {
 
                     await axios({
                         method: "get",
-                        url: `http://localhost:8080/auth/kakao?code=${code}`,
+                        url: `${process.env.REACT_APP_API_URL}/auth/kakao?code=${code}`,
                     }).then((response) => {
                         const ACCESS_TOKEN = response.data.accessToken
                         const REFRESH_TOKEN = response.data.refreshToken

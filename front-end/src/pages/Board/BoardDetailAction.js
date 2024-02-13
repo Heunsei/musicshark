@@ -11,7 +11,7 @@ export const boardDetailAction=async(board_id, setBoardDetail)=>{
     try{
         await axios({
             method : 'get' ,
-            url:`http://localhost:8080/board/${board_id}`,
+            url:`${process.env.REACT_APP_API_URL}/board/${board_id}`,
             //data : boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`

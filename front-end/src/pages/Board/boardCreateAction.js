@@ -11,7 +11,7 @@ export const boardCreateAction=async(boardDetail)=>{
     try{
         await axios({
             method : 'post' ,
-            url:'http://localhost:8080/board',
+            url:`${process.env.REACT_APP_API_URL}/board`, 
             data : boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`

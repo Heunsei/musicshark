@@ -46,7 +46,7 @@ https://velog.io/@akskflwn/Rest-API-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B9%B4%EC%B9%
 @RequiredArgsConstructor
 public class KakaoServiceImpl implements KakaoService {
     private final String KAKAO_REST_API_KEY = "a1d71ef7ee8a62c397eea8c14103b31d";
-    private final String REDIRECT_URI = "http://localhost:3000/auth/kakao";
+    private final String REDIRECT_URI = "${kakaoservice.redirecturi}";
 
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
