@@ -90,18 +90,6 @@ export default function BoardList(){
     return(
 
 
-//              {/* <ul>
-//                 {boardList.map((board)=>(
-//                     <li key={board.idx}>
-//                         <Link to={`/board/${board.idx}`}>{board.title}</Link>
-//                     </li>
-//                 ))}
-//             </ul>
-//             <div>
-//                 <button onClick={moveToWrite}>글쓰기</button>
-//             </div> */}
-
-
 <> 
 <Navbar/>
             <Table>

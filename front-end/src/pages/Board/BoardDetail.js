@@ -7,6 +7,8 @@ import Navbar from "../../components/Navbar";
 import { getCookie } from "../../util/cookie";
 import { useSelector } from "react-redux";
 import { boardDeleteAction } from "./boardDeleteAction";
+import moment from 'moment';
+import 'moment/locale/ko';
 import Comments from "./Comments";
 //import Comments from "./Comments";
 
@@ -22,6 +24,7 @@ import Comments from "./Comments";
 // })
 
 const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boardContent})=>{
+    
     const nickname = useSelector((state) => state.user.nickname)
     const {board_id}=useParams();
     const [loading, setLoading]=useState(true);
