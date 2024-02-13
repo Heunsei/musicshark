@@ -6,7 +6,7 @@ import GroupInput from './GroupInput/GroupInput';
 import GroupBox from './GroupBox/GroupBox';
 import GroupBottom from './GroupBottom/GroupBottom';
 import loadGroupAction from './loadGroupAction';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { redirect, useNavigate } from 'react-router-dom';
 import { logoutAction } from '../../authPages/LoginPage/logoutAction';
 
@@ -28,6 +28,7 @@ const GroupPage = () => {
     const [searchText, setSearchText] = useState('')
     const [groupList, setGroupList] = useState([])
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     useEffect(() => {
         loadGroupAction(setGroupList)
     }, [])
@@ -42,7 +43,7 @@ const GroupPage = () => {
             <BoxWrapper>
                 <GroupInput value={searchText}
                     setValue={setSearchText} />
-                <button onClick={() => logoutAction(navigate)}>로그아웃</button>
+                <button onClick={() => logoutAction(navigate, dispatch)}>로그아웃</button>
                 <GroupBox groupList={groupList} setGroupList={setGroupList} />
             </BoxWrapper>
         </>
