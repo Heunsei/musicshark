@@ -22,4 +22,6 @@ public interface VideoRepository extends JpaRepository<VideoEntity, Integer> {
     Optional<VideoEntity> findByUserIdxAndVideoTitleAndVideoDate(int userIdx, String videoTitle, LocalDate date);
 
     List<VideoEntity> findByUserIdxAndVideoTitle(int userIdx, String videoTitle);
+
+    Optional<List<VideoEntity>> findByUserIdxAndVideoDateOrderByVideoIdxDesc(int userIdx, LocalDate date);
 }
