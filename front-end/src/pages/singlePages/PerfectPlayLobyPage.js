@@ -48,6 +48,7 @@ const PerfectPlayLobyPage = () => {
             const response = await getUserAction();
             const data = response.data;
             setUserInfo(data);
+            console.log(data);
         }
         catch(error){
             console.log(error);
@@ -119,6 +120,7 @@ const PerfectPlayLobyPage = () => {
             const response = await getPerfectPlayListAction();
             const data = response.data.data;
             setPerfectPlayList(data);
+            console.log(data);
         }
         catch(error){
             console.log(error);
