@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 // import styles from "./Board.module.css";
 import axios from "axios";
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import Navbar from "../../components/Navbar";
 import { getCookie } from "../../util/cookie";
 import { useSelector } from "react-redux";
@@ -81,14 +81,27 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         <>
         <Navbar/>
 
-        <div style={{textAlign:"center", minWidth:"90%"}}>
+        <div style={{textAlign:"center", Width:"100%"}}>
             <div>
-                <h2>{data.boardTitle}</h2>
+                <h2 style={{margin:"2%"}}>{data.boardTitle}</h2>
                 <hr/>
-                <h5>{nickname}</h5>
+                <div>
+                    <table style={{position:"relative", marginLeft:"auto", marginRight:"auto", width:"70%"}}>
+                    <tr>
+                    <td>작성자&nbsp;&nbsp; {nickname}</td>
+                    <td>작성일&nbsp;&nbsp; {board.boardDate}</td>
+                    <td>조회&nbsp;&nbsp; {board.boardCount}</td>
+                    </tr>
+                    
+                </table>
+                </div>
                 <hr/>
-                <p>{data.boardContent}</p>
-                <hr/>
+                
+                <div style={{height:300}}>
+                    <p>{data.boardContent}</p>
+                </div>
+                
+                
             </div>
             <div>
                 <button onClick={moveToUpdate}>수정</button>
@@ -97,8 +110,11 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
                 }}>삭제</button>
                 <button onClick={moveToList}>목록</button>
             </div>
-
             <hr/>
+            <div><h5 style={{position:"absolute", right:"80%"}}>댓글</h5></div>
+            
+               
+            
             {/* <div><Comments/></div> */}
             
                 {/* <Board
@@ -107,6 +123,7 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
                     board_contents={data.board_contents}
                     board_nickname={data.board_nickname}
                 /> */}
+                <hr/>
         </div>
         </>
         
