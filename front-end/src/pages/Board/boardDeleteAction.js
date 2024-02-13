@@ -10,11 +10,12 @@ export const boardDeleteAction=async(boardDetail,board_id,nickname)=>{
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     if(window.confirm('게시글을 삭제하시겠습니까?')){
-        await axios(`${URL}/board/${board_id}/${nickname}`,{
+        await axios({
             method:'put',
-            headers : new Headers(),
-            data:{board_id:board_id}
-            
+            url:`${URL}/board/${board_id}/${nickname}`,
+            headers : {
+                Authorization: `Bearer ${accessToken}`
+            }
         })
         .then((res) => {
             console.log(boardDetail)
