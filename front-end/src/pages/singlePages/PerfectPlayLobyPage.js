@@ -63,7 +63,6 @@ const PerfectPlayLobyPage = () => {
             const data = response.data.data;
             setSongList(data); // songList에 데이터 저장
             setIsLoading(false); // 데이터 로딩이 완료됨을 표시
-            console.log(data);
         }catch (error){
             console.error(error);
         }
@@ -210,7 +209,7 @@ const PerfectPlayLobyPage = () => {
                             scope="row"
                             sx={{ cursor: "pointer" }}
                             onClick={() => {
-                              navigate(`./${element.song_idx}`);
+                              navigate(`./${element.songIdx}`);
                             }}
                           >
                             {element.title}
