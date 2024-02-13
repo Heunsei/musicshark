@@ -52,7 +52,7 @@ const KakaoLoginHandler = () => {
                             dispatch(setKakao.setEmail(error.response.data.email));
                             console.log(error.response.data.kakao);
                             dispatch(setKakao.setKakao(error.response.data.kakao)); 
-                            navigate("/register");
+                            navigate("/register", {state: {email: error.response.data.email, kakao: error.response.data.kakao}});
                         }
                         else {
                             window.alert("탈퇴한 회원입니다. 메인 페이지로 이동합니다.");

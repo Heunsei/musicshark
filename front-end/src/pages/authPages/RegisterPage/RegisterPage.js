@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -18,7 +18,7 @@ import * as setKakao from '../../../redux/store/kakaoRegisterSlice';
 const RegisterPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const location = useLocation()
     
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
@@ -34,7 +34,11 @@ const RegisterPage = () => {
 
     const kakaoEmail = useSelector((state) => state.kakao.email);
     const kakaoReadonly = useSelector((state) => state.kakao.kakao);
+    
     console.log(kakaoReadonly);
+    console.log("location.state: ", location.state);
+    console.log("location.state.email: ", location.state.email);
+    console.log("location.state.kakao: ", location.state.kakao);
 
     const handleRegister = async () => {
         const userDetails = {
