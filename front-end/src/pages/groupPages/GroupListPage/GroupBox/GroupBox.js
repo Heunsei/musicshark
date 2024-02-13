@@ -130,7 +130,8 @@ const GroupBox = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h4" component="h2">
+                    <Typography id="modal-modal-title" variant="h4" component="h2"
+                        sx={{ fontFamily: 'Pretendard-Bold', textAlign: 'center', borderBottom: '2px solid black' }}>
                         그룹 생성
                     </Typography>
                     <div>
@@ -160,25 +161,27 @@ const GroupBox = (props) => {
                         max='6'
                         min='2'
                     />
-                    <Button variant="contained"
-                        onClick={() => {
-                            createGroupAction(groupDetail)
-                            setIsModalOpen(false)
-                            setChannelMax(2)
-                            setGroupIntro('')
-                            setGroupName('')
-                        }}
-                        sx={{
-                            marginTop: '5px',
-                            fontFamily: 'Pretendard-Medium',
-                            backgroundColor: '#997B66',
-                            color: 'white',
-                            ':hover': {
-                                bgcolor: '#997B66',
+                    <div style={{display:'flex', justifyContent:'center', alignItems:'center',marginTop :'5px'}}>
+                        <Button variant="contained"
+                            onClick={() => {
+                                createGroupAction(groupDetail)
+                                setIsModalOpen(false)
+                                setChannelMax(2)
+                                setGroupIntro('')
+                                setGroupName('')
+                            }}
+                            sx={{
+                                marginTop: '5px',
+                                fontFamily: 'Pretendard-Medium',
+                                backgroundColor: '#997B66',
                                 color: 'white',
-                            },
-                        }}
-                    >그룹 생성하기</Button>
+                                ':hover': {
+                                    bgcolor: '#997B66',
+                                    color: 'white',
+                                },
+                            }}
+                        >그룹 생성하기</Button>
+                    </div>
                 </Box>
             </Modal>
 

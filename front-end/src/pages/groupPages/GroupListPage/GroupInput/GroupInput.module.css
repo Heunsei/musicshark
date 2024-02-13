@@ -38,12 +38,14 @@
 }
 
 .modalHeader {
+    border-bottom: 2px solid black;
     font-size: 24px;
     position: absolute;
     top: 0px
 }
 
 .searchResult {
+    font-family: 'Pretendard-Bold';
     position: relative;
     display: flex;
     align-items: center;
@@ -52,6 +54,8 @@
     height: 50px;
     margin-bottom: 15px;
     border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 5px gray;
 }
 
 .searchGroupName {
@@ -62,6 +66,9 @@
 .searchGroupButton {
     position: absolute;
     right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .searchSubmitButton {

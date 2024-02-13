@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import SearchIcon from '@mui/icons-material/Search';
 import Modal from '@mui/material/Modal';
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 
 import getGroupListAction from './getGroupListAction';
 import styles from './GroupInput.module.css'
@@ -76,7 +77,9 @@ const GroupInput = (props) => {
                                 return (
                                     <div className={styles.searchResult} key={i}>
                                         <p className={styles.searchGroupName}>{element.channelName}</p>
-                                        <button className={styles.searchGroupButton} onClick={() => handleMoveToGroup(element.channelIdx)}>이동하기</button>
+                                        <button className={styles.searchGroupButton} onClick={() => handleMoveToGroup(element.channelIdx)}>
+                                            <TrendingFlatIcon />
+                                        </button>
                                     </div>
                                 )
                             }) : <p>검색 결과가 없습니다</p>
