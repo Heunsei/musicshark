@@ -12,8 +12,9 @@ const RightChatBox = (props) => {
     // 채팅을 연결할 세션, ov를 받아와야함
     const { id, userName, session, setSession, recordList, setRecordList } = props
     // 기본적으로 채팅박스를 보여주고 그게 아니라면 영상 리스트를 제공
-    // const [recordList, setRecordList] = useState([])
+    // 채팅 리스트가 저장될 리스트
     const [chatList, setChatList] = useState([])
+    // 유저가 보내는 텍스트
     const [message, setMessage] = useState([])
     const [searchTitle, setSearchTitle] = useState('')
 

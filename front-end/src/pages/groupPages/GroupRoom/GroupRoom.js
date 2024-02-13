@@ -232,19 +232,23 @@ const GroupRoom = (props) => {
     }
 
     const changePlayer = (from) => {
-        console.log('누른사람 확인 : ', from.stream.streamManager)
-        console.log('플레이어 확인', player)
         const newPlayer = from.stream.streamManager
         if (player[0] === newPlayer) {
-            console.log('player가 같습니다')
-            console.log(player[0])
-            console.log(newPlayer)
-            setPlayer([])
+            if (player.length === 1) {
+                console.log('길이가 1')
+                player.pop()
+                setPlayer([...player])
+            } else {
+                const index = player.indexOf(nextPlayer)
+                player.slice(index, 1)
+                setPlayer([...player])
+            }
         } else if (player[0] === undefined) {
             player.push(newPlayer)
             setPlayer([...player])
             console.log('빈배열에서의 플레이어', player)
         }
+        console.log('결과 플레이어', player)
     }
 
     /**
@@ -369,14 +373,10 @@ const GroupRoom = (props) => {
                     </div>
                     <div className={`${styles.mainScreen}`}>
                         {
-                            player !== undefined ?
-                                player.map((player) => {
-                                    return (
-                                        <div >
-                                            <VideoScreen streamManager={player} />
-                                        </div>
-                                    )
-                                })
+                            player.length ?
+                                <div >
+                                    <VideoScreen streamManager={player.length ? player[0] : undefined} />
+                                </div>
                                 : null
                         }
                     </div>
