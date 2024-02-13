@@ -297,10 +297,14 @@ const PlayScreen = ({ songIdx }) => {
             voiceNoteWindow.shift();
         }
 
-        console.log('Pitch:', pitch);
+        // console.log('Pitch:', pitch);
 
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
+
+        if(songData[songIndex].cnt == 48) {
+            setIsPlaying(false);
+        }
         if (songIndex >= songData.length) {
             console.log("!!종료!!");
             return;
