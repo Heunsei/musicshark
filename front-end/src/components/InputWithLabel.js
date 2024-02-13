@@ -38,7 +38,7 @@ const Input = styled("input")({
 
 const InputWithLabel = (props) => {
     const { value, setValue, label, type, placeholder, validateState,
-            maxLength, min, max } = props
+            maxLength, min, max, readonly = false } = props
 
     const handleValueChange = (event) => {
         setValue(event.target.value)
@@ -54,6 +54,7 @@ const InputWithLabel = (props) => {
                 min={min}
                 max={max}
                 maxLength={maxLength}
+                readOnly={readonly}
             />
             <div style= {{display: 'inline-block'}}>
                 <ValidChecker>{validateState}</ValidChecker>

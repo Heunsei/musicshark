@@ -11,6 +11,8 @@ import PerfectPlayLobyPage from "./pages/singlePages/PerfectPlayLobyPage";
 import PerfectPlayPlayPage from "./pages/singlePages/PerfectPlayPlayPage";
 import SingleRecordPage from "./pages/singlePages/SingleRecordPage";
 
+import KakaoLoginHandler from "./pages/authPages/LoginPage/KakaoLoginHandler";
+
 import BoardList from './pages/Board/BoardList';
 import BoardDetail from './pages/Board/BoardDetail';
 import BoardCreate from './pages/Board/BoardCreate';
@@ -35,6 +37,7 @@ function App() {
         <Route path='/single' element={<SingleSelectPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/:userId" element={<ProfileEdit />} />
+        <Route path="auth/kakao/*" element={<KakaoLoginHandler />} />
         <Route element={<PrivateRoute />}>
           <Route path='/group' element={<GroupPage />} />
           <Route path='/group/:id' element={<GroupDetailPage />} />

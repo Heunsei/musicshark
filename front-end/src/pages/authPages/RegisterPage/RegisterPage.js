@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import RegisterAuthBox from '../../../components/RegisterAuthBox';
 import RegisterPageHeader from './RegisterPageHeader';
@@ -11,12 +12,14 @@ import { registerValidator } from './../validator'
 import Navbar from './../../../components/Navbar'
 import { registerAction } from './registerAction'
 import { loginAction } from '../LoginPage/loginAction';
+import * as setKakao from '../../../redux/store/kakaoRegisterSlice';
 
 
 const RegisterPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
@@ -25,8 +28,13 @@ const RegisterPage = () => {
     const [gender, setGender] = useState("")
     const [isFormValid, setIsFormValid] = useState(false)
     const [isPasswordValid, setIsPasswordVaild] = useState(false)
-
+    const [readonly, setReadonly] = useState(false);
     // const [profile, setProfile] = useState("")
+
+
+    const kakaoEmail = useSelector((state) => state.kakao.email);
+    const kakaoReadonly = useSelector((state) => state.kakao.kakao);
+    console.log(kakaoReadonly);
 
     const handleRegister = async () => {
         const userDetails = {
@@ -39,6 +47,8 @@ const RegisterPage = () => {
         }
         const res = await registerAction(userDetails)
         if (res) {
+            dispatch(setKakao.setEmail(""));
+            dispatch(setKakao.setKakao(false));
             const loginData = {
                 userEmail: mail,
                 password: password,
@@ -54,6 +64,13 @@ const RegisterPage = () => {
     useEffect(() => {
         setIsPasswordVaild(validatePasswordConfirm(password, passwordConfirm))
     }, [password, passwordConfirm, setIsPasswordVaild, setPasswordConfirm])
+
+    useEffect(() => {
+        setReadonly(kakaoReadonly)
+        if(readonly){
+            setMail(kakaoEmail);
+        }
+    }, [readonly]);
 
     return (
         <>
@@ -73,6 +90,7 @@ const RegisterPage = () => {
                     setGender={setGender}
                     birth={birth}
                     setBirth={setBirth}
+                    readonly={readonly}
                 />
                 <RegisterPageFooter
                     isFormValid={isFormValid}
