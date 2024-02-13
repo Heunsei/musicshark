@@ -16,15 +16,16 @@ import { getCookie } from '../../util/cookie';
 import axios from 'axios'
 
 const PerfectPlayLobyPage = () => {
-  const userName = useSelector((state) => state.user.nickname)
-  const [userTier, setUserTier] = useState("");
-  const [isLoading, setIsLoading] = useState(true)
-  const navigate = useNavigate()
+    const userName = useSelector((state) => state.user.nickname)
+    const [userTier, setUserTier] = useState("");
+    const userIdx = useSelector((state) => state.user.userIdx)
+    const [isLoading, setIsLoading] = useState(true)
+    const navigate = useNavigate()
 
-  // 페이지 로드 시 axios요청으로 전체 음악 조회
-  const [songList, setSongList] = useState([])
-  const [userInfo, setUserInfo] = useState([]);
-  const [perfectplayList, setPerfectPlayList] = useState([]);
+    // 페이지 로드 시 axios요청으로 전체 음악 조회
+    const [songList, setSongList] = useState([])
+    const [userInfo, setUserInfo] = useState({});
+    const [perfectplayList, setPerfectPlayList] = useState([]);
 
   // 유저 정보
   const getUserAction = async () => {
@@ -42,15 +43,46 @@ const PerfectPlayLobyPage = () => {
     } catch (err) {
       console.log(err)
     }
-  }
-  const getUser = async () => {
-    try {
-      const response = await getUserAction();
-      const data = response.data;
-      setUserInfo(data);
+    const getUser = async () => {
+        try{
+            const response = await getUserAction();
+            const data = response.data;
+            setUserInfo(data);
+            console.log(data);
+        }
+        catch(error){
+            console.log(error);
+        }
     }
-    catch (error) {
-      console.log(error);
+
+    // 노래 리스트
+    const getSongList = async () => {
+        try{
+            const response = await getSongListAction();
+            const data = response.data.data;
+            setSongList(data); // songList에 데이터 저장
+            setIsLoading(false); // 데이터 로딩이 완료됨을 표시
+        }catch (error){
+            console.error(error);
+        }
+    };
+
+    // 티어
+    const getUserTierAction = async () => {
+        const URL = process.env.REACT_APP_API_URL
+        const accessToken = getCookie('accessToken')
+        try {
+            const response = await axios({
+                method: 'get',
+                url: `${URL}/user/tier`,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+            return response
+        } catch (err) {
+            console.log(err)
+        }
     }
   }
 
@@ -67,16 +99,22 @@ const PerfectPlayLobyPage = () => {
     }
   };
 
-  // 티어
-  const getUserTierAction = async () => {
-    const URL = process.env.REACT_APP_API_URL
-    const accessToken = getCookie('accessToken')
-    try {
-      const response = await axios({
-        method: 'get',
-        url: `${URL}/user/tier`,
-        headers: {
-          Authorization: `Bearer ${accessToken}`
+    // 퍼펙트 플레이 리스트
+    const getPerfectPlayListAction = async () => {
+        const URL = process.env.REACT_APP_API_URL
+        const accessToken = getCookie('accessToken')
+        try {
+
+            const response = await axios({
+                method: 'get',
+                url: `${URL}/perfectplay/${userIdx}`,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+            return response
+        } catch (err) {
+            console.log(err)
         }
       })
       return response
@@ -95,12 +133,12 @@ const PerfectPlayLobyPage = () => {
     }
   }
 
-  // 퍼펙트 플레이 리스트
-  const getPerfectPlayListAction = async () => {
-    console.log(userInfo.userIdx);
-    const URL = process.env.REACT_APP_API_URL
-    const accessToken = getCookie('accessToken')
-    try {
+    useEffect(() => {
+        getUser();
+        getSongList();
+        getUserTier();
+        getPerfectList();
+    }, [])
 
       const response = await axios({
         method: 'get',
@@ -297,11 +335,24 @@ const PerfectPlayLobyPage = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {perfectplayList.map((element) => (
-                        <TableRow>
-                          <TableCell>{element.title}</TableCell>
-                          <TableCell>{element.score}</TableCell>
-                          <TableCell>{element.clear ? "O" : "X"}</TableCell>
+                      {songList.map((element) => (
+                        <TableRow
+                          key={element.title}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            sx={{ cursor: "pointer" }}
+                            onClick={() => {
+                              navigate(`./${element.songIdx}`);
+                            }}
+                          >
+                            {element.title}
+                          </TableCell>
+                          <TableCell>{element.singer}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

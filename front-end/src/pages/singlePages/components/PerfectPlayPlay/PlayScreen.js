@@ -7,11 +7,14 @@ import randomData from './randomData.json';
 import * as data from './PerfectScoreData';
 import Popup from './Popup';
 import './Popup.css';
-import { useNavigate } from 'react-router-dom';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { postPlayScoreAction } from '../../actions/postPlayScoreAction';
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../../../util/cookie';
+import axios from 'axios'
 
 const PlayScreen = ({ songIdx }) => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
@@ -19,6 +22,8 @@ const PlayScreen = ({ songIdx }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState([]);
+    
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -221,8 +226,35 @@ const PlayScreen = ({ songIdx }) => {
     let scoreText = '';
     let barColor = '';
 
-    // const [totalScore, setTotalScore] = useState(0);
-    // const [avgScore, setAvgScore] = useState(0);
+    // 유저 정보
+    const getUserAction = async () => {
+        const URL = process.env.REACT_APP_API_URL
+        const accessToken = getCookie('accessToken')
+        try {
+            const response = await axios({
+                method: 'get',
+                url: `${URL}/user/`,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+            return response
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const getUser = async () => {
+        try {
+            const response = await getUserAction();
+            // console.log(response);
+            const data = response.data;
+            setUserInfo(data);
+            // console.log(data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     let totalScore = 0;
     let avgScore = 0;
@@ -322,36 +354,36 @@ const PlayScreen = ({ songIdx }) => {
                 scoreText = 'PERFECT';
                 // setTotalScore(totalScore + 100);
                 // setAvgScore(totalScore / randomData.length);
-                // totalScore +=100;
-                // avgScore = totalScore/randomData.length;
+                totalScore += 100;
+                avgScore = totalScore / randomData.length;
             } else if (correct > block * 0.3) {
                 barColor = 2;
                 scoreText = 'GREAT';
                 // setTotalScore(totalScore + 75);
                 // setAvgScore(totalScore / randomData.length);
-                // totalScore +=75;
-                // avgScore = totalScore/randomData.length;
+                totalScore += 75;
+                avgScore = totalScore / randomData.length;
             } else if (correct > block * 0.1) {
                 barColor = 3;
                 scoreText = 'GOOD';
                 // setTotalScore(totalScore + 50);
                 // setAvgScore(totalScore / randomData.length);
-                // totalScore +=50;
-                // avgScore = totalScore/randomData.length;
+                totalScore += 50;
+                avgScore = totalScore / randomData.length;
             } else if (correct > 0) {
                 barColor = 4;
                 scoreText = 'NORMAL';
                 // setTotalScore(totalScore + 25);
                 // setAvgScore(totalScore / randomData.length);
-                // totalScore +=25;
-                // avgScore = totalScore/randomData.length;
+                totalScore += 25;
+                avgScore = totalScore / randomData.length;
             } else {
                 barColor = 5;
                 scoreText = 'BAD';
                 // setTotalScore(totalScore + 0);
                 // setAvgScore(totalScore / randomData.length);
-                // totalScore +=0;
-                // avgScore = totalScore/randomData.length;
+                totalScore += 0;
+                avgScore = totalScore / randomData.length;
             }
             for (let i = 0; i < block; i++) {
                 songNoteWindow[halfSize - i][1] = barColor;
@@ -457,7 +489,7 @@ const PlayScreen = ({ songIdx }) => {
             ctx.strokeStyle = '#fff';
             ctx.lineWidth = 3;
             ctx.moveTo(canvasWidth * 0.5, 0);
-            ctx.lineTo(canvasWidth * 0.5, canvasHeight-55);
+            ctx.lineTo(canvasWidth * 0.5, canvasHeight - 55);
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
@@ -467,18 +499,23 @@ const PlayScreen = ({ songIdx }) => {
             ctx.textAlign = 'center';
             ctx.fillText(scoreText, canvasWidth * 0.4, 50);
             ctx.fillStyle = 'white';
-            ctx.fillText(avgScore.toFixed(2), canvasWidth/2, canvasHeight-20);
+            ctx.fillText(avgScore.toFixed(2), canvasWidth / 2, canvasHeight - 20);
         }
     };
 
+    let check = false;
     useAnimation(() => {
         if (isPlaying) {
             play();
         }
+        
         if (songIndex >= songData.length) {
             // songIndex가 songData.length를 넘어가면 애니메이션 종료
             setIsPlaying(false);
-            //postPlayScoreAction(userIdx, songIdx, avgScore);
+            if(!check){
+                check=true;
+                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
+            }
             return;
         }
     }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
@@ -493,6 +530,7 @@ const PlayScreen = ({ songIdx }) => {
         };
 
         fetchMusic();
+        getUser();
     }, []);
 
     return (

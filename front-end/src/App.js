@@ -31,7 +31,7 @@ function App() {
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/single/record' element={<SingleRecordPage />} />
         <Route path='/single/perfect' element={<PerfectPlayLobyPage />} />
-        <Route path='/single/perfect/:song_idx' element={<PerfectPlayPlayPage />} />
+        <Route path='/single/perfect/:songIdx' element={<PerfectPlayPlayPage />} />
         <Route path='/single' element={<SingleSelectPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/:userId" element={<ProfileEdit />} />
