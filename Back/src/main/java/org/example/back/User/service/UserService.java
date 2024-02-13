@@ -12,5 +12,5 @@ public interface UserService {
     GetUserResponseDto getUser(String userEmail);
     ApiResponse<PatchUserResponseDto> patchUser(String userEmail, PatchUserRequestDto dto);
     ApiResponse<DeleteUserResponseDto> deleteUser(String userEmail);
-    ApiResponse<?> patchUserPassword(String userEmail, String userPassword, PatchUserPasswordRequestDto dto);
+    ApiResponse<?> patchUserPassword(String userEmail, PatchUserPasswordRequestDto dto);
 }

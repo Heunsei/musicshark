@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse<?> patchUserPassword(String userEmail, String userPassword, PatchUserPasswordRequestDto dto) {
+    public ApiResponse<?> patchUserPassword(String userEmail, PatchUserPasswordRequestDto dto) {
 
         Optional<UserEntity> optionalUserEntity = userRepository.findByUserEmail(userEmail);
         String existPassword = dto.getExistPassword();
@@ -112,7 +112,6 @@ public class UserServiceImpl implements UserService {
         try{
 
             String checkExistPassword = optionalUserEntity.get().getPassword();
-            System.out.println("2 "+ checkExistPassword);
 
             boolean passwordMatch = passwordEncoder.matches(existPassword, checkExistPassword);
 

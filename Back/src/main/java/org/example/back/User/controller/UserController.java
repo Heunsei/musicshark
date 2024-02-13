@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<ApiResponse> patchPassword(@AuthenticationPrincipal UserDetails userDetails,
                                                      @RequestBody PatchUserPasswordRequestDto requestDto){
 
-        ApiResponse<?> result = userService.patchUserPassword(userDetails.getUsername(), userDetails.getPassword(), requestDto);
+        ApiResponse<?> result = userService.patchUserPassword(userDetails.getUsername(), requestDto);
 
         String message = result.getMessage();
         int status = result.getStatus();
