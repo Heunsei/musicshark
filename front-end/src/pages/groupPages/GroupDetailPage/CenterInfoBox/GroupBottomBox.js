@@ -53,7 +53,7 @@ const GroupBottomBox = () => {
                     },
                 }}> 캘린더 </Button>
             </Container>
-            <button style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            <button style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: 'Pretendard-Medium' }}
                 onClick={() => navigate('/group')}>
                 <LogoutIcon /> <span>그룹 목록 페이지로</span>
             </button>

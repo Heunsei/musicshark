@@ -99,7 +99,7 @@ const AddMemberButton = (props) => {
             >
                 <Box sx={style}>
                     <div className={styles.header}>
-                        <p>멤버 초대</p>
+                        <p style={{ fontWeight: 'bolder', fontFamily: 'Pretendard-Bold', fontSize: '24px' }}>멤버 초대</p>
                     </div>
                     <div className={styles.inviteBox}>
                         <div className={styles.searchBox}>

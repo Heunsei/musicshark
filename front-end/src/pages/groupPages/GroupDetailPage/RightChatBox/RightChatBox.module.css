@@ -49,6 +49,7 @@
 }
 
 .chatContainer {
+    font-family: "Pretendard-Medium";
     display: flex;
     flex-direction: column;
     position: relative;

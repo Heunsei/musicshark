@@ -169,7 +169,14 @@ const GroupBox = (props) => {
                             setGroupName('')
                         }}
                         sx={{
-                            margin: '15px'
+                            marginTop: '5px',
+                            fontFamily: 'Pretendard-Medium',
+                            backgroundColor: '#997B66',
+                            color: 'white',
+                            ':hover': {
+                                bgcolor: '#997B66',
+                                color: 'white',
+                            },
                         }}
                     >그룹 생성하기</Button>
                 </Box>

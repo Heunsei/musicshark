@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createRef, useEffect, useState } from 'react'
 
 import SendIcon from '@mui/icons-material/Send';
 
@@ -19,6 +19,8 @@ const RightChatBox = (props) => {
     const [searchTitle, setSearchTitle] = useState('')
 
     const [isChatBoxOpen, setIsChatBoxOpen] = useState(true)
+
+    const chatScroll = createRef();
 
     const [isHover, setIsHover] = useState(false)
     const [hoverDivId, setHoverDivId] = useState('')
@@ -42,6 +44,10 @@ const RightChatBox = (props) => {
                 messageList.push({ connectionId: event.from.connectionId, nickname: data.nickname, message: data.message });
                 setChatList(messageList)
             });
+            setTimeout(() => {
+                const chatWarp = chatScroll.current;
+                chatWarp.scrollTop = chatWarp.scrollHeight
+            }, 20)
         }
     }, [session, chatList])
 
@@ -88,9 +94,9 @@ const RightChatBox = (props) => {
                     type: 'chat',
                 });
             }
+
             setMessage('')
         }
-
     }
 
     const handleSearchRecord = async () => {
@@ -124,7 +130,7 @@ const RightChatBox = (props) => {
                 {
                     isChatBoxOpen ?
                         <>
-                            <div className={styles.chatContainer}>
+                            <div className={styles.chatContainer} ref={chatScroll}>
                                 {
                                     session === undefined ? <p>그룹 통화에 참여해야 합니다</p> :
                                         chatList.map((e, i) => {
