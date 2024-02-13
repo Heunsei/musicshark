@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.example.back.PerfectPlay.dto.request.PerfectplayRequestDto;
 import org.example.back.PerfectPlay.dto.response.PerfectplayResponseDto;
 import org.example.back.PerfectPlay.entity.PerfectplayEntity;
+import org.example.back.PerfectPlay.entity.SongEntity;
+import org.example.back.PerfectPlay.repository.SongRepository;
 import org.example.back.User.entity.TierEntity;
 import org.example.back.PerfectPlay.repository.PerfectplayRepository;
 import org.example.back.User.repository.TierRepository;
@@ -21,6 +23,7 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 
 	private final PerfectplayRepository perfectplayRepository;
 	private final TierRepository tierRepository;
+	private final SongServiceImpl songServiceImpl;
 
 	// 퍼펙트플레이 기록 조회
 	@Override
@@ -49,7 +52,8 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 	// 퍼펙트플레이 기록 저장
 	@Override
 	public PerfectplayEntity createPerfectplayResult(int userIdx, PerfectplayRequestDto perfectplayRequestDto) {
-		PerfectplayEntity perfectplayEntity = convertToEntity(userIdx, perfectplayRequestDto);
+		SongEntity song = songServiceImpl.getSongById(perfectplayRequestDto.getSongIdx());
+		PerfectplayEntity perfectplayEntity = convertToEntity(userIdx, song, perfectplayRequestDto);
 
 		perfectplayRepository.save(perfectplayEntity);
 
@@ -92,11 +96,12 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		return cnt > 1;
 	}
 
-	private PerfectplayEntity convertToEntity(int userIdx, PerfectplayRequestDto perfectplayRequestDto) {
+	private PerfectplayEntity convertToEntity(int userIdx, SongEntity song, PerfectplayRequestDto perfectplayRequestDto) {
 		PerfectplayEntity entity = new PerfectplayEntity();
-		boolean isClear = perfectplayRequestDto.getScore() >= 80; //score 80점 넘으면 clear=true
+
+		boolean isClear = perfectplayRequestDto.getScore() >= 60; //score 60점 넘으면 clear=true
 		entity.setUserIdx(userIdx);
-		entity.setSongIdx(perfectplayRequestDto.getSongIdx());
+		entity.setSongIdx(song.getSongIdx());
 		entity.setScore(perfectplayRequestDto.getScore());
 		entity.setClear(isClear);
 		return entity;

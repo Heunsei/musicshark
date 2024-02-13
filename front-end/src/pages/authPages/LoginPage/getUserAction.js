@@ -21,6 +21,7 @@ const getUserAction = async (ACCESS_TOKEN, dispatch, navigate) => {
                 dispatch(setUser.setNickname(res.data.nickname))
                 dispatch(setUser.setGender(res.data.gender))
                 dispatch(setUser.setBrith(res.data.birth))
+                dispatch(setUser.setUserIdx(res.data.userIdx))
                 navigate('/group')
             })
             .catch((err) => {

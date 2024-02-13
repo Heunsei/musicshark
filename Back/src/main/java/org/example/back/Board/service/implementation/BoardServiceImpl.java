@@ -1,6 +1,7 @@
 package org.example.back.Board.service.implementation;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.example.back.Board.dto.request.PostBoardRequestDto;
 import org.example.back.Board.entity.BoardEntity;
@@ -30,7 +31,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardEntity getBoard(int boardIdx) {
-		return boardRepository.findByBoardIdxAndBoardDeleted(boardIdx, false);
+        return boardRepository.findByBoardIdxAndBoardDeleted(boardIdx, false)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
 	}
 
 	@Override
@@ -76,6 +78,15 @@ public class BoardServiceImpl implements BoardService {
 			boardRepository.save(board);
 		}
 	}
+
+	@Override
+	public void countUp(int boardIdx) {
+		BoardEntity board = boardRepository.findByBoardIdxAndBoardDeleted(boardIdx, false)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
+
+		board.setBoardCount(board.getBoardCount() + 1);
+	}
+
 	@Override
 	public List<BoardEntity> getUserBoard(String nickname) {
 		UserEntity user = userRepository.findByNickname(nickname);
