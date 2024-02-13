@@ -18,12 +18,13 @@ import axios from 'axios'
 const PerfectPlayLobyPage = () => {
     const userName = useSelector((state) => state.user.nickname)
     const [userTier, setUserTier] = useState("");
+    const userIdx = useSelector((state) => state.user.userIdx)
     const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate()
 
     // 페이지 로드 시 axios요청으로 전체 음악 조회
     const [songList, setSongList] = useState([])
-    const [userInfo, setUserInfo] = useState([]);
+    const [userInfo, setUserInfo] = useState({});
     const [perfectplayList, setPerfectPlayList] = useState([]);
 
     // 유저 정보
@@ -97,14 +98,13 @@ const PerfectPlayLobyPage = () => {
 
     // 퍼펙트 플레이 리스트
     const getPerfectPlayListAction = async () => {
-        console.log(userInfo.userIdx);
         const URL = process.env.REACT_APP_API_URL
         const accessToken = getCookie('accessToken')
         try {
 
             const response = await axios({
                 method: 'get',
-                url: `${URL}/perfectplay/13`,
+                url: `${URL}/perfectplay/${userIdx}`,
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -119,7 +119,6 @@ const PerfectPlayLobyPage = () => {
             const response = await getPerfectPlayListAction();
             const data = response.data.data;
             setPerfectPlayList(data);
-            console.log(data);
         }
         catch(error){
             console.log(error);
@@ -128,9 +127,9 @@ const PerfectPlayLobyPage = () => {
 
     useEffect(() => {
         getUser();
-        getPerfectList();
         getSongList();
         getUserTier();
+        getPerfectList();
     }, [])
 
       const perfectplayListStyle = {
