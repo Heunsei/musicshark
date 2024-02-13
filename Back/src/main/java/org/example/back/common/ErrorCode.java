@@ -21,9 +21,9 @@ public enum ErrorCode {
     FAIL_UNLINKING_KAKAO_ACCOUNT(500, "카카오 계정의 연결을 끊는데 실패했습니다."),
     FAIL_TOKEN_GENERATION(500, "Failed to generate Token."),
     CONFLICT_RESOURCE(409, "중복된 값이 있습니다. 다시 입력해주세요"),
-
     USER_NOT_FOUND(404, "해당 유저를 찾을 수 없습니다."),
     SONG_NOT_FOUND(404, "해당 노래를 찾을 수 없습니다."),
+    BOARD_NOT_FOUND(404, "게시글을 찾을 수 없습니다."),
     COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다."),
     VIDEO_NOT_FOUND(404, "존재하지 않는 영상입니다.");
 

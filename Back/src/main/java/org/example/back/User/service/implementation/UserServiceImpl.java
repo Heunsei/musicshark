@@ -1,6 +1,7 @@
 package org.example.back.User.service.implementation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.back.User.dto.request.PatchUserPasswordRequestDto;
 import org.example.back.common.ApiResponse;
 import org.example.back.User.dto.request.PatchUserRequestDto;
 import org.example.back.User.dto.response.DeleteUserResponseDto;
@@ -54,7 +55,6 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> OptionUserEntity = userRepository.findByUserEmail(userEmail);
 
         String nickname = dto.getNickname();
-        String password = dto.getPassword();
         String profileImage = dto.getProfileImage();
 
         try{
@@ -66,13 +66,10 @@ public class UserServiceImpl implements UserService {
             UserEntity userEntity = OptionUserEntity.get();
 
                 boolean usedNickname = userRepository.existsByNickname(nickname);
-                if(usedNickname) return  new ApiResponse<>("존재하는 닉네임입니다.", 500, data);
-                userEntity.setNickname(nickname); // 받는 값들이 null이면 기존 값들을 넣고, 값들을 넣어서 보냈다면 값 바꾸기...?
+                if(usedNickname) return new ApiResponse<>("존재하는 닉네임입니다.", 500, data);
+                userEntity.setNickname(nickname);
 
-                if(password != null){
-                    String passwordEncoded = passwordEncoder.encode(password);
-                    userEntity.setPassword(passwordEncoded);
-                }
+
                 if(profileImage != null) userEntity.setProfileImage(profileImage);
 
                 userRepository.save(userEntity);
@@ -103,5 +100,34 @@ public class UserServiceImpl implements UserService {
         }
 
         return new ApiResponse("유저 탈퇴 성공", OK.value(), null);
+    }
+
+    @Override
+    public ApiResponse<?> patchUserPassword(String userEmail, PatchUserPasswordRequestDto dto) {
+
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUserEmail(userEmail);
+        String existPassword = dto.getExistPassword();
+        String newPassword = dto.getNewPassword();
+
+        try{
+
+            String checkExistPassword = optionalUserEntity.get().getPassword();
+
+            boolean passwordMatch = passwordEncoder.matches(existPassword, checkExistPassword);
+
+            if (passwordMatch){
+                String passwordEncoded = passwordEncoder.encode(newPassword);
+                optionalUserEntity.get().setPassword(passwordEncoded);
+            }
+            else return new ApiResponse("현재 비밀번호가 다릅니다.", 500, null);
+
+            userRepository.save(optionalUserEntity.get());
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ApiResponse("패스워드 수정 에러", 500, null);
+        }
+
+        return  new ApiResponse("패스워드 수정 성공", 500, null);
     }
 }

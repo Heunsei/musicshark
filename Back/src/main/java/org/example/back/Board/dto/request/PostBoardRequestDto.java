@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class PostBoardRequestDto {
 	@NotBlank
-	@JsonProperty("board_title")
+//	@JsonProperty("board_title")
 	String boardTitle;
 
 	@NotBlank
-	@JsonProperty("board_content")
+//	@JsonProperty("board_content")
 	String boardContent;
 }
