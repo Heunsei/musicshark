@@ -17,6 +17,7 @@ import BoardCreate from './pages/Board/BoardCreate';
 import BoardUpdate from './pages/Board/BoardUpdate';
 
 import PrivateRoute from "./util/PrivateRoute";
+import PublicRoute from "./util/PublicRoute";
 
 import ProfileEdit from "./pages/authPages/MyPage/ProfileEdit";
 
@@ -27,7 +28,6 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<MainPage />} />
-        <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/single/record' element={<SingleRecordPage />} />
         <Route path='/single/perfect' element={<PerfectPlayLobyPage />} />
@@ -46,8 +46,9 @@ function App() {
           <Route path='/group/:id' element={<GroupDetailPage />} />
           {/* <Route path='/about' element={<AboutPage />} /> */}
         </Route>
-
-
+        <Route element={<PublicRoute />}>
+          <Route path='/login' element={<LoginPage />} />
+        </Route>
       </Routes>
     </>
   );

@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import TitleIcon from '@mui/icons-material/Title';
+import LyricsIcon from '@mui/icons-material/Lyrics';
 
 import styles from './PerfectPlayPage.module.css'
 import Navbar from '../../components/Navbar';
@@ -16,16 +18,16 @@ import { getCookie } from '../../util/cookie';
 import axios from 'axios'
 
 const PerfectPlayLobyPage = () => {
-    const userName = useSelector((state) => state.user.nickname)
-    const [userTier, setUserTier] = useState("");
-    const userIdx = useSelector((state) => state.user.userIdx)
-    const [isLoading, setIsLoading] = useState(true)
-    const navigate = useNavigate()
+  const userName = useSelector((state) => state.user.nickname)
+  const [userTier, setUserTier] = useState("");
+  const userIdx = useSelector((state) => state.user.userIdx)
+  const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
-    // 페이지 로드 시 axios요청으로 전체 음악 조회
-    const [songList, setSongList] = useState([])
-    const [userInfo, setUserInfo] = useState({});
-    const [perfectplayList, setPerfectPlayList] = useState([]);
+  // 페이지 로드 시 axios요청으로 전체 음악 조회
+  const [songList, setSongList] = useState([])
+  const [userInfo, setUserInfo] = useState({});
+  const [perfectplayList, setPerfectPlayList] = useState([]);
 
   // 유저 정보
   const getUserAction = async () => {
@@ -43,46 +45,16 @@ const PerfectPlayLobyPage = () => {
     } catch (err) {
       console.log(err)
     }
-    const getUser = async () => {
-        try{
-            const response = await getUserAction();
-            const data = response.data;
-            setUserInfo(data);
-            console.log(data);
-        }
-        catch(error){
-            console.log(error);
-        }
+  }
+  const getUser = async () => {
+    try {
+      const response = await getUserAction();
+      const data = response.data;
+      setUserInfo(data);
+      console.log(data);
     }
-
-    // 노래 리스트
-    const getSongList = async () => {
-        try{
-            const response = await getSongListAction();
-            const data = response.data.data;
-            setSongList(data); // songList에 데이터 저장
-            setIsLoading(false); // 데이터 로딩이 완료됨을 표시
-        }catch (error){
-            console.error(error);
-        }
-    };
-
-    // 티어
-    const getUserTierAction = async () => {
-        const URL = process.env.REACT_APP_API_URL
-        const accessToken = getCookie('accessToken')
-        try {
-            const response = await axios({
-                method: 'get',
-                url: `${URL}/user/tier`,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            })
-            return response
-        } catch (err) {
-            console.log(err)
-        }
+    catch (error) {
+      console.log(error);
     }
   }
 
@@ -93,28 +65,21 @@ const PerfectPlayLobyPage = () => {
       const data = response.data.data;
       setSongList(data); // songList에 데이터 저장
       setIsLoading(false); // 데이터 로딩이 완료됨을 표시
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
   };
 
-    // 퍼펙트 플레이 리스트
-    const getPerfectPlayListAction = async () => {
-        const URL = process.env.REACT_APP_API_URL
-        const accessToken = getCookie('accessToken')
-        try {
-
-            const response = await axios({
-                method: 'get',
-                url: `${URL}/perfectplay/${userIdx}`,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            })
-            return response
-        } catch (err) {
-            console.log(err)
+  // 티어
+  const getUserTierAction = async () => {
+    const URL = process.env.REACT_APP_API_URL
+    const accessToken = getCookie('accessToken')
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `${URL}/user/tier`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`
         }
       })
       return response
@@ -133,16 +98,15 @@ const PerfectPlayLobyPage = () => {
     }
   }
 
-    useEffect(() => {
-        getUser();
-        getSongList();
-        getUserTier();
-        getPerfectList();
-    }, [])
+  // 퍼펙트 플레이 리스트
+  const getPerfectPlayListAction = async () => {
+    const URL = process.env.REACT_APP_API_URL
+    const accessToken = getCookie('accessToken')
+    try {
 
       const response = await axios({
         method: 'get',
-        url: `${URL}/perfectplay/13`,
+        url: `${URL}/perfectplay/${userIdx}`,
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -165,9 +129,9 @@ const PerfectPlayLobyPage = () => {
 
   useEffect(() => {
     getUser();
-    getPerfectList();
     getSongList();
     getUserTier();
+    getPerfectList();
   }, [])
 
   const perfectplayListStyle = {
@@ -285,14 +249,22 @@ const PerfectPlayLobyPage = () => {
           <div className={styles.content}>
             <div className={styles.songList}>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ backgroundColor: "#F5F5DC", minWidth: 650, borderSpacing: '7px 7px', borderCollapse: 'separate' }} aria-label="simple table">
                   <TableHead sx={{ backgroundColor: "#997B66" }}>
-                    <TableRow>
-                      <TableCell>제목</TableCell>
-                      <TableCell>가수</TableCell>
+                    <TableRow sx={{ backgroundColor: "#997B66" }} >
+                      <TableCell sx={{ textAlign: 'center', borderRadius: '5px', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                          <TitleIcon />
+                          <p style={{ fontSize: '17px', fontWeight: 'bold' }}>제목</p>
+                        </div>
+
+                      </TableCell>
+                      <TableCell sx={{ textAlign: 'center', borderRadius: '5px', alignItems: 'center' }}>
+                        <LyricsIcon />가수
+                      </TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
+                  <TableBody >
                     {songList.map((element) => (
                       <TableRow
                         key={element.title}
@@ -305,7 +277,7 @@ const PerfectPlayLobyPage = () => {
                           scope="row"
                           sx={{ cursor: "pointer" }}
                           onClick={() => {
-                            navigate(`./${element.song_idx}`);
+                            navigate(`./${element.songIdx}`);
                           }}
                         >
                           {element.title}
@@ -335,24 +307,11 @@ const PerfectPlayLobyPage = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {songList.map((element) => (
-                        <TableRow
-                          key={element.title}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell
-                            component="th"
-                            scope="row"
-                            sx={{ cursor: "pointer" }}
-                            onClick={() => {
-                              navigate(`./${element.songIdx}`);
-                            }}
-                          >
-                            {element.title}
-                          </TableCell>
-                          <TableCell>{element.singer}</TableCell>
+                      {perfectplayList.map((element) => (
+                        <TableRow>
+                          <TableCell>{element.title}</TableCell>
+                          <TableCell>{element.score}</TableCell>
+                          <TableCell>{element.clear ? "O" : "X"}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -362,7 +321,7 @@ const PerfectPlayLobyPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };

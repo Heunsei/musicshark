@@ -17,7 +17,6 @@ const getUserAction = async (ACCESS_TOKEN, dispatch, navigate) => {
         })
             .then((res) => {
                 console.log('setUser 상태', res.data)
-                dispatch(setUser.setUserIndex(res.data.userIdx))
                 dispatch(setUser.setEmail(res.data.userEmail))
                 dispatch(setUser.setNickname(res.data.nickname))
                 dispatch(setUser.setGender(res.data.gender))
