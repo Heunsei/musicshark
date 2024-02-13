@@ -14,10 +14,10 @@ const BoardUpdate=()=>{
   const nickname = useSelector((state) => state.user.nickname)
   const {board_id}=useParams();
   const [loading, setLoading]=useState();
+      const [data, setData] = useState([])
   const [board, setBoard]=useState({
-      boardTitle:'',
-              boardContent:'',
-              userNickname:nickname
+      boardTitle:`${boardTitle}`,
+              boardContent:`${boardContent}`,
           })
           
 const {boardTitle, boardContent}=board;
@@ -28,12 +28,19 @@ const {boardTitle, boardContent}=board;
 
 
  
-          
+        const handleUpdataAction = () => {
+          const data = {
+            boardTitle : board.boardTitle,
+            boardContent: board.boardContent
+          }
+          boardUpdateAction(board_id,data)
+        }
   
 
 
   const handleChange=(event)=>{
       console.log(event.target.value);
+      
       const{value,name}=event.target;
       setBoard({
           ...board,
@@ -59,10 +66,25 @@ const BoxWrapper = styled('div')({
         })
     }
 
-    const getBoard = async () => {
-        const resp = await (await axios.get(`${URL}/board/${board_id}`)).data;
-        setBoard(resp.data);
-      };
+    const getBoard=async()=>{
+      // const resp=await(await axios.get(`//localhost:8080/board/${board_id}`)).data;
+      const response = await axios ({
+          url : `${URL}/board/${board_id}`,
+          headers : {
+              Authorization : `Bearer ${accessToken}`
+          },
+          data : {board_idx  : board_id}
+
+      })
+      console.log('보드 업데이트 확인',response.data)
+      setData(response.data)
+      setBoard(response.data);
+      setLoading(false);
+    }
+    // const getBoard = async () => {
+    //     const resp = await (await axios.get(`${URL}/board/${board_id}`)).data;
+    //     setBoard(resp.data);
+    //   };
     
       // const updateBoard = async () => {
       //   await axios.patch(`${URL}/board`, board).then((res) => {
@@ -110,7 +132,8 @@ const BoxWrapper = styled('div')({
                     <div>
                         <button onClick={backToDetail}>취소</button>
                         <button onClick={()=>{
-                            boardUpdateAction(board)
+                          handleUpdataAction()
+                            // boardUpdateAction(board, )
                     }}>수정</button>
                        
                     </div>

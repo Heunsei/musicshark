@@ -12,13 +12,13 @@ export const boardUpdateAction=async(board_id,boardDetail)=>{
         await axios({
             method : 'put' ,
             url:`http://localhost:8080/board/${board_id}`,
-            data : boardDetail,
+            data : board_id,
             headers : {
                 Authorization: `Bearer ${accessToken}`
             }
         })
         .then((res) => {
-            alert('등록되었습니다.');
+            alert('수정되었습니다.');
             console.log(res)
         })
         .catch((err => {
