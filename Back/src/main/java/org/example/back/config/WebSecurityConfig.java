@@ -52,7 +52,7 @@ public class WebSecurityConfig {
 //            .antMatchers("/board/{board_idx}/{nickname}").permitAll()
 //                .antMatchers(HttpMethod.GET).permitAll()
 //                .antMatchers(HttpMethod.POST).permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated() // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
