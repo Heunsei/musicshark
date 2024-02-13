@@ -65,6 +65,17 @@ public class PersonalVideoController {
 		}
 	}
 
+	@GetMapping("/search/between")
+	public ResponseEntity<?> searchVideoBetweenDate(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("year") int year, @RequestParam("month") int month){
+		try{
+			List<SearchVideoResponseDto> list;
+			list = s3Service.searchVideoBetweenDate(userDetails, year, month);
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@PostMapping()
 	public ResponseEntity<?> saveVideo(
 			@ModelAttribute PersonalVideoRequestDto dto,

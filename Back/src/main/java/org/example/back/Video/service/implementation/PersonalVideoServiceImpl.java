@@ -161,6 +161,27 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 		return list;
 	}
 
+	@Override
+	public List<SearchVideoResponseDto> searchVideoBetweenDate(UserDetails userDetails, int year, int month) throws Exception {
+		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
+				.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+		List<VideoEntity> videoList = videoRepository.findByUserIdxAndDateRange(user.getUserIdx(), year, month)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.VIDEO_NOT_FOUND));
+
+		List<SearchVideoResponseDto> list = new ArrayList<>();
+		for(VideoEntity video : videoList){
+			SearchVideoResponseDto dto = new SearchVideoResponseDto();
+			dto.setVideoIdx(video.getVideoIdx());
+			dto.setVideoDate(video.getVideoDate());
+			dto.setVideoTitle(video.getVideoTitle());
+			dto.setPresignedURL(makePresignedURL(video.getVideoPath(), accessExpiredTime, HttpMethod.GET));
+
+			list.add(dto);
+		}
+		return list;
+	}
+
 	private String makePresignedURL(String keyname, long expTimeSecond, HttpMethod method) throws Exception {
 		String preSignedURL;
 		Date expiration = new Date();
