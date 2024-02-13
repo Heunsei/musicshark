@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CustomCalendar from "./Calendar";
 import api from "../../../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const RecordBox = () => {
   function getCookie(name) {
@@ -22,10 +23,13 @@ const RecordBox = () => {
   const [userId, setUserId] = useState(-1);
   const [userNickname, setUserNickname] = useState("");
   const [userTier, setUserTier] = useState("");
+  const [tierImageUrl, setTierImageUrl] = useState("");
   const [songs, setSongs] = useState([]); // 음악 목록을 저장할 상태
   const [clearedSongs, setClearedSongs] = useState(0); // 클리어 곡 수를 저장할 상태
   const [userPosts, setUserPosts] = useState([]); // 유저가 작성한 게시글 목록을 저장할 상태
   const [value, onChange] = useState(new Date());
+
+  const navigate = useNavigate(); // useNavigate Hook을 사용합니다
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -90,6 +94,18 @@ const RecordBox = () => {
     fetchSongs(); // 음악 목록 조회 함수 호출
   }, []);
 
+  useEffect(() => {
+    // userId에 따라 userImageUrl 업데이트
+    const updateTierImageUrl = () => {
+      setTierImageUrl(`${process.env.PUBLIC_URL}/${userTier}.png`);
+    };
+
+    if (userId !== -1) {
+      // userId가 설정된 후에만 이미지 URL 업데이트 실행
+      updateTierImageUrl();
+    }
+  }, [userTier]); // userId 값이 변경될 때마다 실행
+
   const fetchClearedSongs = async () => {
     try {
       const response = await api.get(`/perfectplay/${userId}`, {
@@ -142,15 +158,15 @@ const RecordBox = () => {
       tier.toLowerCase() // 소문자로 변환하여 대소문자 구분 없이 비교
     ) {
       case "bronze":
-        return "BR";
+        return "BRONZE";
       case "silver":
-        return "SV";
+        return "SILVER";
       case "gold":
-        return "GD";
+        return "GOLD";
       case "platinum":
-        return "PT";
+        return "PLATINUM";
       case "diamond":
-        return "DM";
+        return "DIAMOND";
       default:
         return ""; // 일치하는 티어가 없는 경우 빈 문자열 반환
     }
@@ -161,8 +177,10 @@ const RecordBox = () => {
     alignItems: "center",
     justifyContent: "center", // 수평 중앙 정렬 추가
     width: "40%", // 필요에 따라 조정하거나 제거
-    height: "10%",
+    height: "11%",
     border: "solid", // 필요에 따라 테두리 스타일을 조정
+    borderRadius: "5%",
+    marginTop: "-2%",
   };
 
   const getTierStyle = (tier) => {
@@ -173,6 +191,7 @@ const RecordBox = () => {
         return {
           ...baseStyle,
           backgroundColor: "#cd7f32", // Bronze 색상
+          border: "#cd7f32",
           color: "white",
           marginLeft: "1.5%",
           marginRight: "3%",
@@ -181,24 +200,28 @@ const RecordBox = () => {
         return {
           ...baseStyle,
           backgroundColor: "#C0C0C0", // Silver 색상
-          color: "white",
+          border: "#C0C0C0",
+          color: "black",
         };
       case "gold":
         return {
           ...baseStyle,
           backgroundColor: "#FFD700", // Gold 색상
+          border: "#FFD700",
           color: "white",
         };
       case "platinum":
         return {
           ...baseStyle,
           backgroundColor: "#E5E4E2", // Platinum 색상
-          color: "white",
+          border: "#E5E4E2",
+          color: "black",
         };
       case "diamond":
         return {
           ...baseStyle,
           backgroundColor: "#b9f2ff", // Diamond 색상
+          border: "#b9f2ff",
           color: "black", // Diamond는 밝은 색상이므로 텍스트 색상을 검정으로 변경
         };
       default:
@@ -245,7 +268,7 @@ const RecordBox = () => {
   const cardStyle2 = {
     display: "block",
     textAlign: "left",
-    marginTop: "50px", // Navbar 아래에 위치하도록 마진 조정
+    marginTop: "6%", // Navbar 아래에 위치하도록 마진 조정
     marginLeft: "auto",
     marginRight: "auto",
     width: "92%", // 전체 너비 사용
@@ -260,8 +283,8 @@ const RecordBox = () => {
 
   const cardStyle3 = {
     display: "block",
-    marginTop: "50px", // Navbar 아래에 위치하도록 마진 조정
-    marginBottom: "14.5%",
+    marginTop: "6%", // Navbar 아래에 위치하도록 마진 조정
+    marginBottom: "5.5%",
     marginLeft: "auto",
     marginRight: "auto",
     width: "92%", // 전체 너비 사용
@@ -360,6 +383,13 @@ const RecordBox = () => {
     fontWeight: "bold", // 글씨를 굵게 합니다.
   };
 
+  const tierImageStyle = {
+    // display: "flex",
+    // justifyContent: "center",
+    marginTop: "-4%",
+    marginRight: "11%",
+  };
+
   return (
     <div style={{ display: "block" }}>
       <div style={cardStyle1}>
@@ -367,9 +397,8 @@ const RecordBox = () => {
         <div style={containerStyle}>
           <div style={innerBoxStyle}>
             <h2 style={innerTitle}>나의 티어</h2>
+            <img src={tierImageUrl} style={tierImageStyle} />
             <div style={getTierStyle(userTier)}>{getTierAbbreviation(userTier)}</div>
-            <br />
-            <button>전체 티어표 보기</button>
           </div>
           <div style={innerBoxStyle}>
             <h2 style={innerTitle}>클리어한 곡</h2>
@@ -389,7 +418,7 @@ const RecordBox = () => {
         <ul style={postListStyle}>
           {currentPosts.map((post) => (
             <li key={post.boardIdx} style={postItemStyle}>
-              {post.boardTitle}
+              {post.boardTitle.length > 48 ? `${post.boardTitle.slice(0, 48)}···` : post.boardTitle}
             </li>
           ))}
         </ul>
