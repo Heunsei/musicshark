@@ -27,6 +27,7 @@ const GroupBottomBox = () => {
                         dispatch(setLoby(false))
                     }}
                     sx={{
+                        fontFamily: "Pretendard-Medium",
                         width: '45%',
                         height: '50%',
                         backgroundColor: '#C0AB9A',
@@ -39,6 +40,7 @@ const GroupBottomBox = () => {
                         },
                     }}> 연습하기 </Button>
                 <Button sx={{
+                    fontFamily: "Pretendard-Medium",
                     width: '45%',
                     height: '50%',
                     backgroundColor: '#C0AB9A',

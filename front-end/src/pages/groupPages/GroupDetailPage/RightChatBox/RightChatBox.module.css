@@ -10,6 +10,8 @@
 }
 
 .chatBtn {
+    font-family: "Pretendard-Medium";
+    font-size: 24px;
     border-radius: 15px 0 0 15px;
     border: none;
     display: inline;
@@ -18,6 +20,8 @@
 }
 
 .videoBtn {
+    font-family: "Pretendard-Medium";
+    font-size: 24px;
     border-radius: 0 15px 15px 0;
     border: none;
     display: inline;
@@ -70,6 +74,7 @@
 }
 
 .messageInput {
+    font-family: "Pretendard-Medium";
     border-radius: 15px;
     box-sizing: border-box;
     height: 50%;

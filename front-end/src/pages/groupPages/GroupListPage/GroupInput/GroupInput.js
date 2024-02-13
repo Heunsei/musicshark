@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styles from './GroupInput.module.css'
-import getGroupListAction from './getGroupListAction';
-import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
 
+import SearchIcon from '@mui/icons-material/Search';
+import Modal from '@mui/material/Modal';
+
+import getGroupListAction from './getGroupListAction';
+import styles from './GroupInput.module.css'
 
 const GroupInput = (props) => {
     const { value, setValue, groupList, setGroupList } = props
@@ -57,7 +58,9 @@ const GroupInput = (props) => {
                     onKeyDown={(event) => checkGroupList(event)}
                     maxLength={20}
                 />
-                <button onClick={(event) => checkGroupList(event)}>검색</button>
+                <button className={styles.searchSubmitButton} onClick={(event) => checkGroupList(event)} disabled={!value}>
+                    <SearchIcon />
+                </button>
             </div>
             <Modal
                 open={open}

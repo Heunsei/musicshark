@@ -6,8 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 import TitleIcon from '@mui/icons-material/Title';
 import LyricsIcon from '@mui/icons-material/Lyrics';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import FlagIcon from '@mui/icons-material/Flag';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 import styles from './PerfectPlayPage.module.css'
 import Navbar from '../../components/Navbar';
@@ -244,7 +249,7 @@ const PerfectPlayLobyPage = () => {
       <div className={styles.body}>
         <div className={styles.container}>
           <div className={styles.topIndicator}>
-            <p>{userName}님 어서오세요</p>
+            <p style={{ fontFamily: 'Pretendard-Bold' }}>{userName}님 어서오세요</p>
           </div>
           <div className={styles.content}>
             <div className={styles.songList}>
@@ -252,15 +257,17 @@ const PerfectPlayLobyPage = () => {
                 <Table sx={{ backgroundColor: "#F5F5DC", minWidth: 650, borderSpacing: '7px 7px', borderCollapse: 'separate' }} aria-label="simple table">
                   <TableHead sx={{ backgroundColor: "#997B66" }}>
                     <TableRow sx={{ backgroundColor: "#997B66" }} >
-                      <TableCell sx={{ textAlign: 'center', borderRadius: '5px', alignItems: 'center' }}>
+                      <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center', width: '70%' }}>
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                          <TitleIcon />
-                          <p style={{ fontSize: '17px', fontWeight: 'bold' }}>제목</p>
+                          <TitleIcon sx={{ color: 'white' }} />
+                          <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>제목</p>
                         </div>
-
                       </TableCell>
-                      <TableCell sx={{ textAlign: 'center', borderRadius: '5px', alignItems: 'center' }}>
-                        <LyricsIcon />가수
+                      <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                          <LyricsIcon sx={{ color: 'white' }} />
+                          <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>가수</p>
+                        </div>
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -275,14 +282,22 @@ const PerfectPlayLobyPage = () => {
                         <TableCell
                           component="th"
                           scope="row"
-                          sx={{ cursor: "pointer" }}
+                          sx={{
+                            fontFamily: 'Pretendard-Medium', cursor: "pointer",
+                            textAlign: 'center', borderRadius: '5px', alignItems: 'center', boxShadow: '1px 1px 1px gray'
+                          }}
                           onClick={() => {
                             navigate(`./${element.songIdx}`);
                           }}
                         >
                           {element.title}
                         </TableCell>
-                        <TableCell>{element.singer}</TableCell>
+                        <TableCell
+                          sx={{
+                            fontFamily: 'Pretendard-Medium', cursor: "pointer",
+                            textAlign: 'center', borderRadius: '5px', alignItems: 'center', boxShadow: '1px 1px 1px gray'
+                          }}
+                        >{element.singer}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -298,20 +313,35 @@ const PerfectPlayLobyPage = () => {
               </div>
               <div className={styles.perfectplayList}>
                 <TableContainer component={Paper} sx={{ height: "100%" }}>
-                  <Table sx={{ height: "100%" }} aria-label="simple table">
+                  <Table sx={{ backgroundColor: "#F5F5DC", minWidth: 650, borderSpacing: '7px 7px', borderCollapse: 'separate' }} aria-label="simple table">
                     <TableHead sx={{ backgroundColor: "#997B66" }}>
                       <TableRow>
-                        <TableCell>제목</TableCell>
-                        <TableCell>점수</TableCell>
-                        <TableCell>클리어</TableCell>
+                        <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <MusicNoteIcon sx={{ color: 'white' }} />
+                            <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>점수</p>
+                          </div>
+                        </TableCell>
+                        <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <FlagIcon sx={{ color: 'white' }} />
+                            <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>클리어</p>
+                          </div>
+                        </TableCell>
+                        <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <TitleIcon sx={{ color: 'white' }} />
+                            <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>제목</p>
+                          </div>
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {perfectplayList.map((element) => (
                         <TableRow>
-                          <TableCell>{element.title}</TableCell>
-                          <TableCell>{element.score}</TableCell>
-                          <TableCell>{element.clear ? "O" : "X"}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.title}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.score}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.clear ? "O" : "X"}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

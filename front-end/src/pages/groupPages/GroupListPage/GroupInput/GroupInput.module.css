@@ -1,6 +1,6 @@
 .groupInputBox {
     width: 100%;
-    height: 100%;
+    height: 10%;
     background-color: burlywood;
     justify-content: center;
     align-items: center;
@@ -8,7 +8,8 @@
 }
 
 .customInput {
-    height: 70%;
+    font-family: 'Pretendard-Medium';
+    height: 60%;
     width: 40%;
     border: 1px solid black;
     border-radius: 5px;
@@ -32,7 +33,7 @@
     width: 500px;
     height: 500px;
     background-color: white;
-    border: 2px solid blue;
+    border: 2px solid black;
     box-shadow: 24;
 }
 
@@ -55,10 +56,24 @@
 
 .searchGroupName {
     position: absolute;
-    left : 5px
+    left: 5px
 }
 
 .searchGroupButton {
     position: absolute;
     right: 5px;
+}
+
+.searchSubmitButton {
+    margin-left: 5px;
+    height: 60%;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button :disabled {
+    background-color: dimgrey;
+    color: blue;
+    opacity: 1;
 }

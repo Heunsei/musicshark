@@ -160,7 +160,8 @@ const RightChatBox = (props) => {
                             {
                                 // 녹화한 영상들을 띄워주는 코드
                                 // ref={testRef} 삭제했음
-                                recordList.length !== 0 ?
+                                // recordList.length 에서 recordList로 수정
+                                recordList ?
                                     (recordList.map((element, i) => {
                                         return (
                                             <div key={i} className={styles.videoContainer} onMouseOver={() => handleMouseOver(i)} onMouseLeave={() => handleMouseOut()} >
