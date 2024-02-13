@@ -16,7 +16,7 @@ const VideoScreen = (props) => {
 
     return (
         <div>
-            <video className={styles.video} autoPlay ref={videoRef} />
+            <video className={styles.subScreen} autoPlay ref={videoRef} />
         </div>
     );
 };

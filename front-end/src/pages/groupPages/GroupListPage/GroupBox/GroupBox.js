@@ -15,6 +15,7 @@ import InputWithLabel from '../../../../components/InputWithLabel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
 
 const style = {
     position: 'absolute',
@@ -51,7 +52,7 @@ const GroupBox = (props) => {
     useEffect(() => {
         const check = async () => {
             const res = await loadGroupAction(setGroupList)
-            console.log('페이지 로드 시 확인', res)
+            console.log('뭐가 문제지', res)
             setGroupList(res)
             setShowGroup(res.slice(fisrtItem, lastItem));
         }

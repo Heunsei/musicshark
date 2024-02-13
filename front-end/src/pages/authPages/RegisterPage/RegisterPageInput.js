@@ -10,7 +10,7 @@ import { validateNickname } from '../validator'
 
 const RegisterInput = ({
   mail, setMail, password, setPassword, birth, setBirth, passwordConfirm, setPasswordConfirm,
-  nickname, setNickname, gender, setGender
+  nickname, setNickname, gender, setGender, readonly
 }) => {
   return (
     <>
@@ -21,6 +21,7 @@ const RegisterInput = ({
         type='email'
         placeholder="이메일을 입력하세요"
         validateState={validateMail(mail) ? '' : 'check email'}
+        readonly={readonly}
       />
       <InputWithLabel
         value={password}

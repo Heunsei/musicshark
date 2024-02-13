@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import RegisterAuthBox from '../../../components/RegisterAuthBox';
@@ -16,7 +16,8 @@ import { loginAction } from '../LoginPage/loginAction';
 const RegisterPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const location = useLocation()
+    
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
@@ -25,7 +26,7 @@ const RegisterPage = () => {
     const [gender, setGender] = useState("")
     const [isFormValid, setIsFormValid] = useState(false)
     const [isPasswordValid, setIsPasswordVaild] = useState(false)
-
+    const [readonly, setReadonly] = useState(false);
     // const [profile, setProfile] = useState("")
 
     const handleRegister = async () => {
@@ -55,6 +56,13 @@ const RegisterPage = () => {
         setIsPasswordVaild(validatePasswordConfirm(password, passwordConfirm))
     }, [password, passwordConfirm, setIsPasswordVaild, setPasswordConfirm])
 
+    useEffect(() => {
+    if(location.state != null){
+        setReadonly(location.state.kakao);
+        setMail(location.state.email);
+    }
+    }, []);
+
     return (
         <>
             <Navbar />
@@ -73,6 +81,7 @@ const RegisterPage = () => {
                     setGender={setGender}
                     birth={birth}
                     setBirth={setBirth}
+                    readonly={readonly}
                 />
                 <RegisterPageFooter
                     isFormValid={isFormValid}

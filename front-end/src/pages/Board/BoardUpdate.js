@@ -36,12 +36,12 @@ const BoxWrapper = styled('div')({
     }
 
     const getBoard = async () => {
-        const resp = await (await axios.get(`//localhost:8080/board/${board_id}`)).data;
+        const resp = await (await axios.get(`${process.env.REACT_APP_API_URL}/board/${board_id}`)).data;
         setBoard(resp.data);
       };
     
       const updateBoard = async () => {
-        await axios.patch(`//localhost:8080/board`, board).then((res) => {
+        await axios.put(`${process.env.REACT_APP_API_URL}/board`, board).then((res) => {
           alert('수정되었습니다.');
           navigate('/board/' + board_id);
         });

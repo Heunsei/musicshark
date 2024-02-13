@@ -87,4 +87,14 @@ public class BoardController {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@PutMapping("/{board_idx}/countup")
+	public ResponseEntity<?> countUpBoard(@PathVariable("board_idx") int boardIdx){
+		try{
+			boardService.countUp(boardIdx);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 }

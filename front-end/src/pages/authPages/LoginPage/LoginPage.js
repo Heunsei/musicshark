@@ -8,6 +8,7 @@ import LoginPageFooter from './LoginPageFooter';
 import Navbar from './../../../components/Navbar'
 import { loginAction } from './loginAction';
 import { loginValidator } from './../validator'
+import { KakaoLoginButton } from './KakaoLoginButton';
 
 const LoginPage = () => {
     const dispatch = useDispatch()
@@ -16,6 +17,7 @@ const LoginPage = () => {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
     const [isFormValid, setIsFormValid] = useState(true)
+
 
     const handleLogin = () => {
         const userDetails = {
@@ -42,6 +44,7 @@ const LoginPage = () => {
                     setPassword={setPassword}
                 />
                 <LoginPageFooter isFormValid={isFormValid} handleLogin={handleLogin} />
+                <KakaoLoginButton />
             </AuthBox>
         </>
     );

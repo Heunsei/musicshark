@@ -2,6 +2,7 @@ package org.example.back.User.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.back.User.dto.request.PatchUserPasswordRequestDto;
 import org.example.back.common.ApiResponse;
 import org.example.back.User.dto.request.PatchUserRequestDto;
 import org.example.back.User.dto.response.DeleteUserResponseDto;
@@ -43,6 +44,19 @@ public class UserController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @PatchMapping("/patch/password")
+    public ResponseEntity<ApiResponse> patchPassword(@AuthenticationPrincipal UserDetails userDetails,
+                                                     @RequestBody PatchUserPasswordRequestDto requestDto){
+
+        ApiResponse<?> result = userService.patchUserPassword(userDetails.getUsername(), requestDto);
+
+        String message = result.getMessage();
+        int status = result.getStatus();
+
+        ApiResponse apiResponse = new ApiResponse(message, status, result.getData());
+        return ResponseEntity.ok(apiResponse);
+    }
+
     @PatchMapping("/delete")
     public ResponseEntity<ApiResponse> deleteUser(@AuthenticationPrincipal UserDetails userDetails){
 
@@ -63,4 +77,6 @@ public class UserController {
 
         return new ResponseEntity<>(tier, HttpStatus.OK);
     }
+
+
 }
