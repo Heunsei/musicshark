@@ -75,6 +75,24 @@ const RightChatBox = (props) => {
         setMessage('')
     }
 
+    const sendMessageWithEnter = (event) => {
+        console.log('현재 보내는 메세지 : ', message)
+        // 세션이 있을때만 메세지를 보내게 해야함
+        if (session && event.key === 'Enter') {
+            event.preventDefault();
+            let newMessage = message.replace(/ +(?= )/g, '');
+            if (newMessage !== '' && newMessage !== ' ') {
+                const data = { message: newMessage, nickname: userName, streamId: session.streamId };
+                session.signal({
+                    data: JSON.stringify(data),
+                    type: 'chat',
+                });
+            }
+            setMessage('')
+        }
+
+    }
+
     const handleSearchRecord = async () => {
         const res = await searchGroupRecord(id, searchTitle)
         setRecordList(res)
@@ -127,8 +145,8 @@ const RightChatBox = (props) => {
                             </div>
                             <div className={styles.messageInputBox}>
                                 <input value={message} onChange={(event) => { setMessage(event.target.value) }}
-                                    placeholder='메세지를 입력하세요' className={styles.messageInput} />
-                                <button className={styles.sendMessageBtn} onClick={() => sendMessage()}><SendIcon /></button>
+                                    placeholder='메세지를 입력하세요' className={styles.messageInput} onKeyDown={sendMessageWithEnter} />
+                                <button className={styles.sendMessageBtn} onClick={() => sendMessage()} ><SendIcon /></button>
                             </div>
                         </>
 
