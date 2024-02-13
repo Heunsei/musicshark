@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
 
 import RegisterAuthBox from '../../../components/RegisterAuthBox';
 import RegisterPageHeader from './RegisterPageHeader';
@@ -12,7 +11,6 @@ import { registerValidator } from './../validator'
 import Navbar from './../../../components/Navbar'
 import { registerAction } from './registerAction'
 import { loginAction } from '../LoginPage/loginAction';
-import * as setKakao from '../../../redux/store/kakaoRegisterSlice';
 
 
 const RegisterPage = () => {
@@ -31,15 +29,6 @@ const RegisterPage = () => {
     const [readonly, setReadonly] = useState(false);
     // const [profile, setProfile] = useState("")
 
-
-    const kakaoEmail = useSelector((state) => state.kakao.email);
-    const kakaoReadonly = useSelector((state) => state.kakao.kakao);
-    
-    console.log(kakaoReadonly);
-    console.log("location.state: ", location.state);
-    console.log("location.state.email: ", location.state.email);
-    console.log("location.state.kakao: ", location.state.kakao);
-
     const handleRegister = async () => {
         const userDetails = {
             userEmail: mail,
@@ -51,8 +40,6 @@ const RegisterPage = () => {
         }
         const res = await registerAction(userDetails)
         if (res) {
-            dispatch(setKakao.setEmail(""));
-            dispatch(setKakao.setKakao(false));
             const loginData = {
                 userEmail: mail,
                 password: password,
@@ -70,11 +57,11 @@ const RegisterPage = () => {
     }, [password, passwordConfirm, setIsPasswordVaild, setPasswordConfirm])
 
     useEffect(() => {
-        setReadonly(kakaoReadonly)
-        if(readonly){
-            setMail(kakaoEmail);
-        }
-    }, [readonly]);
+    if(location.state != null){
+        setReadonly(location.state.kakao);
+        setMail(location.state.email);
+    }
+    }, []);
 
     return (
         <>

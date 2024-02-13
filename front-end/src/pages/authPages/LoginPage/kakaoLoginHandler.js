@@ -1,8 +1,7 @@
 ﻿import { useEffect } from "react";
 import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { setCookie, getCookie } from './../../../util/cookie';
-import * as setKakao from "../../../redux/store/kakaoRegisterSlice";
+import { setCookie } from '../../../util/cookie';
 import getUserAction from './getUserAction';
 import axios from "axios";
 
@@ -46,13 +45,14 @@ const KakaoLoginHandler = () => {
                         }
                     }).catch((error) => {
                         const status = error.response.status;
-                        if(status == 404){
+                        if(status === 404){
                             window.alert("가입되어 있지 않는 회원입니다. 회원가입 페이지로 이동합니다.");
-                            console.log(error.response.data.email);
-                            dispatch(setKakao.setEmail(error.response.data.email));
-                            console.log(error.response.data.kakao);
-                            dispatch(setKakao.setKakao(error.response.data.kakao)); 
-                            navigate("/register", {state: {email: error.response.data.email, kakao: error.response.data.kakao}});
+                            navigate("/register", {
+                                state: {
+                                    email: error.response.data.email, 
+                                    kakao: error.response.data.kakao
+                                }
+                            });
                         }
                         else {
                             window.alert("탈퇴한 회원입니다. 메인 페이지로 이동합니다.");
