@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getCookie } from "../../../util/cookie";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import axios from "axios";
 import Calendar from "react-calendar";
@@ -66,21 +67,21 @@ const absoluteDiv = {
 
 function MyCalendar() {
   const [value, onChange] = useState(new Date());
+  const [markSet, setMarkSet] = useState(new Set(["2024-02-01", "2024-02-04"]));
   const [mark, setMark] = useState([]);
   const month = moment().format("MM");
-
-  useQuery(
-    ["logDate", month],
-    async () => {
-      const result = await axios.get(`/api/healthLogs?health_log_type=DIET`);
-      return result.data;
-    },
-    {
-      onSuccess: (data) => {
-        setMark(data);
-      },
-    }
-  );
+  // useQuery(
+  //   ["logDate", month],
+  //   async () => {
+  //     const result = await axios.get(`/api/healthLogs?health_log_type=DIET`);
+  //     return result.data;
+  //   },
+  //   {
+  //     onSuccess: (data) => {
+  //       setMark(data);
+  //     },
+  //   }
+  // );
 
   const formatShortWeekday = (locale, date) => {
     // 요일을 나타내는 숫자를 얻습니다 (0: 일요일, 1: 월요일, ..., 6: 토요일)
@@ -89,6 +90,33 @@ function MyCalendar() {
     const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
     return weekdays[day];
   };
+
+  const handleActiveStartDateChange = async (date) => {
+    console.log("handleActiveStateDateChange called!");
+    if(date.view === 'month'){
+      const startDate = date.activeStartDate;
+      const year = startDate.getFullYear();
+      const month = startDate.getMonth() + 1;
+
+      await axios.get(`${process.env.REACT_APP_API_URL}/videos/personal/search/between?year=${year}&month=${month}`, {
+        headers: {
+          Authorization: `Bearer ${getCookie('accessToken')}`
+        }
+      })
+      .then((res) => {
+        const dates = res.data.map(Element => Element.video_date);
+        setMarkSet(new Set(dates));
+      });
+    }
+  }
+
+  useEffect(() => {
+    console.log("value :", value);
+  }, [value]);
+
+  useEffect(() => {
+    console.log("markSet: ", markSet);
+  }, [markSet]);
 
   return (
     <div>
@@ -118,15 +146,18 @@ function MyCalendar() {
             }
           }
         }}
-        tileContent={({ date, view }) => {
-          if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
-            return (
-              <div style={absoluteDiv}>
-                <div style={dot}></div>
-              </div>
-            );
-          }
-        }}
+        // tileContent={({ date, view }) => {
+        //   if(markSet.has(moment(date).format("YYYY-MM-DD"))) {
+        //     console.log("markSet!");
+        //   // if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
+        //     return (
+        //       <div style={absoluteDiv}>
+        //         <div style={dot}></div>
+        //       </div>
+        //     );
+        //   }
+        // }}
+        onActiveStartDateChange={handleActiveStartDateChange}
       />
     </div>
   );
