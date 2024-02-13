@@ -28,12 +28,13 @@ const {boardTitle, boardContent}=board;
 
 
  
-        const handleUpdataAction = () => {
-          const data = {
+        const handleUpdataAction = async() => {
+          const boardDetail = {
             boardTitle : board.boardTitle,
             boardContent: board.boardContent
           }
-          boardUpdateAction(board_id,data)
+          await boardUpdateAction(board_id,boardDetail)
+          navigate(`/board/${board_id}`)
         }
   
 

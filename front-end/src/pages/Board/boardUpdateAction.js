@@ -13,7 +13,7 @@ export const boardUpdateAction=async(board_id,boardDetail)=>{
         await axios({
             method : 'put' ,
             url:`http://localhost:8080/board/${board_id}`,
-            data : board_id,boardDetail,
+            data :boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`
             }

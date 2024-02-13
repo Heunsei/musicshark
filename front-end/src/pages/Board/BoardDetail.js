@@ -106,7 +106,7 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
             <div>
                 <button onClick={moveToUpdate}>수정</button>
                 <button onClick={()=>{
-                    boardDeleteAction(board)
+                    boardDeleteAction(board, board_id, nickname)
                 }}>삭제</button>
                 <button onClick={moveToList}>목록</button>
             </div>
