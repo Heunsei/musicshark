@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { styled, Table,TableCell,tableCellClasses,TableHead,TableRow, TableBody } from "@mui/material";
 import Navbar from './../../components/Navbar';
-import styles from "./BoardList.module.css";
+// import styles from "./Board.module.css";
 import { Button } from "bootstrap";
 import { getCookie } from "../../util/cookie";
 
@@ -103,6 +103,7 @@ export default function BoardList(){
 
 
 <> 
+<Navbar/>
             <Table>
                 
                  <TableHead>

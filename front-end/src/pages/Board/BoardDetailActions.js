@@ -7,7 +7,7 @@ export const BoardDetailAction=async(contentDetails,dispatch,navigate)=>{
     console.log(JSON.stringify(contentDetails))
     try{
         const response = await axios({
-            method:'post',
+            method:'put',
             url:'http://localhost:8080/board/{board_id}/',
             data:contentDetails,
         })

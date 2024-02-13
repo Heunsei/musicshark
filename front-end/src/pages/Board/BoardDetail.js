@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./Board.module.css";
+// import styles from "./Board.module.css";
 import axios from "axios";
 import { styled } from "@mui/material";
 import Navbar from "../../components/Navbar";
 import { getCookie } from "../../util/cookie";
+import { useSelector } from "react-redux";
+import { boardDeleteAction } from "./boardDeleteAction";
+import Comments from "./Comments";
 //import Comments from "./Comments";
 
 // const BoxWrapper = styled('div')({
@@ -19,6 +22,7 @@ import { getCookie } from "../../util/cookie";
 // })
 
 const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boardContent})=>{
+    const nickname = useSelector((state) => state.user.nickname)
     const {board_id}=useParams();
     const [loading, setLoading]=useState(true);
     const [board, setBoard]=useState({});
@@ -42,26 +46,32 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         console.log('보드 디테일 확인',response.data)
         setData(response.data)
         setBoard(response.data);
-        setLoading(true);
+        setLoading(false);
     };
+    // const deleteBoard=async()=>{
+    //     if(window.confirm('게시글을 삭제하시겠습니까?')){
+    //         await axios.put(
+    //             `${URL}/board/${board_id}/${nickname}`,{
+    //             headers : {
+    //             Authorization : `Bearer ${accessToken}`
+    //             }
+    //             })
+    //         .then((res)=>{
+    //             alert('삭제되었습니다.');
+    //             navigate('/board');
+    //         })
+    //     }
+    // }
 
     useEffect(()=>{
         getBoard();
     },[]);
 
     const moveToUpdate=()=>{
-        navigate(`/update/${boardIdx}`);
+        navigate(`/update/${board_id}`);
     }
 
-    const deleteBoard=async()=>{
-        if(window.confirm('게시글을 삭제하시겠습니까?')){
-            await axios.delete(`//localhost:8080/board/${boardIdx}`)
-            .then((res)=>{
-                alert('삭제되었습니다.');
-                navigate('/board');
-            })
-        }
-    }
+
 
     const moveToList=()=>{
         navigate('/board');
@@ -71,19 +81,25 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         <>
         <Navbar/>
 
-            <div>
+        <div style={{textAlign:"center", minWidth:"90%"}}>
             <div>
                 <h2>{data.boardTitle}</h2>
-                <h5>{data.userNickname}</h5>
+                <hr/>
+                <h5>{nickname}</h5>
                 <hr/>
                 <p>{data.boardContent}</p>
+                <hr/>
             </div>
             <div>
                 <button onClick={moveToUpdate}>수정</button>
-                <button onClick={deleteBoard}>삭제</button>
+                <button onClick={()=>{
+                    boardDeleteAction(board)
+                }}>삭제</button>
                 <button onClick={moveToList}>목록</button>
             </div>
 
+            <hr/>
+            {/* <div><Comments/></div> */}
             
                 {/* <Board
                     board_id={data.board_id}

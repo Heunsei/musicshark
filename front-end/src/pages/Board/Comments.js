@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Dialog, DialogContent, IconButton, TextField } from "@mui/material";
-import { CommentsAction, commentsAction } from './CommentsAction';
+// import { CommentsAction, commentsAction } from './CommentsAction';
+import { commentsCreateAction } from './commentsCreateAction';
 
 const Comments=({board_id})=>{
     const location=useLocation();
