@@ -66,6 +66,7 @@ const PlayScreen = ({ songIdx }) => {
     }
 
     const restartPlayback = () => {
+        setIsEndOpen(false)
         startTimeRef.current = Date.now();
         particles.length = 0; // 파티클 초기화
 
@@ -302,8 +303,8 @@ const PlayScreen = ({ songIdx }) => {
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
 
-        if(songData[songIndex].cnt == 48) {
-            
+        if(songData[songIndex].cnt == songData[songData.length-1].cnt) {
+            setIsEndOpen(true);
             setIsPlaying(false);
         if(!flag){
             flag = true;
