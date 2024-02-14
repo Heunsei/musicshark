@@ -9,6 +9,7 @@
 
 .userBox p {
     margin-left: 15px;
+    font-family: 'Pretendard-Bold';
 }
 
 .deleteBtn {
@@ -36,4 +37,13 @@
 
 .groupDeleteIcon {
     margin-right: 5px;
+}
+
+.groupUserBox {
+    margin-top: 10px;
+}
+
+.groupInfoButtonBox {
+    display: flex;
+    justify-content: space-evenly;
 }

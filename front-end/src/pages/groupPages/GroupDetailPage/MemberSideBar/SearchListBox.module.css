@@ -1,5 +1,6 @@
 .wrapper {
     border: 1px solid black;
+    border-radius: 15px;
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
@@ -10,6 +11,9 @@
 }
 
 .wrapper button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 20%;
     border-radius: 15px;
 }

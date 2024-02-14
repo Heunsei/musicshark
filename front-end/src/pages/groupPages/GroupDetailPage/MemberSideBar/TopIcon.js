@@ -4,9 +4,10 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import GroupIcon from '@mui/icons-material/Group';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import styles from './TopIcon.module.css'
 
 import { useParams, useNavigate } from 'react-router-dom';
@@ -46,7 +47,7 @@ const TopIcon = (props) => {
         if (result) {
             const res = await deleteGroupAction(id)
             console.log('res : ', res)
-            if(res.data.message === '채널 삭제 성공'){
+            if (res.data.message === '채널 삭제 성공') {
                 navigate('/group')
             }
         }
@@ -75,28 +76,33 @@ const TopIcon = (props) => {
                 onClose={handleClose}
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h6" component="h2"
+                        sx={{ textAlign: 'center', fontFamily: 'Pretendard-Bold', marginBottom: '5px', borderBottom: '2px solid black' }}>
                         그룹 관리
                     </Typography>
-                    {
-                        groupMembers.map((element, i) => {
-                            return (
-                                <>
-                                    <div className={styles.userBox}>
-                                        <p>{element.nickname}</p>
-                                    </div>
-                                </>
-                            )
-                        })
-                    }
-                    <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteMember(id) }}>
-                        <DeleteForeverIcon className={styles.groupDeleteIcon} />
-                        <span>그룹 탈퇴</span>
-                    </button>
-                    <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteGroup(id) }}>
-                        <DeleteForeverIcon className={styles.groupDeleteIcon} />
-                        <span>그룹 삭제</span>
-                    </button>
+                    <div className={styles.groupUserBox}>
+                        {
+                            groupMembers.map((element, i) => {
+                                return (
+                                    <>
+                                        <div className={styles.userBox}>
+                                            <p>{element.nickname}</p>
+                                        </div>
+                                    </>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className={styles.groupInfoButtonBox}>
+                        <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteMember(id) }}>
+                            <ExitToAppIcon className={styles.groupDeleteIcon} />
+                            <span>그룹 탈퇴</span>
+                        </button>
+                        <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteGroup(id) }}>
+                            <DeleteForeverIcon className={styles.groupDeleteIcon} />
+                            <span>그룹 삭제</span>
+                        </button>
+                    </div>
                 </Box>
             </Modal>
         </>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { styled, Table,TableCell,tableCellClasses,TableHead,TableRow, TableBody } from "@mui/material";
 import Navbar from './../../components/Navbar';
-import styles from "./BoardList.module.css";
+// import styles from "./Board.module.css";
 import { Button } from "bootstrap";
 import { getCookie } from "../../util/cookie";
 
@@ -90,24 +90,12 @@ export default function BoardList(){
     return(
 
 
-//              {/* <ul>
-//                 {boardList.map((board)=>(
-//                     <li key={board.idx}>
-//                         <Link to={`/board/${board.idx}`}>{board.title}</Link>
-//                     </li>
-//                 ))}
-//             </ul>
-//             <div>
-//                 <button onClick={moveToWrite}>글쓰기</button>
-//             </div> */}
-
-
 <> 
+<Navbar/>
             <Table>
                 
                  <TableHead>
                     <StyledTableRow>
-                        <StyledTableCell>번호</StyledTableCell>
                         <StyledTableCell>제목</StyledTableCell>
                         <StyledTableCell>작성자</StyledTableCell>
                         <StyledTableCell>조회</StyledTableCell>
@@ -117,9 +105,10 @@ export default function BoardList(){
                  <TableBody>
                  {rows.map((row, i)=>(
                         <StyledTableRow key={row.boardIdx}>
-                            <StyledTableCell>{row.boardIdx}</StyledTableCell>
-                            <StyledTableCell><Link to={`/board/${row.boardIdx}`}>{row.boardTitle}</Link></StyledTableCell>
-                            <StyledTableCell>{row.userIdx}</StyledTableCell>
+                              <StyledTableCell>          
+                                <Link style={{ textDecoration: 'none' }} to={`/board/${row.boardIdx}`}>{row.boardTitle}</Link>
+                              </StyledTableCell>
+                            <StyledTableCell>{row.userNickname}</StyledTableCell>
                             <StyledTableCell>{row.boardCount}</StyledTableCell>
                             <StyledTableCell>{row.boardDate}</StyledTableCell>
                          </StyledTableRow>

@@ -15,7 +15,7 @@ public class PerfectplayResponseDto {
 	private int songIdx;
 	private String title;
 	private String singer;
-	private int score;
+	private double score;
 	private boolean clear;
 	private Timestamp date;
 	private int totalClear;

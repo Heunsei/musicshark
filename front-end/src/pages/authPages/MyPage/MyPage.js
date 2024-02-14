@@ -6,10 +6,10 @@ import Navbar from "../../../components/Navbar";
 const MyPage = () => {
   return (
     <div style={{ display: "grid", gridTemplateRows: "7% 93%", height: "100%" }}>
-      <div>
+      <div style={{ position: "fixed", top: 0, width: "100%", zIndex: 1000 }}>
         <Navbar />
       </div>
-      <div style={{ display: "flex", width: "100%" }}>
+      <div style={{ display: "flex", width: "100%", marginTop: "7%" }}>
         <div style={{ flex: 3.5 }}>
           <ProfileBox />
         </div>

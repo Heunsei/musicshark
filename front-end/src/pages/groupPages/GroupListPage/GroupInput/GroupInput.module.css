@@ -1,13 +1,14 @@
 .groupInputBox {
     width: 100%;
     height: 10%;
-    background-color: burlywood;
+    background-color: #F5F5DC;
     justify-content: center;
     align-items: center;
     display: flex;
 }
 
 .customInput {
+    font-family: 'Pretendard-Medium';
     height: 60%;
     width: 40%;
     border: 1px solid black;
@@ -17,4 +18,73 @@
     margin: 0;
     font-size: 24px;
     padding: 0 5px;
+}
+
+.modalStyle {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 24;
+}
+
+.modalHeader {
+    border-bottom: 2px solid black;
+    font-size: 24px;
+    position: absolute;
+    top: 0px;
+}
+
+.searchResult {
+    font-family: 'Pretendard-Bold';
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 300px;
+    height: 50px;
+    margin-bottom: 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 5px gray;
+}
+
+.searchGroupName {
+    position: absolute;
+    left: 5px
+}
+
+.searchGroupButton {
+    position: absolute;
+    right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.searchSubmitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    height: 60%;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button :disabled {
+    background-color: dimgrey;
+    color: blue;
+    opacity: 1;
 }

@@ -1,12 +1,11 @@
 .groupBox {
     width: 100%;
     height: 90%;
-    background-color: bisque;
+    background-color: #F5F5DC;
     justify-content: center;
     align-items: center;
     display: flex;
     padding: 10px;
-
 }
 
 .innerBox {

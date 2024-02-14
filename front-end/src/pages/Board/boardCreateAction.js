@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 export const boardCreateAction=async(boardDetail)=>{
     console.log(boardDetail)
-    //const URL = process.env.REACT_APP_API_URL
+    const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
-    
+
     try{
         await axios({
             method : 'post' ,
-            url:`${process.env.REACT_APP_API_URL}/board`, 
+            url:`${URL}/board`,
             data : boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`
