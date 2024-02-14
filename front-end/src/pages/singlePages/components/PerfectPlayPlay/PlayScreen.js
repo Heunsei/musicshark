@@ -114,8 +114,8 @@ const PlayScreen = ({ songIdx }) => {
     // particles.push(exampleParticle);
 
     //캔버스
-    const canvasWidth = 930;
-    const canvasHeight = 330;
+    const canvasWidth = 950;
+    const canvasHeight = 450;
     const canvasRef = useCanvas(canvasWidth, canvasHeight);
 
     // 파티클
@@ -304,7 +304,7 @@ const PlayScreen = ({ songIdx }) => {
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
 
         if (songData[songIndex].cnt == songData[songData.length - 1].cnt) {
-            
+
             setIsPlaying(false);
             if (!flag) {
                 flag = true;
@@ -504,6 +504,14 @@ const PlayScreen = ({ songIdx }) => {
     return (
         <div className={styles.body}>
             <div className={styles.container}>
+                <div className={styles.infoBox}>
+                    <div className={styles.card}>
+                        <div className={styles.img}></div>
+                        <div className={styles.content}>
+                            제목
+                        </div>
+                    </div>
+                </div>
                 <div className={styles.screenBox}>
                     <NumberDisplay number={number} />
                     <canvas
@@ -512,23 +520,24 @@ const PlayScreen = ({ songIdx }) => {
                         height={canvasHeight}
                         ref={canvasRef}
                     />
+                    <div className={styles.buttonBox}>
+                        {
+                            !isPlaying ?
+                                (<button onClick={() => startButtonClick()}>
+                                    <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
+                                </button>) :
+                                (<button onClick={() => stopButtonClick()}>
+                                    <StopCircleIcon /> <span>중지</span>
+                                </button>)
+                        }
+                        <button onClick={() => navigate('/single/perfect')} style={{ position: 'absolute', right: '30px' }}>
+                            <LogoutIcon />
+                        </button>
+                    </div>
                 </div>
+
                 {isEndOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
-                <div className={styles.buttonBox}>
-                    {
-                        !isPlaying ?
-                            (<button onClick={() => startButtonClick()}>
-                                <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
-                            </button>) :
-                            (<button onClick={() => stopButtonClick()}>
-                                <StopCircleIcon /> <span>중지</span>
-                            </button>)
-                    }
-                    <button onClick={() => navigate('/single/perfect')} style={{ position: 'absolute', right: '30px' }}>
-                        <LogoutIcon />
-                    </button>
-                </div>
             </div>
         </div>
 
