@@ -61,8 +61,7 @@ const SingleRecordPage = () => {
         setIsClick(false)
     }
 
-    /**
-     *  유저의 미디어를 받아오고 마이크가 없을 시 오류를 콘솔로 띄워줌
+    /**유저의 미디어를 받아오고 마이크가 없을 시 오류를 콘솔로 띄워줌
      */
     const getMedia = async () => {
         try {
@@ -84,8 +83,7 @@ const SingleRecordPage = () => {
         }
     };
 
-    /**
-     *  녹화를 시작하는 함수
+    /**녹화를 시작하는 함수
      */
     const handleStartRecording = () => {
         setRecordedBlobs([]);
@@ -111,8 +109,7 @@ const SingleRecordPage = () => {
     };
 
 
-    /**
-     * 녹화를 종료하는 함수
+    /**녹화를 종료하는 함수
      */
     const handleStopRecording = () => {
         setIsRecording(false)
@@ -124,8 +121,7 @@ const SingleRecordPage = () => {
     };
 
 
-    /**
-     * 다운로드 함수
+    /**다운로드 함수
      */
     const handleDownload = () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
@@ -136,15 +132,14 @@ const SingleRecordPage = () => {
         a.download = 'recorded.webm';
         document.body.appendChild(a);
         a.click();
-        setTimeout(() => {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            setRecordedBlobs([])
-        }, 100);
+        // setTimeout(() => {
+        //     document.body.removeChild(a);
+        //     window.URL.revokeObjectURL(url);
+        //     setRecordedBlobs([])
+        // }, 100);
     }
 
-    /**
-    *  blob객체를 생성하고 입력받은 videoTitle과 함께 데이터 폼으로 전달
+    /**blob객체를 생성하고 입력받은 videoTitle과 함께 데이터 폼으로 전달
     */
     const handleUpload = async () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
@@ -206,7 +201,7 @@ const SingleRecordPage = () => {
                             {
                                 // 녹화한 영상들을 띄워주는 코드
                                 // ref={testRef} 삭제했음
-                                recordList.length !== 0 ?
+                                recordList ?
                                     (recordList.map((element, i) => {
                                         return (
                                             <div key={i} className={styles.videoContainer} onMouseOver={() => handleMouseOver(i)} onMouseLeave={() => handleMouseOut()} >
@@ -218,7 +213,7 @@ const SingleRecordPage = () => {
                                                 </video>
                                             </div>
                                         )
-                                    })) : null
+                                    })) : <p>녹화 내용이 없습니다</p>
                             }
                         </div>
                     </div>
@@ -250,9 +245,13 @@ const SingleRecordPage = () => {
                 onClose={handleClose}
             >
                 <div className={styles.modalContainer}>
-                    <header>영상을 저장 하시겠습니까?</header>
+                    <div className={styles.modalHeader}>
+                        <p style={{ padding: '0', margin: '0' }}>영상을 저장 하시겠습니까?</p>
+                    </div>
                     <input value={videoTitle} onChange={(event) => { setVideoTitle(event.target.value); }} placeholder='영상 제목을 입력해주세요' />
-                    {isDuplicateTitle ? <p style={{ padding: '0', margin: '0' }}>중복되는 이름의 영상이 존재합니다</p> : null}
+                    <div className={styles.consoleBox} >
+                        {isDuplicateTitle ? <p style={{ padding: '0', margin: '0' }}>중복되는 이름의 영상이 존재합니다</p> : null}
+                    </div>
                     <div className={styles.modalButtonBox}>
                         <button onClick={() => { handleUpload(); }}>저장</button>
                         <button onClick={() => { setRecordedBlobs([]); handleClose() }}>취소</button>

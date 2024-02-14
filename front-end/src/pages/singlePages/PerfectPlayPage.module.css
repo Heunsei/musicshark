@@ -29,7 +29,9 @@
     width: 60%;
     height: 80vh;
     margin-right: 10px;
-    background-color: wheat;
+    border: 2px solid gray;
+    border-radius: 15px;
+    background-color: #F5F5DC;
 }
 
 .rightBox {
@@ -49,7 +51,7 @@
     border-radius: 3px;
     background: #F9FFF8;
     padding-top: 0%;
-    width: 90%;
+    width: 100%;
     height: 275px;
     text-align: center;
     margin: 0px 0px 15px 0px;
@@ -57,7 +59,7 @@
 }
 
 .perfectplayList {
-    width: 90%;
+    width: 100%;
     height: 40%;
     border: solid 3px silver;
     border-radius: 7;

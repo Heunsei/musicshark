@@ -48,6 +48,12 @@ const GroupBox = (props) => {
         "channelMax": channelMax,
     }
 
+    const handleCreateGroupAction = async () => {
+        const createRes = await createGroupAction(groupDetail)
+        console.log('werionbioaerwbnioerwnboiaernboiern', createRes)
+        navigate(`/group/${createRes}`)
+    }
+
     // 페이지에 로드할 그룹리스트를 요청하고 그룹 리스트가 존재한다면 보여줄 그룹을 랜더링
     useEffect(() => {
         const check = async () => {
@@ -69,7 +75,7 @@ const GroupBox = (props) => {
             setShowGroup(res.slice(fisrtItem, lastItem));
         }
         action()
-    }, [isModalOpen, setGroupList, setIsModalOpen])
+    }, [isModalOpen, setGroupList, setIsModalOpen, fisrtItem, lastItem])
 
     // 채널생성 값을 받을때 이상한 값 있는지 확인
     useEffect(() => {
@@ -161,10 +167,10 @@ const GroupBox = (props) => {
                         max='6'
                         min='2'
                     />
-                    <div style={{display:'flex', justifyContent:'center', alignItems:'center',marginTop :'5px'}}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5px' }}>
                         <Button variant="contained"
                             onClick={() => {
-                                createGroupAction(groupDetail)
+                                handleCreateGroupAction()
                                 setIsModalOpen(false)
                                 setChannelMax(2)
                                 setGroupIntro('')

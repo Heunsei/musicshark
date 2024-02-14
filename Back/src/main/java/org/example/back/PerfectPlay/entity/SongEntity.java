@@ -37,8 +37,8 @@ public class SongEntity {
 	@Column(name = "RUNNING_TIME", nullable = false)
 	private int runningTime;
 
-	@Column(name = "MR_FILE", columnDefinition = "TEXT", nullable = false)
-	private String mrFile;
+	@Column(name = "SONG_IMG", nullable = false)
+	private String songImg;
 
 	@Override
 	public String toString() {
@@ -48,7 +48,7 @@ public class SongEntity {
 			", singer='" + singer + '\'' +
 			", startTiming=" + startTiming +
 			", runningTime=" + runningTime +
-			", mrFile='" + mrFile + '\'' +
+			", mrFile='" + songImg + '\'' +
 			'}';
 	}
 }

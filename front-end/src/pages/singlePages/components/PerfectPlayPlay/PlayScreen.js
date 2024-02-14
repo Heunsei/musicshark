@@ -11,10 +11,11 @@ import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { postPlayScoreAction } from '../../actions/postPlayScoreAction';
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '../../../../util/cookie';
 import axios from 'axios'
+import { getSongListAction } from '../../actions/getSongListAction';
+import { getSongDetailAction } from '../../actions/getSongDetailAction';
 
 const PlayScreen = ({ songIdx }) => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
@@ -24,6 +25,19 @@ const PlayScreen = ({ songIdx }) => {
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState([]);
+    const [songInfo, setSongInfo] = useState([]);    
+
+    const getSongInfo = async () => {
+        try{
+            const response = await getSongDetailAction(1);
+            const data = response.data.data;
+            console.log(data);
+            setSongInfo(data);
+
+        }catch(error){
+            console.error(error);
+        }
+    }
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -96,20 +110,6 @@ const PlayScreen = ({ songIdx }) => {
     const startTimeRef = useRef(0);
     const pausedTimeRef = useRef(0);
     const particles = [];
-
-    //const [isStarted, setIsStarted] = useState(false);
-    // 예시 파티클 추가
-    // const exampleParticle = {
-    //     speed: {
-    //         x: 0.5,
-    //         y: -0.3,
-    //     },
-    //     startX: 100,
-    //     startY: 200,
-    //     radius: 5,
-    //     color: '#FF0000',
-    //     life: 10,
-    // };
 
     // particles.push(exampleParticle);
 
@@ -491,6 +491,9 @@ const PlayScreen = ({ songIdx }) => {
 
     // 노래 재생
     useEffect(() => {
+
+        getSongInfo();
+        getUser();
         const fetchMusic = async () => {
             for (let i = 0; i < randomData.length; i++) {
                 songData.push(randomData[i]);
@@ -498,7 +501,7 @@ const PlayScreen = ({ songIdx }) => {
             startTimeRef.current = Date.now();
         };
         fetchMusic();
-        getUser();
+
     }, []);
 
     return (
