@@ -11,19 +11,33 @@ import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { postPlayScoreAction } from '../../actions/postPlayScoreAction';
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '../../../../util/cookie';
 import axios from 'axios'
+import { getSongListAction } from '../../actions/getSongListAction';
+import { getSongDetailAction } from '../../actions/getSongDetailAction';
 
 const PlayScreen = ({ songIdx }) => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEndOpen, setIsEndOpen] = useState(false);
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState([]);
-    
+    const [songInfo, setSongInfo] = useState([]);    
+
+    const getSongInfo = async () => {
+        try{
+            const response = await getSongDetailAction(1);
+            const data = response.data.data;
+            console.log(data);
+            setSongInfo(data);
+
+        }catch(error){
+            console.error(error);
+        }
+    }
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -66,6 +80,7 @@ const PlayScreen = ({ songIdx }) => {
     }
 
     const restartPlayback = () => {
+        setIsEndOpen(false)
         startTimeRef.current = Date.now();
         particles.length = 0; // 파티클 초기화
 
@@ -95,20 +110,6 @@ const PlayScreen = ({ songIdx }) => {
     const startTimeRef = useRef(0);
     const pausedTimeRef = useRef(0);
     const particles = [];
-
-    //const [isStarted, setIsStarted] = useState(false);
-    // 예시 파티클 추가
-    // const exampleParticle = {
-    //     speed: {
-    //         x: 0.5,
-    //         y: -0.3,
-    //     },
-    //     startX: 100,
-    //     startY: 200,
-    //     radius: 5,
-    //     color: '#FF0000',
-    //     life: 10,
-    // };
 
     // particles.push(exampleParticle);
 
@@ -242,10 +243,8 @@ const PlayScreen = ({ songIdx }) => {
     const getUser = async () => {
         try {
             const response = await getUserAction();
-            // console.log(response);
             const data = response.data;
             setUserInfo(data);
-            // console.log(data);
         }
         catch (error) {
             console.log(error);
@@ -254,6 +253,8 @@ const PlayScreen = ({ songIdx }) => {
 
     let totalScore = 0;
     let avgScore = 0;
+    let flag = false;
+
     const play = () => {
 
         if (
@@ -297,10 +298,20 @@ const PlayScreen = ({ songIdx }) => {
             voiceNoteWindow.shift();
         }
 
-        console.log('Pitch:', pitch);
+        // console.log('Pitch:', pitch);
 
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
+
+        if (songData[songIndex].cnt == songData[songData.length - 1].cnt) {
+            
+            setIsPlaying(false);
+            if (!flag) {
+                flag = true;
+                setIsEndOpen(true);
+                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
+            }
+        }
         if (songIndex >= songData.length) {
             console.log("!!종료!!");
             return;
@@ -472,25 +483,17 @@ const PlayScreen = ({ songIdx }) => {
         }
     };
 
-    let check = false;
     useAnimation(() => {
         if (isPlaying) {
             play();
-        }
-        if (songIndex >= songData.length) {
-            // songIndex가 songData.length를 넘어가면 애니메이션 종료
-            //console.log(songIndex);
-            setIsPlaying(false);
-            if(!check){
-                check=true;
-                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
-            }
-            return;
         }
     }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
 
     // 노래 재생
     useEffect(() => {
+
+        getSongInfo();
+        getUser();
         const fetchMusic = async () => {
             for (let i = 0; i < randomData.length; i++) {
                 songData.push(randomData[i]);
@@ -498,7 +501,7 @@ const PlayScreen = ({ songIdx }) => {
             startTimeRef.current = Date.now();
         };
         fetchMusic();
-        getUser();
+
     }, []);
 
     return (
@@ -513,7 +516,7 @@ const PlayScreen = ({ songIdx }) => {
                         ref={canvasRef}
                     />
                 </div>
-
+                {isEndOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 <div className={styles.buttonBox}>
                     {
