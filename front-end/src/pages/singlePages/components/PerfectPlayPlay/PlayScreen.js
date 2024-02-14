@@ -508,6 +508,9 @@ const PlayScreen = ({ songIdx }) => {
         <div className={styles.body}>
             <div className={styles.container}>
                 <div className={styles.screenBox}>
+                    <div>
+                        <img src={songInfo.songImg}></img>
+                    </div>
                     <NumberDisplay number={number} />
                     <canvas
                         id="screen-screen"
