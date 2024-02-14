@@ -250,9 +250,13 @@ const SingleRecordPage = () => {
                 onClose={handleClose}
             >
                 <div className={styles.modalContainer}>
-                    <header>영상을 저장 하시겠습니까?</header>
+                    <div className={styles.modalHeader}>
+                        <p style={{ padding: '0', margin: '0' }}>영상을 저장 하시겠습니까?</p>
+                    </div>
                     <input value={videoTitle} onChange={(event) => { setVideoTitle(event.target.value); }} placeholder='영상 제목을 입력해주세요' />
-                    {isDuplicateTitle ? <p style={{ padding: '0', margin: '0' }}>중복되는 이름의 영상이 존재합니다</p> : null}
+                    <div className={styles.consoleBox} >
+                        {isDuplicateTitle ? <p style={{ padding: '0', margin: '0' }}>중복되는 이름의 영상이 존재합니다</p> : null}
+                    </div>
                     <div className={styles.modalButtonBox}>
                         <button onClick={() => { handleUpload(); }}>저장</button>
                         <button onClick={() => { setRecordedBlobs([]); handleClose() }}>취소</button>
