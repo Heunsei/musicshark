@@ -11,7 +11,7 @@ export const commentAction=async(board_id, setComment)=>{
     try{
         await axios({
             method : 'get' ,
-            url:`${URL}/board/${board_id}/${comments}`,
+            url:`${URL}/board/${board_id}`,
             //data : boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`

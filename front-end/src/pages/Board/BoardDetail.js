@@ -170,15 +170,7 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
             <div><h5 style={{position:"absolute", right:"80%"}}>댓글</h5></div>
             <template>
             <article />
-            <Comment>
-            <label>제목</label> &nbsp;&nbsp;&nbsp;
-                        <input 
-                        type="text" 
-                        name="boardTitle"
-                        value={boardTitle}
-                        onChange={onInsert}
-                        />
-                </Comment>
+            <Comment/>
           </template>
           <div style={{ marginBottom: "4rem" }}>
             {comments.map((comment) => {

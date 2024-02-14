@@ -42,6 +42,12 @@ const Comment = ({ onInsert }) => {
     );
 
     return (
+        <div>
+            <label>댓글</label> &nbsp;&nbsp;&nbsp;
+                        <input 
+                        type="text" 
+                        onChange={onInsert}
+                        />
         <form onSubmit={onSubmit}>
             
             <input placeholder="댓글"
@@ -52,10 +58,12 @@ const Comment = ({ onInsert }) => {
                 <MdAdd />
             </button>
         </form>
+        </div>
     )
 }
 
 export default Comment;
+
 // import axios from "axios";
 // import React, { useCallback, useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
