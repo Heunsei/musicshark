@@ -300,7 +300,7 @@ const PerfectPlayLobyPage = () => {
                         {perfectplayList.map((element) => (
                           <TableRow>
                             <TableCell>{element.title}</TableCell>
-                            <TableCell>{element.score}</TableCell>
+                            <TableCell>{element.score.toFixed(2)}</TableCell>
                             <TableCell>{element.clear ? "O" : "X"}</TableCell>
                           </TableRow>
                         ))}

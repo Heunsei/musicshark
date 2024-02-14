@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PerfectplayRequestDto {
 	private int songIdx;
-	private int score;
+	private float score;
 }
