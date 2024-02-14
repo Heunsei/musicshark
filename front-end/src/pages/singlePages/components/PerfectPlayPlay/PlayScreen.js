@@ -26,6 +26,7 @@ const PlayScreen = ({ songIdx }) => {
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState([]);
+<<<<<<< HEAD
     const [songInfo, setSongInfo] = useState([]);    
 
     const getSongInfo = async () => {
@@ -39,6 +40,8 @@ const PlayScreen = ({ songIdx }) => {
             console.error(error);
         }
     }
+=======
+>>>>>>> 73c1c2b57b0f1ecc956af24f21539698463cd039
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -304,13 +307,14 @@ const PlayScreen = ({ songIdx }) => {
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
 
-        if(songData[songIndex].cnt == songData[songData.length-1].cnt) {
-            setIsEndOpen(true);
+        if (songData[songIndex].cnt == songData[songData.length - 1].cnt) {
+            
             setIsPlaying(false);
-        if(!flag){
-            flag = true;
-            postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
-        }
+            if (!flag) {
+                flag = true;
+                setIsEndOpen(true);
+                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
+            }
         }
         if (songIndex >= songData.length) {
             console.log("!!종료!!");
