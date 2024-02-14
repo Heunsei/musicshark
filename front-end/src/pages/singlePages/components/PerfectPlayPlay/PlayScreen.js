@@ -24,7 +24,6 @@ const PlayScreen = ({ songIdx }) => {
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState([]);
-    
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -67,6 +66,7 @@ const PlayScreen = ({ songIdx }) => {
     }
 
     const restartPlayback = () => {
+        setIsEndOpen(false)
         startTimeRef.current = Date.now();
         particles.length = 0; // 파티클 초기화
 
@@ -243,10 +243,8 @@ const PlayScreen = ({ songIdx }) => {
     const getUser = async () => {
         try {
             const response = await getUserAction();
-            // console.log(response);
             const data = response.data;
             setUserInfo(data);
-            // console.log(data);
         }
         catch (error) {
             console.log(error);
@@ -255,6 +253,8 @@ const PlayScreen = ({ songIdx }) => {
 
     let totalScore = 0;
     let avgScore = 0;
+    let flag = false;
+
     const play = () => {
 
         if (
@@ -298,10 +298,20 @@ const PlayScreen = ({ songIdx }) => {
             voiceNoteWindow.shift();
         }
 
-        console.log('Pitch:', pitch);
+        // console.log('Pitch:', pitch);
 
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
+
+        if (songData[songIndex].cnt == songData[songData.length - 1].cnt) {
+            
+            setIsPlaying(false);
+            if (!flag) {
+                flag = true;
+                setIsEndOpen(true);
+                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
+            }
+        }
         if (songIndex >= songData.length) {
             console.log("!!종료!!");
             return;
@@ -473,21 +483,9 @@ const PlayScreen = ({ songIdx }) => {
         }
     };
 
-    let check = false;
     useAnimation(() => {
         if (isPlaying) {
             play();
-        }
-        if (songIndex >= songData.length) {
-            // songIndex가 songData.length를 넘어가면 애니메이션 종료
-            //console.log(songIndex);
-            setIsPlaying(false);
-            if(!check){
-                check=true;
-                setIsEndOpen(true);
-                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
-            }
-            return;
         }
     }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
 

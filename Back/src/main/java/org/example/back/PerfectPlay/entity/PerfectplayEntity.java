@@ -23,7 +23,7 @@ public class PerfectplayEntity {
 	private int userIdx;
 
 	@Column(name = "SCORE", nullable = false)
-	private int score;
+	private double score;
 
 	@Column(name = "SONG_IDX", nullable = false)
 	private int songIdx;
