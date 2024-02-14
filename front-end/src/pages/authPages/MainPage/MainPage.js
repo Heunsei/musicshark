@@ -47,7 +47,7 @@ export default function MainPage() {
                             원하는 대로 즐기세요<br />
                         </p>
                     </div>
-                    <div>
+                    <div style={{marginTop : '50px'}}>
                         <button onClick={navigateToGroup}
                             style={{
                                 fontFamily : 'Pretendard-Bold',
@@ -57,8 +57,8 @@ export default function MainPage() {
                                 color: '#783F26',
                                 backgroundColor: '#FFFADD',
                                 width: '15%',
-                                height: '2.5rem',
-                                margin: '1rem 0.5rem 0 0',
+                                height: '4rem',
+                                margin: '1rem 3rem 0 0',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
                                 cursor : 'pointer',
@@ -76,8 +76,8 @@ export default function MainPage() {
                                 color: '#783F26',
                                 backgroundColor: '#FADDA4',
                                 width: '15%',
-                                height: '2.5rem',
-                                margin: '1rem 0 0 0.5rem',
+                                height: '4rem',
+                                margin: '1rem 0 0 3rem',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
                                 cursor : 'pointer',
