@@ -21,6 +21,7 @@ export const getGroupRecordListAction = async (id) => {
         console.log('그룹 record 목록 조회 : ', res.data)
         return res.data
     } catch (err) {
+        return err.data
         console.log(err)
     }
 }

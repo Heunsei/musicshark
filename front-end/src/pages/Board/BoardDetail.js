@@ -73,7 +73,15 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         navigate(`/update/${board_id}`);
     }
 
-
+    const deleteBoard=async()=>{
+        if(window.confirm('게시글을 삭제하시겠습니까?')){
+            await axios.delete(`${process.env.REACT_APP_API_URL}/board/${boardIdx}`)
+            .then((res)=>{
+                alert('삭제되었습니다.');
+                navigate('/board');
+            })
+        }
+    }
 
     const moveToList=()=>{
         navigate('/board');

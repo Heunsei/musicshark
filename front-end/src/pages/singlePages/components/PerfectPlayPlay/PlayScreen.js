@@ -479,6 +479,7 @@ const PlayScreen = ({ songIdx }) => {
         }
         if (songIndex >= songData.length) {
             // songIndex가 songData.length를 넘어가면 애니메이션 종료
+            //console.log(songIndex);
             setIsPlaying(false);
             if(!check){
                 check=true;
@@ -496,7 +497,6 @@ const PlayScreen = ({ songIdx }) => {
             }
             startTimeRef.current = Date.now();
         };
-
         fetchMusic();
         getUser();
     }, []);

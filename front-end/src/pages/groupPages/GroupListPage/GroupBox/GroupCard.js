@@ -22,18 +22,28 @@ const GroupCard = (props) => {
             textAlign: 'center',
         }}>
             <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography variant="h5" component="div" sx={{ fontFamily: 'Pretendard-Medium' }}>
                     {groupData.channelName}
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                <Typography sx={{ mb: 1.5, fontFamily: 'Pretendard-Medium' }} color="text.secondary">
                     {`인원수 : ${groupData.channelCur}/${groupData.channelMax}`}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ fontFamily: 'Pretendard-Medium' }}>
                     {groupData.channelIntro}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => { navigate(`./${groupData.channelIdx}`) }}>참가하기</Button>
+                <Button sx={{
+                    fontFamily: 'Pretendard-Bold', fontSize: '24px', color: 'black',
+                    ':hover': {
+                        bgcolor: '#997B66',
+                        color: 'white',
+                    },
+                }}
+                    size="small"
+                    onClick={() => { navigate(`./${groupData.channelIdx}`) }}>
+                    참가하기
+                </Button>
             </CardActions>
         </Card>
     );

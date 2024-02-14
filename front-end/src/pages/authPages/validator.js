@@ -22,7 +22,7 @@ export const validatePasswordConfirm = (password, passwordConfirm) => {
 }
 
 export const validatePassword = (password) => {
-    return password.length >= 8 && password.length < 16
+    return password.length >= 8 && password.length < 17
 }
 
 export const validateMail = (mail) => {
@@ -33,7 +33,7 @@ export const validateMail = (mail) => {
 export const validateNickname = (nickname) => {
     const regex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/;
     const isFormValid = regex.test(nickname)
-    return nickname.length >=8 && nickname.length < 16 && isFormValid
+    return nickname.length >=8 && nickname.length < 17 && isFormValid
 }
 
 const validateGender = (gender) => {
