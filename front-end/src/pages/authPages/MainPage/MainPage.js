@@ -50,15 +50,18 @@ export default function MainPage() {
                     <div>
                         <button onClick={navigateToGroup}
                             style={{
+                                fontFamily : 'Pretendard-Bold',
+                                fontSize : '24px',
                                 display: 'inline-block',
                                 border: 'none',
                                 color: '#783F26',
                                 backgroundColor: '#FFFADD',
-                                width: '6rem',
+                                width: '15%',
                                 height: '2.5rem',
                                 margin: '1rem 0.5rem 0 0',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
+                                cursor : 'pointer',
                                 fontWeight: 900,
 
                             }}>
@@ -66,15 +69,18 @@ export default function MainPage() {
                         </button>
                         <button onClick={navigateToSingle}
                             style={{
+                                fontFamily : 'Pretendard-Bold',
+                                fontSize : '24px',
                                 display: 'inline-block',
                                 border: 'none',
                                 color: '#783F26',
                                 backgroundColor: '#FADDA4',
-                                width: '6rem',
+                                width: '15%',
                                 height: '2.5rem',
                                 margin: '1rem 0 0 0.5rem',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
+                                cursor : 'pointer',
                                 fontWeight: 900,
                             }}>
                             혼자 하기
