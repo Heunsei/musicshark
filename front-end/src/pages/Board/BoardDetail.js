@@ -79,7 +79,7 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         navigate('/board');
     }
 
-    const [comments, setComments] = useState([]);
+    const [comments, setComment] = useState([]);
     
     const getComment=async()=>{
         // const resp=await(await axios.get(`//localhost:8080/board/${board_id}`)).data;
@@ -94,23 +94,32 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         // 보드 디테일 확인용 코드 >> 지금 제대로 받아오고는 있음
         // 이걸 데이터 받아와서 아래의 board에 넣어줘야함
         setData(response.data)
-        setBoard(response.data);
+        setComment(response.data);
         setLoading(false);
     };
+
+        const onInsert=(event)=>{
+        console.log(event.target.value);
+        const{value,name}=event.target;
+        setComment({
+            ...comments,
+            [name]:value,
+        })
+    }
     
-      const onInsert = useCallback(
-        (name, content) => {
-          const comment = {
-            name,
-            content
-          };
-          console.log(name);
-          console.log(content);
-          setComments(comments => comments.concat(comment));
+    //   const  = useCallback(
+    //     (name, content) => {
+    //       const comment = {
+    //         name,
+    //         content
+    //       };
+    //       console.log(name);
+    //       console.log(content);
+    //       setComments(comments => comments.concat(comment));
           
-        },
-        [comments],
-      );
+    //     },
+    //     [comments],
+    //   );
     
 
     return (
@@ -153,8 +162,14 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
             <div><h5 style={{position:"absolute", right:"80%"}}>댓글</h5></div>
             <template>
             <article />
-            <Comment onInsert={onInsert}>
-                <input ></input>
+            <Comment>
+            <label>제목</label> &nbsp;&nbsp;&nbsp;
+                        <input 
+                        type="text" 
+                        name="boardTitle"
+                        value={boardTitle}
+                        onChange={onInsert}
+                        />
                 </Comment>
           </template>
           <div style={{ marginBottom: "4rem" }}>
