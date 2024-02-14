@@ -6,13 +6,13 @@ import BoardDetail from './BoardDetail';
 
 export const boardUpdateAction=async(board_id,boardDetail)=>{
     console.log(boardDetail)
-    //const URL = process.env.REACT_APP_API_URL
+    const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     
     try{
         await axios({
             method : 'put' ,
-            url:`http://localhost:8080/board/${board_id}`,
+            url:`${URL}/board/${board_id}`,
             data :boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`
