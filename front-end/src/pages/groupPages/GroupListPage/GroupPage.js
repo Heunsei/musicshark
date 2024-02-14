@@ -31,7 +31,7 @@ const GroupPage = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        loadGroupAction(setGroupList)
+        loadGroupAction(setGroupList, navigate, dispatch)
     }, [])
 
     useEffect(() => {
