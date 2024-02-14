@@ -89,7 +89,7 @@ const {boardTitle, boardContent}=board;
                         <button onClick={backToList}>목록</button>
                         <button onClick={()=>{
                             boardCreateAction(board)
-                            navigate('/board')
+                            //navigate(`/board/${board}`)
                     }}>등록</button>
                        
                     </div>

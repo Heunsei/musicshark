@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 // import styles from "./Board.module.css";
 import axios from "axios";
@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { boardDeleteAction } from "./boardDeleteAction";
 import moment from 'moment';
 import 'moment/locale/ko';
-import Comments from "./Comments";
+import Comment from "../Comments/Comment";
 //import Comments from "./Comments";
 
 // const BoxWrapper = styled('div')({
@@ -46,7 +46,6 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         })
         // 보드 디테일 확인용 코드 >> 지금 제대로 받아오고는 있음
         // 이걸 데이터 받아와서 아래의 board에 넣어줘야함
-        console.log('보드 디테일 확인',response.data)
         setData(response.data)
         setBoard(response.data);
         setLoading(false);
@@ -79,6 +78,40 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
     const moveToList=()=>{
         navigate('/board');
     }
+
+    const [comments, setComments] = useState([]);
+    
+    const getComment=async()=>{
+        // const resp=await(await axios.get(`//localhost:8080/board/${board_id}`)).data;
+        const response = await axios ({
+            url : `${URL}/board/${board_id}/${comments}`,
+            headers : {
+                Authorization : `Bearer ${accessToken}`
+            },
+            data : {board_idx  : board_id}
+
+        })
+        // 보드 디테일 확인용 코드 >> 지금 제대로 받아오고는 있음
+        // 이걸 데이터 받아와서 아래의 board에 넣어줘야함
+        setData(response.data)
+        setBoard(response.data);
+        setLoading(false);
+    };
+    
+      const onInsert = useCallback(
+        (name, content) => {
+          const comment = {
+            name,
+            content
+          };
+          console.log(name);
+          console.log(content);
+          setComments(comments => comments.concat(comment));
+          
+        },
+        [comments],
+      );
+    
 
     return (
         <>
@@ -115,11 +148,38 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
                 <button onClick={moveToList}>목록</button>
             </div>
             <hr/>
+
+            <div>
             <div><h5 style={{position:"absolute", right:"80%"}}>댓글</h5></div>
+            <template>
+            <article />
+            <Comment onInsert={onInsert}>
+                <input ></input>
+                </Comment>
+          </template>
+          <div style={{ marginBottom: "4rem" }}>
+            {comments.map((comment) => {
+                console.log("id"+comment.content);
+
+              return (
+                <Comment
+                  key={comment.id}
+                  id={comment.id}
+                  name={comment.name}
+                  content={comment.content}
+                  
+                />
+                
+              )
+            })}
+          </div>
+        </div>
+        
             
-               
-            
-            {/* <div><Comments/></div> */}
+             {/* <div>
+                <div><h5 style={{position:"absolute", right:"80%"}}>댓글</h5></div>
+                <div><Comment/></div>
+            </div> */}
             
                 {/* <Board
                     board_id={data.board_id}
