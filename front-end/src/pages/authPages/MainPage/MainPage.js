@@ -32,21 +32,20 @@ export default function MainPage() {
             <div className={styles.backGround}>
                 <Navbar />
                 <div className={styles.titleBox}>
-                    <div>
-                        <h2 style={{ color: 'white', margin: 2, textAlign: 'left' }}>
-                            아름다운 선율을 연주하게 될<br />
-                            당신을 위해<br />
-                        </h2>
+                    <div className={styles.headerBox}>
+                        <p style={{ color: 'white', margin: 2, textAlign: 'left' }}>
+                            아름다운 선율을 연주하게 될 당신을 위해
+                        </p>
                     </div>
                     <div>
-                        <h4 style={{ color: '#F5A760', margin: 3 }} >
-                            <strong>온라인</strong>으로 <strong>연습</strong>하는 <strong>악기 연주</strong>
-                        </h4>
+                        <p className={styles.subTitle}style={{ color: '#F5A760', margin: 3 }} >
+                            온라인으로 연습하는 악기 연주
+                        </p>
                         <br />
-                        <h3 style={{ color: '#FFFADD', margin: 4, fontWeight: 'normal' }}>
+                        <p className={styles.info} style={{ color: '#FFFADD', margin: 4, fontWeight: 'normal' }}>
                             친구들과 함께든 혼자서든<br />
                             원하는 대로 즐기세요<br />
-                        </h3>
+                        </p>
                     </div>
                     <div>
                         <button onClick={navigateToGroup}

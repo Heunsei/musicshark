@@ -59,8 +59,13 @@ const GroupBox = (props) => {
         const check = async () => {
             const res = await loadGroupAction(setGroupList)
             console.log('뭐가 문제지', res)
-            setGroupList(res)
-            setShowGroup(res.slice(fisrtItem, lastItem));
+            if (res !== undefined) {
+                setGroupList(res)
+                setShowGroup(res.slice(fisrtItem, lastItem));
+            } else {
+                
+            }
+
         }
         check()
     }, [fisrtItem, lastItem])
@@ -70,7 +75,9 @@ const GroupBox = (props) => {
     useEffect(() => {
         const action = async () => {
             const res = await loadGroupAction(setGroupList)
-            console.log('모달 확인용')
+            if (res === undefined) {
+                navigate('/login')
+            }
             setGroupList(res)
             setShowGroup(res.slice(fisrtItem, lastItem));
         }

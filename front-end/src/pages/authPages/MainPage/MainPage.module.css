@@ -12,4 +12,73 @@
     border: 2px solid black;
     width: 80%;
     height: 70%;
+    text-align: center;
+    justify-content: center;
+}
+
+.headerBox {
+    display: flex;
+    justify-content: center;
+}
+
+.headerBox p {
+    font-family: 'Pretendard-Bold';
+    font-size: 64px;
+    animation-name: start;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.subTitle {
+    font-family: 'Pretendard-Medium';
+    font-size: 42px;
+    opacity: 1;
+    animation-name: showLeft;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.info {
+    font-family: 'Pretendard-Medium';
+    font-size: 24px;
+    animation-name: showRight;
+    animation-duration: 2.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes start {
+    0% {
+        font-size: 16px;
+    }
+
+    100% {
+        font-size: 64px;
+    }
+
+}
+
+@keyframes showLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes showRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
