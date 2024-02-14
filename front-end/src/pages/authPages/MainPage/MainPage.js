@@ -2,11 +2,12 @@ import React from 'react';
 import { styled } from '@mui/system';
 import Navbar from '../../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+import styles from './MainPage.module.css'
 //import styles from './MainButton/MainButton.module.css';
 
 const BoxWrapper = styled('div')({
     width: '100%',
-    height: '100vh',
+    height: '100vh ',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -28,10 +29,9 @@ export default function MainPage() {
 
     return (
         <>
-            <Navbar />
-            <BoxWrapper>
-                <div style={{ textAlign: 'left', margin: '5%', marginRight: '70%' }}>
-
+            <div className={styles.backGround}>
+                <Navbar />
+                <div className={styles.titleBox}>
                     <div>
                         <h2 style={{ color: 'white', margin: 2, textAlign: 'left' }}>
                             아름다운 선율을 연주하게 될<br />
@@ -77,13 +77,12 @@ export default function MainPage() {
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
                                 fontWeight: 900,
-
                             }}>
                             혼자 하기
                         </button>
                     </div>
                 </div>
-            </BoxWrapper>
+            </div>
         </>
     )
 }
