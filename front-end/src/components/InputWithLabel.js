@@ -21,7 +21,7 @@ const ValidChecker = styled('p')({
     textTransform: 'uppercase',
     fontWeight: '300',
     fontSize: '16px',
-    margin : '2px',
+    margin: '2px',
 })
 
 const Input = styled("input")({
@@ -33,12 +33,13 @@ const Input = styled("input")({
     background: '#ffffff',
     margin: 0,
     fontSize: "16px",
-    padding: "0 5px"
+    padding: "0 5px",
+    width: "100%"
 })
 
 const InputWithLabel = (props) => {
     const { value, setValue, label, type, placeholder, validateState,
-            maxLength, min, max } = props
+            maxLength, min, max, readonly = false } = props
 
     const handleValueChange = (event) => {
         setValue(event.target.value)
@@ -54,8 +55,9 @@ const InputWithLabel = (props) => {
                 min={min}
                 max={max}
                 maxLength={maxLength}
+                readOnly={readonly}
             />
-            <div style= {{display: 'inline-block'}}>
+            <div style={{ display: 'inline-block' }}>
                 <ValidChecker>{validateState}</ValidChecker>
             </div>
         </Wrapper>

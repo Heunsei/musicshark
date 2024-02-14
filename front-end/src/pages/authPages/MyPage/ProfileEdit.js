@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../../api/axiosInstance";
 import Navbar from "../../../components/Navbar";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { validateNickname } from "../validator";
+import { validateNickname, validatePassword, validatePasswordConfirm } from "../validator";
 
 const ProfileEdit = () => {
   function getCookie(name) {
@@ -37,16 +37,32 @@ const ProfileEdit = () => {
   const [newNickname, setNewNickname] = useState("");
   const [nicknameError, setNicknameError] = useState("");
 
-  const [isHovered, setIsHovered] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
+  const [existPassword, setExistPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordConfirmError, setPasswordConfirmError] = useState("");
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setIsClicked(false); // 마우스를 떼면 클릭 상태도 초기화
+  const [isNicknameHovered, setIsNicknameHovered] = useState(false);
+  const [isNicknameClicked, setIsNicknameClicked] = useState(false);
+  const [isPasswordHovered, setIsPasswordHovered] = useState(false);
+  const [isPasswordClicked, setIsPasswordClicked] = useState(false);
+
+  const handleNicknameMouseEnter = () => setIsNicknameHovered(true);
+  const handleNicknameMouseLeave = () => {
+    setIsNicknameHovered(false);
+    setIsNicknameClicked(false);
   };
-  const handleMouseDown = () => setIsClicked(true);
-  const handleMouseUp = () => setIsClicked(false);
+  const handleNicknameMouseDown = () => setIsNicknameClicked(true);
+  const handleNicknameMouseUp = () => setIsNicknameClicked(false);
+
+  const handlePasswordMouseEnter = () => setIsPasswordHovered(true);
+  const handlePasswordMouseLeave = () => {
+    setIsPasswordHovered(false);
+    setIsPasswordClicked(false);
+  };
+  const handlePasswordMouseDown = () => setIsPasswordClicked(true);
+  const handlePasswordMouseUp = () => setIsPasswordClicked(false);
 
   const updateIconSize = () => {
     if (window.innerWidth < 550) {
@@ -114,6 +130,21 @@ const ProfileEdit = () => {
     }
   }, [userId]); // userId 값이 변경될 때마다 실행
 
+  const formatBirthDate = (birthDate) => {
+    if (!birthDate) return "";
+
+    const date = new Date(birthDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // '01' ~ '12'
+    const day = date.getDate().toString().padStart(2, "0"); // '01' ~ '31'
+
+    // MM과 DD가 01~09인 경우 앞의 0을 제거하여 'M월' 또는 'D일'로 표시
+    const formattedMonth = month.startsWith("0") ? month.slice(1) : month;
+    const formattedDay = day.startsWith("0") ? day.slice(1) : day;
+
+    return `${year}년 ${formattedMonth}월 ${formattedDay}일`;
+  };
+
   const handleNicknameChange = (event) => {
     // setNewNickname(event.target.value);
     const newNickname = event.target.value;
@@ -142,6 +173,13 @@ const ProfileEdit = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!validateNickname(newNickname)) {
+      // 유효하지 않은 경우, alert 메시지를 표시하고 함수 실행을 중단
+      alert("닉네임은 특수 문자를 제외하고 8 ~ 16글자로 설정해주세요.");
+      return; // 함수 실행 중단
+    }
+
     const accessToken = getCookie("accessToken");
     try {
       const response = await api.patch(
@@ -157,12 +195,99 @@ const ProfileEdit = () => {
         }
       );
       console.log("Nickname updated:", response.data);
+      alert("닉네임이 변경되었습니다.");
       navigate(`/mypage/${userId}`, { replace: true }); // 프로필 페이지로 리디렉션
       window.location.reload(); // 페이지 새로고침
       // fetchProfile();
     } catch (error) {
       console.error("Error updating nickname:", error);
+      alert("닉네임 변경에 실패했습니다. 다시 시도해주세요.");
     }
+  };
+
+  // 비밀번호 변경 핸들러
+  const handleExistPasswordChange = (event) => {
+    const existPassword = event.target.value;
+    setExistPassword(existPassword);
+  };
+
+  const handlePasswordChange = (event) => {
+    setNewPassword(event.target.value);
+    if (event.target.value && !validatePassword(event.target.value)) {
+      setPasswordError("비밀번호는 8 ~ 16글자로 설정해주세요.");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handlePasswordConfirmChange = (event) => {
+    setPasswordConfirm(event.target.value);
+
+    if (event.target.value && !validatePasswordConfirm(newPassword, event.target.value)) {
+      setPasswordConfirmError("비밀번호가 일치하지 않습니다.");
+    } else {
+      setPasswordConfirmError(""); // 비밀번호가 일치하거나 입력 필드가 비어 있는 경우 에러 메시지를 지웁니다.
+    }
+  };
+
+  const handleSubmitPasswordChange = async (event) => {
+    event.preventDefault();
+
+    // 1번 조건문: 새 비밀번호 유효성 검사
+    if (!validatePassword(newPassword)) {
+      alert("비밀번호는 8 ~ 16글자로 설정해주세요.");
+      return;
+    }
+
+    // 2번 조건문: 새 비밀번호와 비밀번호 확인이 일치하는지 검사
+    if (!validatePasswordConfirm(newPassword, passwordConfirm)) {
+      alert("새 비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    const accessToken = getCookie("accessToken");
+    try {
+      const response = await api.patch(
+        "/user/patch/password",
+        {
+          existPassword: existPassword,
+          newPassword: newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (response.status === 200 && response.data.message === "현재 비밀번호가 다릅니다.") {
+        console.log("Password not updated:", response.data);
+        alert("현재 비밀번호를 잘못 입력했습니다.");
+      } else {
+        console.log("Password updated:", response.data);
+        alert("비밀번호가 변경되었습니다.");
+        navigate(`/mypage/${userId}`, { replace: true });
+        window.location.reload();
+      }
+      // if (response.status === 200 &&) {
+      //   console.log("Password updated:", response.data);
+      //   alert("비밀번호가 변경되었습니다.");
+      //   navigate(`/mypage/${userId}`, { replace: true });
+      //   window.location.reload();
+      // } else {
+      //   alert("현재 비밀번호를 잘못 입력했습니다.");
+      // }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const containerStyle = {
+    display: "grid",
+    gridTemplateRows: "7% 93%",
+    height: "100vh", // 뷰포트 높이로 설정
+    overflow: "hidden", // 오버플로 숨김
   };
 
   const leftBoxStyle = {
@@ -171,7 +296,7 @@ const ProfileEdit = () => {
     flexDirection: "column",
     alignItems: "center", // 가로축 기준으로 중앙에 배치합니다.
     justifyContent: "flex-start", // 세로축 기준으로 상단에 배치합니다.
-    height: "95%",
+    height: "82%",
     padding: "20px",
     marginTop: "1%",
     borderRight: "3px solid #9C9888",
@@ -186,6 +311,7 @@ const ProfileEdit = () => {
     flexDirection: "row",
     justifyContent: "space-between", // 내용을 공간에 균등하게 배치
     alignItems: "flex-start", // 상단에 항목을 정렬
+    height: "82%",
     marginLeft: "3%",
   };
 
@@ -237,6 +363,7 @@ const ProfileEdit = () => {
 
   const sectionTitleStyle = {
     fontSize: "22px",
+    marginTop: "3%",
     marginBottom: "7%",
   };
 
@@ -244,19 +371,21 @@ const ProfileEdit = () => {
     display: "flex",
     flexDirection: "column",
     flex: 1, // Takes half the space
-    height: "100%",
+    height: "95%",
     marginRight: "2%",
     borderRight: "1px dotted #9C9888",
-    paddingTop: "10%",
+    paddingTop: "1%",
+    marginTop: "5%",
   };
 
   const rightColumnStyle = {
     display: "flex",
     flexDirection: "column",
-    height: "100%",
+    height: "95%",
     flex: 1, // Takes half the space
     marginLeft: "2%",
-    paddingTop: "10%",
+    paddingTop: "1%",
+    marginTop: "5%",
   };
 
   const boxKeyStyle = {
@@ -271,7 +400,7 @@ const ProfileEdit = () => {
     backgroundColor: "#F9FFF8",
     borderRadius: "4px",
     width: "80%",
-    height: "5%",
+    height: "6.5%",
     marginTop: "2%",
     marginBottom: "10%",
     marginLeft: "2%",
@@ -297,7 +426,61 @@ const ProfileEdit = () => {
     // display: "flex",
     alignItems: "center", // 텍스트를 수직 중앙 정렬
     // boxSizing: "border-box",
-    height: "19%",
+    height: "21%",
+  };
+
+  const inputStyle2 = {
+    display: "block", // input을 블록 레벨 요소로 만듦
+    border: "3px solid gray",
+    backgroundColor: "#F9FFF8",
+    borderRadius: "4px",
+    width: "79.6%",
+    marginTop: "2%",
+    marginBottom: "10.7%",
+    marginLeft: "2%",
+    // marginRight: "auto",
+    paddingLeft: "2%",
+    fontSize: "17px",
+    // display: "flex",
+    alignItems: "center", // 텍스트를 수직 중앙 정렬
+    // boxSizing: "border-box",
+    height: "8.3%",
+  };
+
+  const inputStyle3 = {
+    display: "block", // input을 블록 레벨 요소로 만듦
+    border: "3px solid gray",
+    backgroundColor: "#F9FFF8",
+    borderRadius: "4px",
+    width: "79.6%",
+    marginTop: "2%",
+    marginBottom: "1%",
+    marginLeft: "2%",
+    // marginRight: "auto",
+    paddingLeft: "2%",
+    fontSize: "17px",
+    // display: "flex",
+    alignItems: "center", // 텍스트를 수직 중앙 정렬
+    // boxSizing: "border-box",
+    height: "8.3%",
+  };
+
+  const inputStyle4 = {
+    display: "block", // input을 블록 레벨 요소로 만듦
+    border: "3px solid gray",
+    backgroundColor: "#F9FFF8",
+    borderRadius: "4px",
+    width: "79.6%",
+    marginTop: "2%",
+    marginBottom: "1%",
+    marginLeft: "2%",
+    // marginRight: "auto",
+    paddingLeft: "2%",
+    fontSize: "17px",
+    // display: "flex",
+    alignItems: "center", // 텍스트를 수직 중앙 정렬
+    // boxSizing: "border-box",
+    height: "8.3%",
   };
 
   const buttonStyle = {
@@ -320,9 +503,41 @@ const ProfileEdit = () => {
     borderRadius: "5%",
   };
 
-  const dynamicButtonStyle = {
+  const buttonStyle2 = {
+    width: "22%",
+    height: "10%",
+    color: "white",
+    fontWeight: "550",
+    backgroundColor: "#764812",
+    border: "#764812",
+    top: "200%", // 입력 필드의 하단에서 시작
+    left: "50%",
+    marginTop: "-50%",
+    marginLeft: "63%",
+    // marginRight: "3%",
+    // paddingTop: "0px",
+    // paddingBottom: "0px",
+    // paddingLeft: "0px",
+    // paddingRight: "0px",
+    borderRadius: "5%",
+  };
+
+  const dynamicNicknameButtonStyle = {
     ...buttonStyle,
-    backgroundColor: isClicked ? "#9e5f42" : isHovered ? "#886048" : buttonStyle.backgroundColor,
+    backgroundColor: isNicknameClicked
+      ? "#9e5f42"
+      : isNicknameHovered
+      ? "#886048"
+      : buttonStyle.backgroundColor,
+  };
+
+  const dynamicPasswordButtonStyle = {
+    ...buttonStyle2,
+    backgroundColor: isPasswordClicked
+      ? "#9e5f42"
+      : isPasswordHovered
+      ? "#886048"
+      : buttonStyle.backgroundColor,
   };
 
   const errorStyle = {
@@ -335,11 +550,11 @@ const ProfileEdit = () => {
   };
 
   return (
-    <div style={{ display: "grid", gridTemplateRows: "7% 93%", height: "100%" }}>
+    <div style={containerStyle}>
       <div>
         <Navbar />
       </div>
-      <div style={{ display: "flex", width: "100%", marginTop: "4%" }}>
+      <div style={{ display: "flex", width: "100%", height: "94%", marginTop: "4%" }}>
         <div style={leftBoxStyle}>
           <div>
             {userImageUrl ? (
@@ -352,9 +567,15 @@ const ProfileEdit = () => {
             <div style={infoKeyStyle}>이메일</div>
             <div style={infoValueStyle}>{profile.email}</div>
             <div style={infoKeyStyle}>생년월일</div>
-            <div style={infoValueStyle}>{profile.birth}</div>
+            <div style={infoValueStyle}>{formatBirthDate(profile.birth)}</div>
             <div style={infoKeyStyle}>성별</div>
-            <div style={infoValueStyle}>{profile.gender}</div>
+            <div style={infoValueStyle}>
+              {profile.gender.toLowerCase() === "male"
+                ? "남자"
+                : profile.gender.toLowerCase() === "female"
+                ? "여자"
+                : ""}
+            </div>
           </div>
         </div>
         <div style={rightBoxStyle}>
@@ -373,14 +594,13 @@ const ProfileEdit = () => {
                   onBlur={handleNicknameBlur}
                 />
               </label>
-              {/* {nicknameError && <div style={errorStyle}>{nicknameError}</div>} */}
               <div style={errorStyle}>{nicknameError || " "}</div>
               <button
-                style={dynamicButtonStyle}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
+                style={dynamicNicknameButtonStyle}
+                onMouseEnter={handleNicknameMouseEnter}
+                onMouseLeave={handleNicknameMouseLeave}
+                onMouseDown={handleNicknameMouseDown}
+                onMouseUp={handleNicknameMouseUp}
                 type="submit"
               >
                 닉네임 변경
@@ -389,6 +609,47 @@ const ProfileEdit = () => {
           </div>
           <div style={rightColumnStyle}>
             <div style={sectionTitleStyle}>비밀번호 변경</div>
+            <form onSubmit={handleSubmitPasswordChange}>
+              <label>
+                <div style={boxKeyStyle}>현재 비밀번호</div>
+                <input
+                  style={inputStyle2}
+                  type="password"
+                  value={existPassword}
+                  onChange={handleExistPasswordChange}
+                />
+                <div style={boxKeyStyle}>새로운 비밀번호</div>
+                <input
+                  style={inputStyle3}
+                  type="password"
+                  value={newPassword}
+                  onChange={handlePasswordChange}
+                />
+              </label>
+              <div style={errorStyle}>{passwordError || " "}</div>
+              {/* {passwordError && <div style={errorStyle}>{passwordError}</div>} */}
+              <label>
+                <div style={boxKeyStyle}>비밀번호 확인</div>
+                <input
+                  style={inputStyle4}
+                  type="password"
+                  value={passwordConfirm}
+                  onChange={handlePasswordConfirmChange}
+                />
+              </label>
+              <div style={errorStyle}>{passwordConfirmError || " "}</div>
+              {/* {passwordConfirmError && <div style={errorStyle}>{passwordConfirmError}</div>} */}
+              <button
+                style={dynamicPasswordButtonStyle}
+                onMouseEnter={handlePasswordMouseEnter}
+                onMouseLeave={handlePasswordMouseLeave}
+                onMouseDown={handlePasswordMouseDown}
+                onMouseUp={handlePasswordMouseUp}
+                type="submit"
+              >
+                비밀번호 변경
+              </button>
+            </form>
           </div>
         </div>
       </div>

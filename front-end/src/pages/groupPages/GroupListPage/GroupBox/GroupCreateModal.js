@@ -66,7 +66,7 @@ const GroupCreateModal = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h4" component="h2">
+                    <Typography id="modal-modal-title" sx={{ fontFamily: 'Pretendard-Bold', fontWeight: 'bolder' }}>
                         그룹 생성
                     </Typography>
                     <div>
@@ -96,18 +96,19 @@ const GroupCreateModal = (props) => {
                         max='6'
                         min='2'
                     />
-                    <Button variant="contained"
+                    <Button sx={{
+                        fontFamily: 'Pretendard-Medium',
+                        backgroundColor: '#997B66',
+                        color: '#997B66',
+                    }}
                         onClick={() => {
                             createGroupAction(groupDetail)
                             setIsModalOpen(false)
                             setChannelMax(2)
                             setGroupIntro('')
                             setGroupName('')
-                        }}
-                        sx={{
-                            margin: '15px'
-                        }}
-                    >그룹 생성하기</Button>
+                        }}>
+                        그룹 생성하기</Button>
                 </Box>
             </Modal>
         </div >
