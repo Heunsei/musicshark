@@ -20,10 +20,10 @@ const PlayScreen = ({ songIdx }) => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEndOpen, setIsEndOpen] = useState(false);
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState([]);
-    
+    const [userInfo, setUserInfo] = useState([]);    
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -511,7 +511,7 @@ const PlayScreen = ({ songIdx }) => {
                         ref={canvasRef}
                     />
                 </div>
-
+                {isEndOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 <div className={styles.buttonBox}>
                     {

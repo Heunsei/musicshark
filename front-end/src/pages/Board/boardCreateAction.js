@@ -8,7 +8,6 @@ export const boardCreateAction=async(boardDetail)=>{
     const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
 
-    
     try{
         await axios({
             method : 'post' ,

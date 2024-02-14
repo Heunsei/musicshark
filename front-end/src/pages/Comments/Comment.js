@@ -42,12 +42,8 @@ const Comment = ({ onInsert }) => {
     );
 
     return (
-        <form className="CommentInsert" onSubmit={onSubmit}>
-            <input classNames="inputNames"
-                placeholder="이름"
-                value={value.name}
-                onChange={onChangeName}
-            />
+        <form onSubmit={onSubmit}>
+            
             <input placeholder="댓글"
                 value={value.content}
                 onChange={onChangeContent}
