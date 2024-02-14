@@ -105,6 +105,7 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         setData(response.data)
         setComment(response.data);
         setLoading(false);
+        console.log(response.data);
     };
 
         const onInsert=(event)=>{
@@ -167,8 +168,8 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
             </div>
             <hr/>
 
+
             <div>
-            
             
             <Comments/>
           <div style={{ marginBottom: "4rem" }}>
