@@ -43,13 +43,14 @@ const Comment = ({ onInsert }) => {
 
     return (
         <div>
-            <label>댓글</label> &nbsp;&nbsp;&nbsp;
+            {/* <label>댓글</label> &nbsp;&nbsp;&nbsp;
                         <input 
                         type="text" 
                         onChange={onInsert}
                         />
-        <form onSubmit={onSubmit}>
-            
+        <form onSubmit={onSubmit}> */}
+            <span><h5 style={{position:"absolute", right:"80%"}}>댓글</h5></span>
+            <span>
             <input placeholder="댓글"
                 value={value.content}
                 onChange={onChangeContent}
@@ -57,7 +58,8 @@ const Comment = ({ onInsert }) => {
             <button type="submit">
                 <MdAdd />
             </button>
-        </form>
+            </span>
+        
         </div>
     )
 }

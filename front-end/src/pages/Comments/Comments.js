@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Dialog, DialogContent, IconButton, TextField } from "@mui/material";
 // import { CommentsAction, commentsAction } from './CommentsAction';
 import { commentsCreateAction } from './commentsCreateAction';
+import moment from "moment";
 
 const Comments=({board_id})=>{
     const URL = process.env.REACT_APP_API_URL
@@ -16,12 +17,13 @@ const Comments=({board_id})=>{
     const [commentList, setCommentList]=useState([]);
 
     const [content, setContent]=useState("");
-    const token=useSelector(state=>state.auth.token);
+    const token=useSelector(state=>state.login.login);
 
     const [page,setPage]=useState(1);
     const [pageCount,setPageCount]=useState(0);
 
     const [show,setShow]=useState(false);
+
 
     useEffect(()=>{
         const getCommentList=async()=>{
@@ -33,7 +35,7 @@ const Comments=({board_id})=>{
 
     useEffect(()=>{
         const getTotalBoard=async()=>{
-            const {data}=await axios.get(`/api/comment/count?board_id=${board_id}`);
+            const {data}=await axios.get(`${URL}/board/${board_id}`);
             return data.total;
         }
         getTotalBoard().then((result)=>setPageCount(Math.ceil(result/5)));
@@ -52,7 +54,8 @@ const Comments=({board_id})=>{
 
     const goLogin=()=>{
         setShow(false);
-        navigate(`login?redirectUrl=${location.pathname}`);
+        //navigate(`login?redirectUrl=${location.pathname}`);
+        navigate('/login')
     }
 
     return(
@@ -80,9 +83,9 @@ const Comments=({board_id})=>{
                 {commentList.map((item, index)=>(
                     <div key={index} className="comments-comment">
                         <div className="comment-username-date">
-                            {/* <div className="comment-date">{
+                            <div className="comment-date">{
                             moment(item.created).add(9,"hour").format('YYYY-MM-DD HH:mm:ss')}
-                            </div> */}
+                            </div>
                         </div>
                         <div className="comment-content">{item.content}</div>
                         <div className="comment-usename">{item.user.username}</div>

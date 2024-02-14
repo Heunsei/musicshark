@@ -10,6 +10,7 @@ import { boardDeleteAction } from "./boardDeleteAction";
 import moment from 'moment';
 import 'moment/locale/ko';
 import Comment from "../Comments/Comment";
+import Comments from "../Comments/Comments";
 //import Comments from "./Comments";
 
 // const BoxWrapper = styled('div')({
@@ -167,17 +168,15 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
             <hr/>
 
             <div>
-            <div><h5 style={{position:"absolute", right:"80%"}}>댓글</h5></div>
-            <template>
-            <article />
-            <Comment/>
-          </template>
+            
+            
+            <Comments/>
           <div style={{ marginBottom: "4rem" }}>
             {comments.map((comment) => {
                 console.log("id"+comment.content);
 
               return (
-                <Comment
+                <Comments
                   key={comment.id}
                   id={comment.id}
                   name={comment.name}

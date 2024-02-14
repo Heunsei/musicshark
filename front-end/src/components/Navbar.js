@@ -45,8 +45,6 @@ export default function Navbar() {
         const loginState = useSelector((state) => state.login.login)
         const userNickname=useSelector((state)=>state.user.nickname)
 
-        console.log("확인용입니다"+userNickname)
-
         return (
         <Box sx={{flexGrow:1}}>
             <AppBar position="static" sx={{bgcolor: "#997B66"}} >
