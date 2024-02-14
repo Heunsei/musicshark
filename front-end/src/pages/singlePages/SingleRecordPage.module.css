@@ -22,7 +22,7 @@
 }
 
 .buttonBox {
-    background-color: #9CD08F;
+    background-color: #EFD6BC;
     width: 100%;
     height: 10%;
     display: flex;
@@ -62,7 +62,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #9CD08F;
+    background-color: #EFD6BC;
     flex-direction: column;
     overflow: scroll;
     -ms-overflow-style: none;

@@ -42,3 +42,8 @@
 .groupUserBox {
     margin-top: 10px;
 }
+
+.groupInfoButtonBox {
+    display: flex;
+    justify-content: space-evenly;
+}

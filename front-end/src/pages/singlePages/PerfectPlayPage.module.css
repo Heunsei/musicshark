@@ -29,7 +29,9 @@
     width: 60%;
     height: 80vh;
     margin-right: 10px;
-    background-color: wheat;
+    border: 2px solid gray;
+    border-radius: 15px;
+    background-color: #F5F5DC;
 }
 
 .rightBox {

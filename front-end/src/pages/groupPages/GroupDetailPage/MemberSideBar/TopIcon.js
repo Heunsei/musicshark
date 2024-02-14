@@ -93,14 +93,16 @@ const TopIcon = (props) => {
                             })
                         }
                     </div>
-                    <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteMember(id) }}>
-                        <ExitToAppIcon className={styles.groupDeleteIcon} />
-                        <span>그룹 탈퇴</span>
-                    </button>
-                    <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteGroup(id) }}>
-                        <DeleteForeverIcon className={styles.groupDeleteIcon} />
-                        <span>그룹 삭제</span>
-                    </button>
+                    <div className={styles.groupInfoButtonBox}>
+                        <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteMember(id) }}>
+                            <ExitToAppIcon className={styles.groupDeleteIcon} />
+                            <span>그룹 탈퇴</span>
+                        </button>
+                        <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteGroup(id) }}>
+                            <DeleteForeverIcon className={styles.groupDeleteIcon} />
+                            <span>그룹 삭제</span>
+                        </button>
+                    </div>
                 </Box>
             </Modal>
         </>

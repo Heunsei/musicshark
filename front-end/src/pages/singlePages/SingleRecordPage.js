@@ -61,8 +61,7 @@ const SingleRecordPage = () => {
         setIsClick(false)
     }
 
-    /**
-     *  유저의 미디어를 받아오고 마이크가 없을 시 오류를 콘솔로 띄워줌
+    /**유저의 미디어를 받아오고 마이크가 없을 시 오류를 콘솔로 띄워줌
      */
     const getMedia = async () => {
         try {
@@ -84,8 +83,7 @@ const SingleRecordPage = () => {
         }
     };
 
-    /**
-     *  녹화를 시작하는 함수
+    /**녹화를 시작하는 함수
      */
     const handleStartRecording = () => {
         setRecordedBlobs([]);
@@ -111,8 +109,7 @@ const SingleRecordPage = () => {
     };
 
 
-    /**
-     * 녹화를 종료하는 함수
+    /**녹화를 종료하는 함수
      */
     const handleStopRecording = () => {
         setIsRecording(false)
@@ -124,8 +121,7 @@ const SingleRecordPage = () => {
     };
 
 
-    /**
-     * 다운로드 함수
+    /**다운로드 함수
      */
     const handleDownload = () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
@@ -136,15 +132,14 @@ const SingleRecordPage = () => {
         a.download = 'recorded.webm';
         document.body.appendChild(a);
         a.click();
-        setTimeout(() => {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            setRecordedBlobs([])
-        }, 100);
+        // setTimeout(() => {
+        //     document.body.removeChild(a);
+        //     window.URL.revokeObjectURL(url);
+        //     setRecordedBlobs([])
+        // }, 100);
     }
 
-    /**
-    *  blob객체를 생성하고 입력받은 videoTitle과 함께 데이터 폼으로 전달
+    /**blob객체를 생성하고 입력받은 videoTitle과 함께 데이터 폼으로 전달
     */
     const handleUpload = async () => {
         const blob = new Blob(recordedBlobs, { type: "video/webm" });
