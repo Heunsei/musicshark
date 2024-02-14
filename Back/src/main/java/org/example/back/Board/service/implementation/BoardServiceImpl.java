@@ -1,9 +1,11 @@
 package org.example.back.Board.service.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.example.back.Board.dto.request.PostBoardRequestDto;
+import org.example.back.Board.dto.response.GetAllBoardResponseDto;
 import org.example.back.Board.entity.BoardEntity;
 import org.example.back.User.entity.UserEntity;
 import org.example.back.Board.repository.BoardRepository;
@@ -25,8 +27,18 @@ public class BoardServiceImpl implements BoardService {
 	private final UserRepository userRepository;
 
 	@Override
-	public List<BoardEntity> getAllBoard() {
-		return boardRepository.findAllByBoardDeleted(false);
+	public List<GetAllBoardResponseDto> getAllBoard() {
+		List<BoardEntity> list = boardRepository.findAllByBoardDeleted(false);
+		List<GetAllBoardResponseDto> result = new ArrayList<>();
+
+		for(BoardEntity board : list){
+			UserEntity user = userRepository.findByUserIdx(board.getUserIdx());
+			GetAllBoardResponseDto dto = new GetAllBoardResponseDto(board, user);
+			System.out.println(dto.getBoardDate());
+
+			result.add(dto);
+		}
+		return result;
 	}
 
 	@Override
