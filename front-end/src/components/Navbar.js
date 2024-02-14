@@ -5,9 +5,15 @@
     // import LogoButton from './LogoButton';
     import styles from './Buttons.module.css';
     import sharklogo from '../assets/sharklogo.png';
+    import userSlice from '../redux/store/userSlice';
 
-    export default function Navbar() {
+    import { logoutAction } from './../pages/authPages/LoginPage/logoutAction';
+import { useDispatch, useSelector } from 'react-redux';
+import getUserAction from './../pages/authPages/LoginPage/getUserAction';
+
+export default function Navbar() {
         const navigate = useNavigate();
+        const dispatch = useDispatch()
         const navigateToAbout = () => {
             navigate('/about')
         }
@@ -32,6 +38,15 @@
         const navigateToMain = () => {
             navigate('/');
         };
+
+        
+             
+
+        const loginState = useSelector((state) => state.login.login)
+        const userNickname=useSelector((state)=>state.user.nickname)
+
+        console.log("확인용입니다"+userNickname)
+
         return (
         <Box sx={{flexGrow:1}}>
             <AppBar position="static" sx={{bgcolor: "#997B66"}} >
@@ -65,9 +80,28 @@
                             
                         <TableRow>
                             <td colSpan={4} style={{textAlign:'right'}}>
-                            <div className={styles.loginBtn} onClick={navigateToSignIn}>
-                            Login
-                            </div>
+                            {
+                                !loginState ? 
+                                <text>{userNickname}</text>:(
+                                <text>반갑습니다 {userNickname}님&nbsp;&nbsp;&nbsp;</text>)
+                            }
+
+                                
+                               { !loginState ? 
+                                (<button onClick={()=>{
+                                    navigateToSignIn();
+                                }}>
+                                로그인
+                                </button>) :
+                                (<button onClick={() => {
+                                    logoutAction(navigate, dispatch)
+                                }}> 
+                                 로그아웃
+                                    </button>
+                                    )
+                                    
+                            }
+
                             </td>
                         </TableRow>
                         <TableRow>
