@@ -53,7 +53,6 @@
 
                     </Typography>
 
-                 
                         <Table style={{width:"100%", marginRight:0}}>
                                 <colgroup>
                                     <col style={{width:"20%"}}/>
