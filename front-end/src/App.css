@@ -1,5 +1,17 @@
 body {
   background-color: rgba(255, 237, 216, 0.4);
+  font-family: "Pretendard-Medium";
+}
+
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url('./components/font/Pretendard/Pretendard-Bold.woff') format('woff')
+}
+
+@font-face {
+  font-family: "Pretendard-Medium";
+  font-size: medium;
+  src: url('./components/font/Pretendard/Pretendard-Medium.woff') format('woff')
 }
 
 @font-face {

@@ -28,6 +28,7 @@ const style = {
 };
 
 const Container = styled('div')({
+    fontFamily: 'Pretendard-Medium',
     backgroundColor: '#C0AB9A',
     width: '90%',
     height: '50%',
@@ -115,6 +116,9 @@ const GroupInfoBox = (props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
+                    <div style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}>
+                        <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '24px', fontWeight: 'bold', margin: '0px' }}>그룹 정보 변경</p>
+                    </div>
                     <InputWithLabel value={groupName} setValue={setGroupName}
                         label='그룹명 변경' placeholder="변경할 그룹명을 입력하세요" type='text' />
                     <InputWithLabel value={groupIntro} setValue={setGroupIntro}
