@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import React, { useState, useEffect } from "react";
+import { useQuery, QueryClient, QueryClientProvider } from "react-query";
 import axios from "axios";
+import api from "../../../api/axiosInstance";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import styles from "./CalendarModal.css";
+import Modal from "react-modal";
 import moment from "moment";
 import styled from "styled-components";
 
@@ -65,22 +68,64 @@ const absoluteDiv = {
 };
 
 function MyCalendar() {
-  const [value, onChange] = useState(new Date());
-  const [mark, setMark] = useState([]);
-  const month = moment().format("MM");
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
 
-  useQuery(
-    ["logDate", month],
-    async () => {
-      const result = await axios.get(`/api/healthLogs?health_log_type=DIET`);
-      return result.data;
-    },
+  const [value, onChange] = useState(new Date());
+  const [videos, setVideos] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedDateVideos, setSelectedDateVideos] = useState([]);
+  const [mark, setMark] = useState([]);
+
+  const fetchVideos = async (year, month) => {
+    try {
+      const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
+      const response = await api.get(
+        `/videos/personal/search/between?year=${year}&month=${month}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Cache-Control": "no-cache",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching videos data:", error);
+      throw new Error("Fetching videos data failed");
+    }
+  };
+
+  const { data: videosData, refetch } = useQuery(
+    ["videosData", value],
+    () => fetchVideos(value.getFullYear(), value.getMonth() + 1),
     {
-      onSuccess: (data) => {
-        setMark(data);
-      },
+      keepPreviousData: true,
     }
   );
+
+  useEffect(() => {
+    if (videosData) {
+      setVideos(videosData);
+    }
+  }, [videosData]);
+
+  useEffect(() => {
+    refetch(); // 선택된 날짜가 변경될 때마다 데이터를 다시 가져옵니다.
+  }, [value, refetch]);
 
   const formatShortWeekday = (locale, date) => {
     // 요일을 나타내는 숫자를 얻습니다 (0: 일요일, 1: 월요일, ..., 6: 토요일)
@@ -88,6 +133,32 @@ function MyCalendar() {
     // 요일에 따라 한글 문자열을 반환합니다
     const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
     return weekdays[day];
+  };
+
+  const handleDayClick = (date) => {
+    const selectedVideos = videos.filter((video) => moment(video.video_date).isSame(date, "day"));
+
+    // 영상이 존재하는 경우에만 모달 창을 열기
+    if (selectedVideos.length > 0) {
+      setSelectedDateVideos(selectedVideos);
+      setModalIsOpen(true);
+    }
+  };
+
+  const modalStyle = {
+    overlay: {
+      zIndex: "1000",
+    },
+    content: {
+      backgroundColor: "#F9FFF8",
+    },
+  };
+
+  const videoGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)', // 3개의 열을 가진 그리드
+    gap: '10px', // 그리드 간격
+    padding: '10px',
   };
 
   return (
@@ -105,6 +176,11 @@ function MyCalendar() {
       <StyledCalendar
         onChange={onChange}
         value={value}
+        onActiveStartDateChange={({ activeStartDate }) => {
+          onChange(activeStartDate); // 캘린더의 활성 시작 날짜를 업데이트
+          refetch(); // 활성 시작 날짜 변경 시 데이터 다시 가져오기
+        }}
+        onClickDay={handleDayClick}
         locale="en-US"
         formatShortWeekday={formatShortWeekday} // 요일을 '일월화수목금토'로 표시
         tileClassName={({ date, view }) => {
@@ -119,15 +195,49 @@ function MyCalendar() {
           }
         }}
         tileContent={({ date, view }) => {
-          if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
+          // mark 배열의 날짜와 일치하는 날짜에 점 표시
+          if (view === "month" && mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
             return (
               <div style={absoluteDiv}>
                 <div style={dot}></div>
               </div>
             );
           }
+          // videos 배열에서 video_date와 일치하는 날짜에 초록색 점 표시
+          if (
+            view === "month" &&
+            Array.isArray(videosData) && // videosData가 배열인지 확인
+            videosData.some((video) => moment(video.video_date).isSame(date, "day"))
+          ) {
+            return <div style={dot}></div>; // 초록색 점
+          }
         }}
       />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Selected Date Videos"
+        style={modalStyle}
+      >
+        <button 
+          onClick={() => setModalIsOpen(false)} 
+          style={{ position: 'absolute', top: '10px', right: '10px', border: 'none', background: 'transparent', fontSize: '40px', cursor: 'pointer' }}
+        >
+          &times;
+        </button>
+        <h2>영상 목록</h2>
+        <div style={videoGridStyle}>
+          {selectedDateVideos.map((video) => (
+            <div>
+              <video style={{ width: '100%' }} controls>
+                <source src={video.presigned_url} type="video/mp4" />
+                브라우저가 비디오를 지원하지 않습니다.
+              </video>
+              <div>{video.video_title}</div>
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 }
