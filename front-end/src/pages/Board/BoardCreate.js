@@ -16,9 +16,10 @@ const BoardCreate=()=>{
     const [board,setBoard]=useState({
                 boardTitle:'',
                 boardContent:'',
+                boardId:'',
                  //userNickname:nickname
             })
-const {boardTitle, boardContent}=board;
+const {boardTitle, boardContent, boardId}=board;
    
             
     
@@ -53,6 +54,10 @@ const {boardTitle, boardContent}=board;
            
             const backToList=()=>{
                 navigate('/board');
+            }
+
+            const showBoard=()=>{
+                navigate(`/board/${boardId}`);
             }
    
 
@@ -89,7 +94,7 @@ const {boardTitle, boardContent}=board;
                         <button onClick={backToList}>목록</button>
                         <button onClick={()=>{
                             boardCreateAction(board)
-                            //navigate(`/board/${board}`)
+                            showBoard();
                     }}>등록</button>
                        
                     </div>
