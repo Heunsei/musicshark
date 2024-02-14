@@ -30,7 +30,8 @@ public class SongServiceImpl implements SongService {
 			SongResponseDto songResponseDto = new SongResponseDto(
 				song.getSongIdx(),
 				song.getTitle(),
-				song.getSinger()
+				song.getSinger(),
+				song.getSongImg()
 			);
 			songLineDtos.add(songResponseDto);
 		}
