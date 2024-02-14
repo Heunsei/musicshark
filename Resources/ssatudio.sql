@@ -95,7 +95,7 @@ select * from perfectplay;
 create table if not exists `perfectplay`(
     pp_idx int primary key auto_increment COMMENT '퍼펙트 플레이 인덱스',
     user_idx int NOT NULL COMMENT '유저 인덱스',
-    score int NOT NULL COMMENT '점수',
+    score double NOT NULL COMMENT '점수',
     song_idx int NOT NULL COMMENT '노래 인덱스',
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '실행 날짜',
     clear tinyint NOT NULL COMMENT '클리어 여부',
@@ -212,7 +212,7 @@ create table if not exists `tier` (
 --     ('user3', 'password3', 'Male', FROM_UNIXTIME(UNIX_TIMESTAMP('1990-01-01') + FLOOR(1 + RAND() * (365 * 25 * 24 * 60 * 60))), 0, 'userN@example.com', NULL);
 
 INSERT INTO `perfectplay` (user_idx, score, song_idx, clear)
-VALUES (13, 70, 1, 1);
+VALUES (15, 70, 1, 1);
 
 --     (1, 2, 1),
 --     (2, 3, 1),

@@ -242,10 +242,8 @@ const PlayScreen = ({ songIdx }) => {
     const getUser = async () => {
         try {
             const response = await getUserAction();
-            // console.log(response);
             const data = response.data;
             setUserInfo(data);
-            // console.log(data);
         }
         catch (error) {
             console.log(error);
@@ -254,6 +252,8 @@ const PlayScreen = ({ songIdx }) => {
 
     let totalScore = 0;
     let avgScore = 0;
+    let flag = false;
+
     const play = () => {
 
         if (
@@ -303,7 +303,12 @@ const PlayScreen = ({ songIdx }) => {
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
 
         if(songData[songIndex].cnt == 48) {
+            
             setIsPlaying(false);
+        if(!flag){
+            flag = true;
+            postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
+        }
         }
         if (songIndex >= songData.length) {
             console.log("!!종료!!");
@@ -476,20 +481,9 @@ const PlayScreen = ({ songIdx }) => {
         }
     };
 
-    let check = false;
     useAnimation(() => {
         if (isPlaying) {
             play();
-        }
-        if (songIndex >= songData.length) {
-            // songIndex가 songData.length를 넘어가면 애니메이션 종료
-            //console.log(songIndex);
-            setIsPlaying(false);
-            if(!check){
-                check=true;
-                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
-            }
-            return;
         }
     }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
 
