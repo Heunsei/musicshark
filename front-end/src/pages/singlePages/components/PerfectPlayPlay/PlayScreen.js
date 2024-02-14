@@ -16,7 +16,6 @@ import { getCookie } from '../../../../util/cookie';
 import axios from 'axios'
 import { getSongListAction } from '../../actions/getSongListAction';
 import { getSongDetailAction } from '../../actions/getSongDetailAction';
-import e from 'express';
 
 const PlayScreen = ({ songIdx }) => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
@@ -26,12 +25,11 @@ const PlayScreen = ({ songIdx }) => {
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState([]);
-<<<<<<< HEAD
     const [songInfo, setSongInfo] = useState([]);    
 
     const getSongInfo = async () => {
         try{
-            const response = await getSongDetailAction();
+            const response = await getSongDetailAction(1);
             const data = response.data.data;
             console.log(data);
             setSongInfo(data);
@@ -40,8 +38,6 @@ const PlayScreen = ({ songIdx }) => {
             console.error(error);
         }
     }
-=======
->>>>>>> 73c1c2b57b0f1ecc956af24f21539698463cd039
 
     const startButtonClick = async () => {
         setIsPlaying(true);
