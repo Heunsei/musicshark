@@ -16,7 +16,7 @@ public class SongInfoResponseDto {
 	private int songIdx;
 	private String title;
 	private String singer;
-	private String mrFile;
+	private String songImg;
 	private int startTiming;
 	private int runningTime;
 	private List<SongLineResponseDto> songLineResponseDtoList;
@@ -26,7 +26,7 @@ public class SongInfoResponseDto {
 		this.songIdx = songEntity.getSongIdx();
 		this.title = songEntity.getTitle();
 		this.singer = songEntity.getSinger();
-		this.mrFile = songEntity.getMrFile();
+		this.songImg = songEntity.getSongImg();
 		this.startTiming = songEntity.getStartTiming();
 		this.runningTime = songEntity.getRunningTime();
 		this.songLineResponseDtoList = songLineResponseDtoList;

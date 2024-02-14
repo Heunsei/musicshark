@@ -73,11 +73,11 @@ create table if not exists `song` (
     singer varchar(50) COMMENT '가수',
     start_timing int NOT NULL COMMENT '시작 시간',
     running_time int NOT NULL COMMENT '재생 시간',
-    mr_file varchar(300) NOT NULL COMMENT '반주'
+    song_img text NOT NULL COMMENT '노래 이미지'
 );
-
 select * from song;
-
+insert into song (title, singer, start_timing, running_time, song_img) 
+values ('언제나 몇번이라도(센과 치히로의 행방불명 OST)','키무라 유미', 3, 102, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg3D_ZeM4CUyxFI2Y_t1L2s7T9BOQ0t3qYZQ&usqp=CAU');
 -- 노래 바
 create table if not exists `song_line` (
    song_line_idx int primary key auto_increment COMMENT '노래바 인덱스',
@@ -89,7 +89,6 @@ create table if not exists `song_line` (
    CONSTRAINT `fk_song_line_song_idx` FOREIGN KEY (song_idx) REFERENCES `song` (song_idx)
 );
 
-select * from perfectplay;
 -- 퍼펙트 플레이
 
 create table if not exists `perfectplay`(
@@ -102,6 +101,9 @@ create table if not exists `perfectplay`(
     CONSTRAINT `fk_perfectplay_user_idx` FOREIGN KEY (user_idx) REFERENCES `user` (user_idx),
     CONSTRAINT `fk_perfectplay_song_idx` FOREIGN KEY (song_idx) REFERENCES `song` (song_idx)
 );
+
+select * from perfectplay;
+
 -- 관심악기
 create table if not exists `instrument` (
 	user_idx int primary key auto_increment COMMENT '유저 인덱스',
