@@ -11,8 +11,6 @@ import TitleIcon from '@mui/icons-material/Title';
 import LyricsIcon from '@mui/icons-material/Lyrics';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import FlagIcon from '@mui/icons-material/Flag';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 import styles from './PerfectPlayPage.module.css'
 import Navbar from '../../components/Navbar';
@@ -249,7 +247,7 @@ const PerfectPlayLobyPage = () => {
       <div className={styles.body}>
         <div className={styles.container}>
           <div className={styles.topIndicator}>
-            <p style={{ fontFamily: 'Pretendard-Bold' }}>{userName}님 어서오세요</p>
+            <p style={{ fontFamily: 'Pretendard-Bold', borderBottom: '3px solid black' }}>{userName}님 어서오세요</p>
           </div>
           <div className={styles.content}>
             <div className={styles.songList}>
@@ -283,7 +281,7 @@ const PerfectPlayLobyPage = () => {
                           component="th"
                           scope="row"
                           sx={{
-                            fontFamily: 'Pretendard-Medium', cursor: "pointer",
+                            fontFamily: 'Pretendard-Medium', cursor: "pointer", width: '70%',
                             textAlign: 'center', borderRadius: '5px', alignItems: 'center', boxShadow: '1px 1px 1px gray'
                           }}
                           onClick={() => {
@@ -313,25 +311,25 @@ const PerfectPlayLobyPage = () => {
               </div>
               <div className={styles.perfectplayList}>
                 <TableContainer component={Paper} sx={{ height: "100%" }}>
-                  <Table sx={{ backgroundColor: "#F5F5DC", minWidth: 650, borderSpacing: '7px 7px', borderCollapse: 'separate' }} aria-label="simple table">
+                  <Table sx={{ backgroundColor: "#F5F5DC", borderSpacing: '7px 7px', borderCollapse: 'separate' }} aria-label="simple table">
                     <TableHead sx={{ backgroundColor: "#997B66" }}>
                       <TableRow>
                         <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <TitleIcon sx={{ color: 'white' }} />
+                            <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>제목</p>
+                          </div>
+                        </TableCell>
+                        <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center', width: '23%' }}>
                           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <MusicNoteIcon sx={{ color: 'white' }} />
                             <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>점수</p>
                           </div>
                         </TableCell>
-                        <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center' }}>
+                        <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center', width: '23%' }}>
                           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <FlagIcon sx={{ color: 'white' }} />
                             <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>클리어</p>
-                          </div>
-                        </TableCell>
-                        <TableCell sx={{ textAlign: 'center', borderRadius: '7px', alignItems: 'center' }}>
-                          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <TitleIcon sx={{ color: 'white' }} />
-                            <p style={{ fontFamily: 'Pretendard-Bold', fontSize: '17px', fontWeight: 'bold', color: 'white' }}>제목</p>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -339,9 +337,9 @@ const PerfectPlayLobyPage = () => {
                     <TableBody>
                       {perfectplayList.map((element) => (
                         <TableRow>
-                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.title}</TableCell>
-                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.score}</TableCell>
-                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.clear ? "O" : "X"}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium', }}>{element.title}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium', width: '23%' }}>{element.score}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium', width: '23%' }}>{element.clear ? "O" : "X"}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
