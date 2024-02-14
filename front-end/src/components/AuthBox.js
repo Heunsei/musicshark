@@ -16,7 +16,7 @@ const AuthBox = (props) => {
         <BoxWrapper>
             <Box
                 sx={{
-                    width: 700,
+                    width: 500,
                     height: '70vh',
                     bgcolor: '#ffffff',
                     borderRadius: '5px',
