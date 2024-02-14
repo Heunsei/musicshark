@@ -1,0 +1,15 @@
+.kakaoLoginBtn {
+    font-family: 'Pretendard-Medium';
+    background-color: #FEE500;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
