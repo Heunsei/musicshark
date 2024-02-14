@@ -5,13 +5,13 @@ import { getCookie } from '../../util/cookie'
 
 export const boardDetailAction=async(board_id, setBoardDetail)=>{
     //console.log(boardDetail)
-    //const URL = process.env.REACT_APP_API_URL
+    const URL = process.env.REACT_APP_API_URL
     const accessToken = getCookie('accessToken')
     
     try{
         await axios({
             method : 'get' ,
-            url:`http://localhost:8080/board/${board_id}`,
+            url:`${URL}/board/${board_id}`,
             //data : boardDetail,
             headers : {
                 Authorization: `Bearer ${accessToken}`

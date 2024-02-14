@@ -43,6 +43,7 @@ public class WebSecurityConfig {
 //                .antMatchers("/auth/**").permitAll()
                 .antMatchers("/auth/sign-in").permitAll()
                 .antMatchers("/auth/sign-up").permitAll()
+                .antMatchers("/auth/kakao/**").permitAll()
 //                .antMatchers("/user/").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/channel/**").hasRole("USER")

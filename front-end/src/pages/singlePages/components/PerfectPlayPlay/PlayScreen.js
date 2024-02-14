@@ -20,10 +20,10 @@ const PlayScreen = ({ songIdx }) => {
     const [isAudioContextInitialized, setAudioContextInitialized] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEndOpen, setIsEndOpen] = useState(false);
     const [number, setNumber] = useState(3);
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState([]);
-    
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -66,10 +66,7 @@ const PlayScreen = ({ songIdx }) => {
     }
 
     const restartPlayback = () => {
-        // 재생을 다시 시작하는 로직
-        // const pausedDuration = Date.now() - pausedTimeRef.current; // 멈춘 시간 계산
-        // startTimeRef.current = Date.now() - pausedDuration; //재생 시작 시간 초기화
-
+        setIsEndOpen(false)
         startTimeRef.current = Date.now();
         particles.length = 0; // 파티클 초기화
 
@@ -121,7 +118,7 @@ const PlayScreen = ({ songIdx }) => {
     const canvasHeight = 330;
     const canvasRef = useCanvas(canvasWidth, canvasHeight);
 
-    //!! 파티클
+    // 파티클
     const drawParticle = (noteWindow, ctx) => {
         if (noteWindow[halfSize][0] < 10) return;
 
@@ -246,10 +243,8 @@ const PlayScreen = ({ songIdx }) => {
     const getUser = async () => {
         try {
             const response = await getUserAction();
-            // console.log(response);
             const data = response.data;
             setUserInfo(data);
-            // console.log(data);
         }
         catch (error) {
             console.log(error);
@@ -258,6 +253,8 @@ const PlayScreen = ({ songIdx }) => {
 
     let totalScore = 0;
     let avgScore = 0;
+    let flag = false;
+
     const play = () => {
 
         if (
@@ -301,10 +298,20 @@ const PlayScreen = ({ songIdx }) => {
             voiceNoteWindow.shift();
         }
 
-        console.log('Pitch:', pitch);
+        // console.log('Pitch:', pitch);
 
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
+
+        if (songData[songIndex].cnt == songData[songData.length - 1].cnt) {
+            
+            setIsPlaying(false);
+            if (!flag) {
+                flag = true;
+                setIsEndOpen(true);
+                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
+            }
+        }
         if (songIndex >= songData.length) {
             console.log("!!종료!!");
             return;
@@ -333,55 +340,29 @@ const PlayScreen = ({ songIdx }) => {
                     correct += 1;
                 }
             }
-            // if (correct > block * 0.5) {
-            //     barColor = 1;
-            //     scoreText = 'PERFECT';
-            // } else if (correct > block * 0.3) {
-            //     barColor = 2;
-            //     scoreText = 'GREAT';
-            // } else if (correct > block * 0.1) {
-            //     barColor = 3;
-            //     scoreText = 'GOOD';
-            // } else if (correct > 0) {
-            //     barColor = 4;
-            //     scoreText = 'NORMAL';
-            // } else {
-            //     barColor = 5;
-            //     scoreText = 'BAD';
-            // }
             if (correct > block * 0.5) {
                 barColor = 1;
                 scoreText = 'PERFECT';
-                // setTotalScore(totalScore + 100);
-                // setAvgScore(totalScore / randomData.length);
                 totalScore += 100;
                 avgScore = totalScore / randomData.length;
             } else if (correct > block * 0.3) {
                 barColor = 2;
                 scoreText = 'GREAT';
-                // setTotalScore(totalScore + 75);
-                // setAvgScore(totalScore / randomData.length);
                 totalScore += 75;
                 avgScore = totalScore / randomData.length;
             } else if (correct > block * 0.1) {
                 barColor = 3;
                 scoreText = 'GOOD';
-                // setTotalScore(totalScore + 50);
-                // setAvgScore(totalScore / randomData.length);
                 totalScore += 50;
                 avgScore = totalScore / randomData.length;
             } else if (correct > 0) {
                 barColor = 4;
                 scoreText = 'NORMAL';
-                // setTotalScore(totalScore + 25);
-                // setAvgScore(totalScore / randomData.length);
                 totalScore += 25;
                 avgScore = totalScore / randomData.length;
             } else {
                 barColor = 5;
                 scoreText = 'BAD';
-                // setTotalScore(totalScore + 0);
-                // setAvgScore(totalScore / randomData.length);
                 totalScore += 0;
                 avgScore = totalScore / randomData.length;
             }
@@ -467,8 +448,7 @@ const PlayScreen = ({ songIdx }) => {
                 ) {
                     ctx.roundRect(musicX, musicY, barWidth, barHeight, [0, 5, 5, 0]);
                 } else {
-                    //console.log(songNoteWindow[i]);
-                    if (songNoteWindow[i][2] < songNoteWindow[i + 1][2]) {//같은데 다음 json 객체면 라운드 
+                    if (songNoteWindow[i][2] != songNoteWindow[i + 1][2]) {//같은데 다음 json 객체면 라운드 
                         ctx.roundRect(musicX, musicY, barWidth - 5, barHeight, [0, 5, 5, 0]);
                     }
                     else {
@@ -503,20 +483,9 @@ const PlayScreen = ({ songIdx }) => {
         }
     };
 
-    let check = false;
     useAnimation(() => {
         if (isPlaying) {
             play();
-        }
-        
-        if (songIndex >= songData.length) {
-            // songIndex가 songData.length를 넘어가면 애니메이션 종료
-            setIsPlaying(false);
-            if(!check){
-                check=true;
-                postPlayScoreAction(userInfo.userIdx, songIdx, avgScore);
-            }
-            return;
         }
     }, 0, [dataArrayRef, pitchDetectorRef, analyser]);
 
@@ -528,7 +497,6 @@ const PlayScreen = ({ songIdx }) => {
             }
             startTimeRef.current = Date.now();
         };
-
         fetchMusic();
         getUser();
     }, []);
@@ -545,7 +513,7 @@ const PlayScreen = ({ songIdx }) => {
                         ref={canvasRef}
                     />
                 </div>
-
+                {isEndOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 <div className={styles.buttonBox}>
                     {

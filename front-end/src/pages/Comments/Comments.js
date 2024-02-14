@@ -6,9 +6,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Dialog, DialogContent, IconButton, TextField } from "@mui/material";
-import { CommentsAction, commentsAction } from './CommentsAction';
+// import { CommentsAction, commentsAction } from './CommentsAction';
+import { commentsCreateAction } from './commentsCreateAction';
 
 const Comments=({board_id})=>{
+    const URL = process.env.REACT_APP_API_URL
     const location=useLocation();
     const navigate=useNavigate();
     const [commentList, setCommentList]=useState([]);
@@ -23,7 +25,7 @@ const Comments=({board_id})=>{
 
     useEffect(()=>{
         const getCommentList=async()=>{
-            const {data}=await axios.get(`//localhost:8080/board/${board_id}&page_number=${page}&page_size=${5}`);
+            const {data}=await axios.get(`${URL}/board/${board_id}&page_number=${page}&page_size=${5}`);
             return data;
         }
         getCommentList().then((result)=>setCommentList([...commentList,...result]));

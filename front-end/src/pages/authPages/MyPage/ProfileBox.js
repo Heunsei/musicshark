@@ -161,6 +161,7 @@ const ProfileBox = () => {
         return {
           ...baseStyle,
           backgroundColor: "#cd7f32", // Bronze 색상
+          border: "#cd7f32",
           color: "white",
           marginLeft: "1.5%",
           marginRight: "3%",
@@ -169,24 +170,28 @@ const ProfileBox = () => {
         return {
           ...baseStyle,
           backgroundColor: "#C0C0C0", // Silver 색상
-          color: "white",
+          border: "#C0C0C0",
+          color: "black",
         };
       case "gold":
         return {
           ...baseStyle,
           backgroundColor: "#FFD700", // Gold 색상
+          border: "#FFD700",
           color: "white",
         };
       case "platinum":
         return {
           ...baseStyle,
           backgroundColor: "#E5E4E2", // Platinum 색상
+          border: "#E5E4E2",
           color: "black",
         };
       case "diamond":
         return {
           ...baseStyle,
           backgroundColor: "#b9f2ff", // Diamond 색상
+          border: "#b9f2ff",
           color: "black", // Diamond는 밝은 색상이므로 텍스트 색상을 검정으로 변경
         };
       default:
@@ -297,6 +302,7 @@ const ProfileBox = () => {
     margin: "3.2% 3.7% 3.2% -3.7%",
     width: "12%", // 필요에 따라 조정하거나 제거
     border: "solid", // 필요에 따라 테두리 스타일을 조정
+    borderRadius: "15%",
   };
 
   const nameTextStyle = {

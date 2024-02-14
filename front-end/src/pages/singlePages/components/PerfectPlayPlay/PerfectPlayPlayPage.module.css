@@ -1,6 +1,6 @@
 .body {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 100px);
     display: flex;
     background-color: beige;
     justify-content: center;
@@ -8,20 +8,17 @@
 }
 
 .container {
-    border: 1px solid black;
     width: 100%;
-    height: 90%;
+    height: 100%;
 }
 
 .screenBox {
-    border: 1px solid black;
     width: 100%;
-    height: 90%;
+    height: 100%-100;
     text-align: center;
 }
 
 .buttonBox {
-    border: 1px solid black;
     width: 100%;
     height: 10%;
     display: flex;

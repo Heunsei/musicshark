@@ -337,9 +337,9 @@ const PerfectPlayLobyPage = () => {
                     <TableBody>
                       {perfectplayList.map((element) => (
                         <TableRow>
-                          <TableCell sx={{ fontFamily: 'Pretendard-Medium', }}>{element.title}</TableCell>
-                          <TableCell sx={{ fontFamily: 'Pretendard-Medium', width: '23%' }}>{element.score}</TableCell>
-                          <TableCell sx={{ fontFamily: 'Pretendard-Medium', width: '23%' }}>{element.clear ? "O" : "X"}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.title}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.score.toFixed(2)}</TableCell>
+                          <TableCell sx={{ fontFamily: 'Pretendard-Medium' }}>{element.clear ? "O" : "X"}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

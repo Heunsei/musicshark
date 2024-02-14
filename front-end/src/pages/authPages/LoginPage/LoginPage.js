@@ -8,6 +8,7 @@ import LoginPageFooter from './LoginPageFooter';
 import Navbar from './../../../components/Navbar'
 import { loginAction } from './loginAction';
 import { loginValidator } from './../validator'
+import { KakaoLoginButton } from './KakaoLoginButton';
 
 const LoginPage = () => {
     const dispatch = useDispatch()
@@ -43,6 +44,7 @@ const LoginPage = () => {
                     setPassword={setPassword}
                 />
                 <LoginPageFooter isFormValid={isFormValid} handleLogin={handleLogin} />
+                <KakaoLoginButton />
             </AuthBox>
         </>
     );
