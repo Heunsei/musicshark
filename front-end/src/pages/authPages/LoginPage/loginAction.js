@@ -36,6 +36,7 @@ export const loginAction = async (userDetails, dispatch, navigate) => {
         }
     } catch (err) {
         console.log(err)
+        alert('존재하지 않는 계정입니다')
         return {
             error: true,
             err

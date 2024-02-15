@@ -1,4 +1,4 @@
-import styles from './PerfectPlayPlayPage.module.css'
+import styles from './PerfectPlayPlayPage.module.css';
 import React, { useRef, useEffect, useState } from 'react';
 import { PitchDetector } from 'pitchy';
 import { useCanvas } from './useCanvas';
@@ -33,6 +33,7 @@ const PlayScreen = ({ songIdx }) => {
             const data = response.data.data;
             console.log(data);
             setSongInfo(data);
+            
 
         }catch(error){
             console.error(error);
@@ -114,8 +115,8 @@ const PlayScreen = ({ songIdx }) => {
     // particles.push(exampleParticle);
 
     //캔버스
-    const canvasWidth = 980;
-    const canvasHeight = 480;
+    const canvasWidth = 950;
+    const canvasHeight = 450;
     const canvasRef = useCanvas(canvasWidth, canvasHeight);
 
     // 파티클
@@ -505,76 +506,46 @@ const PlayScreen = ({ songIdx }) => {
     }, []);
 
     return (
-      <div className={styles.body}>
-        <div className={styles.container}>
-          <div style={{ border: "solid 1px", textAlign: "center" }}>
-            <NumberDisplay number={number} />
-          </div>
-          <div>
-            <div
-              style={{display: "flex", ustifyContent: "space-between", border: "solid 4px"}}
-              className={styles.screenBox}
-            >
-              <div className={styles.infoBox}>
-                <div
-                  style={{
-                    border: "solid 4px gold",
-                    width: "300px",
-                    height: "300px",
-                  }}
-                  className={styles.card}
-                >
-                  <div className={styles.img}>
-                    sss
-                    <img src={songInfo.songImg}></img>
-                  </div>
-                  <div className={styles.content}>
-                    <div>{songInfo.title}</div>
-                  </div>
+        <div className={styles.body}>
+            <div className={styles.container}>
+                <div className={styles.infoBox}>
+                    <div className={styles.card}>
+                        <div className={styles.img}><img src={songInfo.songImg}></img></div>
+                        <div className={styles.content}>
+                            <div className={styles.title}>{songInfo.title}</div>
+                            <div className={styles.singer}>{songInfo.singer}</div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div style={{border : "solid 4px gold"}} >
-                <canvas
-                  id="screen-screen"
-                  width={canvasWidth}
-                  height={canvasHeight}
-                  ref={canvasRef}
-                />
-              </div>
-            </div>
-            <div className={styles.buttonBox}>
-              {!isPlaying ? (
-                <button onClick={() => startButtonClick()}>
-                  <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
-                </button>
-              ) : (
-                <button onClick={() => stopButtonClick()}>
-                  <StopCircleIcon /> <span>중지</span>
-                </button>
-              )}
-              <button
-                onClick={() => navigate("/single/perfect")}
-                style={{ position: "absolute", right: "30px" }}
-              >
-                <LogoutIcon />
-              </button>
-            </div>
-          </div>
+                <div className={styles.screenBox}>
+                    <NumberDisplay number={number} />
+                    <canvas
+                        id="screen-screen"
+                        width={canvasWidth}
+                        height={canvasHeight}
+                        ref={canvasRef}
+                    />
+                    <div className={styles.buttonBox}>
+                        {
+                            !isPlaying ?
+                                (<button onClick={() => startButtonClick()}>
+                                    <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
+                                </button>) :
+                                (<button onClick={() => stopButtonClick()}>
+                                    <StopCircleIcon /> <span>중지</span>
+                                </button>)
+                        }
+                        <button onClick={() => navigate('/single/perfect')} style={{ position: 'absolute', right: '30px' }}>
+                            <LogoutIcon />
+                        </button>
+                    </div>
+                </div>
 
-          {isEndOpen && (
-            <Popup
-              onClose={() => setIsModalOpen(false)}
-              onRestartPlayback={restartPlayback}
-            />
-          )}
-          {isModalOpen && (
-            <Popup
-              onClose={() => setIsModalOpen(false)}
-              onRestartPlayback={restartPlayback}
-            />
-          )}
+                {isEndOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
+                {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
+            </div>
         </div>
-      </div>
+
     );
 };
 

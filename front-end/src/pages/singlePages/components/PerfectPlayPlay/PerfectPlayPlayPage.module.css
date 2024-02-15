@@ -1,40 +1,40 @@
 .body {
     width: 100%;
     height: calc(100vh - 100px);
-    display: flex;
     background-color: beige;
     justify-content: center;
     align-items: center;
 }
-.container {
-    width: 100%;
-    height: 100%;
-}
 .infoBox {
-    width: 30%;
-    height: 90%;
-    background-color: rgba(71, 203, 215, 0.468);
+    width:35%;
+    height: 50%;
     display: inline-block;
+    
 }
 .card {
-    width: 70%;
+    width: 78%;
     height: 78%;
-    margin: 13% 20%;
-    background-color: aliceblue;
+    margin-left: 20%;
+    background-color: burlywood;
+    border-radius: 15px;
 }
 .img {
-    width: 70%;
+    width: 100%;
     height: 70%;
-    background-color: gray;
+}
+.img img {
+    width: 80%;
+    height: 100%;
+    border-radius: 15px;
 }
 .content {
-    width: 70%;
+    width: 100%;
     height: 20%;
-    background-color: gray;
-    margin-top: 10px;
+    text-align: center;
+    line-height: 200%;
 }
 .screenBox {
-    width: 69%;
+    width: 65%;
     height: 100%;
     text-align: center;
     justify-content: center;
@@ -58,3 +58,9 @@
     width: 15%;
     height: 80%;
 }
+
+.title {
+    font-size: larger;
+    font-weight: bold;
+}
+

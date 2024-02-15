@@ -24,10 +24,12 @@ const loadGroupAction = async (setGroupList, navigate, dispatch) => {
                 return res.data.data
             })
             .catch((err) => {
-                console.log(err)
+                logoutAction(navigate, dispatch)
+                navigate('/login')
             })
     } catch (err) {
-        console.log(err)
+        logoutAction(navigate, dispatch)
+        navigate('/login')
     }
 }
 

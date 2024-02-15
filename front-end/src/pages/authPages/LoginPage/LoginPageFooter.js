@@ -5,6 +5,8 @@ import Button from '@mui/material/Button'
 import { styled } from '@mui/system';
 import CustomPrimaryButton from '../../../components/CustomPrimaryButton';
 import RedirectInfo from '../../../components/RedirectInfo';
+import { KakaoLoginButton } from './KakaoLoginButton';
+
 
 const getFormNotValidMessage = () => {
     return ''
@@ -51,26 +53,22 @@ const LoginPageFooter = ({ handleLogin, isFormValid }) => {
                     />
                 </div>
             </Tooltip>
-            <div style={{ margin: '10px' }}>
-                <RedirectInfo
-                    redirectText={'비밀번호 찾기'}
-                    redirectHandler={handlePushToPasswordFindPage}
-                />
-                <FindUserInfo>|</FindUserInfo>
-                <RedirectInfo
-                    redirectText={'아이디 찾기'}
-                    redirectHandler={handlePushToIdFindPage}
-                />
-            </div>
-            <Button variant='outlined' sx={{
-                bgcolor: '#DAE5A3',
-                color: 'black',
-                textTransform: 'none',
-                fontSize: '16px',
-                fontWeight: 500,
-                width: '100%',
-                height: '40px',
-            }} onClick={() => { navigate('/register') }}>회원가입</Button>
+            <KakaoLoginButton />
+            <Button variant='outlined'
+                sx={{
+                    fontFamily: 'Pretendard-Medium',
+                    bgcolor: '#DAE5A3',
+                    color: 'black',
+                    textTransform: 'none',
+                    fontSize: '18px',
+                    fontWeight: 500,
+                    width: '100%',
+                    height: '40px',
+                    ':hover': {
+                        bgcolor: '#588157',
+                        color: 'white',
+                    },
+                }} onClick={() => { navigate('/register') }}>회원가입</Button>
         </>
     );
 };
