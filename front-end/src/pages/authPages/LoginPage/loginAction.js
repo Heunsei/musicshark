@@ -36,7 +36,7 @@ export const loginAction = async (userDetails, dispatch, navigate) => {
         }
     } catch (err) {
         console.log(err)
-        alert('존재하지 않는 계정입니다')
+        alert('가입되어 있지 않는 이메일이거나 올바르지 않는 비밀번호입니다.')  
         return {
             error: true,
             err
