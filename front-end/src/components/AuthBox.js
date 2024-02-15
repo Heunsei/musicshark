@@ -1,19 +1,11 @@
 import React from 'react';
 import Box from '@mui/material/Box'
 import { styled } from '@mui/system';
-
-const BoxWrapper = styled('div')({
-    width: '100%',
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: '#FFEDD8',
-})
+import styles from './AuthBox.module.css'
 
 const AuthBox = (props) => {
     return (
-        <BoxWrapper>
+        <div className={styles.boxWrapper}>
             <Box
                 sx={{
                     width: 500,
@@ -25,13 +17,13 @@ const AuthBox = (props) => {
                     flexDirection: 'column',
                     padding: '25px',
                     overflow: 'scroll',
-                    msOverflowStyle : 'none',
-                    scrollbarWidth : 'none'
+                    msOverflowStyle: 'none',
+                    scrollbarWidth: 'none',
                 }}
             >
                 {props.children}
             </Box>
-        </BoxWrapper>
+        </div>
     )
 }
 
