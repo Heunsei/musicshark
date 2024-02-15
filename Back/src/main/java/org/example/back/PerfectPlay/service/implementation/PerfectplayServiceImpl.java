@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PerfectplayServiceImpl implements PerfectplayService {
 
+	private final UserRepository userRepository;
 	private final PerfectplayRepository perfectplayRepository;
 	private final TierRepository tierRepository;
 	private final SongServiceImpl songServiceImpl;
@@ -93,6 +94,13 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 		return perfectplayRepository.findByUserIdxToAvgScore(userIdx);
 	}
 
+	@Override
+	public int getClearSongCount(int userIdx) throws Exception {
+		UserEntity user = userRepository.findByUserIdx(userIdx);
+		return perfectplayRepository.getClearSongCount(user.getUserIdx());
+	}
+
+
 	private String fineNextTier(String curTier) {
 		//bronze면 silver 반환
 		//silver면 gold 반환
@@ -133,10 +141,15 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 
 	// 평균 점수를 이용하여 score 계산
 	private String changeTier(double score, int playCount) {
-		if(playCount < 5 || score < 15) return "bronze"; // 0~14.99..
-		else if(score < 35) return "silver"; // 15~34.99..
-		else if(score < 65) return "gold"; // 35~64.99
-		else if(score < 75) return "platinum";
-		else return "diamond";
+		if (playCount < 5 || score < 15)
+			return "bronze"; // 0~14.99..
+		else if (score < 35)
+			return "silver"; // 15~34.99..
+		else if (score < 65)
+			return "gold"; // 35~64.99
+		else if (score < 75)
+			return "platinum";
+		else
+			return "diamond";
 	}
 }

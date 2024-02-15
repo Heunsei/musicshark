@@ -27,6 +27,9 @@ public interface PerfectplayRepository extends JpaRepository<PerfectplayEntity, 
 	@Query("select count(p) from PERFECTPLAY  p where p.userIdx = :userIdx")
 	Integer getCountToUserIdx(@Param("userIdx") int userIdx);
 
+	@Query("select distinct p.songIdx from PERFECTPLAY p where p.userIdx = :userIdx")
+	int getClearSongCount(@Param("userIdx") int userIdx);
+
 
 	// 퍼펙트플레이 점수 내림차순
 	//
