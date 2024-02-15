@@ -94,6 +94,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .myChat {
@@ -146,12 +147,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #9CD08F;
+    background-color: #C0AB9A;
     flex-direction: column;
     position: relative;
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    background-image: url('./../../../../../public/recordBg.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .videoContainer {

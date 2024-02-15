@@ -13,6 +13,7 @@ const Container = styled('div')({
     height: '60%',
     flexDirection: 'column',
     borderRadius : '15px',
+    boxShadow : '5px 5px black'
 })
 
 const InnerContainer = (props) => {

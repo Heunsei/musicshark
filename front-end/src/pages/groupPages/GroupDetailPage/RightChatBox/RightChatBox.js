@@ -162,7 +162,7 @@ const RightChatBox = (props) => {
                             <div className={styles.searchBox}>
                                 <input onChange={(event) => setSearchTitle(event.target.value)}
                                     value={searchTitle} placeholder='검색할 영상 제목을 입력하세요' />
-                                <button onClick={() => { handleSearchRecord() }} ><SearchIcon /></button>
+                                <button style={{ cursor: 'pointer'}} onClick={() => { handleSearchRecord() }} ><SearchIcon /></button>
                             </div>
                             {
                                 // 녹화한 영상들을 띄워주는 코드

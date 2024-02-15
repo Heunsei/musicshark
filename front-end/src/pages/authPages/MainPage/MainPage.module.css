@@ -6,6 +6,10 @@
     justify-content: center;
     background-color: #F5F5DC;
     flex-direction: column;
+    background-image: url('./../../../../public/main.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .titleBox {
