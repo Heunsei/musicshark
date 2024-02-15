@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import Navbar from '../../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import styles from './MainPage.module.css'
-//import styles from './MainButton/MainButton.module.css';
 
 const BoxWrapper = styled('div')({
     width: '100%',
@@ -33,7 +32,7 @@ export default function MainPage() {
                 <Navbar />
                 <div className={styles.titleBox}>
                     <div className={styles.headerBox}>
-                        <p style={{ color: '#ffb6c1', margin: 2, textAlign: 'left' }}>
+                        <p style={{ color: '#8b4513', margin: 2, textAlign: 'left' }}>
                             아름다운 선율을 연주하게 될 당신을 위해
                         </p>
                     </div>
@@ -47,42 +46,15 @@ export default function MainPage() {
                             원하는 대로 즐기세요<br />
                         </p>
                     </div>
-                    <div style={{ marginTop: '50px' }}>
+                    <div className={styles.buttonBox} >
                         <button onClick={navigateToGroup}
-                            style={{
-                                fontFamily: 'MaplestoryOTFBold',
-                                fontSize: '24px',
-                                display: 'inline-block',
-                                border: 'none',
-                                color: '#783F26',
-                                backgroundColor: '#FFFADD',
-                                width: '15%',
-                                height: '4rem',
-                                margin: '1rem 3rem 0 0',
-                                padding: '0 1rem ',
-                                borderRadius: '22px',
-                                cursor: 'pointer',
-                                fontWeight: 900,
-
-                            }}>
+                            className={styles.groupPlayBtn}
+                        >
                             함께 하기
                         </button>
                         <button onClick={navigateToSingle}
-                            style={{
-                                fontFamily: 'MaplestoryOTFBold',
-                                fontSize: '24px',
-                                display: 'inline-block',
-                                border: 'none',
-                                color: '#783F26',
-                                backgroundColor: '#FADDA4',
-                                width: '15%',
-                                height: '4rem',
-                                margin: '1rem 0 0 3rem',
-                                padding: '0 1rem ',
-                                borderRadius: '22px',
-                                cursor: 'pointer',
-                                fontWeight: 900,
-                            }}>
+                            className={styles.singlePlayBtn}
+                        >
                             혼자 하기
                         </button>
                     </div>

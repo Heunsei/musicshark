@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box'
 import { styled } from '@mui/system';
+import styles from './AuthBox.module.css'
 
 const BoxWrapper = styled('div')({
     width: '100%',
@@ -13,7 +14,7 @@ const BoxWrapper = styled('div')({
 
 const RegisterAuthBox = (props) => {
     return (
-        <BoxWrapper>
+        <div className={styles.boxWrapper}>
             <Box
                 sx={{
                     width: 700,
@@ -30,7 +31,7 @@ const RegisterAuthBox = (props) => {
             >
                 {props.children}
             </Box>
-        </BoxWrapper>
+        </div>
     )
 }
 

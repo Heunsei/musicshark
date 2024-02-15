@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import CustomCalendar from "./Calendar";
 import api from "../../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { QueryClient } from "react-query";
 
 const RecordBox = () => {
+  const queryClient = new QueryClient();
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -26,6 +28,7 @@ const RecordBox = () => {
   const [tierImageUrl, setTierImageUrl] = useState("");
   const [songs, setSongs] = useState([]); // 음악 목록을 저장할 상태
   const [clearedSongs, setClearedSongs] = useState(0); // 클리어 곡 수를 저장할 상태
+  const [avgScore, setAvgScore] = useState(0);
   const [userPosts, setUserPosts] = useState([]); // 유저가 작성한 게시글 목록을 저장할 상태
   const [value, onChange] = useState(new Date());
 
@@ -106,16 +109,38 @@ const RecordBox = () => {
     }
   }, [userTier]); // userId 값이 변경될 때마다 실행
 
-  const fetchClearedSongs = async () => {
+  const fetchAvgScore = async () => {
     try {
-      const response = await api.get(`/perfectplay/${userId}`, {
+      const response = await api.get(`/perfectplay/${userId}/avgscore`, {
         headers: {
           Authorization: `Bearer ${getCookie("accessToken")}`, // 요청 헤더에 인증 토큰 추가
           "Cache-Control": "no-cache",
         },
       });
-      console.log("Cleared Songs:", response.data.data[0].totalClear);
-      setClearedSongs(response.data.data[0].totalClear);
+      console.log("Average Score:", response.data);
+      setAvgScore(response.data);
+    } catch (error) {
+      console.error("Error fetching cleared songs:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId !== -1) {
+      // 초기 값이 아니라 실제로 설정된 경우에만 실행
+      fetchAvgScore();
+    }
+  }, [userId]);
+
+  const fetchClearedSongs = async () => {
+    try {
+      const response = await api.get(`/perfectplay/${userId}/count`, {
+        headers: {
+          Authorization: `Bearer ${getCookie("accessToken")}`, // 요청 헤더에 인증 토큰 추가
+          "Cache-Control": "no-cache",
+        },
+      });
+      console.log("Cleared Songs:", response.data);
+      setClearedSongs(response.data);
     } catch (error) {
       console.error("Error fetching cleared songs:", error);
     }
@@ -181,6 +206,8 @@ const RecordBox = () => {
     border: "solid", // 필요에 따라 테두리 스타일을 조정
     borderRadius: "5%",
     marginTop: "-2%",
+    fontFamily: "Pretendard-Medium",
+    fontWeight: "bold",
   };
 
   const getTierStyle = (tier) => {
@@ -195,6 +222,7 @@ const RecordBox = () => {
           color: "white",
           marginLeft: "1.5%",
           marginRight: "3%",
+          fontFamily: "Pretendard-Medium",
         };
       case "silver":
         return {
@@ -202,6 +230,7 @@ const RecordBox = () => {
           backgroundColor: "#C0C0C0", // Silver 색상
           border: "#C0C0C0",
           color: "black",
+          fontFamily: "Pretendard-Medium",
         };
       case "gold":
         return {
@@ -209,20 +238,23 @@ const RecordBox = () => {
           backgroundColor: "#FFD700", // Gold 색상
           border: "#FFD700",
           color: "white",
+          fontFamily: "Pretendard-Medium",
         };
       case "platinum":
         return {
           ...baseStyle,
-          backgroundColor: "#E5E4E2", // Platinum 색상
-          border: "#E5E4E2",
+          backgroundColor: "#91FCE7", // Platinum 색상
+          border: "#91FCE7",
           color: "black",
+          fontFamily: "Pretendard-Medium",
         };
       case "diamond":
         return {
           ...baseStyle,
           backgroundColor: "#b9f2ff", // Diamond 색상
           border: "#b9f2ff",
-          color: "black", // Diamond는 밝은 색상이므로 텍스트 색상을 검정으로 변경
+          color: "black",
+          fontFamily: "Pretendard-Medium",
         };
       default:
         return baseStyle; // 일치하는 티어가 없는 경우 기본 스타일 사용
@@ -367,20 +399,21 @@ const RecordBox = () => {
   };
 
   const tierBoxStyle = {
-    backgroundColor: "gold", // 'G4' 박스의 배경색을 황금색으로 설정합니다.
-    color: "black", // 'G4' 텍스트 색상을 검은색으로 설정합니다.
+    backgroundColor: "gold",
+    color: "black",
     padding: "8px 12px", // 적당한 패딩을 추가합니다.
     borderRadius: "5px", // 모서리를 둥글게 합니다.
     fontWeight: "bold", // 글씨를 굵게 합니다.
     marginTop: "4%",
-    marginBottom: "8%", // 'Gold 4' 텍스트와의 간격을 설정합니다.
+    marginBottom: "8%",
   };
 
   const tierTextStyle = {
-    marginBottom: "3%",
-    fontSize: "32px", // 'Gold 4' 텍스트 크기를 크게 설정합니다.
-    color: "black", // 'Gold 4' 텍스트 색상을 검은색으로 설정합니다.
-    fontWeight: "bold", // 글씨를 굵게 합니다.
+    marginTop: "1%",
+    marginBottom: "9%",
+    fontSize: "32px",
+    color: "black",
+    fontWeight: "bold",
   };
 
   const tierImageStyle = {
@@ -388,6 +421,17 @@ const RecordBox = () => {
     // justifyContent: "center",
     marginTop: "-4%",
     marginRight: "11%",
+  };
+
+  const buttonStyle = {
+    padding: "5px 10px",
+    margin: "0 2px",
+    border: "1px solid #AEAFAE",
+    borderRadius: "5px",
+    cursor: "pointer",
+    backgroundColor: "#F7FFF6",
+    color: "black", // 기본 텍스트 색상
+    fontFamily: "Pretendard-Medium",
   };
 
   return (
@@ -403,13 +447,32 @@ const RecordBox = () => {
           <div style={innerBoxStyle}>
             <h2 style={innerTitle}>클리어한 곡</h2>
             <br />
+            <br />
             <div style={tierTextStyle}>{clearedSongs}곡</div>
             <br />
             <br />
-            <div style={{ fontSize: "20px" }}>총 {songs.length}곡</div>
+            <div style={{ fontSize: "17px" }}>[총 {songs.length}곡 중]</div>
           </div>
           <div style={innerBoxStyle}>
-            <h2 style={innerTitle}>스트릭</h2>
+            <h2 style={innerTitle}>평균 점수</h2>
+            <br />
+            <br />
+            <div style={tierTextStyle}>{avgScore}점</div>
+            <br />
+            <br />
+            <div style={{ fontSize: "17px" }}>
+              {clearedSongs < 5
+                ? "[최소 5곡 이상 클리어해야 승급 시작]"
+                : avgScore < 15
+                ? "[평균 15점 달성 시 실버 승급]"
+                : avgScore < 35
+                ? "[평균 35점 달성 시 골드 승급]"
+                : avgScore < 65
+                ? "[평균 65점 달성 시 플래티넘 승급]"
+                : avgScore < 75
+                ? "[평균 75점 달성 시 다이아몬드 승급]"
+                : "[당신은 최고 티어입니다]"}
+            </div>
           </div>
         </div>
       </div>
@@ -418,24 +481,37 @@ const RecordBox = () => {
         <ul style={postListStyle}>
           {currentPosts.map((post) => (
             <li key={post.boardIdx} style={postItemStyle}>
-              {post.boardTitle.length > 48 ? `${post.boardTitle.slice(0, 48)}···` : post.boardTitle}
+              {post.boardTitle.length > 50 ? `${post.boardTitle.slice(0, 50)}···` : post.boardTitle}
             </li>
           ))}
         </ul>
         <div style={paginationStyle}>
-          <button onClick={() => paginate(1)}>{"<<"}</button>
-          <button onClick={() => paginate(Math.max(1, startPage - 5))}>{"<"}</button>
+          <button onClick={() => paginate(1)} style={buttonStyle}>
+            {"<<"}
+          </button>
+          <button onClick={() => paginate(Math.max(1, startPage - 5))} style={buttonStyle}>
+            {"<"}
+          </button>
           {Array.from({ length: endPage - startPage + 1 }, (_, i) => (
             <button
               key={startPage + i}
               onClick={() => paginate(startPage + i)}
-              style={{ fontWeight: currentPage === startPage + i ? "bold" : "normal" }}
+              style={{
+                ...buttonStyle,
+                fontWeight: currentPage === startPage + i ? "bold" : "normal",
+                backgroundColor: currentPage === startPage + i ? "#8ED391" : "#F7FFF6", // 현재 페이지 버튼은 다른 배경색
+                color: currentPage === startPage + i ? "white" : "black", // 현재 페이지 텍스트 색상
+              }}
             >
               {startPage + i}
             </button>
           ))}
-          <button onClick={() => paginate(Math.min(totalPages, endPage + 1))}>{">"}</button>
-          <button onClick={() => paginate(totalPages)}>{">>"}</button>
+          <button onClick={() => paginate(Math.min(totalPages, endPage + 1))} style={buttonStyle}>
+            {">"}
+          </button>
+          <button onClick={() => paginate(totalPages)} style={buttonStyle}>
+            {">>"}
+          </button>
         </div>
       </div>
       <div style={cardStyle3}>

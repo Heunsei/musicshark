@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { UseDispatch, useDispatch } from "react-redux";
 import api from "../../../api/axiosInstance";
 import Navbar from "../../../components/Navbar";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { validateNickname, validatePassword, validatePasswordConfirm } from "../validator";
+import * as setUser from "./../../../redux/store/userSlice";
 
 const ProfileEdit = () => {
   function getCookie(name) {
@@ -24,6 +26,7 @@ const ProfileEdit = () => {
 
   const { userId } = useParams(); // URL에서 userId 값을 추출
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [profile, setProfile] = useState({
     email: "",
     birth: "",
@@ -196,6 +199,7 @@ const ProfileEdit = () => {
       );
       console.log("Nickname updated:", response.data);
       alert("닉네임이 변경되었습니다.");
+      dispatch(setUser.setNickname(newNickname));
       navigate(`/mypage/${userId}`, { replace: true }); // 프로필 페이지로 리디렉션
       window.location.reload(); // 페이지 새로고침
       // fetchProfile();
@@ -269,14 +273,6 @@ const ProfileEdit = () => {
         navigate(`/mypage/${userId}`, { replace: true });
         window.location.reload();
       }
-      // if (response.status === 200 &&) {
-      //   console.log("Password updated:", response.data);
-      //   alert("비밀번호가 변경되었습니다.");
-      //   navigate(`/mypage/${userId}`, { replace: true });
-      //   window.location.reload();
-      // } else {
-      //   alert("현재 비밀번호를 잘못 입력했습니다.");
-      // }
     } catch (error) {
       console.error("Error updating password:", error);
       alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
@@ -484,11 +480,12 @@ const ProfileEdit = () => {
   };
 
   const buttonStyle = {
+    fontFamily: "Pretendard-Medium",
     // position: 'absolute',
     width: "19%",
     height: "25%",
     color: "white",
-    fontWeight: "550",
+    fontWeight: "570",
     backgroundColor: "#764812",
     border: "#764812",
     top: "150%", // 입력 필드의 하단에서 시작
@@ -504,10 +501,11 @@ const ProfileEdit = () => {
   };
 
   const buttonStyle2 = {
+    fontFamily: "Pretendard-Medium",
     width: "22%",
     height: "10%",
     color: "white",
-    fontWeight: "550",
+    fontWeight: "570",
     backgroundColor: "#764812",
     border: "#764812",
     top: "200%", // 입력 필드의 하단에서 시작
