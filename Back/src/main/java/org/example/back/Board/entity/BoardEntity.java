@@ -43,4 +43,5 @@ public class BoardEntity {
 	@CreationTimestamp
 	@Column(name = "board_date")
 	private Timestamp boardDate;
+
 }

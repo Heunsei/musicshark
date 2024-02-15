@@ -134,17 +134,29 @@ const Comments=()=>{
 
     return(
         <div>
-            <div>
+            <div style={{
+                border : "solid 2px blue", 
+                display:'flex', 
+                justifyContent:'space-evenly',
+                 marginLeft : "15%",
+                 marginRight : "15%",
+                 height : "100px"}}>
+                <div style={{border : "solid 2px red", height : "100%"}}>
                 <TextField
                 maxRows={3}
+                style={{width : '600px',
+            height : '100%'}}
                 //onClick={isLogin}
                 onChange={(e)=>{
                     setContent(e.target.value)
                 }}
                 multiline placeholder="댓글을 입력해 주세요"
                 />
+                </div>
+                <div style={{border : "solid 2px gold"}}>
+
                 {content !== "" ? (
-                    <Button variant="outlined" onClick={() =>{ handleContentSubmit()}}>
+                    <Button sty variant="outlined" onClick={() =>{ handleContentSubmit()}}>
                         등록하기
                     </Button>
                 ):(
@@ -152,8 +164,9 @@ const Comments=()=>{
                         등록하기
                     </Button>
                 )}
+                </div>
             </div>
-            <div className="comments-body">
+            <div style={{border : "solid 1px purple", marginLeft : "%", marginRight : "15%"}} className="comments-body">
                 {commentList.map((item, index)=>(
                     <div key={index} className="comments-comment">
                         <div className="comment-username-date">

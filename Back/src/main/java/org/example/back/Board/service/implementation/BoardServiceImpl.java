@@ -72,6 +72,8 @@ public class BoardServiceImpl implements BoardService {
 		data.setBoardContent(boardDto.getBoardContent());
 		data.setUserIdx(writer.getUserIdx());
 
+
+
 		boardRepository.save(data);
 	}
 
