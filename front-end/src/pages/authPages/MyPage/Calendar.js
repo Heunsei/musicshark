@@ -1,25 +1,24 @@
-// import React, { useState, useEffect } from "react";
-// import { useQuery, QueryClient, QueryClientProvider } from "react-query";
-// import axios from "axios";
-// import api from "../../../api/axiosInstance";
-// import Calendar from "react-calendar";
-// import "react-calendar/dist/Calendar.css";
-// import styles from "./CalendarModal.css";
-// import Modal from "react-modal";
-// import moment from "moment";
-// import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+import axios from "axios";
+import api from "../../../api/axiosInstance";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import Modal from "react-modal";
+import moment from "moment";
+import styled from "styled-components";
 
 // const queryClient = new QueryClient();
 
-// const StyledCalendar = styled(Calendar)`
-//   width: 96%;
-//   height: 60%;
-//   margin-left: auto;
-//   margin-right: auto;
-//   background-color: #f9fff8;
-//   border: 2px solid #ddd;
-//   border-radius: 6px;
-//   font-family: Arial, sans-serif;
+const StyledCalendar = styled(Calendar)`
+  width: 96%;
+  height: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f9fff8;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-family: "Pretendard-Medium";
 
 //   .react-calendar__tile:enabled:hover,
 //   .react-calendar__tile:enabled:focus {
@@ -42,19 +41,33 @@
 //     color: red; // '일요일'에 대한 스타일
 //   }
 
-//   .saturday {
-//     color: blue; // '토요일'에 대한 스타일
-//   }
-// `;
+  .saturday {
+    color: blue; // '토요일'에 대한 스타일
+  }
 
-// const dot = {
-//   height: "8px",
-//   width: "8px",
-//   backgroundColor: "#f87171",
-//   borderRadius: "50%",
-//   display: "inline-block",
-//   marginLeft: "1px",
-// };
+  * {
+    font-weight: 600; /* 모든 텍스트에 적용되는 font-weight */
+  }
+`;
+
+const dot = {
+  height: "8px",
+  width: "8px",
+  backgroundColor: "#f87171",
+  borderRadius: "50%",
+  display: "inline-block",
+  marginLeft: "1px",
+  // marginRight: "0px",
+};
+
+const dotContainerStyle = {
+  display: "flex",
+  justifyContent: "flex-end", // 오른쪽 정렬
+  width: "100%", // 컨테이너를 타일의 전체 너비로 설정
+  position: "absolute", // 타일 내에서 절대 위치 지정
+  bottom: "0", // 타일의 하단에 위치
+  right: "0", // 타일의 오른쪽에 위치
+};
 
 // const absoluteDiv = {
 //   position: "absolute",
@@ -145,102 +158,165 @@
 //     }
 //   };
 
-//   const modalStyle = {
-//     overlay: {
-//       zIndex: "1000",
-//     },
-//     content: {
-//       backgroundColor: "#F9FFF8",
-//     },
-//   };
+  const handleDeleteVideo = async (video_idx) => {
+    const isConfirmed = window.confirm("이 영상을 삭제하시겠습니까?");
+    if (isConfirmed) {
+      try {
+        const accessToken = getCookie("accessToken");
+        const response = await api.delete(`/videos/personal?boardIdx=${video_idx}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Cache-Control": "no-cache",
+          },
+        });
+        if (response.status === 200) {
+          alert("영상이 삭제되었습니다.");
 
-//   const videoGridStyle = {
-//     display: 'grid',
-//     gridTemplateColumns: 'repeat(3, 1fr)', // 3개의 열을 가진 그리드
-//     gap: '10px', // 그리드 간격
-//     padding: '10px',
-//   };
+          // 모달 창에 표시되는 영상 목록에서 삭제된 영상을 제거합니다.
+          const updatedSelectedVideos = selectedDateVideos.filter(
+            (video) => video.video_idx !== video_idx
+          );
+          setSelectedDateVideos(updatedSelectedVideos); // selectedDateVideos 상태를 업데이트합니다.
 
-//   return (
-//     <div>
-//       <div
-//         style={{
-//           textAlign: "right",
-//           marginTop: "-2.5%",
-//           marginBottom: "0.4%",
-//           marginRight: "2.5%",
-//         }}
-//       >
-//         {moment(value).format("YYYY년 MM월 DD일")}
-//       </div>
-//       <StyledCalendar
-//         onChange={onChange}
-//         value={value}
-//         onActiveStartDateChange={({ activeStartDate }) => {
-//           onChange(activeStartDate); // 캘린더의 활성 시작 날짜를 업데이트
-//           refetch(); // 활성 시작 날짜 변경 시 데이터 다시 가져오기
-//         }}
-//         onClickDay={handleDayClick}
-//         locale="en-US"
-//         formatShortWeekday={formatShortWeekday} // 요일을 '일월화수목금토'로 표시
-//         tileClassName={({ date, view }) => {
-//           if (view === "month") {
-//             if (date.getDay() === 0) {
-//               // 일요일
-//               return "sunday";
-//             } else if (date.getDay() === 6) {
-//               // 토요일
-//               return "saturday";
-//             }
-//           }
-//         }}
-//         tileContent={({ date, view }) => {
-//           // mark 배열의 날짜와 일치하는 날짜에 점 표시
-//           if (view === "month" && mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
-//             return (
-//               <div style={absoluteDiv}>
-//                 <div style={dot}></div>
-//               </div>
-//             );
-//           }
-//           // videos 배열에서 video_date와 일치하는 날짜에 초록색 점 표시
-//           if (
-//             view === "month" &&
-//             Array.isArray(videosData) && // videosData가 배열인지 확인
-//             videosData.some((video) => moment(video.video_date).isSame(date, "day"))
-//           ) {
-//             return <div style={dot}></div>; // 초록색 점
-//           }
-//         }}
-//       />
-//       <Modal
-//         isOpen={modalIsOpen}
-//         onRequestClose={() => setModalIsOpen(false)}
-//         contentLabel="Selected Date Videos"
-//         style={modalStyle}
-//       >
-//         <button 
-//           onClick={() => setModalIsOpen(false)} 
-//           style={{ position: 'absolute', top: '10px', right: '10px', border: 'none', background: 'transparent', fontSize: '40px', cursor: 'pointer' }}
-//         >
-//           &times;
-//         </button>
-//         <h2>영상 목록</h2>
-//         <div style={videoGridStyle}>
-//           {selectedDateVideos.map((video) => (
-//             <div>
-//               <video style={{ width: '100%' }} controls>
-//                 <source src={video.presigned_url} type="video/mp4" />
-//                 브라우저가 비디오를 지원하지 않습니다.
-//               </video>
-//               <div>{video.video_title}</div>
-//             </div>
-//           ))}
-//         </div>
-//       </Modal>
-//     </div>
-//   );
-// }
+          // 전체 영상 목록에서 삭제된 영상을 제거합니다.
+          const updatedVideos = videos.filter((video) => video.video_idx !== video_idx);
+          setVideos(updatedVideos); // videos 상태를 업데이트합니다.
+        }
+      } catch (error) {
+        console.error("Error deleting video:", error);
+        alert("영상 삭제에 실패했습니다.");
+      }
+    }
+  };
+
+  const modalStyle = {
+    overlay: {
+      zIndex: "1000",
+    },
+    content: {
+      backgroundColor: "#F9FFF8",
+    },
+  };
+
+  const videoGridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)", // 3개의 열을 가진 그리드
+    gap: "50px", // 그리드 간격
+    padding: "20px",
+  };
+
+  const videoInfoStyle = {
+    display: "flex",
+    justifyContent: "space-between", // 내용을 양쪽 끝으로 정렬합니다.
+    alignItems: "center", // 세로 중앙 정렬합니다.
+    padding: "0 2%", // 양쪽 패딩을 줍니다.
+  };
+
+  const videoTitleStyle = {
+    flexGrow: 1,
+  };
+
+  const deleteButtonStyle = {
+    fontFamily: "Pretendard-Medium",
+    backgroundColor: "red",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    padding: "5px 10px",
+    cursor: "pointer",
+    marginRight: "-1.5%",
+    fontWeight: "550",
+  };
+
+  return (
+    <div>
+      <div
+        style={{
+          textAlign: "right",
+          marginTop: "-2.5%",
+          marginBottom: "0.4%",
+          marginRight: "2.5%",
+        }}
+      >
+        {`${moment(value).format("YYYY년")} ${moment(value).format("M")}월 ${moment(value).format(
+          "D"
+        )}일`}
+      </div>
+      <StyledCalendar
+        onChange={onChange}
+        value={value}
+        onActiveStartDateChange={({ activeStartDate }) => {
+          onChange(activeStartDate); // 캘린더의 활성 시작 날짜를 업데이트
+          refetch(); // 활성 시작 날짜 변경 시 데이터 다시 가져오기
+        }}
+        onClickDay={handleDayClick}
+        locale="en-US"
+        formatShortWeekday={formatShortWeekday} // 요일을 '일월화수목금토'로 표시
+        tileClassName={({ date, view }) => {
+          if (view === "month") {
+            if (date.getDay() === 0) {
+              // 일요일
+              return "sunday";
+            } else if (date.getDay() === 6) {
+              // 토요일
+              return "saturday";
+            }
+          }
+        }}
+        tileContent={({ date, view }) => {
+          if (
+            view === "month" &&
+            Array.isArray(videosData) && // videosData가 배열인지 확인
+            videosData.some((video) => moment(video.video_date).isSame(date, "day"))
+          ) {
+            return <div style={dot}></div>;
+          }
+        }}
+      />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Selected Date Videos"
+        style={modalStyle}
+      >
+        <button
+          onClick={() => setModalIsOpen(false)}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "12px",
+            border: "none",
+            background: "transparent",
+            fontSize: "40px",
+            cursor: "pointer",
+          }}
+        >
+          &times;
+        </button>
+        <h2 style={{ marginTop: "1vw", marginLeft: "1.7vw" }}>영상 목록</h2>
+        <div style={videoGridStyle}>
+          {selectedDateVideos.map((video) => (
+            <div key={video.video_idx}>
+              <video style={{ width: "100%", position: "relative" }} controls>
+                <source src={video.presigned_url} type="video/mp4" />
+                브라우저가 비디오를 지원하지 않습니다.
+              </video>
+              <div style={videoInfoStyle}>
+                <div style={videoTitleStyle}>{video.video_title}</div>
+                <button
+                  onClick={() => handleDeleteVideo(video.video_idx)}
+                  style={deleteButtonStyle}
+                >
+                  삭제
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Modal>
+    </div>
+  );
+}
 
 // function CustomCalendar() {
 //   return (
