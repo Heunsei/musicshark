@@ -2,8 +2,14 @@ package org.example.back.PerfectPlay.controller;
 
 import static org.springframework.http.HttpStatus.*;
 
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
+import com.amazonaws.HttpMethod;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import org.example.back.PerfectPlay.repository.SongRepository;
 import org.example.back.common.ApiResponse;
 import org.example.back.PerfectPlay.dto.request.PerfectplayRequestDto;
 import org.example.back.PerfectPlay.dto.response.PerfectplayResponseDto;
@@ -15,6 +21,7 @@ import org.example.back.PerfectPlay.entity.SongEntity;
 import org.example.back.PerfectPlay.service.implementation.PerfectplayServiceImpl;
 import org.example.back.PerfectPlay.service.implementation.SongLineServiceImpl;
 import org.example.back.PerfectPlay.service.implementation.SongServiceImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,9 +37,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PerfectController {
 
+	private final AmazonS3 amazonS3;
 	private final SongServiceImpl songServiceImpl;
 	private final PerfectplayServiceImpl perfectplayServiceImpl;
 	private final SongLineServiceImpl songLineServiceImpl;
+	private final SongRepository songRepository;
+
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
 
 	// 전체 음악 조회
 	@GetMapping("/list")
@@ -75,7 +87,7 @@ public class PerfectController {
 	}
 
 	@GetMapping("/{songIdx}/info")
-	public ResponseEntity<ApiResponse> getSongInfo(@PathVariable int songIdx) {
+	public ResponseEntity<ApiResponse> getSongInfo(@PathVariable int songIdx) throws Exception {
 		SongEntity song = songServiceImpl.getSongById(songIdx);
 		List<SongLineResponseDto> songLineList = songLineServiceImpl.getAllSongLineById(songIdx);
 		SongInfoResponseDto songInfoResponseDto = SongInfoResponseDto.builder()
@@ -87,6 +99,32 @@ public class PerfectController {
 			.status(OK.value())
 			.data(songInfoResponseDto)
 			.build();
+
+		makeURL(songIdx);
 		return ResponseEntity.ok(apiResponse);
+	}
+
+	// s3에 저장된 파일, 만료시간, http method 타입(get, post)
+//	@GetMapping("/imgUrl/{songIdx}")
+	public String makeURL(int songIdx) throws Exception {
+		String preSignedURL;
+		Date expiration = new Date();
+		Long expTimeMillis = expiration.getTime();
+		expTimeMillis += 1000 * 144400;
+		expiration.setTime(expTimeMillis);
+
+		GeneratePresignedUrlRequest PresignedUrlRequest =
+				new GeneratePresignedUrlRequest(bucket, "storage/song_img/images.jfif")
+						.withMethod(HttpMethod.GET)
+						.withExpiration(expiration);
+		URL url = amazonS3.generatePresignedUrl(PresignedUrlRequest);
+		preSignedURL = url.toString();
+
+
+		SongEntity songEntity = songRepository.findBySongIdx(songIdx);
+		songEntity.setSongImg(preSignedURL);
+		songRepository.save(songEntity);
+
+		return preSignedURL;
 	}
 }
