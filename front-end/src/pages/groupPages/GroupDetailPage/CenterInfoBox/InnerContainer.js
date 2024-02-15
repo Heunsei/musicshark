@@ -6,12 +6,13 @@ import GroupBottomBox from './GroupBottomBox';
 const Container = styled('div')({
     display: 'flex',
     // position : 'relative',
-    backgroundColor: 'white',
+    backgroundColor: '#C0AB9A',
     justifyContent: 'center',
     alignItems: 'center',
     width: '60%',
     height: '60%',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    borderRadius : '15px',
 })
 
 const InnerContainer = (props) => {

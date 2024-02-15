@@ -22,6 +22,8 @@ import org.example.back.PerfectPlay.service.implementation.PerfectplayServiceImp
 import org.example.back.PerfectPlay.service.implementation.SongLineServiceImpl;
 import org.example.back.PerfectPlay.service.implementation.SongServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -105,7 +107,7 @@ public class PerfectController {
 	}
 
 	@GetMapping("/{userIdx}/count")
-	public ResponseEntity<ApiResponse> getPlayCount(@PathVariable int userIdx) {
+	public ResponseEntity<ApiResponse> getPlayCount(@PathVariable("userIdx") int userIdx) {
 		int playCount = perfectplayServiceImpl.getPlayCount(userIdx);
 
 		ApiResponse apiResponse = ApiResponse.builder()
@@ -116,6 +118,17 @@ public class PerfectController {
 
 		return ResponseEntity.ok(apiResponse);
 	}
+
+	@GetMapping("/{user_idx}/avgscore")
+	public ResponseEntity<?> getAvgScore(@PathVariable("user_idx") int userIdx){
+		try {
+			double avgScore = perfectplayServiceImpl.getAvgScore(userIdx);
+			return new ResponseEntity<>(avgScore, HttpStatus.OK);
+		}catch(Exception e){
+			return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
+		}
+	}
+
 	public String makeURL(int songIdx) throws Exception {
 		String preSignedURL;
 		Date expiration = new Date();

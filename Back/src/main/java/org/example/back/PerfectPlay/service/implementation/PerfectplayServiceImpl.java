@@ -11,8 +11,10 @@ import org.example.back.PerfectPlay.entity.SongEntity;
 import org.example.back.PerfectPlay.repository.SongRepository;
 import org.example.back.User.entity.TierEntity;
 import org.example.back.PerfectPlay.repository.PerfectplayRepository;
+import org.example.back.User.entity.UserEntity;
 import org.example.back.User.repository.TierRepository;
 import org.example.back.PerfectPlay.service.PerfectplayService;
+import org.example.back.User.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -84,6 +86,11 @@ public class PerfectplayServiceImpl implements PerfectplayService {
 	@Override
 	public int getPlayCount(int userIdx) {
 		return perfectplayRepository.getCountToUserIdx(userIdx);
+	}
+
+	@Override
+	public double getAvgScore(int userIdx) {
+		return perfectplayRepository.findByUserIdxToAvgScore(userIdx);
 	}
 
 	private String fineNextTier(String curTier) {

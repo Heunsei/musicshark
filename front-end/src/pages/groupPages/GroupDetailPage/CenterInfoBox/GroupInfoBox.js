@@ -29,16 +29,17 @@ const style = {
 
 const Container = styled('div')({
     fontFamily: 'Pretendard-Medium',
-    backgroundColor: '#C0AB9A',
+    backgroundColor: 'white',
     width: '90%',
-    height: '50%',
+    height: '70%',
     position: 'relative',
     display: 'flex',
     textAlign: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     borderRadius: '15px',
-    overflow: 'auto'
+    overflow: 'auto',
+    marginTop: '15px',
 })
 // group detail은 GroupDetailPage에서 props 받아옴
 const GroupInfoBox = (props) => {
@@ -101,10 +102,44 @@ const GroupInfoBox = (props) => {
     return (
         <>
             <Container>
-                <p>{groupDetail.channelName}</p>
-                <p>{groupDetail.channelIntro}</p>
-                <p>{`현재 인원 : ${groupDetail.channelCur} / ${groupDetail.channelMax}`}</p>
-                <p>{`채널 생성일 : ${groupDetail.channelDate}`}</p>
+                <p style={{
+                    fontFamily: 'Pretendard-Bold',
+                    fontSize: '42px',
+                    margin: '0',
+                    padding: '0',
+                }}>
+                    {groupDetail.channelName}</p>
+                <hr style={{ color: 'black' }}></hr>
+                <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', flexDirection: 'column' }}>
+                    <div style={{
+                        width: '90%',
+                        textAlign: 'center',
+                        overflow: 'scroll',
+                        msOverflowStyle: 'none',
+                        scrollbarWidth: 'none',
+                    }}>
+                        <p style={{
+                            fontSize: '32px', margin: '0 0 20px 0',
+                        }}>{groupDetail.channelIntro}</p>
+                    </div>
+                    <table style={{ fontSize: '20px', borderSpacing: '5px 5px' }}>
+                        <tr>
+                            <td>현재인원 :</td>
+                            <td style={{ textAlign: 'right' }}>{groupDetail.channelCur}명</td>
+                        </tr>
+                        <tr>
+                            <td>모집인원 :</td>
+                            <td style={{ textAlign: 'right' }}>{groupDetail.channelMax}명</td>
+                        </tr>
+                        <tr>
+                            <td>생성일자 :</td>
+                            <td>{groupDetail.channelDate}</td>
+                        </tr>
+                        {/* <p style={{ fontSize: '20px' }}>{groupDetail.channelIntro}</p>
+                        <p style={{ fontSize: '20px' }}>{`현재 인원 : ${groupDetail.channelCur} / ${groupDetail.channelMax}`}</p>
+                        <p style={{ fontSize: '20px' }}>{`채널 생성일 : ${groupDetail.channelDate}`}</p> */}
+                    </table>
+                </div>
                 <button className={`${styles.groupInfoModifyBtn} ${styles.groupRoomBtn}`} onClick={handleOpen}>
                     <EditIcon />
                 </button>

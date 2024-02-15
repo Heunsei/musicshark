@@ -42,6 +42,7 @@ const GroupRoom = (props) => {
     const [isMicMute, setIsMicMute] = useState(false)
     const [isCamMute, setIsCamMute] = useState(false)
     const [isRecording, setIsRecording] = useState(false)
+    const [isPalyer, setIsPlayer] = useState(false)
 
     // modal 관련 state
     const [open, setOpen] = useState(false)
@@ -248,6 +249,9 @@ const GroupRoom = (props) => {
             setPlayer([...player])
             console.log('빈배열에서의 플레이어', player)
         }
+
+        console.log('공유 누를때 누른사람', newPlayer)
+        console.log('공유 누를때 사용자???', publisher)
         console.log('결과 플레이어', player)
     }
 
@@ -398,7 +402,7 @@ const GroupRoom = (props) => {
                 onClose={handleClose}
             >
                 <div className={styles.modalContainer}>
-                    <header>영상을 저장 하시겠습니까?</header>
+                    <p>영상을 저장 하시겠습니까?</p>
                     <input value={videoTitle} onChange={handleInputChange} placeholder='영상 제목을 입력해주세요' />
                     {
                         isDuplicate ? <p>중복된 이름의 영상이 존재합니다</p> : null

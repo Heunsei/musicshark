@@ -38,7 +38,7 @@ export default function MainPage() {
                         </p>
                     </div>
                     <div>
-                        <p className={styles.subTitle}style={{ color: '#F5A760', margin: 3 }} >
+                        <p className={styles.subTitle} style={{ color: '#F5A760', margin: 3 }} >
                             온라인으로 연습하는 악기 연주
                         </p>
                         <br />
@@ -47,11 +47,11 @@ export default function MainPage() {
                             원하는 대로 즐기세요<br />
                         </p>
                     </div>
-                    <div style={{marginTop : '50px'}}>
+                    <div style={{ marginTop: '50px' }}>
                         <button onClick={navigateToGroup}
                             style={{
-                                fontFamily : 'Pretendard-Bold',
-                                fontSize : '24px',
+                                fontFamily: 'Pretendard-Bold',
+                                fontSize: '24px',
                                 display: 'inline-block',
                                 border: 'none',
                                 color: '#783F26',
@@ -61,7 +61,7 @@ export default function MainPage() {
                                 margin: '1rem 3rem 0 0',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
-                                cursor : 'pointer',
+                                cursor: 'pointer',
                                 fontWeight: 900,
 
                             }}>
@@ -69,8 +69,8 @@ export default function MainPage() {
                         </button>
                         <button onClick={navigateToSingle}
                             style={{
-                                fontFamily : 'Pretendard-Bold',
-                                fontSize : '24px',
+                                fontFamily: 'Pretendard-Bold',
+                                fontSize: '24px',
                                 display: 'inline-block',
                                 border: 'none',
                                 color: '#783F26',
@@ -80,7 +80,7 @@ export default function MainPage() {
                                 margin: '1rem 0 0 3rem',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
-                                cursor : 'pointer',
+                                cursor: 'pointer',
                                 fontWeight: 900,
                             }}>
                             혼자 하기

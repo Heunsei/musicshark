@@ -21,7 +21,7 @@
 }
 
 .headerBox p {
-    font-family: 'Pretendard-Bold';
+    font-family: 'MaplestoryOTFBold';
     font-size: 64px;
     animation-name: start;
     animation-duration: 1s;
@@ -55,7 +55,6 @@
     100% {
         font-size: 64px;
     }
-
 }
 
 @keyframes showLeft {
