@@ -36,6 +36,7 @@ const Container = styled('div')({
     display: 'flex',
     textAlign: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'column',
     borderRadius: '15px',
     overflow: 'auto',
@@ -110,21 +111,21 @@ const GroupInfoBox = (props) => {
                 }}>
                     {groupDetail.channelName}</p>
                 <hr style={{ color: 'black' }}></hr>
-                <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', flexDirection: 'column' }}>
-                    <div style={{
-                        width: '90%',
-                        textAlign: 'center',
-                        overflow: 'scroll',
-                        msOverflowStyle: 'none',
-                        scrollbarWidth: 'none',
+                <div style={{
+                    width: '90%',
+                    display: 'flex', flexDirection: 'column', justifyContent: 'center', align: 'center',
+                    overflow: 'scroll', msOverflowStyle: 'none', scrollbarWidth: 'none',
+                }}>
+
+                    <p style={{
+                        fontSize: '32px', margin: '0 0 20px 0', align: 'center'
+                    }}>{groupDetail.channelIntro}</p>
+                    <table style={{
+                        fontSize: '20px', borderSpacing: '5px 5px',
+                        width: '80%'
                     }}>
-                        <p style={{
-                            fontSize: '32px', margin: '0 0 20px 0',
-                        }}>{groupDetail.channelIntro}</p>
-                    </div>
-                    <table style={{ fontSize: '20px', borderSpacing: '5px 5px' }}>
                         <tr>
-                            <td>현재인원 :</td>
+                            <td >현재인원 :</td>
                             <td style={{ textAlign: 'right' }}>{groupDetail.channelCur}명</td>
                         </tr>
                         <tr>
@@ -133,11 +134,8 @@ const GroupInfoBox = (props) => {
                         </tr>
                         <tr>
                             <td>생성일자 :</td>
-                            <td>{groupDetail.channelDate}</td>
+                            <td style={{ textAlign: 'right' }}>{groupDetail.channelDate}</td>
                         </tr>
-                        {/* <p style={{ fontSize: '20px' }}>{groupDetail.channelIntro}</p>
-                        <p style={{ fontSize: '20px' }}>{`현재 인원 : ${groupDetail.channelCur} / ${groupDetail.channelMax}`}</p>
-                        <p style={{ fontSize: '20px' }}>{`채널 생성일 : ${groupDetail.channelDate}`}</p> */}
                     </table>
                 </div>
                 <button className={`${styles.groupInfoModifyBtn} ${styles.groupRoomBtn}`} onClick={handleOpen}>
