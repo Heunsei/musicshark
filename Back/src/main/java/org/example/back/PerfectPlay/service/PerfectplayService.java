@@ -13,4 +13,6 @@ public interface PerfectplayService {
 	int getPlayCount(int userIdx);
 
 	double getAvgScore(int userIdx);
+
+	int getClearSongCount(int userIdx) throws Exception;
 }
