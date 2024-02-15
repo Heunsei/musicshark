@@ -145,7 +145,7 @@ export default function BoardList() {
             ))}
           </TableBody>
         </StyledTable>
-        <div style={{ marginTop: "20px", display: "flex", justifyContent: "center", width: "70%" }}>
+        <div style={{ marginTop: "50px", display: "flex", justifyContent: "center", width: "70%" }}>
           <StyledButton onClick={() => moveToCreate()}>글 작성하기</StyledButton>
         </div>
       </div>
