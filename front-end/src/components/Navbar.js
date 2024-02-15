@@ -76,8 +76,6 @@ export default function Navbar() {
                             <col style={{ width: "20%" }} />
                             <col style={{ width: "20%" }} />
                             <col style={{ width: "20%" }} />
-                            <col style={{ width: "20%" }} />
-                            <col style={{ width: "20%" }} />
                         </colgroup>
 
                         <TableRow>
@@ -106,9 +104,7 @@ export default function Navbar() {
                                         로그아웃
                                     </button>
                                     )
-
                                 }
-
                             </td>
                         </TableRow>
                         <TableRow>
