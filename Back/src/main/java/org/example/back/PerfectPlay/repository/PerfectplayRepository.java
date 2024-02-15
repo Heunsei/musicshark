@@ -20,6 +20,17 @@ public interface PerfectplayRepository extends JpaRepository<PerfectplayEntity, 
 	@Query("select p.songIdx from PERFECTPLAY p where p.userIdx = :userIdx order by p.date desc")
 	Integer findLatestSongIdx(@Param("userIdx") int userIdx);
 
+
+	@Query("select avg(p.score) from PERFECTPLAY p where p.userIdx = :userIdx")
+	Double findByUserIdxToAvgScore(@Param("userIdx") int userIdx);
+
+	@Query("select count(p) from PERFECTPLAY  p where p.userIdx = :userIdx")
+	Integer getCountToUserIdx(@Param("userIdx") int userIdx);
+
+	@Query("select distinct p.songIdx from PERFECTPLAY p where p.userIdx = :userIdx")
+	int getClearSongCount(@Param("userIdx") int userIdx);
+
+
 	// 퍼펙트플레이 점수 내림차순
 	//
 	// @Query("select p.songIdx from PerfectplayEntity p where p.userIdx = :userIdx order by p.score desc")

@@ -44,7 +44,6 @@ const LoginPage = () => {
                     setPassword={setPassword}
                 />
                 <LoginPageFooter isFormValid={isFormValid} handleLogin={handleLogin} />
-                <KakaoLoginButton />
             </AuthBox>
         </>
     );

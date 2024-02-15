@@ -3,6 +3,7 @@ package org.example.back.Board.controller;
 import java.util.List;
 
 import org.example.back.Board.dto.request.PostBoardRequestDto;
+import org.example.back.Board.dto.response.GetAllBoardResponseDto;
 import org.example.back.Board.entity.BoardEntity;
 import org.example.back.Board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@GetMapping
-	public ResponseEntity<List<BoardEntity>> getAllBoard(){
-		List<BoardEntity> results = boardService.getAllBoard();
-		return new ResponseEntity<List<BoardEntity>>(results, HttpStatus.OK);
+	public ResponseEntity<?> getAllBoard(){
+		List<GetAllBoardResponseDto> results = boardService.getAllBoard();
+		return new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
 	@GetMapping("/user/{user_nickname}")

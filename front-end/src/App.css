@@ -9,6 +9,11 @@ body {
 }
 
 @font-face {
+  font-family: 'MaplestoryLight';
+  src: url('./components/font/Maplestory\ Light.ttf') format('woff')
+}
+
+@font-face {
   font-family: "Pretendard-Medium";
   font-size: medium;
   src: url('./components/font/Pretendard/Pretendard-Medium.woff') format('woff')
@@ -17,4 +22,18 @@ body {
 @font-face {
   font-family: 'galmuri';
   src: url(./components/font/Galmuri11-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'NPSfontBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MaplestoryOTFBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }

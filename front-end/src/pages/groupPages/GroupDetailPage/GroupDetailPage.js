@@ -35,6 +35,7 @@ const GroupDetailPage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [recordList, setRecordList] = useState([])
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {

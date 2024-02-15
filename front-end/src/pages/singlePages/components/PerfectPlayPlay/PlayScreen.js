@@ -1,4 +1,4 @@
-import styles from './PerfectPlayPlayPage.module.css'
+import styles from './PerfectPlayPlayPage.module.css';
 import React, { useRef, useEffect, useState } from 'react';
 import { PitchDetector } from 'pitchy';
 import { useCanvas } from './useCanvas';
@@ -33,11 +33,15 @@ const PlayScreen = ({ songIdx }) => {
             const data = response.data.data;
             console.log(data);
             setSongInfo(data);
+            
 
         }catch(error){
             console.error(error);
         }
     }
+
+    const multivar = 6;
+    const dupvar = 390;
 
     const startButtonClick = async () => {
         setIsPlaying(true);
@@ -114,8 +118,8 @@ const PlayScreen = ({ songIdx }) => {
     // particles.push(exampleParticle);
 
     //캔버스
-    const canvasWidth = 930;
-    const canvasHeight = 330;
+    const canvasWidth = 950;
+    const canvasHeight = 450;
     const canvasRef = useCanvas(canvasWidth, canvasHeight);
 
     // 파티클
@@ -123,7 +127,7 @@ const PlayScreen = ({ songIdx }) => {
         if (noteWindow[halfSize][0] < 10) return;
 
         const makeParticle = (particleNum) => {
-            const particleY = canvasHeight - noteWindow[halfSize][0] * 3;
+            const particleY = canvasHeight - (noteWindow[halfSize][0] * multivar - dupvar) * 3;
 
             for (let i = 0; i < particleNum; i++) {
                 const speed = {
@@ -288,7 +292,7 @@ const PlayScreen = ({ songIdx }) => {
 
         // 음정 분석 결과를 노트 윈도우에 저장
         let note = freqToNote(pitch[0]);
-        if (note < 40 || note > 90) { // 노트가 40보다 작거나 90보다 크면 -1로 설정
+        if (note < 40/2 || note > 90*2) { // 노트가 40보다 작거나 90보다 크면 -1로 설정
             note = -1;
         }
 
@@ -298,13 +302,14 @@ const PlayScreen = ({ songIdx }) => {
             voiceNoteWindow.shift();
         }
 
+        console.log('Midi:', freqToNote(pitch[0]));
         // console.log('Pitch:', pitch);
 
         //현재 시간에 맞는 노래 데이터 저장
         const currentTime = (Date.now() - startTimeRef.current) / 1000;
 
         if (songData[songIndex].cnt == songData[songData.length - 1].cnt) {
-            
+
             setIsPlaying(false);
             if (!flag) {
                 flag = true;
@@ -335,7 +340,7 @@ const PlayScreen = ({ songIdx }) => {
                 if (
                     Math.abs(
                         voiceNoteWindow[halfSize - i] - songNoteWindow[halfSize - i][0],
-                    ) < 3
+                    ) < 1.55
                 ) {
                     correct += 1;
                 }
@@ -385,7 +390,7 @@ const PlayScreen = ({ songIdx }) => {
         const drawMicNote = () => {
             let x = 0;
             for (let i = 0; i < voiceNoteWindow.length; i++) {
-                const y = canvasHeight - voiceNoteWindow[i] * 3;
+                const y = canvasHeight - (voiceNoteWindow[i] * multivar - dupvar) * 3;
 
                 if (!Number.isNaN(y)) {
                     ctx.fillStyle = `rgba(255, 255, 255, 0.5)`;
@@ -426,7 +431,7 @@ const PlayScreen = ({ songIdx }) => {
         const drawMusicNote = () => {
             let musicX = barWidth * 2;
             for (let i = 1; i < data.NOTE_WINDOW_SIZE - 2; i++) {
-                const musicY = canvasHeight - songNoteWindow[i][0] * 3;
+                const musicY = canvasHeight - (songNoteWindow[i][0] * multivar - dupvar) * 3;
                 if (!Number.isNaN(musicY)) {
                     const gradient = ctx.createLinearGradient(
                         musicX,
@@ -507,6 +512,15 @@ const PlayScreen = ({ songIdx }) => {
     return (
         <div className={styles.body}>
             <div className={styles.container}>
+                <div className={styles.infoBox}>
+                    <div className={styles.card}>
+                        <div className={styles.img}><img src={songInfo.songImg}></img></div>
+                        <div className={styles.content}>
+                            <div className={styles.title}>{songInfo.title}</div>
+                            <div className={styles.singer}>{songInfo.singer}</div>
+                        </div>
+                    </div>
+                </div>
                 <div className={styles.screenBox}>
                     <NumberDisplay number={number} />
                     <canvas
@@ -515,23 +529,24 @@ const PlayScreen = ({ songIdx }) => {
                         height={canvasHeight}
                         ref={canvasRef}
                     />
+                    <div className={styles.buttonBox}>
+                        {
+                            !isPlaying ?
+                                (<button onClick={() => startButtonClick()}>
+                                    <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
+                                </button>) :
+                                (<button onClick={() => stopButtonClick()}>
+                                    <StopCircleIcon /> <span>중지</span>
+                                </button>)
+                        }
+                        <button onClick={() => navigate('/single/perfect')} style={{ position: 'absolute', right: '30px' }}>
+                            <LogoutIcon />
+                        </button>
+                    </div>
                 </div>
+
                 {isEndOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
                 {isModalOpen && <Popup onClose={() => setIsModalOpen(false)} onRestartPlayback={restartPlayback} />}
-                <div className={styles.buttonBox}>
-                    {
-                        !isPlaying ?
-                            (<button onClick={() => startButtonClick()}>
-                                <PlayCircleFilledWhiteIcon /> <span>시작하기</span>
-                            </button>) :
-                            (<button onClick={() => stopButtonClick()}>
-                                <StopCircleIcon /> <span>중지</span>
-                            </button>)
-                    }
-                    <button onClick={() => navigate('/single/perfect')} style={{ position: 'absolute', right: '30px' }}>
-                        <LogoutIcon />
-                    </button>
-                </div>
             </div>
         </div>
 

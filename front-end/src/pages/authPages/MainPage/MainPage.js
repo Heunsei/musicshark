@@ -2,11 +2,12 @@ import React from 'react';
 import { styled } from '@mui/system';
 import Navbar from '../../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+import styles from './MainPage.module.css'
 //import styles from './MainButton/MainButton.module.css';
 
 const BoxWrapper = styled('div')({
     width: '100%',
-    height: '100vh',
+    height: '100vh ',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -28,38 +29,39 @@ export default function MainPage() {
 
     return (
         <>
-            <Navbar />
-            <BoxWrapper>
-                <div style={{ textAlign: 'left', margin: '5%', marginRight: '70%' }}>
-
-                    <div>
-                        <h2 style={{ color: 'white', margin: 2, textAlign: 'left' }}>
-                            아름다운 선율을 연주하게 될<br />
-                            당신을 위해<br />
-                        </h2>
+            <div className={styles.backGround}>
+                <Navbar />
+                <div className={styles.titleBox}>
+                    <div className={styles.headerBox}>
+                        <p style={{ color: '#ffb6c1', margin: 2, textAlign: 'left' }}>
+                            아름다운 선율을 연주하게 될 당신을 위해
+                        </p>
                     </div>
                     <div>
-                        <h4 style={{ color: '#F5A760', margin: 3 }} >
-                            <strong>온라인</strong>으로 <strong>연습</strong>하는 <strong>악기 연주</strong>
-                        </h4>
+                        <p className={styles.subTitle} style={{ color: '#F5A760', margin: 3 }} >
+                            온라인으로 연습하는 악기 연주
+                        </p>
                         <br />
-                        <h3 style={{ color: '#FFFADD', margin: 4, fontWeight: 'normal' }}>
+                        <p className={styles.info} style={{ color: '#000000', margin: 4, fontWeight: 'normal' }}>
                             친구들과 함께든 혼자서든<br />
                             원하는 대로 즐기세요<br />
-                        </h3>
+                        </p>
                     </div>
-                    <div>
+                    <div style={{ marginTop: '50px' }}>
                         <button onClick={navigateToGroup}
                             style={{
+                                fontFamily: 'MaplestoryOTFBold',
+                                fontSize: '24px',
                                 display: 'inline-block',
                                 border: 'none',
                                 color: '#783F26',
                                 backgroundColor: '#FFFADD',
-                                width: '6rem',
-                                height: '2.5rem',
-                                margin: '1rem 0.5rem 0 0',
+                                width: '15%',
+                                height: '4rem',
+                                margin: '1rem 3rem 0 0',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
+                                cursor: 'pointer',
                                 fontWeight: 900,
 
                             }}>
@@ -67,23 +69,25 @@ export default function MainPage() {
                         </button>
                         <button onClick={navigateToSingle}
                             style={{
+                                fontFamily: 'MaplestoryOTFBold',
+                                fontSize: '24px',
                                 display: 'inline-block',
                                 border: 'none',
                                 color: '#783F26',
                                 backgroundColor: '#FADDA4',
-                                width: '6rem',
-                                height: '2.5rem',
-                                margin: '1rem 0 0 0.5rem',
+                                width: '15%',
+                                height: '4rem',
+                                margin: '1rem 0 0 3rem',
                                 padding: '0 1rem ',
                                 borderRadius: '22px',
+                                cursor: 'pointer',
                                 fontWeight: 900,
-
                             }}>
                             혼자 하기
                         </button>
                     </div>
                 </div>
-            </BoxWrapper>
+            </div>
         </>
     )
 }

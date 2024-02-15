@@ -121,6 +121,7 @@
     border: 1px solid black;
     border-radius: 15px;
     font-size: 1.5rem;
+    margin-top: 20px;
 }
 
 .modalButtonBox {
@@ -135,15 +136,19 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    font-size: 24px;
+    font-size: 32px;
+    font-family: 'Pretendard-Bold';
+    border-bottom: 1px solid gray;
 }
 
 .modalButtonBox button {
-    width: 100px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+    width: 70px;
     height: 30px;
     margin: 15px 15px;
-    cursor: pointer;
-    border-radius: 15px;
+    box-shadow: 2px 2px gray;
 
 }
 

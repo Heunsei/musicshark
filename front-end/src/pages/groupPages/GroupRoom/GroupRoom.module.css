@@ -12,9 +12,8 @@
 
 .mainScreen {
     position: absolute;
-    padding-top: 15px;
     width: 100%;
-    height: 70%;
+    height: 65%;
 }
 
 .mainScreen video {
@@ -24,7 +23,8 @@
 }
 
 .subScreen {
-    height: 10%;
+    height: 13%;
+    position: relative;
     display: flex;
     background-color: #C0AB9A;
     border-radius: 15px;
@@ -34,6 +34,15 @@
     align-items: center;
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+.myScreen{
+    left: 15px;
+}
+
+.myScreen video{
+    border: 4px solid blueviolet;
+    box-sizing: border-box;
 }
 
 .subScreen ::-webkit-scrollbar {
@@ -156,14 +165,16 @@
     font-size: 1.5rem;
 }
 
-.modalContainer>header {
-    font-size: 24px;
-    position: absolute;
-    top: 15px;
-    left: 15px;
+.modalContainer>p {
+    font-family: 'Pretendard-Bold';
+    font-size: 32px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid black;
 }
 
 .subScreenVideo {
+    position: absolute;
     display: flex;
     width: 20%;
     height: 80%;
@@ -174,4 +185,21 @@
     width: 100%;
     height: 100%;
     border-radius: 15px;
+}
+
+.modalButtonBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-family: 'Pretendard-Medium';
+}
+
+.modalButtonBox>button {
+    border-radius: 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+    width: 70px;
+    height: 30px;
+    margin: 15px 15px;
+    box-shadow: 2px 2px gray;
 }
