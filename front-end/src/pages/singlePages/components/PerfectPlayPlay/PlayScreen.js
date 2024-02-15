@@ -40,6 +40,9 @@ const PlayScreen = ({ songIdx }) => {
         }
     }
 
+    const multivar = 6;
+    const dupvar = 390;
+
     const startButtonClick = async () => {
         setIsPlaying(true);
         try {
@@ -124,7 +127,7 @@ const PlayScreen = ({ songIdx }) => {
         if (noteWindow[halfSize][0] < 10) return;
 
         const makeParticle = (particleNum) => {
-            const particleY = canvasHeight - noteWindow[halfSize][0] * 3;
+            const particleY = canvasHeight - (noteWindow[halfSize][0] * multivar - dupvar) * 3;
 
             for (let i = 0; i < particleNum; i++) {
                 const speed = {
@@ -289,7 +292,7 @@ const PlayScreen = ({ songIdx }) => {
 
         // 음정 분석 결과를 노트 윈도우에 저장
         let note = freqToNote(pitch[0]);
-        if (note < 40 || note > 90) { // 노트가 40보다 작거나 90보다 크면 -1로 설정
+        if (note < 40/2 || note > 90*2) { // 노트가 40보다 작거나 90보다 크면 -1로 설정
             note = -1;
         }
 
@@ -337,7 +340,7 @@ const PlayScreen = ({ songIdx }) => {
                 if (
                     Math.abs(
                         voiceNoteWindow[halfSize - i] - songNoteWindow[halfSize - i][0],
-                    ) < 3
+                    ) < 1.55
                 ) {
                     correct += 1;
                 }
@@ -387,7 +390,7 @@ const PlayScreen = ({ songIdx }) => {
         const drawMicNote = () => {
             let x = 0;
             for (let i = 0; i < voiceNoteWindow.length; i++) {
-                const y = canvasHeight - voiceNoteWindow[i] * 3;
+                const y = canvasHeight - (voiceNoteWindow[i] * multivar - dupvar) * 3;
 
                 if (!Number.isNaN(y)) {
                     ctx.fillStyle = `rgba(255, 255, 255, 0.5)`;
@@ -428,7 +431,7 @@ const PlayScreen = ({ songIdx }) => {
         const drawMusicNote = () => {
             let musicX = barWidth * 2;
             for (let i = 1; i < data.NOTE_WINDOW_SIZE - 2; i++) {
-                const musicY = canvasHeight - songNoteWindow[i][0] * 3;
+                const musicY = canvasHeight - (songNoteWindow[i][0] * multivar - dupvar) * 3;
                 if (!Number.isNaN(musicY)) {
                     const gradient = ctx.createLinearGradient(
                         musicX,
