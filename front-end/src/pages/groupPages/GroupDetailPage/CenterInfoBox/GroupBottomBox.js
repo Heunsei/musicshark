@@ -9,6 +9,7 @@ import Modal from '@mui/material/Modal';
 
 import styles from './GroupBottomBox.module.css'
 import Calander from './../../../authPages/MyPage/Calendar'
+import zIndex from '@mui/material/styles/zIndex';
 
 const Container = styled('div')({
     width: '90%',
@@ -20,7 +21,8 @@ const Container = styled('div')({
 })
 
 // 연주 이동 버튼 & 캘린더 버튼 & 그룹 삭제 버튼
-const GroupBottomBox = () => {
+const GroupBottomBox = (props) => {
+    const { isCalander, setIsCalander } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
     // modal
@@ -50,7 +52,7 @@ const GroupBottomBox = () => {
                             color: 'white',
                         },
                     }}> 연습하기 </Button>
-                <Button onClick={() => handleOpen()}
+                <Button onClick={() => setIsCalander(!isCalander)}
                     sx={{
                         fontFamily: "Pretendard-Medium",
                         width: '45%',
@@ -74,18 +76,18 @@ const GroupBottomBox = () => {
                     <LogoutIcon /> <span>그룹 목록 페이지로</span>
                 </button>
             </div>
-            {/* <Modal
+            <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <div className={styles.modalBox}>
-                    <div>
+                    <div className={styles.calanderDiv}>
                         <Calander />
                     </div>
                 </div>
-            </Modal> */}
+            </Modal >
         </>
     );
 };

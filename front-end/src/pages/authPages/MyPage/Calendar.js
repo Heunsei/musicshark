@@ -8,7 +8,7 @@ import Modal from "react-modal";
 import moment from "moment";
 import styled from "styled-components";
 
-// const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 const StyledCalendar = styled(Calendar)`
   width: 96%;
@@ -20,26 +20,26 @@ const StyledCalendar = styled(Calendar)`
   border-radius: 6px;
   font-family: "Pretendard-Medium";
 
-//   .react-calendar__tile:enabled:hover,
-//   .react-calendar__tile:enabled:focus {
-//     background-color: #006edc;
-//   }
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: #006edc;
+  }
 
-//   .react-calendar__tile {
-//     border: 0.1px solid #f3f3f3; /* 연한 회색 테두리 */
-//   }
+  .react-calendar__tile {
+    border: 0.1px solid #f3f3f3; /* 연한 회색 테두리 */
+  }
 
-//   .react-calendar__month-view__weekdays__weekday:first-child {
-//     color: red; /* 일요일 */
-//   }
+  .react-calendar__month-view__weekdays__weekday:first-child {
+    color: red; /* 일요일 */
+  }
 
-//   .react-calendar__month-view__weekdays__weekday:last-child {
-//     color: blue; /* 토요일 */
-//   }
+  .react-calendar__month-view__weekdays__weekday:last-child {
+    color: blue; /* 토요일 */
+  }
 
-//   .sunday {
-//     color: red; // '일요일'에 대한 스타일
-//   }
+  .sunday {
+    color: red; // '일요일'에 대한 스타일
+  }
 
   .saturday {
     color: blue; // '토요일'에 대한 스타일
@@ -69,94 +69,94 @@ const dotContainerStyle = {
   right: "0", // 타일의 오른쪽에 위치
 };
 
-// const absoluteDiv = {
-//   position: "absolute",
-//   top: "0",
-//   left: "0",
-//   right: "0",
-//   bottom: "0",
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center",
-// };
+const absoluteDiv = {
+  position: "absolute",
+  top: "0",
+  left: "0",
+  right: "0",
+  bottom: "0",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
-// function MyCalendar() {
-//   function getCookie(name) {
-//     let cookieValue = null;
-//     if (document.cookie && document.cookie !== "") {
-//       const cookies = document.cookie.split(";");
-//       for (let i = 0; i < cookies.length; i++) {
-//         const cookie = cookies[i].trim();
-//         // Does this cookie string begin with the name we want?
-//         if (cookie.substring(0, name.length + 1) === name + "=") {
-//           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//           break;
-//         }
-//       }
-//     }
-//     return cookieValue;
-//   }
+function MyCalendar() {
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
 
-//   const [value, onChange] = useState(new Date());
-//   const [videos, setVideos] = useState([]);
-//   const [modalIsOpen, setModalIsOpen] = useState(false);
-//   const [selectedDateVideos, setSelectedDateVideos] = useState([]);
-//   const [mark, setMark] = useState([]);
+  const [value, onChange] = useState(new Date());
+  const [videos, setVideos] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedDateVideos, setSelectedDateVideos] = useState([]);
+  const [mark, setMark] = useState([]);
 
-//   const fetchVideos = async (year, month) => {
-//     try {
-//       const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
-//       const response = await api.get(
-//         `/videos/personal/search/between?year=${year}&month=${month}`,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${accessToken}`,
-//             "Cache-Control": "no-cache",
-//           },
-//         }
-//       );
-//       return response.data;
-//     } catch (error) {
-//       console.error("Error fetching videos data:", error);
-//       throw new Error("Fetching videos data failed");
-//     }
-//   };
+  const fetchVideos = async (year, month) => {
+    try {
+      const accessToken = getCookie("accessToken"); // 쿠키에서 accessToken 가져오기
+      const response = await api.get(
+        `/videos/personal/search/between?year=${year}&month=${month}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Cache-Control": "no-cache",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching videos data:", error);
+      throw new Error("Fetching videos data failed");
+    }
+  };
 
-//   const { data: videosData, refetch } = useQuery(
-//     ["videosData", value],
-//     () => fetchVideos(value.getFullYear(), value.getMonth() + 1),
-//     {
-//       keepPreviousData: true,
-//     }
-//   );
+  const { data: videosData, refetch } = useQuery(
+    ["videosData", value],
+    () => fetchVideos(value.getFullYear(), value.getMonth() + 1),
+    {
+      keepPreviousData: true,
+    }
+  );
 
-//   useEffect(() => {
-//     if (videosData) {
-//       setVideos(videosData);
-//     }
-//   }, [videosData]);
+  useEffect(() => {
+    if (videosData) {
+      setVideos(videosData);
+    }
+  }, [videosData]);
 
-//   useEffect(() => {
-//     refetch(); // 선택된 날짜가 변경될 때마다 데이터를 다시 가져옵니다.
-//   }, [value, refetch]);
+  useEffect(() => {
+    refetch(); // 선택된 날짜가 변경될 때마다 데이터를 다시 가져옵니다.
+  }, [value, refetch]);
 
-//   const formatShortWeekday = (locale, date) => {
-//     // 요일을 나타내는 숫자를 얻습니다 (0: 일요일, 1: 월요일, ..., 6: 토요일)
-//     const day = date.getDay();
-//     // 요일에 따라 한글 문자열을 반환합니다
-//     const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
-//     return weekdays[day];
-//   };
+  const formatShortWeekday = (locale, date) => {
+    // 요일을 나타내는 숫자를 얻습니다 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+    const day = date.getDay();
+    // 요일에 따라 한글 문자열을 반환합니다
+    const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+    return weekdays[day];
+  };
 
-//   const handleDayClick = (date) => {
-//     const selectedVideos = videos.filter((video) => moment(video.video_date).isSame(date, "day"));
+  const handleDayClick = (date) => {
+    const selectedVideos = videos.filter((video) => moment(video.video_date).isSame(date, "day"));
 
-//     // 영상이 존재하는 경우에만 모달 창을 열기
-//     if (selectedVideos.length > 0) {
-//       setSelectedDateVideos(selectedVideos);
-//       setModalIsOpen(true);
-//     }
-//   };
+    // 영상이 존재하는 경우에만 모달 창을 열기
+    if (selectedVideos.length > 0) {
+      setSelectedDateVideos(selectedVideos);
+      setModalIsOpen(true);
+    }
+  };
 
   const handleDeleteVideo = async (video_idx) => {
     const isConfirmed = window.confirm("이 영상을 삭제하시겠습니까?");
@@ -318,12 +318,12 @@ const dotContainerStyle = {
   );
 }
 
-// function CustomCalendar() {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <MyCalendar />
-//     </QueryClientProvider>
-//   );
-// }
+function CustomCalendar() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MyCalendar />
+    </QueryClientProvider>
+  );
+}
 
-// export default CustomCalendar;
+export default CustomCalendar;
