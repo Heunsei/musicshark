@@ -12,8 +12,6 @@ export const loginAction = async (userDetails, dispatch, navigate) => {
             url: `${URL}/auth/sign-in`,
             data: userDetails,
         })
-
-        console.log(response)
         const ACCESS_TOKEN = response.data.accessToken
         const REFRESH_TOKEN = response.data.refreshToken
 
@@ -35,7 +33,6 @@ export const loginAction = async (userDetails, dispatch, navigate) => {
             getUserAction(ACCESS_TOKEN, dispatch, navigate)
         }
     } catch (err) {
-        console.log(err)
         alert('가입되어 있지 않는 이메일이거나 올바르지 않는 비밀번호입니다.')  
         return {
             error: true,
