@@ -1,14 +1,13 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-//import moment from 'moment';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Dialog, DialogContent, IconButton, TextField } from "@mui/material";
-// import { CommentsAction, commentsAction } from './CommentsAction';
 import { commentsCreateAction } from './commentsCreateAction';
 import { getCookie } from "../../util/cookie";
+import moment from "moment/moment";
 
 const Comments=()=>{
     const {board_id} = useParams()
@@ -16,38 +15,107 @@ const Comments=()=>{
     const URL = process.env.REACT_APP_API_URL
     const location=useLocation();
     const navigate=useNavigate();
+    const [newComment, setNewComment] = useState('')
     const [commentList, setCommentList]=useState([]);
 
     const [content, setContent]=useState("");
     const token=useSelector(state=>state.login.login);
-
+    const [isModify, setIsModify] = useState(false);
+    const [selectedComment, setSelectedComment] = useState(undefined)
 
     const [show,setShow]=useState(false);
 
-    // useEffect(()=>{
-    //     const getCommentList=async()=>{
-    //         const {data}=await axios.get(`${URL}/board/${board_id}/comments`);
-    //         return data;
-    //     }
-    //     getCommentList().then((result)=>setCommentList([...commentList,...result]));
-    // },[]);
+    const openModify = (idx) => {
+        setIsModify(true)
+        setSelectedComment(idx)
+    }
 
-    // useEffect(()=>{
-    //     const getTotalBoard=async()=>{
-    //         const {data}=await axios.get(`${URL}/board/${board_id}/comments`);
-    //         return data.total;
-    //     }
-    //     getTotalBoard().then((result)=>setPageCount(Math.ceil(result/5)));
-    // },[]);
+    const handleModifyContent = (newComment,commentIdx) => {
+        const accessToken = getCookie('accessToken')
+        const getCommentModify= async () => {
+            try{
+                axios({
+                    method :'put',
+                    url : `${URL}/board/${board_id}/comments`,
+                    data : {
+                        comment_idx:commentIdx,
+                        comment_content:newComment,
+                        user_nickname:nickname,
+                    },
+                    headers : {
+                        Authorization : `Bearer ${accessToken}`
+                    }
+                }).then((res) => {
+                    const getCommentList= async () => {
+                        try{
+                            axios({
+                                method :'get',
+                                url : `${URL}/board/${board_id}/comments`,
+                                headers : {
+                                    Authorization : `Bearer ${accessToken}`
+                                }
+                            }).then((res) =>{
+                                console.log(res.data)
+                                setCommentList(res.data)
+                            })
+                        }
+                        catch (err){
+                            console.log(err)
+                        }
+                    }
+                    getCommentList()
+                })
+            }
+            catch (err){
+                console.log(err)
+            }
+        }
+        getCommentModify()
+    }
 
-    // useEffect(()=>{
-    //     const submit=async()=>{
-    //         const {data}=await axios.post(`${URL}/board/${board_id}/comments`);
+    const closeModify = () => {
+        setIsModify(false)
+        setSelectedComment(undefined)
+        setNewComment('')
+    }
 
-    //         return data;
-    //     }
-    //     submit().then((result)=>setContent([...commentList]))
-    // })
+    const handleDeleteContent=(commentIdx) => {
+        const accessToken = getCookie('accessToken')
+        const deleteCommentList= async () => {
+            try{
+                axios({
+                    method :'patch',
+                    url : `${URL}/board/${board_id}/comments/${commentIdx}`,
+                    headers : {
+                        Authorization : `Bearer ${accessToken}`
+                    }
+                }).then((res) =>{
+                    const getCommentList= async () => {
+                        try{
+                            axios({
+                                method :'get',
+                                url : `${URL}/board/${board_id}/comments`,
+                                headers : {
+                                    Authorization : `Bearer ${accessToken}`
+                                }
+                            }).then((res) =>{
+                                console.log(res.data)
+                                setCommentList(res.data)
+                            })
+                        }
+                        catch (err){
+                            console.log(err)
+                        }
+                    }
+                    getCommentList()
+                })
+            }
+            catch (err){
+                console.log(err)
+            }
+        }
+        deleteCommentList()
+    }
 
     const handleGetContent = () => {
         const accessToken = getCookie('accessToken')
@@ -67,7 +135,6 @@ const Comments=()=>{
         }
         getCommentList()
     }
-
 
     // 로드 시, commentList가 바뀔때마다 로드
     useEffect(() => {
@@ -106,7 +173,27 @@ const Comments=()=>{
                     headers : {
                         Authorization : `Bearer ${accessToken}`
                     }
-                }).then((res) => console.log(res))
+                }).then((res) => {
+                    const getCommentList= async () => {
+                        try{
+                            axios({
+                                method :'get',
+                                url : `${URL}/board/${board_id}/comments`,
+                                headers : {
+                                    Authorization : `Bearer ${accessToken}`
+                                }
+                            }).then((res) =>{
+                                console.log(res.data)
+                                setCommentList(res.data)
+                            })
+                        }
+                        catch (err){
+                            console.log(err)
+                        }
+                    }
+                    getCommentList()
+                })
+
             }
             catch (err){
                 console.log(err)
@@ -115,17 +202,6 @@ const Comments=()=>{
         submitData()
     }
 
-    // const submit=useCallback(async()=>{
-    //     const comment={
-    //         board_id:board_id,
-    //         content:content,
-    //         user_id:token,
-    //     }
-    //     alert("댓글 등록 완료");
-    //     window.location.reload();
-    // },[content]);
-
-    console.log(commentList);
 
     const goLogin=()=>{
         setShow(false);
@@ -134,61 +210,79 @@ const Comments=()=>{
 
     return(
         <div>
+
+            <div style={{marginLeft : "15%", marginRight : "15%", fontSize : "16px"}} className="comments-body">
+                {commentList.map((item, index)=>(
+                    <div>
+
+                    <div style={{display : "flex", justifyContent : "space-between"}} key={index} className="comments-comment">
+                        
+                        <div style={{fontSize : "18px"}} className="comment-content">{item.commentContent}</div>
+                        <div style={{display:"flex"}}>
+               <div style={{marginTop : "4px"}} >
+                        <div className="comment-usename">{item.userNickname}</div>
+                        <div style={{marginTop : "2px"}} className="comment-date">
+                            {moment(item.commentDate).format('YYYY-MM-DD HH:mm:ss')}
+                            </div>
+                </div>
+                <div style={{ marginLeft:"5px"}}>
+                    <div style={{ marginBottom : "2px"}}>
+                    <button style={{ fontSize:"12px", height:"25px",width:"40px"}} variant="outlined" onClick={() => openModify(index)}>
+                        수정
+                    </button>
+
+                    </div>
+                    <div>
+                    <button style={{ fontSize:"12px",height:"25px",width:"40px"}} variant="outlined" onClick={() =>{ handleDeleteContent(item.commentIdx)}}>
+                        삭제
+                    </button>
+                    </div>
+                    </div>
+                        </div>
+                    </div>
+                            <hr style={{width : "100%"}}/>
+                            {
+                            isModify && index === selectedComment ? 
+                            (   <>
+                                <input value={newComment} onChange={(event) => setNewComment(event.target.value) }/>
+                                <button onClick={() => handleModifyContent(newComment, item.commentIdx)} >제출</button>
+                                <button onClick={() => closeModify(index)} >취소</button>
+                                </>
+                            )
+                            : null
+                        }
+                            </div>
+                ))}
+            </div>
+
             <div style={{
-                border : "solid 2px blue", 
                 display:'flex', 
-                justifyContent:'space-evenly',
                  marginLeft : "15%",
                  marginRight : "15%",
                  height : "100px"}}>
-                <div style={{border : "solid 2px red", height : "100%"}}>
+                  
                 <TextField
-                maxRows={3}
-                style={{width : '600px',
-            height : '100%'}}
-                //onClick={isLogin}
+                multiline
+                rowsMax="1"
+                sx={{ width:"100%",  borderRadius : "5px"}}
                 onChange={(e)=>{
                     setContent(e.target.value)
                 }}
-                multiline placeholder="댓글을 입력해 주세요"
-                />
-                </div>
-                <div style={{border : "solid 2px gold"}}>
+                >
+                </TextField>
+                <div style={{border : "solid 1px ", borderRadius : "5px", width : "10%", height : "55%"}}>
 
                 {content !== "" ? (
-                    <Button sty variant="outlined" onClick={() =>{ handleContentSubmit()}}>
+                    <Button sx={{width : "100%", height : "100%", fontWeight : 1000}} sty variant="outlined" onClick={() =>{ handleContentSubmit()}}>
                         등록하기
                     </Button>
                 ):(
-                    <Button variant="outlined" disabled={true}>
+                    <Button sx={{width : "100%", height : "100%", fontWeight : 1000}} variant="outlined" disabled={true}>
                         등록하기
                     </Button>
                 )}
                 </div>
             </div>
-            <div style={{border : "solid 1px purple", marginLeft : "%", marginRight : "15%"}} className="comments-body">
-                {commentList.map((item, index)=>(
-                    <div key={index} className="comments-comment">
-                        <div className="comment-username-date">
-                            {/* <div className="comment-date">{
-                            moment(item.created).add(9,"hour").format('YYYY-MM-DD HH:mm:ss')}
-                            </div> */}
-                        </div>
-                        <div className="comment-content">{item.commentContent}</div>
-                        <div className="comment-usename">{item.userNickname}</div>
-                        <hr/>
-                    </div>
-                ))}
-            </div>
-            {/* {page<pageCount&&(
-                <div className="comments-footer"
-                onClick={()=>{
-                    setPage(page+1);
-                }}
-                >댓글 더보기
-                <KeyboardArrowDownIcon/>
-                </div>
-            )} */}
 
             <Dialog open={show}>
                 <DialogContent style={{position:"relative"}}>
@@ -199,26 +293,7 @@ const Comments=()=>{
                     }}>
                         <DisabledByDefaultOutlinedIcon/>
                     </IconButton>
-                    {/* <div className="modal">
-                        <div className="modal-title">로그인이 필요합니다</div>
-                        <div className="modal-content">로그인 페이지로 이동하시겠습니까?</div>
-                        <div className="modal-button">
-                            <Button
-                                variant="outlined" color="error"
-                                onClick={goLogin}
-                            >
-                                예
-                            </Button>
-                            <Button
-                                variant="outlined" color="primary"
-                                onClick={() => {
-                                setShow(false)
-                                }}
-                            >
-                                아니오
-                            </Button>
-                        </div>
-                    </div> */}
+                     
                 </DialogContent>
             </Dialog>
         </div>

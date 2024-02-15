@@ -34,6 +34,7 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         
         setData(response.data)
         setBoard(response.data);
+        console.log(data);
         setLoading(false);
     };
    
@@ -86,8 +87,16 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
         })
     }
     
-    // const writeDate = board.boardDate.slice(0, 10);
-    // const writeTime = board.boardDate.slice(11, 19);
+    if(board.boardDate === undefined){
+         return;
+       }
+    else {
+       var writeDate = board.boardDate.slice(0, 10);
+       var writeTime = board.boardDate.slice(11, 19);
+       var partHour = String(Number(writeTime.slice(0, 2))+9);
+       var writeTimeOther = writeTime.slice(2, 8);
+       writeTime = partHour + writeTimeOther;
+    }
 
     return (
         <>
@@ -97,12 +106,11 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
             <div>
                 <h1 style={{marginLeft : "15%", marginTop : "2%",  textAlign : "left"}}>{data.boardTitle}</h1>
                 <hr/>
-                <div>
-                    <table style={{position:"relative", marginLeft:"auto", marginRight:"auto", width:"70%"}}>
-                    <tr>
+                <div >
+                    <table style={{ position:"relative", marginLeft:"auto", marginRight:"auto", width:"70%"}}>
+                    <tr style={{display : "flex", justifyContent : "space-between"}}>
                     <td>작성자&nbsp;&nbsp; {"| "+nickname}</td>
-                    {/* <td>작성일&nbsp;&nbsp; {"| "+writeDate + " " + writeTime}</td> */}
-                    <td>작성일&nbsp;&nbsp; {"| "+board.boardDate}</td>
+                    <td>작성일&nbsp;&nbsp; {"| "+writeDate + " " + writeTime}</td>
                     <td>조회&nbsp;&nbsp; {board.boardCount}</td>
                     </tr>
                     
@@ -114,25 +122,21 @@ const BoardDetail=({boardIdx, boardTitle, boardCount, userNickname,boardDate,boa
                     <p style={{fontSize : "18px"}}>{data.boardContent}</p>
                 </div>
                 
-                
             </div>
             <div style={{textAlign: "right", marginRight : "15%"}}>
-                <button onClick={moveToUpdate}>수정</button>
-                <button onClick={()=>{
+                <button style={{width : "50px", height : "35px", marginRight : "2px"}} onClick={moveToUpdate}>수정</button>
+                <button style={{width : "50px", height : "35px", marginRight : "2px"}} onClick={()=>{
                     boardDeleteAction(board, board_id, nickname)
                     navigate('/board')
                 }}>삭제</button>
-                <button onClick={moveToList}>목록</button>
+                <button style={{width : "50px", height : "35px"}} onClick={moveToList}>목록</button>
             </div>
             <hr/>
-
-
             <div>
             
             <Comments/>
           <div style={{ marginBottom: "4rem" }}>
             {comments.map((comment) => {
-                console.log("id"+comment.content);
 
               return (
                 <Comments

@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import Navbar from '../../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import styles from './MainPage.module.css'
-//import styles from './MainButton/MainButton.module.css';
 
 const BoxWrapper = styled('div')({
     width: '100%',
