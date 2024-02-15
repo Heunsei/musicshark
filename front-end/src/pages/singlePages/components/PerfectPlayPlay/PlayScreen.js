@@ -299,6 +299,7 @@ const PlayScreen = ({ songIdx }) => {
             voiceNoteWindow.shift();
         }
 
+        console.log('Midi:', freqToNote(pitch[0]));
         // console.log('Pitch:', pitch);
 
         //현재 시간에 맞는 노래 데이터 저장
