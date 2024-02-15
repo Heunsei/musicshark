@@ -1,22 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
+import storageSessiont from 'redux-persist/lib/storage/session'
+import storage from "redux-persist/lib/storage";
 
 import loginSlice from './loginSlice'
 import userSlice from './userSlice';
 import lobySlice from './lobySlice';
 
-import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
     login: loginSlice.reducer,
     user: userSlice.reducer,
-    isLoby : lobySlice.reducer,
+    isLoby: lobySlice.reducer,
 });
 
 const persistConfig = {
     key: 'root',
-    storage,
+    storage: storageSessiont,
     whitelist: [
         'login',
         'user',
