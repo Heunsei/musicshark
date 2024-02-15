@@ -76,18 +76,6 @@ const GroupBottomBox = (props) => {
                     <LogoutIcon /> <span>그룹 목록 페이지로</span>
                 </button>
             </div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <div className={styles.modalBox}>
-                    <div className={styles.calanderDiv}>
-                        <Calander />
-                    </div>
-                </div>
-            </Modal >
         </>
     );
 };
