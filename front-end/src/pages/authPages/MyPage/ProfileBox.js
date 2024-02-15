@@ -165,6 +165,7 @@ const ProfileBox = () => {
           color: "white",
           marginLeft: "1.5%",
           marginRight: "3%",
+          fontFamily: "Pretendard-Medium",
         };
       case "silver":
         return {
@@ -172,6 +173,7 @@ const ProfileBox = () => {
           backgroundColor: "#C0C0C0", // Silver 색상
           border: "#C0C0C0",
           color: "black",
+          fontFamily: "Pretendard-Medium",
         };
       case "gold":
         return {
@@ -179,20 +181,23 @@ const ProfileBox = () => {
           backgroundColor: "#FFD700", // Gold 색상
           border: "#FFD700",
           color: "white",
+          fontFamily: "Pretendard-Medium",
         };
       case "platinum":
         return {
           ...baseStyle,
-          backgroundColor: "#E5E4E2", // Platinum 색상
-          border: "#E5E4E2",
+          backgroundColor: "#91FCE7", // Platinum 색상
+          border: "#91FCE7",
           color: "black",
+          fontFamily: "Pretendard-Medium",
         };
       case "diamond":
         return {
           ...baseStyle,
           backgroundColor: "#b9f2ff", // Diamond 색상
           border: "#b9f2ff",
-          color: "black", // Diamond는 밝은 색상이므로 텍스트 색상을 검정으로 변경
+          color: "black",
+          fontFamily: "Pretendard-Medium",
         };
       default:
         return baseStyle; // 일치하는 티어가 없는 경우 기본 스타일 사용
@@ -286,6 +291,7 @@ const ProfileBox = () => {
     fontSize: "24px",
     marginTop: "10px",
     marginBottom: "10px",
+    marginRight: "-3%",
   };
 
   const userInfoStyle = {
@@ -303,6 +309,8 @@ const ProfileBox = () => {
     width: "12%", // 필요에 따라 조정하거나 제거
     border: "solid", // 필요에 따라 테두리 스타일을 조정
     borderRadius: "15%",
+    fontFamily: "Pretendard-Medium",
+    fontWeight: "bold",
   };
 
   const nameTextStyle = {
@@ -316,12 +324,16 @@ const ProfileBox = () => {
     color: "white",
     backgroundColor: "#764812",
     border: "#764812",
+    marginRight: "3%",
     paddingTop: "0px",
     paddingBottom: "0px",
     paddingLeft: "0px",
     paddingRight: "0px",
     height: "60%",
+    marginLeft: "%",
     borderRadius: "10%",
+    fontWeight: "550",
+    fontFamily: "Pretendard-Medium",
   };
 
   const dynamicButtonStyle = {
