@@ -9,4 +9,8 @@ import org.example.back.PerfectPlay.entity.PerfectplayEntity;
 public interface PerfectplayService {
 	List<PerfectplayResponseDto> perfectplayResult(int userIdx);
 	PerfectplayEntity createPerfectplayResult(int userIdx, PerfectplayRequestDto perfectplayRequestDto);
+
+	int getPlayCount(int userIdx);
+
+	double getAvgScore(int userIdx);
 }

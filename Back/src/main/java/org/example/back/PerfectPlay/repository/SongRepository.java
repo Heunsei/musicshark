@@ -16,6 +16,8 @@ public interface SongRepository extends JpaRepository<SongEntity, Integer> {
 	@Query("select s FROM SONG s")
 	List<SongEntity> findAllSong();
 
+	public SongEntity findBySongIdx(int songIdx);
+
 	//음악 선택 시 엠알 조회
 }
 

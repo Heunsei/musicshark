@@ -77,7 +77,8 @@ create table if not exists `song` (
 );
 select * from song;
 insert into song (title, singer, start_timing, running_time, song_img) 
-values ('언제나 몇번이라도(센과 치히로의 행방불명 OST)','키무라 유미', 3, 102, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg3D_ZeM4CUyxFI2Y_t1L2s7T9BOQ0t3qYZQ&usqp=CAU');
+values ('언제나 몇번이라도(센과 치히로의 행방불명 OST)','키무라 유미', 3, 102, 'https://akgishark-test-bucket-01.s3.ap-northeast-2.amazonaws.com/storage/song_img/images.jfif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240214T133857Z&X-Amz-SignedHeaders=host&X-Amz-Expires=143&X-Amz-Credential=AKIA4IJEZKEH7OWNWSP4%2F20240214%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=1f042a803b4fa3c3410a13efa4b3cef2d6dfc698bb5a897d0ef738ee14c8b92b');
+select * from song where song_idx = 6;
 -- 노래 바
 create table if not exists `song_line` (
    song_line_idx int primary key auto_increment COMMENT '노래바 인덱스',
@@ -116,7 +117,7 @@ create table if not exists `chatroom` (
     chatroom_idx int primary key auto_increment COMMENT '채팅방 인덱스'
 );
 
--- 채팅메시지
+-- 채팅 메시지
 create table if not exists `chat` (
     chat_idx int primary key auto_increment COMMENT '채팅 인덱스',
     chatroom_idx int NOT NULL COMMENT '채팅방 인덱스',

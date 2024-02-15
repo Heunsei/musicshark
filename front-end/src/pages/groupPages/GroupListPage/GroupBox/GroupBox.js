@@ -49,9 +49,15 @@ const GroupBox = (props) => {
     }
 
     const handleCreateGroupAction = async () => {
-        const createRes = await createGroupAction(groupDetail)
-        console.log('werionbioaerwbnioerwnboiaernboiern', createRes)
-        navigate(`/group/${createRes}`)
+        if(groupName.trim().length !== 0){
+            const createRes = await createGroupAction(groupDetail)
+            console.log('werionbioaerwbnioerwnboiaernboiern', createRes)
+            setIsModalOpen(false)
+            // setChannelMax(2)
+            setGroupIntro('')
+            setGroupName('')
+            navigate(`/group/${createRes}`)
+        }
     }
 
     // 페이지에 로드할 그룹리스트를 요청하고 그룹 리스트가 존재한다면 보여줄 그룹을 랜더링
@@ -156,6 +162,7 @@ const GroupBox = (props) => {
                             placeholder='그룹명'
                             maxLength='15'
                         />
+                        <p id="blankGroup" style={{display: groupName.trim().length === 0 ? 'block' : 'none'}}>그룹명을 적어주세요.</p>
                         <InputWithLabel
                             label='그룹 설명을 입력하세요'
                             value={groupIntro}
@@ -178,10 +185,6 @@ const GroupBox = (props) => {
                         <Button variant="contained"
                             onClick={() => {
                                 handleCreateGroupAction()
-                                setIsModalOpen(false)
-                                setChannelMax(2)
-                                setGroupIntro('')
-                                setGroupName('')
                             }}
                             sx={{
                                 marginTop: '5px',

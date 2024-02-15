@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.example.back.Channel.dto.request.PostChannelRequestDto;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.sql.Date;
 
 @Data
