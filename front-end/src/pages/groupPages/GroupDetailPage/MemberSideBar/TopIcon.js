@@ -86,7 +86,7 @@ const TopIcon = (props) => {
                                 return (
                                     <>
                                         <div className={styles.userBox}>
-                                            <p>{element.nickname}</p>
+                                            <p style={{ fontFamily: 'Pretendard-Medium' }}>{element.nickname}</p>
                                         </div>
                                     </>
                                 )
@@ -96,11 +96,11 @@ const TopIcon = (props) => {
                     <div className={styles.groupInfoButtonBox}>
                         <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteMember(id) }}>
                             <ExitToAppIcon className={styles.groupDeleteIcon} />
-                            <span>그룹 탈퇴</span>
+                            <span style={{ fontFamily: 'Pretendard-Medium' }}>그룹 탈퇴</span>
                         </button>
                         <button className={styles.groupDeleteBtn} onClick={() => { handleDeleteGroup(id) }}>
                             <DeleteForeverIcon className={styles.groupDeleteIcon} />
-                            <span>그룹 삭제</span>
+                            <span style={{ fontFamily: 'Pretendard-Medium' }}>그룹 삭제</span>
                         </button>
                     </div>
                 </Box>

@@ -42,6 +42,7 @@ const GroupRoom = (props) => {
     const [isMicMute, setIsMicMute] = useState(false)
     const [isCamMute, setIsCamMute] = useState(false)
     const [isRecording, setIsRecording] = useState(false)
+    const [isPalyer, setIsPlayer] = useState(false)
 
     // modal 관련 state
     const [open, setOpen] = useState(false)
@@ -248,6 +249,9 @@ const GroupRoom = (props) => {
             setPlayer([...player])
             console.log('빈배열에서의 플레이어', player)
         }
+
+        console.log('공유 누를때 누른사람', newPlayer)
+        console.log('공유 누를때 사용자???', publisher)
         console.log('결과 플레이어', player)
     }
 
