@@ -457,7 +457,7 @@ const RecordBox = () => {
             <h2 style={innerTitle}>평균 점수</h2>
             <br />
             <br />
-            <div style={tierTextStyle}>{avgScore}점</div>
+            <div style={tierTextStyle}>{avgScore.toFixed(2)}점</div>
             <br />
             <br />
             <div style={{ fontSize: "17px" }}>
