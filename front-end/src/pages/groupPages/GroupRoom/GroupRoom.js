@@ -402,7 +402,7 @@ const GroupRoom = (props) => {
                 onClose={handleClose}
             >
                 <div className={styles.modalContainer}>
-                    <header>영상을 저장 하시겠습니까?</header>
+                    <p>영상을 저장 하시겠습니까?</p>
                     <input value={videoTitle} onChange={handleInputChange} placeholder='영상 제목을 입력해주세요' />
                     {
                         isDuplicate ? <p>중복된 이름의 영상이 존재합니다</p> : null
