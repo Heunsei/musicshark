@@ -11,4 +11,6 @@ public interface PerfectplayService {
 	PerfectplayEntity createPerfectplayResult(int userIdx, PerfectplayRequestDto perfectplayRequestDto);
 
 	int getPlayCount(int userIdx);
+
+	double getAvgScore(int userIdx);
 }
