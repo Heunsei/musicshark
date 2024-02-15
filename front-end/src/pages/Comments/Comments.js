@@ -240,7 +240,6 @@ const Comments=()=>{
                     </div>
                         </div>
                     </div>
-                            <hr style={{width : "100%"}}/>
                             {
                             isModify && index === selectedComment ? 
                             (   <>
@@ -251,6 +250,7 @@ const Comments=()=>{
                             )
                             : null
                         }
+                            <hr style={{width : "100%"}}/>
                             </div>
                 ))}
             </div>
