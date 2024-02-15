@@ -97,6 +97,7 @@ public class BoardServiceImpl implements BoardService {
 				.orElseThrow(() -> new NotFoundException(ErrorCode.BOARD_NOT_FOUND));
 
 		board.setBoardCount(board.getBoardCount() + 1);
+		boardRepository.save(board);
 	}
 
 	@Override
