@@ -133,7 +133,8 @@ export default function BoardList() {
             {rows.map((row, i) => (
               <StyledTableRow key={row.boardIdx}>
                 <StyledTableCell>
-                  <Link style={{ textDecoration: 'none' }} to={`/board/${row.boardIdx}`} onClick={() => countUpBoard(row.boardIdx)}>
+                  {/* <Link style={{ textDecoration: 'none' }} to={`/board/${row.boardIdx}`} onClick={() => countUpBoard(row.boardIdx)}> */}
+                  <Link style={{ textDecoration: 'none' }} to={`/board/${row.boardIdx}`}>  
                     <BoldText>{row.boardTitle}</BoldText>
                   </Link>
                 </StyledTableCell>
