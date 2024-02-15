@@ -63,6 +63,19 @@ public class PerfectController {
 	}
 
 	// 퍼펙트플레이 기록 조회
+	// @GetMapping("/{userIdx}/count")
+	// public ResponseEntity<ApiResponse> getPlayCount(@PathVariable("userIdx") int userIdx) {
+	// 	int playCount = perfectplayServiceImpl.getPlayCount(userIdx);
+	//
+	// 	ApiResponse apiResponse = ApiResponse.builder()
+	// 		.message("플레이 횟수")
+	// 		.status(OK.value())
+	// 		.data(playCount)
+	// 		.build();
+	//
+	// 	return ResponseEntity.ok(apiResponse);
+	// }
+
 	@GetMapping("/{userIdx}")
 	public ResponseEntity<ApiResponse> perfectplayResultByUserIdx(@PathVariable int userIdx) {
 		List<PerfectplayResponseDto> perfectplayResultList = perfectplayServiceImpl.perfectplayResult(userIdx);
@@ -73,8 +86,8 @@ public class PerfectController {
 			.build();
 		return ResponseEntity.ok(apiResponse);
 	}
-
 	// 퍼펙트플레이 기록 저장
+
 	@PostMapping("/{userIdx}")
 	public ResponseEntity<ApiResponse> perfectplayResultSave(@PathVariable int userIdx
 		,@RequestBody PerfectplayRequestDto perfectplayRequestDto) {
@@ -106,19 +119,6 @@ public class PerfectController {
 		return ResponseEntity.ok(apiResponse);
 	}
 
-	@GetMapping("/{userIdx}/count")
-	public ResponseEntity<ApiResponse> getPlayCount(@PathVariable("userIdx") int userIdx) {
-		int playCount = perfectplayServiceImpl.getPlayCount(userIdx);
-
-		ApiResponse apiResponse = ApiResponse.builder()
-				.message("플레이 횟수")
-				.status(OK.value())
-				.data(playCount)
-				.build();
-
-		return ResponseEntity.ok(apiResponse);
-	}
-
 	@GetMapping("/{user_idx}/avgscore")
 	public ResponseEntity<?> getAvgScore(@PathVariable("user_idx") int userIdx){
 		try {
@@ -128,6 +128,17 @@ public class PerfectController {
 			return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
 		}
 	}
+
+	@GetMapping("/{user_idx}/count")
+	public ResponseEntity<?> getClearSongCount(@PathVariable("user_idx") int userIdx){
+		try{
+			int count = perfectplayServiceImpl.getClearSongCount(userIdx);
+			return new ResponseEntity<>(count, HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
 
 	public String makeURL(int songIdx) throws Exception {
 		String preSignedURL;
