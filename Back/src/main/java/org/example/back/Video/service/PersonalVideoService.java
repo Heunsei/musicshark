@@ -1,6 +1,7 @@
 package org.example.back.Video.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.example.back.Video.dto.request.PersonalVideoRequestDto;
@@ -18,4 +19,8 @@ public interface PersonalVideoService {
 	boolean findVideoWithTitle(UserDetails userDetails, String boardTitle);
 
 	List<SearchVideoResponseDto> searchVideo(UserDetails userDetails, String videoTitle) throws Exception;
+
+	List<PersonalVideoResponseDto> searchVideowithDate(UserDetails userDetails, LocalDate localDate) throws Exception;
+
+	List<SearchVideoResponseDto> searchVideoBetweenDate(UserDetails userDetails, int year, int month) throws Exception;
 }

@@ -25,7 +25,7 @@ public enum ErrorCode {
     SONG_NOT_FOUND(404, "해당 노래를 찾을 수 없습니다."),
     BOARD_NOT_FOUND(404, "게시글을 찾을 수 없습니다."),
     COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다."),
-    VIDEO_NOT_FOUND(404, "존재하지 않는 영상입니다.");
+    VIDEO_NOT_FOUND(404, "영상을 찾을 수 없습니다.");
 
     private int status;
     private String message;

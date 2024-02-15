@@ -1,5 +1,6 @@
 package org.example.back.Video.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +45,34 @@ public class PersonalVideoController {
 	@GetMapping("/search")
 	public ResponseEntity<?> searchVideo(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("videoTitle") String videoTitle){
 		try {
-			List<SearchVideoResponseDto> list = new ArrayList<>();
+			List<SearchVideoResponseDto> list;
 			list = s3Service.searchVideo(userDetails, videoTitle);
-			return new ResponseEntity<List<SearchVideoResponseDto>>(list, HttpStatus.OK);
+			return new ResponseEntity<>(list, HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/search/date")
+	public ResponseEntity<?> searchVideowithDate(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("localDate") String localDate){
+		try{
+			LocalDate date = LocalDate.parse(localDate);
+			List<PersonalVideoResponseDto> list;
+			list = s3Service.searchVideowithDate(userDetails, date);
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/search/between")
+	public ResponseEntity<?> searchVideoBetweenDate(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("year") int year, @RequestParam("month") int month){
+		try{
+			List<SearchVideoResponseDto> list;
+			list = s3Service.searchVideoBetweenDate(userDetails, year, month);
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch(Exception e){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 

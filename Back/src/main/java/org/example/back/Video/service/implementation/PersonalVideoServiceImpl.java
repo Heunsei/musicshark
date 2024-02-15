@@ -43,7 +43,7 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 	private final VideoRepository videoRepository;
 
 	private final String personalVideoPath = "storage/video/personal/";
-	private final long accessExpiredTime = 30 * 60; // 접근 제한 시간 30분
+	private final long accessExpiredTime = 2 * 60 * 60; // 접근 제한 시간 2시간
 
 
 	@Value("${cloud.aws.s3.bucket}")
@@ -138,6 +138,47 @@ public class PersonalVideoServiceImpl implements PersonalVideoService {
 			list.add(dto);
 		}
 
+		return list;
+	}
+
+	@Override
+	public List<PersonalVideoResponseDto> searchVideowithDate(UserDetails userDetails, LocalDate localDate) throws Exception {
+		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
+				.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+		List<VideoEntity> videoList = videoRepository.findByUserIdxAndVideoDateOrderByVideoIdxDesc(user.getUserIdx(), localDate)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.VIDEO_NOT_FOUND));
+
+		List<PersonalVideoResponseDto> list = new ArrayList<>();
+		for(VideoEntity video : videoList){
+			PersonalVideoResponseDto dto = new PersonalVideoResponseDto();
+			dto.setVideoIdx(video.getVideoIdx());
+			dto.setVideoTitle(video.getVideoTitle());
+			dto.setPresignedURL(makePresignedURL(video.getVideoPath(), accessExpiredTime, HttpMethod.GET));
+
+			list.add(dto);
+		}
+		return list;
+	}
+
+	@Override
+	public List<SearchVideoResponseDto> searchVideoBetweenDate(UserDetails userDetails, int year, int month) throws Exception {
+		UserEntity user = userRepository.findByUserEmail(userDetails.getUsername())
+				.orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+		List<VideoEntity> videoList = videoRepository.findByUserIdxAndDateRange(user.getUserIdx(), year, month)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.VIDEO_NOT_FOUND));
+
+		List<SearchVideoResponseDto> list = new ArrayList<>();
+		for(VideoEntity video : videoList){
+			SearchVideoResponseDto dto = new SearchVideoResponseDto();
+			dto.setVideoIdx(video.getVideoIdx());
+			dto.setVideoDate(video.getVideoDate());
+			dto.setVideoTitle(video.getVideoTitle());
+			dto.setPresignedURL(makePresignedURL(video.getVideoPath(), accessExpiredTime, HttpMethod.GET));
+
+			list.add(dto);
+		}
 		return list;
 	}
 
