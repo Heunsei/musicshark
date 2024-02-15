@@ -9,6 +9,7 @@ import Modal from '@mui/material/Modal';
 
 import styles from './GroupBottomBox.module.css'
 import Calander from './../../../authPages/MyPage/Calendar'
+import zIndex from '@mui/material/styles/zIndex';
 
 const Container = styled('div')({
     width: '90%',
@@ -20,7 +21,8 @@ const Container = styled('div')({
 })
 
 // 연주 이동 버튼 & 캘린더 버튼 & 그룹 삭제 버튼
-const GroupBottomBox = () => {
+const GroupBottomBox = (props) => {
+    const { isCalander, setIsCalander } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
     // modal
@@ -40,50 +42,40 @@ const GroupBottomBox = () => {
                         width: '45%',
                         height: '50%',
                         backgroundColor: 'white',
-                        margin: '15px',
+                        margin: '10px',
                         color: 'black',
                         fontSize: '32px',
                         borderRadius: '15px',
+                        transition: '0.5s',
                         ':hover': {
                             bgcolor: '#588157',
+                            color: 'white',
                         },
                     }}> 연습하기 </Button>
-                <Button onClick={() => handleOpen()}
+                <Button onClick={() => setIsCalander(!isCalander)}
                     sx={{
                         fontFamily: "Pretendard-Medium",
                         width: '45%',
                         height: '50%',
                         backgroundColor: 'white',
-                        margin: '15px',
+                        margin: '10px',
                         color: 'black',
                         fontSize: '32px',
                         borderRadius: '15px',
+                        transition: '0.5s',
+
                         ':hover': {
                             bgcolor: '#588157',
+                            color: 'white',
                         },
                     }}> 캘린더 </Button>
             </Container>
-            <div style={{height : '10%'}}>
-                <button style={{
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', border: '1px solid gray',
-                    fontFamily: 'Pretendard-Medium', borderRadius: '5px', boxShadow: '3px 3px',
-                }}
+            <div style={{ height: '10%' }} >
+                <button className={styles.moveToLobyBtn}
                     onClick={() => navigate('/group')}>
                     <LogoutIcon /> <span>그룹 목록 페이지로</span>
                 </button>
             </div>
-            {/* <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <div className={styles.modalBox}>
-                    <div>
-                        <Calander />
-                    </div>
-                </div>
-            </Modal> */}
         </>
     );
 };

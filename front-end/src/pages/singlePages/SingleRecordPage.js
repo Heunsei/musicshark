@@ -201,7 +201,7 @@ const SingleRecordPage = () => {
                             {
                                 // 녹화한 영상들을 띄워주는 코드
                                 // ref={testRef} 삭제했음
-                                recordList ?
+                                recordList.length !== 0 ?
                                     (recordList.map((element, i) => {
                                         return (
                                             <div key={i} className={styles.videoContainer} onMouseOver={() => handleMouseOver(i)} onMouseLeave={() => handleMouseOut()} >
@@ -213,7 +213,11 @@ const SingleRecordPage = () => {
                                                 </video>
                                             </div>
                                         )
-                                    })) : <p>녹화 내용이 없습니다</p>
+                                    })) : <p style={{
+                                        fontSize: '42px', color: 'green',
+                                        fontFamily: 'Pretendard-Bold',
+                                        backgroundColor : '#EFD6BC'
+                                    }}>녹화 내용이 없습니다</p>
                             }
                         </div>
                     </div>

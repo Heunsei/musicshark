@@ -6,6 +6,10 @@
     justify-content: center;
     background-color: #F5F5DC;
     flex-direction: column;
+    background-image: url('./../../../../public/main2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .titleBox {
@@ -79,4 +83,47 @@
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+.buttonBox {
+    margin-top: 50px;
+}
+
+.singlePlayBtn {
+    font-family: MaplestoryOTFBold;
+    font-size: 24px;
+    display: inline-block;
+    border: none;
+    color: white;
+    background-color: #997B66;
+    width: 15%;
+    height: 4rem;
+    margin: 1rem 0 0 3rem;
+    padding: 0 1rem;
+    border-radius: 22px;
+    cursor: pointer;
+    font-weight: 900;
+    transition: 0.5s;
+}
+
+.groupPlayBtn {
+    font-family: MaplestoryOTFBold;
+    font-size: 24px;
+    display: inline-block;
+    border: none;
+    color: white;
+    background-color: #997B66;
+    width: 15%;
+    height: 4rem;
+    margin: 1rem 3rem 0 0;
+    padding: 0 1rem;
+    border-radius: 22px;
+    cursor: pointer;
+    font-weight: 900;
+    transition: 0.5s;
+}
+
+.buttonBox button:hover {
+    width: 20%;
+    border: 3px solid black;
 }

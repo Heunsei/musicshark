@@ -67,6 +67,10 @@
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    background-image: url('./../../../public/recordBg.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .videoContainer {
