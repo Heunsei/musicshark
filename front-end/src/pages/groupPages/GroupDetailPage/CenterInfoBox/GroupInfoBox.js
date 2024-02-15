@@ -120,23 +120,28 @@ const GroupInfoBox = (props) => {
                     <p style={{
                         fontSize: '32px', margin: '0 0 20px 0', align: 'center'
                     }}>{groupDetail.channelIntro}</p>
+                    <hr></hr>
+
                     <table style={{
                         fontSize: '20px', borderSpacing: '5px 5px',
                         width: '80%'
                     }}>
-                        <tr>
-                            <td >현재인원 :</td>
-                            <td style={{ textAlign: 'right' }}>{groupDetail.channelCur}명</td>
-                        </tr>
-                        <tr>
-                            <td>모집인원 :</td>
-                            <td style={{ textAlign: 'right' }}>{groupDetail.channelMax}명</td>
-                        </tr>
-                        <tr>
-                            <td>생성일자 :</td>
-                            <td style={{ textAlign: 'right' }}>{groupDetail.channelDate}</td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td >현재인원 :</td>
+                                <td style={{ textAlign: 'right' }}>{groupDetail.channelCur}명</td>
+                            </tr>
+                            <tr>
+                                <td>모집인원 :</td>
+                                <td style={{ textAlign: 'right' }}>{groupDetail.channelMax}명</td>
+                            </tr>
+                            <tr>
+                                <td>생성일자 :</td>
+                                <td style={{ textAlign: 'right' }}>{groupDetail.channelDate}</td>
+                            </tr>
+                        </tbody>
                     </table>
+
                 </div>
                 <button className={`${styles.groupInfoModifyBtn} ${styles.groupRoomBtn}`} onClick={handleOpen}>
                     <EditIcon />

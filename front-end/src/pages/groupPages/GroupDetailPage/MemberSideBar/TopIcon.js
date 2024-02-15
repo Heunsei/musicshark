@@ -84,11 +84,9 @@ const TopIcon = (props) => {
                         {
                             groupMembers.map((element, i) => {
                                 return (
-                                    <>
-                                        <div className={styles.userBox}>
-                                            <p style={{ fontFamily: 'Pretendard-Medium' }}>{element.nickname}</p>
-                                        </div>
-                                    </>
+                                    <div className={styles.userBox} key={i}>
+                                        <p style={{ fontFamily: 'Pretendard-Medium' }}>{element.nickname}</p>
+                                    </div>
                                 )
                             })
                         }

@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #997B66;
+    background-color: #F5F5DC;
     flex-direction: column;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .subTitle {
-    font-family: 'Pretendard-Medium';
+    font-family: 'MaplestoryOTFBold';
     font-size: 42px;
     opacity: 1;
     animation-name: showLeft;
@@ -39,7 +39,7 @@
 }
 
 .info {
-    font-family: 'Pretendard-Medium';
+    font-family: 'MaplestoryOTFBold';
     font-size: 24px;
     animation-name: showRight;
     animation-duration: 2.5s;

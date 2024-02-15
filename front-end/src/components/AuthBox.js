@@ -25,6 +25,8 @@ const AuthBox = (props) => {
                     flexDirection: 'column',
                     padding: '25px',
                     overflow: 'scroll',
+                    msOverflowStyle : 'none',
+                    scrollbarWidth : 'none'
                 }}
             >
                 {props.children}

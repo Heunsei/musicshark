@@ -361,7 +361,7 @@ const GroupRoom = (props) => {
                     <div className={styles.subScreen}>
                         {
                             publisher !== undefined ?
-                                <div className={styles.subScreenVideo}>
+                                <div className={`${styles.subScreenVideo} ${styles.myScreen}`}>
                                     <VideoScreen streamManager={publisher} key={publisher.id} />
                                 </div> : null
                         }

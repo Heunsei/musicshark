@@ -33,7 +33,7 @@ export default function MainPage() {
                 <Navbar />
                 <div className={styles.titleBox}>
                     <div className={styles.headerBox}>
-                        <p style={{ color: 'white', margin: 2, textAlign: 'left' }}>
+                        <p style={{ color: '#ffb6c1', margin: 2, textAlign: 'left' }}>
                             아름다운 선율을 연주하게 될 당신을 위해
                         </p>
                     </div>
@@ -42,7 +42,7 @@ export default function MainPage() {
                             온라인으로 연습하는 악기 연주
                         </p>
                         <br />
-                        <p className={styles.info} style={{ color: '#FFFADD', margin: 4, fontWeight: 'normal' }}>
+                        <p className={styles.info} style={{ color: '#000000', margin: 4, fontWeight: 'normal' }}>
                             친구들과 함께든 혼자서든<br />
                             원하는 대로 즐기세요<br />
                         </p>
@@ -50,7 +50,7 @@ export default function MainPage() {
                     <div style={{ marginTop: '50px' }}>
                         <button onClick={navigateToGroup}
                             style={{
-                                fontFamily: 'Pretendard-Bold',
+                                fontFamily: 'MaplestoryOTFBold',
                                 fontSize: '24px',
                                 display: 'inline-block',
                                 border: 'none',
@@ -69,7 +69,7 @@ export default function MainPage() {
                         </button>
                         <button onClick={navigateToSingle}
                             style={{
-                                fontFamily: 'Pretendard-Bold',
+                                fontFamily: 'MaplestoryOTFBold',
                                 fontSize: '24px',
                                 display: 'inline-block',
                                 border: 'none',

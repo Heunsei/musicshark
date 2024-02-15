@@ -72,7 +72,7 @@ const GroupBottomBox = () => {
                     <LogoutIcon /> <span>그룹 목록 페이지로</span>
                 </button>
             </div>
-            <Modal
+            {/* <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -83,7 +83,7 @@ const GroupBottomBox = () => {
                         <Calander />
                     </div>
                 </div>
-            </Modal>
+            </Modal> */}
         </>
     );
 };

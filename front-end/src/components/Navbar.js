@@ -47,8 +47,9 @@ export default function Navbar() {
 
     return (
         <Box sx={{
+            width: '100%',
             fontFamily: "Pretendard-Medium",
-            fontSize: '32px',
+            fontSize: '28px',
             flexGrow: 1
         }}>
             <AppBar position="static" sx={{ bgcolor: "#997B66" }} >
