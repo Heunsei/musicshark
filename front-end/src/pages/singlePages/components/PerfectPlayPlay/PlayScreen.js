@@ -1,4 +1,4 @@
-import styles from './PerfectPlayPlayPage.module.css'
+import styles from './PerfectPlayPlayPage.module.css';
 import React, { useRef, useEffect, useState } from 'react';
 import { PitchDetector } from 'pitchy';
 import { useCanvas } from './useCanvas';
@@ -33,6 +33,7 @@ const PlayScreen = ({ songIdx }) => {
             const data = response.data.data;
             console.log(data);
             setSongInfo(data);
+            
 
         }catch(error){
             console.error(error);
@@ -509,9 +510,10 @@ const PlayScreen = ({ songIdx }) => {
             <div className={styles.container}>
                 <div className={styles.infoBox}>
                     <div className={styles.card}>
-                        <div className={styles.img}></div>
+                        <div className={styles.img}><img src={songInfo.songImg}></img></div>
                         <div className={styles.content}>
-                            제목
+                            <div className={styles.title}>{songInfo.title}</div>
+                            <div className={styles.singer}>{songInfo.singer}</div>
                         </div>
                     </div>
                 </div>

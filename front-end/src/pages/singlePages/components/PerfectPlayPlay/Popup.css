@@ -9,6 +9,7 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000; /* 모달을 화면 상위에 표시하기 위해 z-index 설정 */
+    text-align: center;
   }
   
   /* 배경 레이어 스타일 */
