@@ -89,4 +89,17 @@ public class PerfectController {
 			.build();
 		return ResponseEntity.ok(apiResponse);
 	}
+
+	@GetMapping("/{userIdx}/count")
+	public ResponseEntity<ApiResponse> getPlayCount(@PathVariable int userIdx){
+		int playCount = perfectplayServiceImpl.getPlayCount(userIdx);
+
+		ApiResponse apiResponse = ApiResponse.builder()
+			.message("플레이 횟수")
+			.status(OK.value())
+			.data(playCount)
+			.build();
+
+		return ResponseEntity.ok(apiResponse);
+	}
 }
