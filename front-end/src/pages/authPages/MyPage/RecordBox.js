@@ -355,7 +355,7 @@ const RecordBox = () => {
     border: "3px solid #ccc",
     backgroundColor: "#F9FFF8",
     borderRadius: "4px",
-    width: "96%",
+    width: "92%",
     maxHeight: "70%",
     marginTop: "2%",
     marginLeft: "auto",
@@ -390,11 +390,15 @@ const RecordBox = () => {
 
   const boxTitle = {
     fontSize: "23px",
-    paddingLeft: "18px",
+    paddingLeft: "0%",
     marginTop: "8px",
+    marginBottom: "2.3%",
+    marginLeft: "2%",
   };
 
   const innerTitle = {
+    marginTop: "10%",
+    marginBottom: "9%",
     fontSize: "27px",
   };
 

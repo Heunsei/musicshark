@@ -554,7 +554,7 @@ const ProfileEdit = () => {
       </div>
       <div style={{ display: "flex", width: "100%", height: "94%", marginTop: "4%" }}>
         <div style={leftBoxStyle}>
-          <div>
+          <div style={{ marginRight: "7%" }}>
             {userImageUrl ? (
               <img src={userImageUrl} style={profileImageStyle} />
             ) : (
