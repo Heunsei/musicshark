@@ -1,4 +1,5 @@
-# 악기상어 ![Alt text](front-end/src/assets/sharklogo.png)
+<img src="front-end/src/assets/sharklogo.png" alt="악기상어" width="160" height="160">
+
 
 ## 프로젝트명 : 악기상어(akkishark) 
 
@@ -113,7 +114,7 @@
 ![Alt text](assets/image-9.png)
 
 ## ERD 다이어그램
-![Alt text](<ssatudio ERD.PNG>)
+![Alt text](<assets/ssatudio ERD.PNG>)
 
 ### 팀원 소개
 
