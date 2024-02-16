@@ -174,7 +174,6 @@
 }
 
 .subScreenVideo {
-    position: absolute;
     display: flex;
     width: 20%;
     height: 80%;
