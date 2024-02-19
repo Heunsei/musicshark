@@ -118,13 +118,32 @@
 - 커뮤니티
   - 게시글, 댓글을 작성하여 사용자들 간 소통 공간 제공
 
-
-<!-- ### 기술 소개 -->
 ### 시스템 아키텍처
 <img src="assets/아키텍처.PNG" alt="악기상어" width="600" height="400">
 
 ## ERD 다이어그램
 <img src="assets/ssatudio ERD.PNG" alt="악기상어" width="600" height="400">
+
+## API 설계
+![alt text](<assets/API 설계.png>)
+
+![alt text](<assets/API 설계1.png>)
+
+![alt text](<assets/API 설계2.png>)
+
+![alt text](<assets/API 설계3.png>)
+
+![alt text](<assets/API 설계4.png>)
+
+![alt text](<assets/API 설계5.png>)
+
+![alt text](<assets/API 설계6.png>)
+
+![alt text](<assets/API 설계7.png>)
+
+![alt text](<assets/API 설계8.png>)
+
+![alt text](<assets/API 설계9.png>)
 
 ### 팀원 소개
 <img src="assets/팀원.PNG" alt="악기상어" width="450" height="400">
