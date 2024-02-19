@@ -72,23 +72,23 @@
 ### 서비스 화면
 
 ## 채널 통화
-<img src="assets/채널 통화.gif" alt="악기상어" width="400" height="200">
+<img src="assets/채널 통화.gif" alt="악기상어" width="450" height="225">
 
 ## 개인연습 녹화
-<img src="assets/개인연습 녹화.gif" alt="악기상어" width="400" height="200">
+<img src="assets/개인연습 녹화.gif" alt="악기상어" width="450" height="225">
 
 
 ## 마이 페이지 캘린더
-<img src="assets/마이페이지-캘린더.gif" alt="악기상어" width="400" height="200">
+<img src="assets/마이페이지-캘린더.gif" alt="악기상어" width="450" height="225">
 
 ## 퍼펙트 플레이
-<img src="assets/퍼펙트플레이.gif" alt="악기상어" width="400" height="200">
+<img src="assets/퍼펙트플레이.gif" alt="악기상어" width="450" height="225">
 
 
 
 ## 게시판
-<img src="assets/게시판.PNG" alt="악기상어" width="400" height="200">
-<img src="assets/게시글 조회.PNG" alt="악기상어" width="400" height="200">
+<img src="assets/게시판.PNG" alt="악기상어" width="450" height="225">
+<img src="assets/게시글 조회.PNG" alt="악기상어" width="450" height="225">
 
 ### 주요 기능
 - 소셜 로그인
@@ -117,28 +117,29 @@
 
 <!-- ### 기술 소개 -->
 ### 시스템 아키텍처
-![Alt text](assets/아키텍처.PNG)
+<img src="assets/아키텍처.PNG" alt="악기상어" width="600" height="400">
 
 
 ### 설계 문서
 
 ## API 설계서
-![Alt text](assets/image.png)
-![Alt text](assets/image-1.png)
-![Alt text](assets/image-2.png)
-![Alt text](assets/image-3.png)
-![Alt text](assets/image-4.png)
-![Alt text](assets/image-5.png)
-![Alt text](assets/image-6.png)
-![Alt text](assets/image-7.png)
-![Alt text](assets/image-8.png)
-![Alt text](assets/image-9.png)
+<img src="assets/image.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-1.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-2.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-3.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-4.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-5.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-6.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-7.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-8.png" alt="악기상어" width="600" height="400">
+<img src="assets/image-9.png" alt="악기상어" width="600" height="400">
+
 
 ## ERD 다이어그램
-![Alt text](<assets/ssatudio ERD.PNG>)
+<img src="assets/ssatudio ERD.PNG" alt="악기상어" width="600" height="400">
 
 ### 팀원 소개
-<img src="assets/팀원.PNG" alt="악기상어" width="400" height="400">
+<img src="assets/팀원.PNG" alt="악기상어" width="450" height="400">
 
 
 
