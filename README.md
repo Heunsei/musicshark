@@ -119,22 +119,6 @@
 ### 시스템 아키텍처
 <img src="assets/아키텍처.PNG" alt="악기상어" width="600" height="400">
 
-
-### 설계 문서
-
-## API 설계서
-<img src="assets/image.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-1.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-2.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-3.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-4.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-5.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-6.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-7.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-8.png" alt="악기상어" width="600" height="400">
-<img src="assets/image-9.png" alt="악기상어" width="600" height="400">
-
-
 ## ERD 다이어그램
 <img src="assets/ssatudio ERD.PNG" alt="악기상어" width="600" height="400">
 
