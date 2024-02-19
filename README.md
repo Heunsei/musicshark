@@ -6,6 +6,9 @@
 
 ### 프로젝트 소개 : 본 프로젝트는 webRTC를 활용하여 온라인 상에서 타인과 같이 악기를 연습하거나 혼자서도 연습할 수 있는 환경을 제공해주는 것을 목적으로 한다.
 
+## 결과물
+[최종발표 자료](assets/악기상어-최종-발표.pdf)
+
 ### 개발 환경
 
 <p align="center">
@@ -87,8 +90,9 @@
 
 
 ## 게시판
-<img src="assets/게시판.PNG" alt="악기상어" width="450" height="225">
-<img src="assets/게시글 조회.PNG" alt="악기상어" width="450" height="225">
+<img src="assets/게시판.PNG" alt="악기상어" width="550" height="300">
+
+<img src="assets/게시글 조회.PNG" alt="악기상어" width="550" height="300">
 
 ### 주요 기능
 - 소셜 로그인
