@@ -1,9 +1,13 @@
-# 악기상어 ![Alt text](front-end/src/assets/sharklogo.png)
+<img src="front-end/src/assets/sharklogo.png" alt="악기상어" width="160" height="160">
+
 
 ## 프로젝트명 : 악기상어(akkishark) 
 
 
 ### 프로젝트 소개 : 본 프로젝트는 webRTC를 활용하여 온라인 상에서 타인과 같이 악기를 연습하거나 혼자서도 연습할 수 있는 환경을 제공해주는 것을 목적으로 한다.
+
+## 결과물
+[최종발표 자료](assets/악기상어-최종-발표.pdf)
 
 ### 개발 환경
 
@@ -70,6 +74,26 @@
 
 ### 서비스 화면
 
+## 채널 통화
+<img src="assets/채널 통화.gif" alt="악기상어" width="450" height="225">
+
+## 개인연습 녹화
+<img src="assets/개인연습 녹화.gif" alt="악기상어" width="450" height="225">
+
+
+## 마이 페이지 캘린더
+<img src="assets/마이페이지-캘린더.gif" alt="악기상어" width="450" height="225">
+
+## 퍼펙트 플레이
+<img src="assets/퍼펙트플레이.gif" alt="악기상어" width="450" height="225">
+
+
+
+## 게시판
+<img src="assets/게시판.PNG" alt="악기상어" width="550" height="300">
+
+<img src="assets/게시글 조회.PNG" alt="악기상어" width="550" height="300">
+
 ### 주요 기능
 - 소셜 로그인
 
@@ -94,28 +118,35 @@
 - 커뮤니티
   - 게시글, 댓글을 작성하여 사용자들 간 소통 공간 제공
 
-
-<!-- ### 기술 소개 -->
 ### 시스템 아키텍처
-
-### 설계 문서
-
-## API 설계서
-![Alt text](assets/image.png)
-![Alt text](assets/image-1.png)
-![Alt text](assets/image-2.png)
-![Alt text](assets/image-3.png)
-![Alt text](assets/image-4.png)
-![Alt text](assets/image-5.png)
-![Alt text](assets/image-6.png)
-![Alt text](assets/image-7.png)
-![Alt text](assets/image-8.png)
-![Alt text](assets/image-9.png)
+<img src="assets/아키텍처.PNG" alt="악기상어" width="600" height="400">
 
 ## ERD 다이어그램
-![Alt text](<ssatudio ERD.PNG>)
+<img src="assets/ssatudio ERD.PNG" alt="악기상어" width="600" height="400">
+
+## API 설계
+![alt text](<assets/API 설계.png>)
+
+![alt text](<assets/API 설계1.png>)
+
+![alt text](<assets/API 설계2.png>)
+
+![alt text](<assets/API 설계3.png>)
+
+![alt text](<assets/API 설계4.png>)
+
+![alt text](<assets/API 설계5.png>)
+
+![alt text](<assets/API 설계6.png>)
+
+![alt text](<assets/API 설계7.png>)
+
+![alt text](<assets/API 설계8.png>)
+
+![alt text](<assets/API 설계9.png>)
 
 ### 팀원 소개
+<img src="assets/팀원.PNG" alt="악기상어" width="450" height="400">
 
 
 
