@@ -71,6 +71,22 @@
 
 ### 서비스 화면
 
+## 채널 통화
+![Alt text](assets/채널%20통화.gif)
+
+## 개인연습 녹화
+![Alt text](assets/개인연습%20녹화.gif)
+
+## 마이 페이지 캘린더
+![Alt text](assets/마이페이지-캘린더.gif)
+
+## 퍼펙트 플레이
+![Alt text](assets/퍼펙트플레이.gif)
+
+## 게시판
+![Alt text](assets/게시판.PNG)
+![Alt text](assets/게시글%20조회.PNG)
+
 ### 주요 기능
 - 소셜 로그인
 
@@ -98,6 +114,8 @@
 
 <!-- ### 기술 소개 -->
 ### 시스템 아키텍처
+![Alt text](assets/아키텍처.PNG)
+
 
 ### 설계 문서
 
@@ -117,6 +135,7 @@
 ![Alt text](<assets/ssatudio ERD.PNG>)
 
 ### 팀원 소개
+<img src="assets/팀원.PNG" alt="악기상어" width="400" height="400">
 
 
 
